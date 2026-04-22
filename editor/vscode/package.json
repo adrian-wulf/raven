@@ -1,0 +1,100 @@
+{
+  "name": "raven-security",
+  "displayName": "Raven Security Scanner",
+  "description": "Catch AI-generated security bugs before you ship",
+  "version": "0.5.0",
+  "publisher": "raven-security",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers",
+    "Security"
+  ],
+  "keywords": [
+    "security",
+    "vulnerability",
+    "static-analysis",
+    "ai",
+    "cursor",
+    "sast"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:python",
+    "onLanguage:go",
+    "onLanguage:php",
+    "onLanguage:rust",
+    "onLanguage:java"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "raven.scanWorkspace",
+        "title": "Scan Workspace",
+        "category": "Raven",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "raven.fixAll",
+        "title": "Fix All Issues",
+        "category": "Raven",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "raven.showOutput",
+        "title": "Show Output",
+        "category": "Raven"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "raven.scanWorkspace",
+          "when": "true"
+        },
+        {
+          "command": "raven.fixAll",
+          "when": "true"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Raven Security Scanner",
+      "properties": {
+        "raven.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Raven security scanning"
+        },
+        "raven.minSeverity": {
+          "type": "string",
+          "default": "low",
+          "enum": ["critical", "high", "medium", "low", "info"],
+          "description": "Minimum severity to report"
+        },
+        "raven.path": {
+          "type": "string",
+          "default": "raven",
+          "description": "Path to raven binary"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}

@@ -209,7 +209,7 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 		return nil, err
 	}
 
-	lang := detectLanguage(path)
+	lang := DetectLanguage(path)
 	var findings []Finding
 
 	for _, rule := range rules {
@@ -301,7 +301,7 @@ func (s *Scanner) matchLiteral(content []byte, pattern string, path string) []fi
 	return s.matchRegex(content, regexp.QuoteMeta(pattern), path)
 }
 
-func detectLanguage(path string) string {
+func DetectLanguage(path string) string {
 	ext := strings.ToLower(filepath.Ext(path))
 	switch ext {
 	case ".js", ".jsx", ".mjs", ".cjs":
