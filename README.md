@@ -93,6 +93,25 @@ raven ci --format sarif --output report.sarif
 raven learn sqli
 ```
 
+### GitHub Action
+
+```yaml
+# .github/workflows/security.yml
+name: Security Scan
+on: [push, pull_request]
+jobs:
+  raven:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: raven-security/raven/.github/actions/raven@main
+        with:
+          fail-on: high
+          format: sarif
+```
+
+Results appear in **Security → Code scanning alerts**.
+
 ---
 
 ## Features
