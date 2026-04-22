@@ -1,0 +1,22 @@
+id: raven-fw-express-001
+name: Express Missing Security Middleware
+description: |
+  Detects Express apps without helmet, express-rate-limit, or other
+  security middleware that vibe coders often forget to add.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript]
+frameworks: [express]
+message: |
+  Missing security middleware. Add helmet(), express-rate-limit,
+  and cookie-parser with secure settings to harden your Express app.
+patterns:
+  - type: regex
+    pattern: "app\\.listen\\s*\\("
+  - type: regex
+    pattern: "express\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "createServer\\s*\\("
+references:
+  - https://expressjs.com/en/advanced/best-practice-security.html

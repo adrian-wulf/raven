@@ -77,6 +77,10 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 			fmt.Printf("  %s: %d\n", style.Render(string(sev)), count)
 		}
 	}
+	if len(result.Vulnerabilities) > 0 {
+		vulnStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#FF6B6B")).Bold(true)
+		fmt.Printf("  %s: %d\n", vulnStyle.Render("vulnerable deps"), len(result.Vulnerabilities))
+	}
 	fmt.Println()
 
 	// Findings
@@ -123,6 +127,24 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 
 			fmt.Println()
 		}
+	}
+
+	// Dependency vulnerabilities
+	if len(result.Vulnerabilities) > 0 {
+		vulnTitle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#FF6B6B"))
+		fmt.Println(vulnTitle.Render("Vulnerable Dependencies:"))
+		for _, v := range result.Vulnerabilities {
+			fixed := v.FixedVersion
+			if fixed == "" {
+				fixed = "unknown"
+			}
+			fmt.Printf("  %s: %s@%s → %s\n", v.ID, v.Package, v.Version, fixed)
+			if v.Summary != "" {
+				sumStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#DFE6E9"))
+				fmt.Printf("    %s\n", sumStyle.Render(v.Summary))
+			}
+		}
+		fmt.Println()
 	}
 
 	return nil

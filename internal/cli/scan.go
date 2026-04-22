@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/raven-security/raven/internal/deps"
 	"github.com/raven-security/raven/internal/engine"
+	"github.com/raven-security/raven/internal/framework"
 	"github.com/raven-security/raven/internal/output"
 	"github.com/spf13/cobra"
 )
@@ -17,6 +19,7 @@ func scanCmd() *cobra.Command {
 		minSev     string
 		confidence string
 		fixFlag    bool
+		depsFlag   bool
 	)
 
 	cmd := &cobra.Command{
@@ -56,10 +59,22 @@ Examples:
 				fmt.Printf("Loaded %d rules\n", len(rules))
 			}
 
+			// Detect frameworks
+			fwDetector := framework.NewDetector(paths[0])
+			detectedFrameworks, _ := fwDetector.Detect()
+			var fwNames []string
+			if len(detectedFrameworks) > 0 {
+				for _, fw := range detectedFrameworks {
+					fwNames = append(fwNames, fw.Name)
+				}
+				fmt.Fprintf(os.Stderr, "📦 Frameworks: %s\n\n", framework.FormatFrameworks(detectedFrameworks))
+			}
+
 			// Configure scanner
 			scanConfig := engine.ScanConfig{
 				Paths:       paths,
 				Exclude:     cfg.Rules.Exclude,
+				Frameworks:  fwNames,
 				Confidence:  confidence,
 				MinSeverity: engine.Severity(minSev),
 			}
@@ -68,6 +83,44 @@ Examples:
 			result, err := scanner.Scan()
 			if err != nil {
 				return fmt.Errorf("scan failed: %w", err)
+			}
+
+			// Dependency scanning (before output so JSON includes vulns)
+			var depVulns []deps.Vulnerability
+			if depsFlag {
+				fmt.Fprintln(os.Stderr)
+				fmt.Fprintln(os.Stderr, "🔍 Scanning dependencies...")
+				depScanner := deps.NewScanner()
+				var err error
+				depVulns, err = depScanner.Scan(paths[0])
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "Dependency scan error: %v\n", err)
+				} else if len(depVulns) > 0 {
+					fmt.Fprintf(os.Stderr, "⚠️  Found %d vulnerable dependencies:\n", len(depVulns))
+					for _, v := range depVulns {
+						fixed := v.FixedVersion
+						if fixed == "" {
+							fixed = "unknown"
+						}
+						fmt.Fprintf(os.Stderr, "  %s: %s@%s → %s\n", v.ID, v.Package, v.Version, fixed)
+						fmt.Fprintf(os.Stderr, "    %s\n", v.Summary)
+					}
+				} else {
+					fmt.Fprintln(os.Stderr, "✅ No known vulnerabilities in dependencies")
+				}
+
+				// Convert to engine.Vulnerability for JSON output
+				for _, v := range depVulns {
+					result.Vulnerabilities = append(result.Vulnerabilities, engine.Vulnerability{
+						ID:           v.ID,
+						Summary:      v.Summary,
+						Severity:     v.Severity,
+						Package:      v.Package,
+						Version:      v.Version,
+						FixedVersion: v.FixedVersion,
+						References:   v.References,
+					})
+				}
 			}
 
 			// Output results
@@ -97,7 +150,8 @@ Examples:
 			}
 
 			// Exit code for CI
-			if len(result.Findings) > 0 {
+			totalIssues := len(result.Findings) + len(depVulns)
+			if totalIssues > 0 {
 				os.Exit(1)
 			}
 
@@ -111,6 +165,7 @@ Examples:
 	cmd.Flags().StringVar(&minSev, "min-sev", "low", "Minimum severity: critical, high, medium, low, info")
 	cmd.Flags().StringVar(&confidence, "confidence", "medium", "Minimum confidence: high, medium, low")
 	cmd.Flags().BoolVar(&fixFlag, "fix", false, "Auto-fix issues where possible")
+	cmd.Flags().BoolVar(&depsFlag, "deps", false, "Scan dependencies for known vulnerabilities (OSV)")
 
 	return cmd
 }

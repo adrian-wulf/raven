@@ -92,7 +92,7 @@ func versionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Print Raven version",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Raven v0.1.0-alpha")
+			fmt.Println("Raven v0.6.0")
 			fmt.Println("Security scanner for vibe coders")
 		},
 	}

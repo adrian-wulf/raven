@@ -1,0 +1,20 @@
+id: raven-fw-vue-001
+name: Vue v-html with User Input
+description: |
+  Detects Vue's v-html directive with user-controlled data,
+  which is equivalent to innerHTML and can lead to XSS.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+frameworks: [vue]
+message: |
+  v-html renders raw HTML and is dangerous with user input.
+  Use {{ interpolation }} instead, or sanitize with DOMPurify.
+patterns:
+  - type: regex
+    pattern: "v-html\\s*=\\s*['\"](req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "v-html\\s*=\\s*['\"][^'\"]*\\$\\{[^}]+\\}"
+references:
+  - https://vuejs.org/guide/essentials/template-syntax.html#raw-html

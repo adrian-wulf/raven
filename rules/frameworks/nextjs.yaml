@@ -1,0 +1,20 @@
+id: raven-fw-nextjs-001
+name: Next.js API Route Missing Auth
+description: |
+  Detects Next.js API routes that may lack authentication checks.
+  AI often generates API routes without considering access control.
+severity: medium
+category: auth
+confidence: low
+languages: [javascript, typescript]
+frameworks: [nextjs]
+message: |
+  API route may lack authentication. Ensure sensitive API routes
+  verify the user's identity before processing requests.
+patterns:
+  - type: regex
+    pattern: "export\\s+(?:async\\s+)?function\\s+(?:GET|POST|PUT|DELETE|PATCH)"
+  - type: regex
+    pattern: "export\\s+const\\s+(?:get|post|put|delete|patch)\\s*=\\s*(?:async\\s+)?\\("
+references:
+  - https://nextjs.org/docs/app/building-your-application/authentication

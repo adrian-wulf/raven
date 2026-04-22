@@ -1,0 +1,21 @@
+id: raven-fw-flask-001
+name: Flask Session Without Secure Settings
+description: |
+  Detects Flask apps with insecure session cookie configuration,
+  missing HttpOnly, Secure, or SameSite flags.
+severity: medium
+category: cookies
+confidence: high
+languages: [python]
+frameworks: [flask]
+message: |
+  Flask session cookies may lack security flags. Set
+  SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SECURE=True,
+  and SESSION_COOKIE_SAMESITE='Lax' in production.
+patterns:
+  - type: regex
+    pattern: "app\\.secret_key"
+  - type: regex
+    pattern: "SECRET_KEY"
+references:
+  - https://flask.palletsprojects.com/en/stable/security/

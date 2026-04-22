@@ -15,17 +15,18 @@ const (
 )
 
 type Rule struct {
-	ID          string   `yaml:"id"`
-	Name        string   `yaml:"name"`
-	Description string   `yaml:"description"`
-	Severity    Severity `yaml:"severity"`
-	Category    string   `yaml:"category"`
-	Confidence  string   `yaml:"confidence"` // high, medium, low
-	Languages   []string `yaml:"languages"`
+	ID          string    `yaml:"id"`
+	Name        string    `yaml:"name"`
+	Description string    `yaml:"description"`
+	Severity    Severity  `yaml:"severity"`
+	Category    string    `yaml:"category"`
+	Confidence  string    `yaml:"confidence"` // high, medium, low
+	Languages   []string  `yaml:"languages"`
+	Frameworks  []string  `yaml:"frameworks,omitempty"`
 	Patterns    []Pattern `yaml:"patterns"`
-	Fix         *Fix     `yaml:"fix,omitempty"`
-	References  []string `yaml:"references,omitempty"`
-	Message     string   `yaml:"message"`
+	Fix         *Fix      `yaml:"fix,omitempty"`
+	References  []string  `yaml:"references,omitempty"`
+	Message     string    `yaml:"message"`
 }
 
 type Pattern struct {
@@ -56,11 +57,22 @@ type Finding struct {
 }
 
 type Result struct {
-	Findings    []Finding     `json:"findings"`
-	FilesScanned int          `json:"files_scanned"`
-	RulesRun    int          `json:"rules_run"`
-	Duration    time.Duration `json:"duration"`
-	Target      string        `json:"target"`
+	Findings        []Finding       `json:"findings"`
+	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
+	FilesScanned    int             `json:"files_scanned"`
+	RulesRun        int             `json:"rules_run"`
+	Duration        time.Duration   `json:"duration"`
+	Target          string          `json:"target"`
+}
+
+type Vulnerability struct {
+	ID           string   `json:"id"`
+	Summary      string   `json:"summary"`
+	Severity     string   `json:"severity"`
+	Package      string   `json:"package"`
+	Version      string   `json:"version"`
+	FixedVersion string   `json:"fixed_version"`
+	References   []string `json:"references,omitempty"`
 }
 
 func (r *Result) BySeverity() map[Severity][]Finding {

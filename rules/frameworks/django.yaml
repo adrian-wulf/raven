@@ -1,0 +1,20 @@
+id: raven-fw-django-001
+name: Django Debug Mode Enabled
+description: |
+  Detects Django projects with DEBUG=True in settings, which
+  exposes sensitive information and the interactive debugger.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [python]
+frameworks: [django]
+message: |
+  Django DEBUG is enabled. Never run with DEBUG=True in production.
+  It exposes stack traces and enables the Werkzeug debugger.
+patterns:
+  - type: regex
+    pattern: "DEBUG\\s*=\\s*True"
+  - type: regex
+    pattern: "DEBUG\\s*=\\s*os\\.environ\\.get\\s*\\("
+references:
+  - https://docs.djangoproject.com/en/stable/ref/settings/#debug

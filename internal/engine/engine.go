@@ -17,10 +17,11 @@ type Scanner struct {
 }
 
 type ScanConfig struct {
-	Paths      []string
-	Exclude    []string
-	Languages  []string
-	Confidence string
+	Paths       []string
+	Exclude     []string
+	Languages   []string
+	Frameworks  []string
+	Confidence  string
 	MinSeverity Severity
 }
 
@@ -190,10 +191,28 @@ func (s *Scanner) filterRules() []Rule {
 			continue
 		}
 
+		// Filter by framework (if rule is framework-specific)
+		if len(rule.Frameworks) > 0 {
+			if !s.hasAnyFramework(rule.Frameworks) {
+				continue
+			}
+		}
+
 		filtered = append(filtered, rule)
 	}
 
 	return filtered
+}
+
+func (s *Scanner) hasAnyFramework(frameworks []string) bool {
+	for _, fw := range frameworks {
+		for _, detected := range s.config.Frameworks {
+			if strings.EqualFold(fw, detected) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func (s *Scanner) meetsConfidence(conf string) bool {

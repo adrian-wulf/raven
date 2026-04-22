@@ -1,0 +1,22 @@
+id: raven-fw-fastapi-001
+name: FastAPI CORS Misconfiguration
+description: |
+  Detects FastAPI apps with overly permissive CORS settings
+  that allow any origin to access the API.
+severity: medium
+category: cors
+confidence: high
+languages: [python]
+frameworks: [fastapi]
+message: |
+  FastAPI CORS allows all origins. Restrict to specific domains
+  in production, especially if allow_credentials=True.
+patterns:
+  - type: regex
+    pattern: "CORSMiddleware\\s*\\("
+  - type: regex
+    pattern: "allow_origins\\s*=\\s*\\[\\s*['\"]\\*['\"]\\s*\\]"
+  - type: regex
+    pattern: "allow_origins\\s*=\\s*\\[?'\\*'\\]?"
+references:
+  - https://fastapi.tiangolo.com/tutorial/cors/

@@ -1,0 +1,20 @@
+id: raven-fw-react-001
+name: React Dangerous InnerHTML
+description: |
+  Detects React's dangerouslySetInnerHTML with user-controlled
+  data, which can lead to XSS attacks.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+frameworks: [react]
+message: |
+  dangerouslySetInnerHTML with user input is XSS. Use DOMPurify
+  to sanitize HTML before rendering, or refactor to avoid raw HTML.
+patterns:
+  - type: regex
+    pattern: "dangerouslySetInnerHTML\\s*:\\s*\\{\\s*__html\\s*:\\s*[^}]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "dangerouslySetInnerHTML\\s*=\\s*\\{\\s*__html\\s*:\\s*[`\"'].*\\$\\{[^}]+\\}"
+references:
+  - https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html
