@@ -1,0 +1,23 @@
+id: raven-js-react-url-001
+name: Dangerous URL Scheme in React
+description: |
+  Detects href or src attributes using javascript: or data: schemes
+  which can lead to XSS in React applications.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Dangerous URL scheme detected. Never use javascript: or data: in
+  href/src. Use event handlers or validated URLs instead.
+patterns:
+  - type: regex
+    pattern: "href=['\"]javascript:"
+  - type: regex
+    pattern: "href=\\{['\"]javascript:"
+  - type: regex
+    pattern: "href=\\{[^}]*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+  - type: regex
+    pattern: "src=\\{[^}]*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+references:
+  - https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml

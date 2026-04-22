@@ -1,0 +1,19 @@
+id: raven-js-timeout-001
+name: setTimeout/setInterval with String
+description: |
+  Detects setTimeout or setInterval called with a string argument,
+  which is equivalent to eval() and can lead to code injection.
+severity: high
+category: code-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  setTimeout/setInterval with string is equivalent to eval().
+  Pass a function instead: setTimeout(() => { ... }, 1000)
+patterns:
+  - type: regex
+    pattern: "setTimeout\\s*\\(\\s*['\"`][^'\"`]*['\"`]"
+  - type: regex
+    pattern: "setInterval\\s*\\(\\s*['\"`][^'\"`]*['\"`]"
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#non-string_literal_arguments

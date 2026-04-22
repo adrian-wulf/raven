@@ -1,0 +1,25 @@
+id: raven-py-subprocess-001
+name: Unsafe Subprocess Execution
+description: |
+  Detects subprocess execution without shell=False or without
+  input validation, which can lead to command injection.
+severity: high
+category: command-injection
+confidence: medium
+languages: [python]
+message: |
+  Subprocess with shell=True or user input. Use subprocess.run()
+  with a list of arguments and shell=False.
+patterns:
+  - type: regex
+    pattern: "subprocess\\.run\\s*\\(\\s*[^)]*shell\\s*=\\s*True"
+  - type: regex
+    pattern: "subprocess\\.Popen\\s*\\(\\s*[^)]*shell\\s*=\\s*True"
+  - type: regex
+    pattern: "subprocess\\.call\\s*\\(\\s*[^)]*shell\\s*=\\s*True"
+  - type: regex
+    pattern: "os\\.popen"
+  - type: regex
+    pattern: "os\\.system"
+references:
+  - https://docs.python.org/3/library/subprocess.html#security-considerations

@@ -1,0 +1,21 @@
+id: raven-php-upload-001
+name: Unvalidated File Upload in PHP
+description: |
+  Detects file upload handling without validation of type, size,
+  or extension, which can lead to code execution.
+severity: high
+category: file-upload
+confidence: medium
+languages: [php]
+message: |
+  File upload without validation. Check MIME type, extension (whitelist),
+  file size, and store outside web root. Rename with random filename.
+patterns:
+  - type: regex
+    pattern: "\\$_FILES\\[[^\\]]+\\]\\['tmp_name'\\]"
+  - type: regex
+    pattern: "move_uploaded_file\\s*\\("
+  - type: regex
+    pattern: "copy\\s*\\(\\s*\\$_FILES"
+references:
+  - https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload

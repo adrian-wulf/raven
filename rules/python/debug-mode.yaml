@@ -14,8 +14,6 @@ patterns:
   - type: regex
     pattern: "app\\.run\\s*\\([^)]*debug\\s*=\\s*True"
   - type: regex
-    pattern: "DEBUG\\s*=\\s*True"
-  - type: regex
     pattern: "FLASK_ENV\\s*=\\s*['\"]development['\"]"
   - type: regex
     pattern: "DEBUG\\s*=\\s*os\\.environ"

@@ -1,0 +1,19 @@
+id: raven-js-regex-001
+name: Regular Expression Denial of Service (ReDoS)
+description: |
+  Detects regular expressions with nested quantifiers that can cause
+  catastrophic backtracking on malicious input.
+severity: medium
+category: dos
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Potential ReDoS: regex with nested quantifiers (e.g., (a+)+).
+  Use a regex validator or timeout to prevent DoS attacks.
+patterns:
+  - type: regex
+    pattern: "new\\s+RegExp\\s*\\(\\s*['\"`].*\\(.*[+*?].*\\)[+*?]"
+  - type: regex
+    pattern: "\\/\\(.*[+*?].*\\)[+*?].*\\/"
+references:
+  - https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS

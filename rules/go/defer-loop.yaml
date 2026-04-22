@@ -1,0 +1,19 @@
+id: raven-go-defer-001
+name: defer Inside Loop
+description: |
+  Detects defer statements inside loops, which can cause resource
+  leaks or unexpected behavior in Go.
+severity: low
+category: bug
+confidence: medium
+languages: [go]
+message: |
+  defer inside a loop may cause resource leaks. Move defer outside
+  the loop or wrap the body in a function.
+patterns:
+  - type: regex
+    pattern: "for\\s+.*\\{[^}]*defer\\s+"
+  - type: regex
+    pattern: "for\\s+range\\s+.*\\{[^}]*defer\\s+"
+references:
+  - https://go.dev/blog/defer-panic-and-recover

@@ -1,0 +1,21 @@
+id: raven-py-eval-001
+name: Unsafe eval() or exec() in Python
+description: |
+  Detects eval() or exec() with user-controlled input, which can
+  execute arbitrary Python code.
+severity: critical
+category: code-injection
+confidence: high
+languages: [python]
+message: |
+  eval() and exec() with user input allow arbitrary code execution.
+  Use ast.literal_eval() for literals, or json.loads() for JSON.
+patterns:
+  - type: regex
+    pattern: "eval\\s*\\(\\s*[^)]*(request|req|params|body|form|args|user|input|data)"
+  - type: regex
+    pattern: "exec\\s*\\(\\s*[^)]*(request|req|params|body|form|args|user|input|data)"
+  - type: regex
+    pattern: "compile\\s*\\(\\s*[^)]*(request|req|params|body|form|args|user|input|data)"
+references:
+  - https://docs.python.org/3/library/ast.html#ast.literal_eval

@@ -1,0 +1,19 @@
+id: raven-php-type-001
+name: PHP Loose Comparison (Type Juggling)
+description: |
+  Detects loose comparisons (==) instead of strict (===) in PHP,
+  which can lead to authentication bypass and logic bugs.
+severity: medium
+category: auth
+confidence: medium
+languages: [php]
+message: |
+  Loose comparison == uses type juggling. Use === for strict comparison.
+  '0e123' == '0' is true in PHP! This can bypass authentication.
+patterns:
+  - type: regex
+    pattern: "==\\s*(?:true|false|null|0|['\"]0['\"])"
+  - type: regex
+    pattern: "if\\s*\\(\\s*\\$[^=]+==\\s*"
+references:
+  - https://owasp.org/www-community/vulnerabilities/PHP_Object_Injection

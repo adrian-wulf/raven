@@ -19,6 +19,10 @@ patterns:
     pattern: 'setTimeout\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
   - type: regex
     pattern: 'setInterval\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
+fix:
+  description: Replace eval with JSON.parse for data parsing
+  pattern: "eval\\s*\\("
+  replace: "JSON.parse("
 references:
   - https://owasp.org/www-community/attacks/Code_Injection
   - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!

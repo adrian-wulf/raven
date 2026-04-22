@@ -22,9 +22,9 @@ patterns:
   - type: regex
     pattern: "(?i)query\\s*=\\s*[`\"'].*(req\\.|request\\.|params\\.|body\\.|query\\.)"
 fix:
-  description: Use parameterized queries instead of string concatenation
-  pattern: "(query|exec|execute)\\s*\\(\\s*[`\"']([^`\"']*\\$\\{([^}]+)\\}[^`\"']*)[`\"'](?:\\s*,\\s*\\[[^\\]]*\\])?\\s*\\)"
-  replace: '$1("$2", [$3])'
+  description: Replace user input concatenation with placeholder
+  pattern: "\\+\\s*(req\\.(?:query|params|body)\\.\\w+)"
+  replace: ' + "?" // SECURITY: Use parameterized query, pass $1 as parameter'
 references:
   - https://owasp.org/www-community/attacks/SQL_Injection
   - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

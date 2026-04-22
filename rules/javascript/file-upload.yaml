@@ -1,0 +1,23 @@
+id: raven-js-upload-001
+name: Unvalidated File Upload
+description: |
+  Detects file upload endpoints that don't validate file type, size,
+  or extension, which can lead to malware uploads or RCE.
+severity: high
+category: file-upload
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  File upload without validation. Always check MIME type, extension,
+  and file size. Store uploaded files outside web root.
+patterns:
+  - type: regex
+    pattern: "multer\\s*\\("
+  - type: regex
+    pattern: "upload\\.single\\s*\\("
+  - type: regex
+    pattern: "upload\\.array\\s*\\("
+  - type: regex
+    pattern: "req\\.file\\.filename"
+references:
+  - https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload

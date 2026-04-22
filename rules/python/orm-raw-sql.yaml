@@ -1,0 +1,23 @@
+id: raven-py-orm-001
+name: ORM Raw SQL Query
+description: |
+  Detects raw SQL queries in Django ORM or SQLAlchemy that bypass
+  parameterization and may be vulnerable to SQL injection.
+severity: high
+category: sql-injection
+confidence: medium
+languages: [python]
+message: |
+  Raw SQL in ORM bypasses built-in protection. Use parameterized
+  raw queries: Model.objects.raw("SELECT * FROM t WHERE id = %s", [id])
+patterns:
+  - type: regex
+    pattern: "\\.raw\\s*\\(\\s*['\"`].*%s"
+  - type: regex
+    pattern: "text\\s*\\(\\s*['\"`].*\\$"
+  - type: regex
+    pattern: "text\\s*\\(\\s*['\"`].*%"
+  - type: regex
+    pattern: "\\.raw\\s*\\(\\s*f['\"`].*\\{"
+references:
+  - https://docs.djangoproject.com/en/stable/topics/db/sql/

@@ -1,0 +1,21 @@
+id: raven-php-sqli-escape-001
+name: False Sense of Security - mysql_real_escape_string
+description: |
+  Detects use of mysql_real_escape_string or addslashes for SQL
+  protection, which is insufficient and can be bypassed.
+severity: high
+category: sql-injection
+confidence: high
+languages: [php]
+message: |
+  mysql_real_escape_string() is NOT sufficient protection! Use
+  prepared statements with PDO or MySQLi parameterized queries.
+patterns:
+  - type: regex
+    pattern: "mysql_real_escape_string"
+  - type: regex
+    pattern: "mysqli_real_escape_string"
+  - type: regex
+    pattern: "addslashes"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

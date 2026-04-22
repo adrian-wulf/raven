@@ -1,0 +1,19 @@
+id: raven-js-nextjs-001
+name: Next.js getServerSideProps Injection
+description: |
+  Detects potential XSS through getServerSideProps when user input
+  is passed to props without sanitization.
+severity: high
+category: xss
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  User input passed directly through getServerSideProps. Sanitize
+  before returning to prevent XSS via props.
+patterns:
+  - type: regex
+    pattern: "export\\s+(?:async\\s+)?function\\s+getServerSideProps"
+  - type: regex
+    pattern: "getServerSideProps.*return\\s+\\{[^}]*props[^}]*(req\\.|query|params)"
+references:
+  - https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props

@@ -1,0 +1,17 @@
+id: raven-rust-unsafe-001
+name: Unsafe Block with User Input
+description: |
+  Detects unsafe blocks that may process user input, which can
+  lead to memory corruption or undefined behavior.
+severity: high
+category: memory-safety
+confidence: low
+languages: [rust]
+message: |
+  unsafe block detected. Ensure all unsafe code is thoroughly reviewed.
+  Never trust user input inside unsafe blocks.
+patterns:
+  - type: regex
+    pattern: "unsafe\\s*\\{"
+references:
+  - https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html

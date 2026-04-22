@@ -12,9 +12,9 @@ message: |
   MD5 and SHA1 are vulnerable to collision attacks.
 patterns:
   - type: regex
-    pattern: "hashlib\\.md5"
+    pattern: "hashlib\\.md5\\s*\\("
   - type: regex
-    pattern: "hashlib\\.sha1"
+    pattern: "hashlib\\.sha1\\s*\\("
   - type: regex
     pattern: "hashlib\\.new\\s*\\(\\s*['\"]md5['\"]"
   - type: regex
@@ -22,6 +22,8 @@ patterns:
   - type: regex
     pattern: "Crypto\\.Cipher\\.DES"
   - type: regex
-    pattern: "md5\\s*\\("
+    pattern: "\\bmd5\\s*\\("
+  - type: regex
+    pattern: "\\bsha1\\s*\\("
 references:
   - https://docs.python.org/3/library/hashlib.html

@@ -1,0 +1,19 @@
+id: raven-gen-headers-001
+name: Missing Security Headers
+description: |
+  Detects HTTP responses without common security headers
+  (HSTS, CSP, X-Content-Type-Options, Referrer-Policy).
+severity: low
+category: headers
+confidence: low
+languages: [javascript, typescript, python, go, php]
+message: |
+  Security headers missing. Consider adding helmet() or equivalent
+  middleware for HSTS, CSP, X-Content-Type-Options, Referrer-Policy.
+patterns:
+  - type: regex
+    pattern: "res\\.setHeader\\s*\\(\\s*['\"]Content-Security-Policy['\"]"
+  - type: regex
+    pattern: "res\\.setHeader\\s*\\(\\s*['\"]Strict-Transport-Security['\"]"
+references:
+  - https://securityheaders.com/

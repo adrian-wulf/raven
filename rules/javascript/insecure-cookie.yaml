@@ -1,0 +1,21 @@
+id: raven-js-cookie-001
+name: Insecure Cookie Configuration
+description: |
+  Detects cookies set without security flags (HttpOnly, Secure, SameSite)
+  which can lead to session hijacking and XSS.
+severity: medium
+category: cookies
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Cookie missing security flags. Always set httpOnly, secure (in production),
+  and sameSite='strict' or 'lax' to prevent XSS and CSRF attacks.
+patterns:
+  - type: regex
+    pattern: "res\\.cookie\\s*\\(\\s*[^)]*\\)"
+  - type: regex
+    pattern: "cookie\\s*\\(\\s*[^)]*session[^)]*\\)"
+  - type: regex
+    pattern: "cookie-parser\\s*\\("
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html

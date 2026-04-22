@@ -358,7 +358,6 @@ func (fa *FixApplier) Apply(finding Finding) (string, error) {
 		return "", fmt.Errorf("invalid fix pattern: %w", err)
 	}
 
-	// Find the specific line and apply fix
 	lines := strings.Split(string(content), "\n")
 	if finding.Line < 1 || finding.Line > len(lines) {
 		return "", fmt.Errorf("line %d out of range", finding.Line)
@@ -368,14 +367,25 @@ func (fa *FixApplier) Apply(finding Finding) (string, error) {
 	fixed := re.ReplaceAllString(line, finding.Fix.Replace)
 
 	if fixed == line {
-		return "", fmt.Errorf("fix pattern did not match")
+		return "", fmt.Errorf("fix pattern did not match on line %d", finding.Line)
 	}
 
 	if fa.DryRun {
 		return fixed, nil
 	}
 
-	lines[finding.Line-1] = fixed
+	// Handle multi-line replacements
+	if strings.Contains(fixed, "\n") {
+		newLines := strings.Split(fixed, "\n")
+		// Replace the original line with first new line, insert rest after
+		lines[finding.Line-1] = newLines[0]
+		for i := len(newLines) - 1; i > 0; i-- {
+			lines = append(lines[:finding.Line], append([]string{newLines[i]}, lines[finding.Line:]...)...)
+		}
+	} else {
+		lines[finding.Line-1] = fixed
+	}
+
 	newContent := strings.Join(lines, "\n")
 	if err := os.WriteFile(finding.File, []byte(newContent), 0644); err != nil {
 		return "", err

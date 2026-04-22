@@ -24,9 +24,9 @@ patterns:
   - type: regex
     pattern: "innerHTML\\s*=\\s*[`\"'].*(req\\.|request\\.|params\\.|body\\.|query\\.)"
 fix:
-  description: Use textContent or DOMPurify instead of innerHTML
-  pattern: "(\\w+)\\.innerHTML\\s*=\\s*(.+);?"
-  replace: "$1.textContent = $2;"
+  description: Use textContent instead of innerHTML
+  pattern: "\\.innerHTML\\s*=\\s*"
+  replace: ".textContent = "
 references:
   - https://owasp.org/www-community/attacks/xss/
   - https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html

@@ -1,0 +1,24 @@
+id: raven-js-mass-001
+name: Mass Assignment Vulnerability
+description: |
+  Detects direct assignment of user input to model properties,
+  which can allow attackers to modify sensitive fields like role,
+  isAdmin, or password.
+severity: high
+category: mass-assignment
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Mass assignment: user input directly assigned to model properties.
+  Use allowlists (only permitted fields) instead of spreading user input.
+patterns:
+  - type: regex
+    pattern: "new\\s+\\w+\\s*\\(\\s*req\\.(body|params|query)\\s*\\)"
+  - type: regex
+    pattern: "\\.create\\s*\\(\\s*req\\.(body|params|query)\\s*\\)"
+  - type: regex
+    pattern: "\\.update\\s*\\(\\s*req\\.(body|params|query)\\s*\\)"
+  - type: regex
+    pattern: "Object\\.assign\\s*\\(\\s*\\w+\\s*,\\s*req\\.(body|params|query)"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html

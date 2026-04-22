@@ -1,0 +1,24 @@
+id: raven-go-template-001
+name: Go Template Injection
+description: |
+  Detects Go template execution with user-controlled data,
+  which can lead to SSTI (Server-Side Template Injection).
+severity: high
+category: ssti
+confidence: medium
+languages: [go]
+message: |
+  Template executed with user input. Sanitize data before passing
+  to templates. Use html/template (auto-escaping) not text/template
+  for HTML output.
+patterns:
+  - type: regex
+    pattern: "template\\.Execute\\s*\\("
+  - type: regex
+    pattern: "template\\.Must\\s*\\(.*Parse"
+  - type: regex
+    pattern: "template\\.ParseFiles"
+  - type: regex
+    pattern: "text/template"
+references:
+  - https://pkg.go.dev/html/template

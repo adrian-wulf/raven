@@ -1,0 +1,17 @@
+id: raven-js-csrf-001
+name: Missing CSRF Protection
+description: |
+  Detects state-changing endpoints (POST/PUT/DELETE) that may lack
+  CSRF protection. This is a heuristic rule.
+severity: medium
+category: csrf
+confidence: low
+languages: [javascript, typescript]
+message: |
+  State-changing endpoint detected without visible CSRF protection.
+  Consider using csurf, double-submit cookies, or SameSite cookies.
+patterns:
+  - type: regex
+    pattern: "app\\.(post|put|delete|patch)\\s*\\(\\s*['\"]/[^'\"]*['\"]"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
