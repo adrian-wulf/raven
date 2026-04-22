@@ -224,8 +224,8 @@ raven rules --detail
 - [x] Auto-fix
 - [x] Watch mode
 - [x] CI mode + SARIF
-- [x] 28 rules (SQLi, XSS, RCE, secrets, crypto, SSRF, CORS, auth, etc.)
-- [ ] 50+ rules
+- [x] 49 rules covering OWASP Top 10 + AI-specific mistakes
+- [x] 49 rules (SQLi, XSS, RCE, secrets, crypto, SSRF, CORS, auth, etc.)
 - [ ] IDE extensions (VS Code, Cursor, Zed)
 - [ ] GitHub Action
 - [ ] LLM-powered fix suggestions
