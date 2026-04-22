@@ -1,0 +1,28 @@
+id: raven-ast-js-eval-001
+name: Dangerous eval with Template Literal
+description: |
+  Detects eval() or Function() called with template literals that
+  may contain user-controlled data. AST query finds the exact
+  call expression node.
+severity: high
+category: injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  eval() or Function() is called with a template literal. This is
+  extremely dangerous if the template contains any user input.
+  Avoid eval() entirely. If necessary, use a safe parser like JSON.parse().
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: [
+          (identifier) @fn (#match? @fn "^(eval|Function)$")
+          (member_expression
+            object: (identifier) @obj (#eq? @obj "window")
+            property: (property_identifier) @prop (#eq? @prop "eval"))
+        ]
+        arguments: (arguments
+          (template_string) @vuln))
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!

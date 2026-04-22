@@ -1,0 +1,32 @@
+id: raven-ast-js-cmd-001
+name: Command Injection
+description: |
+  Detects command injection where user input reaches shell execution
+  sinks like child_process.exec, spawn, or eval.
+severity: critical
+category: command-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  User-controlled input flows into a shell command execution.
+  Never pass user input to shell commands. Use parameterized execution
+  or avoid shell execution entirely.
+patterns:
+  - type: taint
+    sources:
+      - req.body
+      - req.params
+      - req.query
+      - req.headers
+      - process.argv
+    sinks:
+      - child_process.exec
+      - child_process.execSync
+      - child_process.spawn
+      - cp.exec
+      - cp.execSync
+      - cp.spawn
+      - eval
+      - Function
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html

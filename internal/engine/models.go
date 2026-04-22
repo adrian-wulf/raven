@@ -30,8 +30,11 @@ type Rule struct {
 }
 
 type Pattern struct {
-	Type    string `yaml:"type"`    // regex, literal
-	Pattern string `yaml:"pattern"`
+	Type    string   `yaml:"type"`    // regex, literal, ast-query, taint
+	Pattern string   `yaml:"pattern"`
+	Query   string   `yaml:"query"`   // for ast-query patterns
+	Sources []string `yaml:"sources,omitempty"`
+	Sinks   []string `yaml:"sinks,omitempty"`
 }
 
 type Fix struct {

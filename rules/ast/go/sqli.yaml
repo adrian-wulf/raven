@@ -1,0 +1,30 @@
+id: raven-ast-go-sqli-001
+name: SQL Injection via String Concatenation
+description: |
+  Detects SQL injection in Go where user input is concatenated into
+  a query string and passed to database methods.
+severity: critical
+category: sqli
+confidence: high
+languages: [go]
+message: |
+  User-controlled input flows into an SQL query without parameterization.
+  Use parameterized queries: db.Query("SELECT * WHERE id = ?", id)
+patterns:
+  - type: taint
+    sources:
+      - r.Body
+      - r.URL.Query
+      - r.FormValue
+      - r.PostFormValue
+      - r.Header.Get
+      - os.Args
+      - req.Body
+    sinks:
+      - .Query
+      - .QueryRow
+      - .QueryContext
+      - .Exec
+      - .ExecContext
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

@@ -1,0 +1,31 @@
+id: raven-ast-py-sqli-001
+name: SQL Injection via String Formatting
+description: |
+  Detects SQL injection in Python where user input flows into
+  database execute/executemany methods through string formatting
+  or concatenation.
+severity: critical
+category: sqli
+confidence: high
+languages: [python]
+message: |
+  User-controlled input flows into an SQL query without parameterization.
+  Use parameterized queries: cursor.execute("SELECT * WHERE id = %s", (id,))
+patterns:
+  - type: taint
+    sources:
+      - request.args
+      - request.form
+      - request.json
+      - request.data
+      - request.headers
+      - request.cookies
+      - request.files
+      - sys.argv
+      - input
+    sinks:
+      - .execute
+      - .executemany
+      - .run
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

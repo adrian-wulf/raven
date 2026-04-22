@@ -1,0 +1,29 @@
+id: raven-ast-js-sqli-001
+name: SQL Injection via String Concatenation
+description: |
+  Detects SQL injection where user input is concatenated into a query
+  string and passed to a database query method. This catches the
+  pattern that regex rules miss: multi-step taint propagation.
+severity: critical
+category: sqli
+confidence: high
+languages: [javascript, typescript]
+message: |
+  User-controlled input flows into an SQL query without parameterization.
+  Use parameterized queries (e.g., db.query("SELECT * WHERE id = ?", [id]))
+  to prevent SQL injection.
+patterns:
+  - type: taint
+    sources:
+      - req.body
+      - req.params
+      - req.query
+      - req.headers
+      - req.cookies
+      - process.argv
+    sinks:
+      - .query
+      - .execute
+      - .run
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

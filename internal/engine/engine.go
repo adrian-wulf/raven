@@ -9,6 +9,9 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/raven-security/raven/internal/ast"
+	"github.com/raven-security/raven/internal/taint"
 )
 
 type Scanner struct {
@@ -231,6 +234,7 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 	lang := DetectLanguage(path)
 	var findings []Finding
 
+	// Phase 1: Regex-based scanning
 	for _, rule := range rules {
 		// Skip if rule doesn't apply to this language
 		if len(rule.Languages) > 0 && !contains(rule.Languages, lang) && !contains(rule.Languages, "*") {
@@ -238,6 +242,11 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 		}
 
 		for _, pattern := range rule.Patterns {
+			// Skip AST-only patterns in regex phase
+			if pattern.Type == "ast-query" || pattern.Type == "taint" {
+				continue
+			}
+
 			var matches []findingMatch
 
 			switch pattern.Type {
@@ -264,6 +273,100 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 					Confidence:   rule.Confidence,
 				}
 				findings = append(findings, finding)
+			}
+		}
+	}
+
+	// Phase 2: AST-based scanning (for supported languages)
+	if ast.IsSupported(path) {
+		pf, err := ast.Parse(path)
+		if err == nil {
+			defer pf.Close()
+
+			// 2a: AST query rules
+			for _, rule := range rules {
+				if len(rule.Languages) > 0 && !contains(rule.Languages, lang) && !contains(rule.Languages, "*") {
+					continue
+				}
+				if len(rule.Frameworks) > 0 && !s.hasAnyFramework(rule.Frameworks) {
+					continue
+				}
+
+				for _, pattern := range rule.Patterns {
+					if pattern.Type != "ast-query" {
+						continue
+					}
+
+					queryStr := pattern.Query
+					if queryStr == "" {
+						queryStr = pattern.Pattern
+					}
+
+					matches, err := ast.Query(pf, queryStr)
+					if err != nil {
+						continue
+					}
+
+					for _, match := range matches {
+						var primaryNode *ast.Capture
+						for _, c := range match.Captures {
+							if c.Name == "vuln" || c.Name == "sink" || c.Name == "danger" {
+								primaryNode = &c
+								break
+							}
+						}
+						if primaryNode == nil && len(match.Captures) > 0 {
+							primaryNode = &match.Captures[0]
+						}
+						if primaryNode == nil {
+							continue
+						}
+
+						node := primaryNode.Node
+						start := node.StartPoint()
+						findings = append(findings, Finding{
+							RuleID:       rule.ID,
+							RuleName:     rule.Name,
+							Severity:     rule.Severity,
+							Category:     rule.Category,
+							Message:      strings.TrimSpace(rule.Message),
+							File:         path,
+							Line:         int(start.Row) + 1,
+							Column:       int(start.Column) + 1,
+							Snippet:      extractSnippet(pf.Source, node),
+							Confidence:   rule.Confidence,
+							References:   rule.References,
+							Fix:          rule.Fix,
+							FixAvailable: rule.Fix != nil,
+						})
+					}
+				}
+			}
+
+			// 2b: Taint analysis
+			langName := lang
+			if langName == "typescript" {
+				langName = "javascript"
+			}
+			tracker := taint.NewTracker(langName)
+			taintRules := convertRulesToTaint(rules)
+			taintFindings, err := tracker.ScanFile(path, taintRules)
+			if err == nil {
+				for _, f := range taintFindings {
+					findings = append(findings, Finding{
+						RuleID:       f.RuleID,
+						RuleName:     f.RuleName,
+						Severity:     Severity(f.Severity),
+						Category:     f.Category,
+						Message:      f.Message,
+						File:         path,
+						Line:         f.Line,
+						Column:       f.Column,
+						Snippet:      f.Snippet,
+						Confidence:   f.Confidence,
+						References:   f.References,
+					})
+				}
 			}
 		}
 	}
@@ -355,6 +458,51 @@ func contains(slice []string, item string) bool {
 		}
 	}
 	return false
+}
+
+func convertRulesToTaint(rules []Rule) []taint.RuleInfo {
+	var result []taint.RuleInfo
+	for _, r := range rules {
+		var patterns []taint.RulePattern
+		for _, p := range r.Patterns {
+			patterns = append(patterns, taint.RulePattern{
+				Type:    p.Type,
+				Pattern: p.Pattern,
+				Sources: p.Sources,
+				Sinks:   p.Sinks,
+			})
+		}
+		result = append(result, taint.RuleInfo{
+			ID:         r.ID,
+			Name:       r.Name,
+			Severity:   string(r.Severity),
+			Category:   r.Category,
+			Message:    r.Message,
+			Confidence: r.Confidence,
+			References: r.References,
+			Languages:  r.Languages,
+			Frameworks: r.Frameworks,
+			Patterns:   patterns,
+		})
+	}
+	return result
+}
+
+func extractSnippet(source []byte, node interface{ StartByte() uint32; EndByte() uint32 }) string {
+	start := node.StartByte()
+	end := node.EndByte()
+	if start >= uint32(len(source)) {
+		return ""
+	}
+	if end > uint32(len(source)) {
+		end = uint32(len(source))
+	}
+	snippet := string(source[start:end])
+	lines := strings.Split(snippet, "\n")
+	if len(lines) > 3 {
+		return strings.Join(lines[:3], "\n") + "..."
+	}
+	return snippet
 }
 
 // FixApplier applies auto-fixes to files
