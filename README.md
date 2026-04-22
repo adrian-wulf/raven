@@ -112,6 +112,46 @@ jobs:
 
 Results appear in **Security → Code scanning alerts**.
 
+### VS Code / Cursor Extension
+
+Install from VS Code Marketplace (coming soon) or build from source:
+
+```bash
+cd editor/vscode
+npm install
+npm run compile
+```
+
+Then press F5 in VS Code to launch the extension. You'll see:
+- 🛡️ Status bar icon showing security status
+- 🔴 Red squiggles under vulnerable code
+- 💡 "Fix with Raven" code actions
+- 📋 Command palette: `Raven: Scan Workspace`
+
+### AI-Powered Fixes
+
+Let AI fix vulnerabilities for you:
+
+```bash
+# Set your API key (OpenRouter recommended - free tier available)
+export OPENROUTER_API_KEY=your-key
+
+# AI-fix all issues interactively
+raven fix-ai
+
+# Preview without applying
+raven fix-ai --dry-run
+```
+
+### Pre-commit Hook
+
+Block commits with security issues:
+
+```bash
+raven install-hook        # Install
+raven install-hook --uninstall  # Remove
+```
+
 ---
 
 ## Features
@@ -245,11 +285,15 @@ raven rules --detail
 - [x] CI mode + SARIF
 - [x] 49 rules covering OWASP Top 10 + AI-specific mistakes
 - [x] 49 rules (SQLi, XSS, RCE, secrets, crypto, SSRF, CORS, auth, etc.)
-- [ ] IDE extensions (VS Code, Cursor, Zed)
-- [ ] GitHub Action
-- [ ] LLM-powered fix suggestions
+- [x] VS Code / Cursor Extension (LSP-based)
+- [x] AI-powered fixes (OpenRouter/DeepSeek)
+- [x] Pre-commit hook
+- [x] GitHub Action
+- [ ] 50+ rules
+- [ ] Zed / Vim support
 - [ ] AST-based analysis (not just regex)
-- [ ] Pre-commit hook
+- [ ] Framework-aware rules
+- [ ] Supply chain scanning
 
 ---
 
