@@ -1,0 +1,22 @@
+id: raven-js-cmd-001
+name: Command Injection via exec/spawn
+description: |
+  Detects execution of shell commands with user input, which can lead
+  to remote code execution.
+severity: critical
+category: command-injection
+confidence: high
+languages: [javascript, typescript, python, go, php, rust, java, ruby]
+message: |
+  Potential command injection: user input is passed to a shell command.
+  Use parameterized execution or avoid shell execution entirely.
+patterns:
+  - type: regex
+    pattern: '(exec|execSync|spawn|child_process)\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
+  - type: regex
+    pattern: '(exec|execSync|spawn)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+  - type: regex
+    pattern: '(exec|execSync|spawn)\s*\(\s*["''`"][^"''`"]*\+[^"''`"]*'
+references:
+  - https://owasp.org/www-community/attacks/Command_Injection
+  - https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html

@@ -1,0 +1,24 @@
+id: raven-js-eval-001
+name: Dangerous eval() or new Function()
+description: |
+  Detects use of eval(), new Function(), or setTimeout/setInterval with
+  string arguments, which can lead to code injection.
+severity: critical
+category: code-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Dangerous code execution: eval() or new Function() with user input.
+  Never pass user input to eval(). Use JSON.parse for data, or refactor to avoid dynamic code.
+patterns:
+  - type: regex
+    pattern: 'eval\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+  - type: regex
+    pattern: 'new\s+Function\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+  - type: regex
+    pattern: 'setTimeout\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
+  - type: regex
+    pattern: 'setInterval\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
+references:
+  - https://owasp.org/www-community/attacks/Code_Injection
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!

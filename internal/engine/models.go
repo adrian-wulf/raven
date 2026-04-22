@@ -1,0 +1,98 @@
+package engine
+
+import (
+	"time"
+)
+
+type Severity string
+
+const (
+	Critical Severity = "critical"
+	High     Severity = "high"
+	Medium   Severity = "medium"
+	Low      Severity = "low"
+	Info     Severity = "info"
+)
+
+type Rule struct {
+	ID          string   `yaml:"id"`
+	Name        string   `yaml:"name"`
+	Description string   `yaml:"description"`
+	Severity    Severity `yaml:"severity"`
+	Category    string   `yaml:"category"`
+	Confidence  string   `yaml:"confidence"` // high, medium, low
+	Languages   []string `yaml:"languages"`
+	Patterns    []Pattern `yaml:"patterns"`
+	Fix         *Fix     `yaml:"fix,omitempty"`
+	References  []string `yaml:"references,omitempty"`
+	Message     string   `yaml:"message"`
+}
+
+type Pattern struct {
+	Type    string `yaml:"type"`    // regex, literal
+	Pattern string `yaml:"pattern"`
+}
+
+type Fix struct {
+	Description string `yaml:"description"`
+	Pattern     string `yaml:"pattern"`     // regex to match
+	Replace     string `yaml:"replace"`     // replacement template
+}
+
+type Finding struct {
+	RuleID       string   `json:"rule_id"`
+	RuleName     string   `json:"rule_name"`
+	Severity     Severity `json:"severity"`
+	Category     string   `json:"category"`
+	Message      string   `json:"message"`
+	File         string   `json:"file"`
+	Line         int      `json:"line"`
+	Column       int      `json:"column"`
+	Snippet      string   `json:"snippet"`
+	Fix          *Fix     `json:"fix,omitempty"`
+	FixAvailable bool     `json:"fix_available"`
+	References   []string `json:"references,omitempty"`
+	Confidence   string   `json:"confidence"`
+}
+
+type Result struct {
+	Findings    []Finding     `json:"findings"`
+	FilesScanned int          `json:"files_scanned"`
+	RulesRun    int          `json:"rules_run"`
+	Duration    time.Duration `json:"duration"`
+	Target      string        `json:"target"`
+}
+
+func (r *Result) BySeverity() map[Severity][]Finding {
+	m := make(map[Severity][]Finding)
+	for _, f := range r.Findings {
+		m[f.Severity] = append(m[f.Severity], f)
+	}
+	return m
+}
+
+func (r *Result) HasFixes() bool {
+	for _, f := range r.Findings {
+		if f.FixAvailable {
+			return true
+		}
+	}
+	return false
+}
+
+func SeverityRank(s Severity) int {
+	switch s {
+	case Critical:
+		return 5
+	case High:
+		return 4
+	case Medium:
+		return 3
+	case Low:
+		return 2
+	case Info:
+		return 1
+	default:
+		return 0
+	}
+}

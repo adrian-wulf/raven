@@ -1,0 +1,26 @@
+id: raven-js-path-001
+name: Path Traversal via Unsanitized File Path
+description: |
+  Detects file system operations with user-controlled paths that lack
+  path sanitization, allowing directory traversal attacks (../..).
+severity: high
+category: path-traversal
+confidence: high
+languages: [javascript, typescript, python, go, php, rust, java]
+message: |
+  Potential path traversal: user input is used in a file path without sanitization.
+  Validate paths with path.resolve() and ensure they stay within the intended directory.
+patterns:
+  - type: regex
+    pattern: '(readFile|writeFile|readFileSync|writeFileSync|createReadStream|createWriteStream|open|unlink)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+  - type: regex
+    pattern: '(fs\.\w+|os\.path\.join|path\.join)\s*\([^)]*\+\s*.*(req\.|request\.|params\.|body\.|query\.)'
+  - type: regex
+    pattern: '(sendFile|res\.sendFile|download)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.)'
+fix:
+  description: Sanitize the path before using it
+  pattern: '(readFile|writeFile|readFileSync|writeFileSync)\s*\(\s*(req\.(?:params|body|query)\.\w+)'
+  replace: '$1(path.resolve("./safe-dir", path.basename($2)))'
+references:
+  - https://owasp.org/www-community/attacks/Path_Traversal
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html

@@ -1,0 +1,32 @@
+id: raven-js-xss-001
+name: XSS via innerHTML or dangerouslySetInnerHTML
+description: |
+  Detects direct assignment of user-controlled data to innerHTML or
+  React's dangerouslySetInnerHTML, which can lead to stored/reflected XSS.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Potential XSS: user input is assigned to innerHTML or dangerouslySetInnerHTML.
+  Use textContent instead, or sanitize input with DOMPurify.
+patterns:
+  - type: regex
+    pattern: "\\.innerHTML\\s*=\\s*[^;]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "dangerouslySetInnerHTML\\s*:\\s*\\{\\s*__html\\s*:\\s*[^}]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "\\.innerHTML\\s*=\\s*[`\"'].*\\$\\{[^}]+\\}"
+  - type: literal
+    pattern: "document.write("
+  - type: regex
+    pattern: "res\\.send\\s*\\(\\s*[`\"'].*\\$\\{[^}]+\\}"
+  - type: regex
+    pattern: "innerHTML\\s*=\\s*[`\"'].*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+fix:
+  description: Use textContent or DOMPurify instead of innerHTML
+  pattern: "(\\w+)\\.innerHTML\\s*=\\s*(.+);?"
+  replace: "$1.textContent = $2;"
+references:
+  - https://owasp.org/www-community/attacks/xss/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html

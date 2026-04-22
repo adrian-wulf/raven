@@ -1,0 +1,30 @@
+id: raven-js-sqli-001
+name: SQL Injection via String Concatenation
+description: |
+  Detects SQL queries built via string concatenation or template literals,
+  which is a common vulnerability in AI-generated code.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Potential SQL injection: user input is concatenated into a SQL query.
+  Use parameterized queries (e.g., db.query("SELECT * FROM users WHERE id = ?", [userId])).
+patterns:
+  - type: regex
+    pattern: "(?i)(query|exec|execute|run)\\s*\\(\\s*[`\"']([^`\"']*\\$\\{[^}]+\\}[^`\"']*)[`\"']"
+  - type: regex
+    pattern: "(?i)(query|exec|execute|run)\\s*\\(\\s*[\"'`][^\"'`]*\\+[^\"'`]*[\"'`]"
+  - type: regex
+    pattern: "(?i)(SELECT|INSERT|UPDATE|DELETE)\\s+.*\\+\\s*.*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+  - type: regex
+    pattern: "(?i)(SELECT|INSERT|UPDATE|DELETE).*\\$\\{[^}]+\\}"
+  - type: regex
+    pattern: "(?i)query\\s*=\\s*[`\"'].*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+fix:
+  description: Use parameterized queries instead of string concatenation
+  pattern: "(query|exec|execute)\\s*\\(\\s*[`\"']([^`\"']*\\$\\{([^}]+)\\}[^`\"']*)[`\"'](?:\\s*,\\s*\\[[^\\]]*\\])?\\s*\\)"
+  replace: '$1("$2", [$3])'
+references:
+  - https://owasp.org/www-community/attacks/SQL_Injection
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

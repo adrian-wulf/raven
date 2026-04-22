@@ -1,0 +1,22 @@
+id: raven-py-cmd-001
+name: Command Injection in Python
+description: |
+  Detects os.system, subprocess.call, or eval with user input in Python.
+severity: critical
+category: command-injection
+confidence: high
+languages: [python]
+message: |
+  Command injection: user input reaches a shell command.
+  Use subprocess.run with a list of arguments instead of shell=True.
+patterns:
+  - type: regex
+    pattern: 'os\.system\s*\(\s*[^)]*(request|req|params|body|form|args|user|input|data)'
+  - type: regex
+    pattern: 'subprocess\.(call|run|Popen)\s*\([^)]*shell\s*=\s*True[^)]*(request|req|params|body|form|args)'
+  - type: regex
+    pattern: 'subprocess\.(call|run|Popen)\s*\(\s*["''"][^"''"]*%\s*'
+  - type: regex
+    pattern: 'eval\s*\(\s*[^)]*(request|req|params|body|form|args|user|input|data)'
+references:
+  - https://docs.python.org/3/library/subprocess.html#security-considerations

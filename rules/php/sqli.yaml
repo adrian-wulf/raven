@@ -1,0 +1,22 @@
+id: raven-php-sqli-001
+name: SQL Injection in PHP
+description: |
+  Detects SQL queries built via string concatenation or interpolation in PHP.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [php]
+message: |
+  SQL injection: Use prepared statements with PDO or mysqli.
+  Never concatenate user input into SQL queries.
+patterns:
+  - type: regex
+    pattern: '(?i)(mysqli_|mysql_)?query\s*\(\s*["''"'].*\$_(GET|POST|REQUEST|COOKIE)'
+  - type: regex
+    pattern: '(?i)\$query\s*=\s*["''"'].*\$\w+'
+  - type: regex
+    pattern: '(?i)(SELECT|INSERT|UPDATE|DELETE)\s+.*\.\s*\$_(GET|POST|REQUEST)'
+  - type: regex
+    pattern: '(?i)pdo->query\s*\(\s*["''"'].*\$'
+references:
+  - https://www.php.net/manual/en/pdo.prepared-statements.php

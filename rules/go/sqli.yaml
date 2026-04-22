@@ -1,0 +1,22 @@
+id: raven-go-sqli-001
+name: SQL Injection in Go
+description: |
+  Detects SQL queries built via fmt.Sprintf or string concatenation in Go.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [go]
+message: |
+  SQL injection: Use parameterized queries with db.Query("SELECT * FROM users WHERE id = ?", id).
+  Never use fmt.Sprintf for SQL.
+patterns:
+  - type: regex
+    pattern: 'fmt\.Sprintf\s*\(\s*[`"][^`"]*(SELECT|INSERT|UPDATE|DELETE)'
+  - type: regex
+    pattern: '(?i)(query|exec|queryrow)\s*\(\s*ctx,\s*[`"][^`"]*\+\s*'
+  - type: regex
+    pattern: '(?i)query\s*:=\s*[`"][^`"]*\+\s*.*(r\.|req|request|params|input)'
+  - type: regex
+    pattern: '(?i)(db\.|sqlx\.|gorm\.)?(Query|Exec|QueryRow)\s*\(\s*[^,]*fmt\.Sprintf'
+references:
+  - https://go.dev/doc/database/sql-injection
