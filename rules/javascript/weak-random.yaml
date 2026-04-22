@@ -1,0 +1,21 @@
+id: raven-js-random-001
+name: Weak Random Number Generation
+description: |
+  Detects use of Math.random() for security-sensitive operations
+  like tokens, passwords, or session IDs.
+severity: medium
+category: cryptography
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Math.random() is not cryptographically secure. Use crypto.randomBytes()
+  or crypto.randomUUID() for tokens, passwords, and session IDs.
+patterns:
+  - type: regex
+    pattern: "Math\\.random\\s*\\(\\s*\\)\\s*[*]\\s*[^;]*(token|password|session|id|secret|key|salt|nonce)"
+  - type: regex
+    pattern: "parseInt\\s*\\(\\s*Math\\.random"
+  - type: regex
+    pattern: "Math\\.random\\s*\\(\\s*\\)\\.toString\\s*\\("
+references:
+  - https://nodejs.org/api/crypto.html#cryptorandombytessize-callback

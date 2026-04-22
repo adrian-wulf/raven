@@ -1,0 +1,19 @@
+id: raven-php-deser-001
+name: Unsafe Deserialization in PHP
+description: |
+  Detects unserialize() with user-controlled data in PHP,
+  which can lead to remote code execution.
+severity: critical
+category: deserialization
+confidence: high
+languages: [php]
+message: |
+  Dangerous deserialization! unserialize() with user input can execute
+  arbitrary code. Use json_decode() or whitelist allowed classes.
+patterns:
+  - type: regex
+    pattern: "unserialize\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"
+  - type: regex
+    pattern: "unserialize\\s*\\(\\s*\\$"
+references:
+  - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data

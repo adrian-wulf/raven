@@ -1,0 +1,23 @@
+id: raven-py-debug-001
+name: Debug Mode Enabled in Flask/Django
+description: |
+  Detects debug mode enabled in Flask or Django applications,
+  which exposes stack traces and interactive debugger.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [python]
+message: |
+  Debug mode is enabled. Never run with debug=True in production.
+  It exposes stack traces and may allow RCE through the Werkzeug debugger.
+patterns:
+  - type: regex
+    pattern: "app\\.run\\s*\\([^)]*debug\\s*=\\s*True"
+  - type: regex
+    pattern: "DEBUG\\s*=\\s*True"
+  - type: regex
+    pattern: "FLASK_ENV\\s*=\\s*['\"]development['\"]"
+  - type: regex
+    pattern: "DEBUG\\s*=\\s*os\\.environ"
+references:
+  - https://werkzeug.palletsprojects.com/en/stable/debug/

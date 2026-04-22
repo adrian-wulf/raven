@@ -1,0 +1,23 @@
+id: raven-py-deser-001
+name: Unsafe Deserialization
+description: |
+  Detects unsafe deserialization using pickle, yaml.load, or marshal
+  with user-controlled data, which can lead to remote code execution.
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+message: |
+  Unsafe deserialization! pickle.loads() and yaml.load() can execute
+  arbitrary code. Use json.loads() or yaml.safe_load() instead.
+patterns:
+  - type: regex
+    pattern: "pickle\\.loads\\s*\\(\\s*[^)]*(request|req|params|body|form|args|user|input|data)"
+  - type: regex
+    pattern: "yaml\\.load\\s*\\(\\s*[^)]*(request|req|params|body|form|args|user|input|data)"
+  - type: regex
+    pattern: "yaml\\.load\\s*\\("
+  - type: regex
+    pattern: "marshal\\.loads\\s*\\("
+references:
+  - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data

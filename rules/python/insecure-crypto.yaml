@@ -1,0 +1,27 @@
+id: raven-py-crypto-001
+name: Insecure Cryptographic Algorithm in Python
+description: |
+  Detects use of weak cryptographic algorithms in Python (MD5, SHA1,
+  DES) that should not be used for security-sensitive operations.
+severity: high
+category: cryptography
+confidence: high
+languages: [python]
+message: |
+  Weak hash algorithm. Use hashlib.sha256() or better.
+  MD5 and SHA1 are vulnerable to collision attacks.
+patterns:
+  - type: regex
+    pattern: "hashlib\\.md5"
+  - type: regex
+    pattern: "hashlib\\.sha1"
+  - type: regex
+    pattern: "hashlib\\.new\\s*\\(\\s*['\"]md5['\"]"
+  - type: regex
+    pattern: "hashlib\\.new\\s*\\(\\s*['\"]sha1['\"]"
+  - type: regex
+    pattern: "Crypto\\.Cipher\\.DES"
+  - type: regex
+    pattern: "md5\\s*\\("
+references:
+  - https://docs.python.org/3/library/hashlib.html

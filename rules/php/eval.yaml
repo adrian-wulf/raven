@@ -1,0 +1,27 @@
+id: raven-php-eval-001
+name: Code Injection in PHP
+description: |
+  Detects dangerous code execution functions (eval, assert, preg_replace /e)
+  with user input in PHP.
+severity: critical
+category: code-injection
+confidence: high
+languages: [php]
+message: |
+  Dangerous code execution! Never pass user input to eval() or assert().
+  Use safe alternatives like json_decode or whitelist validation.
+patterns:
+  - type: regex
+    pattern: "eval\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"
+  - type: regex
+    pattern: "assert\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"
+  - type: regex
+    pattern: "preg_replace\\s*\\(\\s*['\"]/[^'\"]*/e['\"]"
+  - type: regex
+    pattern: "create_function\\s*\\("
+  - type: regex
+    pattern: "include\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"
+  - type: regex
+    pattern: "require\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"
+references:
+  - https://owasp.org/www-community/attacks/Code_Injection

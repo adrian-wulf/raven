@@ -1,0 +1,28 @@
+id: raven-js-crypto-001
+name: Insecure Cryptographic Algorithm
+description: |
+  Detects use of weak cryptographic algorithms (MD5, SHA1, DES, RC4)
+  that are cryptographically broken and should not be used.
+severity: high
+category: cryptography
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Weak cryptographic algorithm detected. MD5 and SHA1 are vulnerable to
+  collision attacks. Use SHA-256 or better for hashing, and AES-256-GCM
+  for encryption.
+patterns:
+  - type: regex
+    pattern: "createHash\\s*\\(\\s*['\"]md5['\"]"
+  - type: regex
+    pattern: "createHash\\s*\\(\\s*['\"]sha1['\"]"
+  - type: regex
+    pattern: "crypto\\.md5"
+  - type: regex
+    pattern: "crypto\\.sha1"
+  - type: regex
+    pattern: "md5\\s*\\("
+  - type: regex
+    pattern: "sha1\\s*\\("
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html

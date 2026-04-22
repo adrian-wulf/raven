@@ -220,10 +220,11 @@ raven rules --detail
 ## Roadmap
 
 - [x] Core rule engine
-- [x] 10 security rules
+- [x] 28 security rules (OWASP Top 10 + AI-specific)
 - [x] Auto-fix
 - [x] Watch mode
 - [x] CI mode + SARIF
+- [x] 28 rules (SQLi, XSS, RCE, secrets, crypto, SSRF, CORS, auth, etc.)
 - [ ] 50+ rules
 - [ ] IDE extensions (VS Code, Cursor, Zed)
 - [ ] GitHub Action

@@ -125,7 +125,17 @@ func (s *Scanner) collectFiles() ([]string, error) {
 }
 
 func (s *Scanner) isExcluded(path string) bool {
-	for _, pattern := range s.config.Exclude {
+	// Common auto-exclude patterns for test files, vendors, etc.
+	autoExclude := []string{
+		"_test.go", "_test.py", "_test.js", "_test.ts",
+		"test_", "spec.", "mock", "fixture", "example",
+		"node_modules", "vendor", "dist", "build", ".git",
+		"*.min.js", "*.min.css", "*.bundle.js",
+	}
+
+	allPatterns := append(s.config.Exclude, autoExclude...)
+
+	for _, pattern := range allPatterns {
 		matched, _ := filepath.Match(pattern, filepath.Base(path))
 		if matched {
 			return true

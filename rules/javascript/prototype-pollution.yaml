@@ -1,0 +1,23 @@
+id: raven-js-proto-001
+name: Prototype Pollution
+description: |
+  Detects unsafe object merging that can lead to prototype pollution,
+  allowing attackers to modify Object.prototype.
+severity: high
+category: prototype-pollution
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Potential prototype pollution. Use Object.create(null) for maps,
+  or validate keys against '__proto__', 'constructor', 'prototype'.
+patterns:
+  - type: regex
+    pattern: "Object\\.assign\\s*\\(\\s*\\{\\s*\\}\\s*,\\s*[^)]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "lodash\\.merge\\s*\\(\\s*[^)]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "\\.merge\\s*\\(\\s*[^)]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "Object\\.setPrototypeOf"
+references:
+  - https://github.com/HoLyVieR/prototype-pollution-nsec18

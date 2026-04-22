@@ -1,0 +1,21 @@
+id: raven-js-redirect-001
+name: Open Redirect
+description: |
+  Detects redirects that use user-controlled input without validation,
+  which can be used in phishing attacks.
+severity: medium
+category: open-redirect
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Open redirect: user input controls the redirect destination.
+  Validate URLs against an allowlist of allowed domains.
+patterns:
+  - type: regex
+    pattern: "res\\.redirect\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "location\\s*[:=]\\s*[^;]*\\+\\s*.*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+  - type: regex
+    pattern: "window\\.location\\s*=\\s*[^;]*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html

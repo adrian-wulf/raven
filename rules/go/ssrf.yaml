@@ -1,0 +1,21 @@
+id: raven-go-ssrf-001
+name: SSRF in Go
+description: |
+  Detects HTTP requests with user-controlled URLs in Go,
+  which can be exploited for SSRF attacks.
+severity: high
+category: ssrf
+confidence: medium
+languages: [go]
+message: |
+  SSRF: User input controls the URL. Validate against an allowlist
+  and block internal IPs and metadata endpoints.
+patterns:
+  - type: regex
+    pattern: "http\\.Get\\s*\\(\\s*[^)]*(r\\.|req|request|params|input|url)"
+  - type: regex
+    pattern: "http\\.NewRequest\\s*\\(\\s*['\"][A-Z]+['\"]\\s*,\\s*[^)]*(r\\.|req|request|params|input|url)"
+  - type: regex
+    pattern: "client\\.Do\\s*\\(\\s*[^)]*http\\.NewRequest"
+references:
+  - https://owasp.org/www-community/attacks/Server_Side_Request_Forgery

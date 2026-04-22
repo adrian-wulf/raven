@@ -1,0 +1,21 @@
+id: raven-gen-auth-001
+name: Missing Authentication Check
+description: |
+  Detects API endpoints that appear to lack authentication checks.
+  This is a heuristic rule and may produce false positives.
+severity: medium
+category: auth
+confidence: low
+languages: [javascript, typescript, python, go, php]
+message: |
+  This endpoint may lack authentication. Ensure sensitive endpoints
+  require authentication. This is a heuristic check - review manually.
+patterns:
+  - type: regex
+    pattern: "app\\.(get|post|put|delete)\\s*\\(\\s*['\"]/admin"
+  - type: regex
+    pattern: "app\\.(get|post|put|delete)\\s*\\(\\s*['\"]/api.*\\s*\\(\\s*req"
+  - type: regex
+    pattern: "@app\\.route\\s*\\(\\s*['\"]/admin"
+references:
+  - https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control

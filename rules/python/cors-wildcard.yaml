@@ -1,0 +1,21 @@
+id: raven-py-cors-001
+name: CORS Wildcard in Flask/FastAPI
+description: |
+  Detects overly permissive CORS configuration in Python web frameworks.
+severity: medium
+category: cors
+confidence: high
+languages: [python]
+message: |
+  CORS allows all origins. Restrict to specific domains in production.
+patterns:
+  - type: regex
+    pattern: "(?i)CORS\\s*\\(\\s*[^)]*origins\\s*=\\s*['\"]\\*['\"]"
+  - type: regex
+    pattern: "(?i)@app\\.route\\s*\\([^)]*methods\\s*=\\s*\\['POST'\\]"
+  - type: regex
+    pattern: "(?i)add_middleware\\s*\\(\\s*CORSMiddleware\\s*\\)"
+  - type: regex
+    pattern: "(?i)allow_origins\\s*=\\s*\\['?'\\*'?'\\]"
+references:
+  - https://flask-cors.readthedocs.io/en/latest/

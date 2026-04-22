@@ -1,0 +1,23 @@
+id: raven-js-ssrf-001
+name: Server-Side Request Forgery (SSRF)
+description: |
+  Detects outbound HTTP requests (fetch, axios, request) with user-controlled
+  URLs, which can be exploited to access internal services.
+severity: high
+category: ssrf
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  SSRF: User input controls the URL of an outbound request.
+  Validate and sanitize URLs against an allowlist. Block internal IPs.
+patterns:
+  - type: regex
+    pattern: "fetch\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "axios\\.(get|post|put|delete|request)\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "request\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+  - type: regex
+    pattern: "new\\s+URL\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+references:
+  - https://owasp.org/www-community/attacks/Server_Side_Request_Forgery

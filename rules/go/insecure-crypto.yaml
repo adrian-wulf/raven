@@ -1,0 +1,28 @@
+id: raven-go-crypto-001
+name: Insecure Cryptographic Algorithm in Go
+description: |
+  Detects use of weak cryptographic algorithms in Go (MD5, SHA1, DES)
+  that should not be used for security-sensitive operations.
+severity: high
+category: cryptography
+confidence: high
+languages: [go]
+message: |
+  Weak hash algorithm. Use crypto/sha256 or better.
+patterns:
+  - type: regex
+    pattern: "crypto/md5"
+  - type: regex
+    pattern: "crypto/sha1"
+  - type: regex
+    pattern: "crypto/des"
+  - type: regex
+    pattern: "md5\\.New\\s*\\("
+  - type: regex
+    pattern: "sha1\\.New\\s*\\("
+  - type: regex
+    pattern: "md5\\.Sum"
+  - type: regex
+    pattern: "sha1\\.Sum"
+references:
+  - https://pkg.go.dev/crypto/sha256

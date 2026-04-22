@@ -1,0 +1,23 @@
+id: raven-js-cors-001
+name: CORS Wildcard / Permissive Configuration
+description: |
+  Detects overly permissive CORS configuration that allows any origin
+  to access the API, including credentials.
+severity: medium
+category: cors
+confidence: high
+languages: [javascript, typescript]
+message: |
+  CORS is set to allow all origins (*). This is dangerous if combined
+  with credentials: true. Specify exact allowed origins instead.
+patterns:
+  - type: regex
+    pattern: "(?i)origin\\s*[:=]\\s*['\"]\\*['\"]"
+  - type: regex
+    pattern: "(?i)cors\\s*\\(\\s*\\{[^}]*origin\\s*[:=]\\s*['\"]\\*['\"]"
+  - type: regex
+    pattern: "(?i)Access-Control-Allow-Origin\\s*[:=]\\s*['\"]\\*['\"]"
+  - type: regex
+    pattern: "(?i)cors\\s*\\(\\s*\\{[^}]*origin\\s*[:=]\\s*true"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/CORS_Configuration_Cheat_Sheet.html

@@ -1,0 +1,23 @@
+id: raven-js-debug-001
+name: Debug Mode Enabled in Production
+description: |
+  Detects debug mode, verbose logging, or development settings
+  that may expose sensitive information in production.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Debug mode may be enabled. Ensure this is disabled in production
+  to prevent information disclosure.
+patterns:
+  - type: regex
+    pattern: "(?i)debug\\s*[:=]\\s*true"
+  - type: regex
+    pattern: "(?i)app\\.listen\\s*\\([^)]*debug"
+  - type: regex
+    pattern: "(?i)NODE_ENV\\s*[:=]\\s*['\"]development['\"]"
+  - type: regex
+    pattern: "(?i)app\\.use\\s*\\(\\s*errorhandler\\s*\\)"
+references:
+  - https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration
