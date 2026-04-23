@@ -1,0 +1,225 @@
+{
+  "name": "raven-security",
+  "displayName": "Raven Security Scanner",
+  "description": "Real-time security scanning for vibe coders — 500+ rules, 10 languages",
+  "version": "1.14.0",
+  "publisher": "raven-security",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Security",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "security",
+    "sast",
+    "vulnerability",
+    "scanner",
+    "sql injection",
+    "xss",
+    "secrets",
+    "vibe coding"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adrian-wulf/raven"
+  },
+  "bugs": {
+    "url": "https://github.com/adrian-wulf/raven/issues"
+  },
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Raven Security Scanner",
+      "properties": {
+        "raven.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable Raven security scanning"
+        },
+        "raven.executablePath": {
+          "type": "string",
+          "default": "raven",
+          "description": "Path to the raven executable"
+        },
+        "raven.minSeverity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low",
+            "info"
+          ],
+          "default": "low",
+          "description": "Minimum severity to report"
+        },
+        "raven.languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Languages to scan (empty = all). E.g. [\"javascript\", \"python\"]"
+        },
+        "raven.scanOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Scan files on save"
+        },
+        "raven.scanOnType": {
+          "type": "boolean",
+          "default": true,
+          "description": "Scan files while typing (for files < 1000 lines)"
+        },
+        "raven.showCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Raven findings count as CodeLens"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "raven.scanWorkspace",
+        "title": "Scan Workspace",
+        "category": "Raven",
+        "icon": "$(search)"
+      },
+      {
+        "command": "raven.scanFile",
+        "title": "Scan Current File",
+        "category": "Raven",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "raven.showFindings",
+        "title": "Show Findings",
+        "category": "Raven",
+        "icon": "$(warning)"
+      },
+      {
+        "command": "raven.openRule",
+        "title": "Open Rule Documentation",
+        "category": "Raven"
+      },
+      {
+        "command": "raven.clearFindings",
+        "title": "Clear All Findings",
+        "category": "Raven"
+      },
+      {
+        "command": "raven.refreshPanel",
+        "title": "Refresh",
+        "category": "Raven",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "raven.scanWorkspace",
+          "when": "raven.enabled"
+        },
+        {
+          "command": "raven.scanFile",
+          "when": "raven.enabled"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "raven.scanFile",
+          "group": "2_raven@1",
+          "when": "raven.enabled"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "raven.scanFile",
+          "group": "2_raven@1",
+          "when": "raven.enabled && explorerResourceIsFile"
+        },
+        {
+          "command": "raven.scanWorkspace",
+          "group": "2_raven@2",
+          "when": "raven.enabled && explorerResourceIsFolder"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "raven.refreshPanel",
+          "when": "view == ravenFindings",
+          "group": "navigation"
+        },
+        {
+          "command": "raven.scanWorkspace",
+          "when": "view == ravenFindings",
+          "group": "navigation"
+        },
+        {
+          "command": "raven.clearFindings",
+          "when": "view == ravenFindings",
+          "group": "secondary"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "ravenFindings",
+          "name": "Raven Findings",
+          "when": "raven.enabled",
+          "icon": "$(shield)",
+          "contextualTitle": "Security Findings"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "ravenFindings",
+        "contents": "No security scan results yet.\n[Scan Workspace](command:raven.scanWorkspace)\n[Scan Current File](command:raven.scanFile)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "raven.scanWorkspace",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:python",
+    "onLanguage:go",
+    "onLanguage:java",
+    "onLanguage:php",
+    "onLanguage:rust",
+    "onLanguage:ruby",
+    "onLanguage:kotlin",
+    "onLanguage:swift",
+    "onLanguage:csharp",
+    "onCommand:raven.scanWorkspace"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}

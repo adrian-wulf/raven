@@ -83,6 +83,7 @@ func init() {
 	rootCmd.AddCommand(learnCmd())
 	rootCmd.AddCommand(initCmd())
 	rootCmd.AddCommand(lspCmd())
+	rootCmd.AddCommand(mcpCmd())
 	rootCmd.AddCommand(hookCmd())
 	rootCmd.AddCommand(aiFixCmd())
 	rootCmd.AddCommand(versionCmd())

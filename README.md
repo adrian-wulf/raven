@@ -393,6 +393,59 @@ references:
   - https://owasp.org/...
 ```
 
+## 🔌 IDE & AI Integration
+
+Raven integrates with your favorite tools:
+
+### VS Code Extension
+
+```bash
+cd vscode-raven
+npm install && npm run compile
+# F5 to launch Extension Development Host
+```
+
+Features: real-time diagnostics, findings panel, hover info, quick fixes, CodeLens.
+
+### MCP Server (for Claude, Codex, etc.)
+
+```bash
+raven mcp  # Starts Model Context Protocol server
+```
+
+**Claude Desktop config:**
+```json
+{
+  "mcpServers": {
+    "raven": {
+      "command": "raven",
+      "args": ["mcp"]
+    }
+  }
+}
+```
+
+**Available MCP tools:**
+- `raven_scan_workspace` — full project scan
+- `raven_scan_file` — single file scan
+- `raven_scan_snippet` — scan AI-generated code snippets
+- `raven_list_rules` / `raven_get_rule` — rule documentation
+- `raven_explain_finding` — detailed vulnerability analysis
+
+### LSP Server
+
+```bash
+raven lsp  # Language Server Protocol on stdio
+```
+
+Works with: VS Code, Neovim, Zed, Emacs, Kimi Code, Cursor.
+
+### Pre-commit Hook
+
+```bash
+raven init --pre-commit  # Auto-installs git hook
+```
+
 ---
 
 ## License
