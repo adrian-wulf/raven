@@ -82,6 +82,13 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 		vulnStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#FF6B6B")).Bold(true)
 		fmt.Printf("  %s: %d\n", vulnStyle.Render("vulnerable deps"), len(result.Vulnerabilities))
 	}
+	// Baseline diff info
+	if len(result.NewFindings) > 0 || len(result.BaselineFindings) > 0 {
+		newStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4")).Bold(true)
+		baseStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#A29BFE"))
+		_ = baseStyle
+		fmt.Printf("  %s: %d new, %d baseline\n", newStyle.Render("baseline diff"), len(result.NewFindings), len(result.BaselineFindings))
+	}
 	fmt.Println()
 
 	// Findings

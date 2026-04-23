@@ -60,12 +60,14 @@ type Finding struct {
 }
 
 type Result struct {
-	Findings        []Finding       `json:"findings"`
-	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
-	FilesScanned    int             `json:"files_scanned"`
-	RulesRun        int             `json:"rules_run"`
-	Duration        time.Duration   `json:"duration"`
-	Target          string          `json:"target"`
+	Findings         []Finding       `json:"findings"`
+	NewFindings      []Finding       `json:"new_findings,omitempty"`
+	BaselineFindings []Finding       `json:"baseline_findings,omitempty"`
+	Vulnerabilities  []Vulnerability `json:"vulnerabilities,omitempty"`
+	FilesScanned     int             `json:"files_scanned"`
+	RulesRun         int             `json:"rules_run"`
+	Duration         time.Duration   `json:"duration"`
+	Target           string          `json:"target"`
 }
 
 type Vulnerability struct {

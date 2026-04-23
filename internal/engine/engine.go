@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/raven-security/raven/internal/ast"
+	"github.com/raven-security/raven/internal/baseline"
 	"github.com/raven-security/raven/internal/taint"
 	"github.com/raven-security/raven/internal/utils"
 )
@@ -27,6 +28,7 @@ type ScanConfig struct {
 	Frameworks  []string
 	Confidence  string
 	MinSeverity Severity
+	Baseline    *baseline.Baseline // optional baseline for diff scanning
 }
 
 func NewScanner(rules []Rule, config ScanConfig) *Scanner {
@@ -82,7 +84,57 @@ func (s *Scanner) Scan() (*Result, error) {
 	// Deduplicate findings (same file + line + rule_id)
 	result.Findings = deduplicate(result.Findings)
 
+	// Apply baseline diff if configured
+	if s.config.Baseline != nil {
+		records := findingsToRecords(result.Findings)
+		diff := s.config.Baseline.Diff(records)
+		result.NewFindings = recordsToFindings(diff.NewRecords, result.Findings)
+		result.BaselineFindings = recordsToFindings(diff.BaselineRecords, result.Findings)
+		result.Findings = recordsToFindings(diff.AllRecords, result.Findings)
+	}
+
 	return result, nil
+}
+
+func findingsToRecords(findings []Finding) []baseline.Record {
+	records := make([]baseline.Record, len(findings))
+	for i, f := range findings {
+		records[i] = baseline.Record{
+			RuleID:      f.RuleID,
+			File:        f.File,
+			Line:        f.Line,
+			Column:      f.Column,
+			SnippetHash: baseline.HashSnippet(f.Snippet),
+			RuleName:    f.RuleName,
+			Severity:    string(f.Severity),
+			Snippet:     f.Snippet,
+		}
+	}
+	return records
+}
+
+func recordsToFindings(records []baseline.Record, source []Finding) []Finding {
+	findings := make([]Finding, len(records))
+	for i, r := range records {
+		// Try to find full finding from source to preserve all fields
+		findings[i] = Finding{
+			RuleID:    r.RuleID,
+			RuleName:  r.RuleName,
+			Severity:  Severity(r.Severity),
+			File:      r.File,
+			Line:      r.Line,
+			Column:    r.Column,
+			Snippet:   r.Snippet,
+		}
+		// Enrich from source if exact match exists
+		for _, f := range source {
+			if f.RuleID == r.RuleID && f.File == r.File && f.Line == r.Line && f.Column == r.Column {
+				findings[i] = f
+				break
+			}
+		}
+	}
+	return findings
 }
 
 func deduplicate(findings []Finding) []Finding {

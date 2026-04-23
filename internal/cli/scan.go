@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/raven-security/raven/internal/baseline"
 	"github.com/raven-security/raven/internal/deps"
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/raven-security/raven/internal/framework"
@@ -13,13 +14,15 @@ import (
 
 func scanCmd() *cobra.Command {
 	var (
-		format     string
-		noColor    bool
-		noCode     bool
-		minSev     string
-		confidence string
-		fixFlag    bool
-		depsFlag   bool
+		format         string
+		noColor        bool
+		noCode         bool
+		minSev         string
+		confidence     string
+		fixFlag        bool
+		depsFlag       bool
+		baselinePath   string
+		updateBaseline bool
 	)
 
 	cmd := &cobra.Command{
@@ -36,7 +39,9 @@ Examples:
   raven scan ./src              # Scan specific directory
   raven scan --fix              # Scan and auto-fix issues
   raven scan --format json      # Output as JSON
-  raven scan --min-sev high     # Only show high/critical issues`,
+  raven scan --min-sev high     # Only show high/critical issues
+  raven scan --baseline .raven-baseline.json  # Only report new issues
+  raven scan --update-baseline                # Save current findings as baseline`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
@@ -70,6 +75,21 @@ Examples:
 				fmt.Fprintf(os.Stderr, "📦 Frameworks: %s\n\n", framework.FormatFrameworks(detectedFrameworks))
 			}
 
+			// Load baseline if specified
+			var bl *baseline.Baseline
+			if baselinePath != "" {
+				loaded, err := baseline.Load(baselinePath)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "Warning: could not load baseline (%v), treating as empty\n", err)
+					bl = baseline.New()
+				} else {
+					bl = loaded
+					if verbose {
+						fmt.Printf("Loaded baseline with %d findings\n", bl.Count())
+					}
+				}
+			}
+
 			// Configure scanner
 			scanConfig := engine.ScanConfig{
 				Paths:       paths,
@@ -77,6 +97,7 @@ Examples:
 				Frameworks:  fwNames,
 				Confidence:  confidence,
 				MinSeverity: engine.Severity(minSev),
+				Baseline:    bl,
 			}
 
 			scanner := engine.NewScanner(rules, scanConfig)
@@ -134,6 +155,32 @@ Examples:
 				return err
 			}
 
+			// Save baseline if requested
+			if updateBaseline {
+				outPath := ".raven-baseline.json"
+				if baselinePath != "" {
+					outPath = baselinePath
+				}
+				newBl := baseline.New()
+				for _, f := range result.Findings {
+					newBl.Records = append(newBl.Records, baseline.Record{
+						RuleID:      f.RuleID,
+						File:        f.File,
+						Line:        f.Line,
+						Column:      f.Column,
+						SnippetHash: baseline.HashSnippet(f.Snippet),
+						RuleName:    f.RuleName,
+						Severity:    string(f.Severity),
+						Snippet:     f.Snippet,
+					})
+				}
+				if err := newBl.Save(outPath); err != nil {
+					fmt.Fprintf(os.Stderr, "Warning: could not save baseline: %v\n", err)
+				} else {
+					fmt.Fprintf(os.Stderr, "\n💾 Baseline saved to %s (%d findings)\n", outPath, newBl.Count())
+				}
+			}
+
 			// Auto-fix if requested
 			if fixFlag && result.HasFixes() {
 				fmt.Println(styles.Info.Render("Applying fixes..."))
@@ -150,7 +197,12 @@ Examples:
 			}
 
 			// Exit code for CI
-			totalIssues := len(result.Findings) + len(depVulns)
+			var totalIssues int
+			if bl != nil {
+				totalIssues = len(result.NewFindings) + len(depVulns)
+			} else {
+				totalIssues = len(result.Findings) + len(depVulns)
+			}
 			if totalIssues > 0 {
 				os.Exit(1)
 			}
@@ -166,6 +218,8 @@ Examples:
 	cmd.Flags().StringVar(&confidence, "confidence", "medium", "Minimum confidence: high, medium, low")
 	cmd.Flags().BoolVar(&fixFlag, "fix", false, "Auto-fix issues where possible")
 	cmd.Flags().BoolVar(&depsFlag, "deps", false, "Scan dependencies for known vulnerabilities (OSV)")
+	cmd.Flags().StringVar(&baselinePath, "baseline", "", "Path to baseline JSON (only report new findings)")
+	cmd.Flags().BoolVar(&updateBaseline, "update-baseline", false, "Save current findings as baseline JSON")
 
 	return cmd
 }
