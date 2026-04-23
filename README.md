@@ -76,6 +76,9 @@ curl -sSL https://get.raven.sh | bash
 cd my-project
 raven scan
 
+# Scan only staged files (instant pre-commit check)
+raven scan --staged
+
 # Watch for changes during development
 raven watch
 
@@ -85,9 +88,23 @@ raven fix --apply
 
 # See all rules
 raven rules
+raven rules validate          # Validate custom rule files
 
 # CI mode (exits 1 on findings, outputs SARIF)
 raven ci --format sarif --output report.sarif
+
+# Baseline / diff scanning (only report NEW issues)
+raven scan --baseline .raven-baseline.json
+raven scan --update-baseline  # Save current findings as baseline
+
+# Deep secrets scanning
+raven scan --secrets
+
+# Enforce security policy
+raven scan --policy .raven-policy.yaml
+
+# Generate HTML report
+raven scan --format html -o report.html
 
 # Learn about a vulnerability
 raven learn sqli
@@ -165,10 +182,23 @@ Rules designed for **common LLM mistakes**:
 - Path traversal (unsanitized file paths)
 - Code injection (`eval`, `new Function`)
 
+### 🔬 Advanced Analysis
+- **AST-based scanning** via Tree-sitter (not just regex)
+- **Taint analysis** — tracks user input from source to sink
+- **Inter-procedural taint** — follows data through function calls
+- **Cross-file analysis** — tracks imports/exports across modules
+- **Sanitizer-aware** — knows when `DOMPurify`, `html.EscapeString`, etc. make data safe
+
 ### 🔧 Auto-Fix
 Raven suggests and applies fixes where possible:
 ```bash
 raven fix --apply
+```
+
+### ⚡ Staged Scanning
+Scan only git staged files in milliseconds:
+```bash
+raven scan --staged
 ```
 
 ### 👁️ Watch Mode
@@ -183,6 +213,29 @@ GitHub Actions, GitLab CI, etc.:
 raven ci --format sarif --output report.sarif
 ```
 
+### 📊 HTML Reports
+Interactive dashboard with filtering:
+```bash
+raven scan --format html -o report.html
+```
+
+### 🛡️ Policy Engine
+Enforce security thresholds in CI:
+```yaml
+# .raven-policy.yaml
+max_findings:
+  critical: 0
+  high: 0
+fail_on_new: true
+```
+
+### 📈 Incremental Caching
+Skip unchanged files on subsequent scans (~40-60% speedup):
+```bash
+raven scan              # Warm cache — ultra fast
+raven scan --no-cache   # Force full re-scan
+```
+
 ### 🎨 Beautiful Output
 Colored, readable terminal output with code snippets.
 
@@ -190,16 +243,18 @@ Colored, readable terminal output with code snippets.
 
 ## Supported Languages
 
-| Language | Status |
-|----------|--------|
-| JavaScript / TypeScript | ✅ Full |
-| Python | ✅ Full |
-| Go | ✅ Full |
-| PHP | ✅ Full |
-| Rust | ✅ Basic |
-| Java / Kotlin | ✅ Basic |
-| Ruby | ✅ Basic |
-| Swift | ✅ Basic |
+| Language | Status | Taint | AST | Rules |
+|----------|--------|-------|-----|-------|
+| JavaScript / TypeScript | ✅ Full | ✅ | ✅ | 25+ |
+| Python | ✅ Full | ✅ | ✅ | 10+ |
+| Go | ✅ Full | ✅ | ✅ | 8+ |
+| PHP | ✅ Full | ✅ | ✅ | 6+ |
+| Java | ✅ Full | ✅ | ✅ | 3+ |
+| Kotlin | ✅ Parser | ✅ | ✅ | Shares Java |
+| C# | ✅ Full | ✅ | ✅ | 3+ |
+| Rust | ✅ Basic | ❌ | ✅ | 1+ |
+| Ruby | ✅ Basic | ❌ | ✅ | Shares JS |
+| Swift | ✅ Basic | ❌ | ✅ | Shares JS |
 
 ---
 
@@ -208,9 +263,13 @@ Colored, readable terminal output with code snippets.
 Raven uses **local rule-based analysis** — no API calls, no data leaves your machine:
 
 1. **Parse rules** from YAML files (built-in + custom)
-2. **Walk files** in your project
-3. **Pattern match** using regex (fast, lightweight)
-4. **Output findings** with severity, location, and fix suggestions
+2. **Walk files** in your project (or staged files only)
+3. **Pattern match** using regex with compiled pattern cache
+4. **AST analysis** via Tree-sitter for deep structural understanding
+5. **Taint tracking** follows user input from sources (req.body) to sinks (db.query)
+6. **Cross-file resolution** tracks taint through imports/exports
+7. **Cache unchanged files** by SHA256 hash for warm-run speedup
+8. **Output findings** with severity, location, fix suggestions, and HTML reports
 
 All free. All local. All fast.
 
@@ -279,7 +338,7 @@ raven rules --detail
 ## Roadmap
 
 - [x] Core rule engine
-- [x] 62 security rules (regex + AST + taint)
+- [x] 70+ security rules (regex + AST + taint)
 - [x] Auto-fix
 - [x] Watch mode
 - [x] CI mode + SARIF
@@ -290,8 +349,17 @@ raven rules --detail
 - [x] AST-based analysis (Tree-sitter)
 - [x] Framework-aware rules
 - [x] Supply chain scanning (OSV)
+- [x] Baseline / diff scanning
+- [x] Incremental caching (SHA256-based)
+- [x] Cross-file taint tracking
+- [x] Inter-procedural taint analysis
+- [x] Rule DSL v2 (where clauses, metavariables)
+- [x] HTML reports with interactive filtering
+- [x] Policy engine (.raven-policy.yaml)
+- [x] Sanitizer-aware taint tracking
+- [x] Staged file scanning (--staged)
+- [x] Java / Kotlin / C# support
 - [ ] Zed / Vim support
-- [ ] Cross-function taint tracking
 - [ ] IDE inline fixes
 
 ---
