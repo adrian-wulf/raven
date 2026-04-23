@@ -11,6 +11,7 @@ import (
 	"github.com/raven-security/raven/internal/framework"
 	"github.com/raven-security/raven/internal/cache"
 	"github.com/raven-security/raven/internal/output"
+	"github.com/raven-security/raven/internal/policy"
 	"github.com/raven-security/raven/internal/secrets"
 	"github.com/raven-security/raven/internal/suppress"
 	"github.com/raven-security/raven/internal/taint/crossfile"
@@ -31,6 +32,7 @@ func scanCmd() *cobra.Command {
 		updateBaseline   bool
 		noIgnoreComments bool
 		noCache          bool
+		policyPath       string
 	)
 
 	cmd := &cobra.Command{
@@ -84,6 +86,19 @@ Examples:
 					fwNames = append(fwNames, fw.Name)
 				}
 				fmt.Fprintf(os.Stderr, "📦 Frameworks: %s\n\n", framework.FormatFrameworks(detectedFrameworks))
+			}
+
+			// Load policy if specified
+			var pol *policy.Policy
+			if policyPath != "" {
+				var err error
+				pol, err = policy.Load(policyPath)
+				if err != nil {
+					return fmt.Errorf("loading policy: %w", err)
+				}
+				if pol != nil && verbose {
+					fmt.Println("Policy loaded")
+				}
 			}
 
 			// Load baseline if specified
@@ -284,13 +299,25 @@ Examples:
 				}
 			}
 
-			// Exit code for CI
+			// Policy check
 			var totalIssues int
 			if bl != nil {
 				totalIssues = len(result.NewFindings) + len(depVulns)
 			} else {
 				totalIssues = len(result.Findings) + len(depVulns)
 			}
+
+			if pol != nil {
+				pr := pol.Check(result)
+				if !pr.Passed {
+					fmt.Fprintln(os.Stderr, "\n❌ Policy violations:")
+					for _, v := range pr.Violations {
+						fmt.Fprintf(os.Stderr, "  - %s\n", v)
+					}
+					os.Exit(pr.ExitCode(totalIssues))
+				}
+			}
+
 			if totalIssues > 0 {
 				os.Exit(1)
 			}
@@ -310,6 +337,7 @@ Examples:
 	cmd.Flags().StringVar(&baselinePath, "baseline", "", "Path to baseline JSON (only report new findings)")
 	cmd.Flags().BoolVar(&updateBaseline, "update-baseline", false, "Save current findings as baseline JSON")
 	cmd.Flags().BoolVar(&noIgnoreComments, "no-ignore-comments", false, "Ignore inline suppression comments")
+	cmd.Flags().StringVar(&policyPath, "policy", "", "Path to policy YAML (.raven-policy.yaml)")
 
 	return cmd
 }
