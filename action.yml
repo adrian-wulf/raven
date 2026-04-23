@@ -1,0 +1,98 @@
+name: 'Raven Security Scan'
+description: 'Scan your code for security vulnerabilities with Raven'
+author: 'Raven Security'
+branding:
+  icon: 'shield'
+  color: 'purple'
+
+inputs:
+  paths:
+    description: 'Paths to scan'
+    required: false
+    default: '.'
+  format:
+    description: 'Output format: pretty, json, sarif, html'
+    required: false
+    default: 'sarif'
+  min-sev:
+    description: 'Minimum severity: critical, high, medium, low, info'
+    required: false
+    default: 'low'
+  baseline:
+    description: 'Path to baseline JSON'
+    required: false
+    default: ''
+  policy:
+    description: 'Path to policy YAML'
+    required: false
+    default: ''
+  secrets:
+    description: 'Enable secrets scanning'
+    required: false
+    default: 'false'
+  deps:
+    description: 'Enable dependency vulnerability scanning'
+    required: false
+    default: 'false'
+  output:
+    description: 'Output file path'
+    required: false
+    default: ''
+  fail-on:
+    description: 'Minimum severity to fail on'
+    required: false
+    default: 'low'
+  version:
+    description: 'Raven version to use'
+    required: false
+    default: 'latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Raven
+      shell: bash
+      run: |
+        VERSION="${{ inputs.version }}"
+        if [ "$VERSION" = "latest" ]; then
+          VERSION=$(curl -s https://api.github.com/repos/raven-security/raven/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        fi
+        echo "Installing Raven $VERSION..."
+        curl -sL "https://github.com/raven-security/raven/releases/download/${VERSION}/raven-linux-amd64" -o /usr/local/bin/raven
+        chmod +x /usr/local/bin/raven
+        raven --version
+
+    - name: Run Raven Scan
+      shell: bash
+      run: |
+        ARGS="scan --format ${{ inputs.format }} --min-sev ${{ inputs.min-sev }}"
+        
+        if [ -n "${{ inputs.baseline }}" ]; then
+          ARGS="$ARGS --baseline ${{ inputs.baseline }}"
+        fi
+        
+        if [ -n "${{ inputs.policy }}" ]; then
+          ARGS="$ARGS --policy ${{ inputs.policy }}"
+        fi
+        
+        if [ "${{ inputs.secrets }}" = "true" ]; then
+          ARGS="$ARGS --secrets"
+        fi
+        
+        if [ "${{ inputs.deps }}" = "true" ]; then
+          ARGS="$ARGS --deps"
+        fi
+        
+        ARGS="$ARGS ${{ inputs.paths }}"
+        
+        if [ -n "${{ inputs.output }}" ]; then
+          raven $ARGS > "${{ inputs.output }}"
+        else
+          raven $ARGS
+        fi
+      
+    - name: Upload SARIF
+      if: inputs.format == 'sarif' && inputs.output != ''
+      uses: github/codeql-action/upload-sarif@v4
+      with:
+        sarif_file: ${{ inputs.output }}
