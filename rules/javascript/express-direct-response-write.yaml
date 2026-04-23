@@ -1,0 +1,19 @@
+id: raven-js-express-xss-001
+name: Express Direct Response Write (XSS)
+description: |
+  Detects writing user input directly to an HTTP response without escaping.
+  This bypasses any HTML escaping and can lead to reflected/stored XSS.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [javascript, typescript]
+message: |
+  Detected directly writing user input to a Response object.
+  This bypasses HTML escaping and may expose the application to XSS.
+  Use resp.render() with safe escaping, or sanitize the data first.
+patterns:
+  - type: regex
+    pattern: "res\\.(write|send|end)\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html

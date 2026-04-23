@@ -1,0 +1,22 @@
+id: raven-py-django-filter-safe-001
+name: Django Filter with is_safe=True
+description: |
+  Detects Django template filters decorated with is_safe=True.
+  This tells Django not to escape the filter's output. If the filter
+  uses user input or adds HTML, it can lead to XSS.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [python]
+frameworks: [django]
+message: |
+  Django filter with is_safe=True bypasses auto-escaping.
+  Ensure this filter does not use external data or add HTML.
+  Consider removing is_safe and using mark_safe() explicitly
+  only on fully controlled content.
+patterns:
+  - type: regex
+    pattern: "@register\\.filter\\s*\\([^)]*is_safe\\s*=\\s*True"
+references:
+  - https://docs.djangoproject.com/en/stable/howto/custom-template-tags/#filters-and-auto-escaping

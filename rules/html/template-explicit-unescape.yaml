@@ -1,0 +1,28 @@
+id: raven-html-template-xss-001
+name: Template Explicit Unescape (|safe / |n / <%-)
+description: |
+  Detects explicit unescaping in templates: Django/Jinja2 |safe,
+  Rails |html_safe, EJS <%-, or Handlebars triple-stash {{{ }}}.
+  If user-controlled data reaches these locations, XSS is possible.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [html]
+message: |
+  Explicit unescape in template bypasses HTML escaping.
+  Use default escaping ({{ var }}, <%= var %>) unless data
+  is fully controlled and sanitized.
+patterns:
+  - type: regex
+    pattern: "\\|\\s*safe"
+  - type: regex
+    pattern: "\\|\\s*n"
+  - type: regex
+    pattern: "\\|\\s*html_safe"
+  - type: regex
+    pattern: "<%-\\s*[^%]+\\s*%>"
+  - type: regex
+    pattern: "\\{\\{\\{\\s*[^}]+\\s*\\}\\}\\}"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html

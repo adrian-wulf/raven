@@ -269,3 +269,123 @@ function handler(req, res) {
 		t.Errorf("expected 0 findings for sanitized input, got %d", len(findings))
 	}
 }
+
+// TestInterProceduralTaintPython checks that taint flows through function
+// arguments to parameters and then to sinks inside the callee.
+func TestInterProceduralTaintPython(t *testing.T) {
+	tracker := NewTracker("python")
+	code := []byte(`
+def run_query(cursor, sql):
+    cursor.execute(sql)
+
+def handler(request):
+    name = request.args.get('name')
+    run_query(cursor, "SELECT * FROM users WHERE name = '" + name + "'")
+`)
+	path := t.TempDir() + "/interprocedural.py"
+	if err := writeFile(path, code); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	rules := []RuleInfo{{
+		ID:       "py-sqli-inter",
+		Name:     "SQL Injection (Inter-procedural)",
+		Severity: "high",
+		Patterns: []RulePattern{{
+			Type:    "taint",
+			Sources: []string{"request.args", "request.form"},
+			Sinks:   []string{".execute", ".executemany"},
+		}},
+	}}
+
+	findings, err := tracker.ScanFile(path, rules)
+	if err != nil {
+		t.Fatalf("ScanFile failed: %v", err)
+	}
+	if len(findings) == 0 {
+		t.Fatal("expected inter-procedural findings for Python, got none")
+	}
+	if findings[0].RuleID != "py-sqli-inter" {
+		t.Errorf("expected rule py-sqli-inter, got %s", findings[0].RuleID)
+	}
+}
+
+// TestInterProceduralTaintPythonScanBytes checks inter-procedural via ScanBytes.
+func TestInterProceduralTaintPythonScanBytes(t *testing.T) {
+	tracker := NewTracker("python")
+	tracker.SetCurrentFile("/tmp/interprocedural.py")
+	code := []byte(`
+def run_query(cursor, sql):
+    cursor.execute(sql)
+
+def handler(request):
+    name = request.args.get('name')
+    run_query(conn, "SELECT * FROM users WHERE name = '" + name + "'")
+`)
+
+	rules := []RuleInfo{{
+		ID:       "py-sqli-inter",
+		Name:     "SQL Injection (Inter-procedural)",
+		Severity: "high",
+		Patterns: []RulePattern{{
+			Type:    "taint",
+			Sources: []string{"request.args", "request.form"},
+			Sinks:   []string{".execute", ".executemany"},
+		}},
+	}}
+
+	findings, err := tracker.ScanBytes("python", code, rules)
+	if err != nil {
+		t.Fatalf("ScanBytes failed: %v", err)
+	}
+	if len(findings) == 0 {
+		t.Fatal("expected inter-procedural findings for Python ScanBytes, got none")
+	}
+}
+
+func TestTrackerDjangoSchema(t *testing.T) {
+	tracker := NewTracker("python")
+	tracker.SetCurrentFile("/tmp/raven-benchmark/django/django/db/backends/base/schema.py")
+	code := []byte(`
+class BaseDatabaseSchemaEditor:
+    def _alter_column_type_sql(self, model, old_field, new_field, new_type):
+        return (
+            (
+                self.sql_alter_column_type
+                % {
+                    "column": self.quote_name(old_field.column),
+                    "type": new_type,
+                },
+                [],
+            ),
+            [],
+        )
+
+    def _delete_composed_index(self, model, fields, *args):
+        columns = [model._meta.get_field(field).column for field in fields]
+        sql = self._create_index_sql(model, fields, suffix="_idx").remove_suffix("_idx")
+        self.execute(sql)
+`)
+
+	rules := []RuleInfo{{
+		ID:       "raven-ast-py-sqli-001",
+		Name:     "SQL Injection via String Formatting",
+		Severity: "critical",
+		Patterns: []RulePattern{{
+			Type:    "taint",
+			Sources: []string{"request.args", "request.form", "request.json", "request.data", "request.headers", "request.cookies", "request.files", "sys.argv", "input"},
+			Sinks:   []string{".execute", ".executemany", ".run"},
+		}},
+	}}
+
+	findings, err := tracker.ScanBytes("python", code, rules)
+	if err != nil {
+		t.Fatalf("ScanBytes failed: %v", err)
+	}
+	for _, f := range findings {
+		t.Logf("FINDING: %s at line %d: %s", f.RuleID, f.Line, f.Message)
+	}
+	if len(findings) != 0 {
+		t.Fatalf("expected 0 findings, got %d", len(findings))
+	}
+}

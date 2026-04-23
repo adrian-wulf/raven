@@ -1,0 +1,19 @@
+id: raven-js-ejs-xss-001
+name: EJS Explicit Unescape (<%- %>)
+description: |
+  Detects explicit unescaped output in EJS templates using <%- ... %>.
+  If external data reaches these locations, the application is exposed to XSS.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [javascript, typescript]
+message: |
+  Detected explicit unescape in an EJS template using '<%- ... %>'.
+  Use '<%= ... %>' to safely escape data.
+  If you need unescaped output, ensure no external data reaches this location.
+patterns:
+  - type: regex
+    pattern: "<%-\\s*[^%]+\\s*%>"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html

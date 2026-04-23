@@ -1,0 +1,25 @@
+id: raven-html-csrf-001
+name: Django Form Missing CSRF Token
+description: |
+  Detects <form> tags in Django/Jinja2 templates without {% csrf_token %}.
+  Without CSRF protection, attackers can forge requests on behalf of users.
+severity: high
+category: csrf
+confidence: medium
+cwe: CWE-352
+languages: [html]
+message: |
+  Form is missing CSRF token. Add {% csrf_token %} inside the form
+  to protect against cross-site request forgery attacks.
+patterns:
+  - type: regex
+    pattern: "<form[^>]*>"
+    where:
+      - not-sanitized:
+          - "{% csrf_token %}"
+          - 'method="get"'
+          - "method='get'"
+          - 'method="GET"'
+          - "method='GET'"
+references:
+  - https://docs.djangoproject.com/en/stable/ref/csrf/

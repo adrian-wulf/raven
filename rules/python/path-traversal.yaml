@@ -13,15 +13,15 @@ message: |
   Use pathlib.Path.resolve() and ensure the path stays within the intended directory.
 patterns:
   - type: regex
-    pattern: 'open\s*\(\s*[^)]*(request|req|params|body|form|args|input|data|path|filename)'
+    pattern: 'open\s*\(\s*[^)]*(request|req|params|body|form|args|input|data)'
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(os\.path\.join|pathlib\.Path)\s*\([^)]*(request|req|params|body|form|args|input|data|path|filename)'
+    pattern: '(os\.path\.join|pathlib\.Path)\s*\([^)]*(request|req|params|body|form|args|input|data)'
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(shutil\.(copy|move)|send_from_directory|send_file)\s*\([^)]*(request|req|params|body|form|args|input|data|path|filename)'
+    pattern: '(shutil\.(copy|move)|send_from_directory|send_file)\s*\([^)]*(request|req|params|body|form|args|input|data)'
     where:
       - not-test-file: true
 references:

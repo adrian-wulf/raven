@@ -11,4 +11,8 @@ message: |
   Stack traces leak internal paths and code structure. Return generic errors to users.
 patterns:
   - type: regex
-    pattern: "(error|exception|stack).*(message|trace|detail)"
+    pattern: "(?i)(res|response|ctx|c)\\.(status|send|write|json)\\s*\\(\\s*[^)]*(error|exception|stack).*(message|trace|detail)"
+  - type: regex
+    pattern: "(?i)return\\s+.*(error|exception|stack).*(message|trace|detail)"
+  - type: regex
+    pattern: "(?i)(print|console\\.log|logger\\.(error|warn|info))\\s*\\(\\s*[^)]*(error|exception|stack).*(message|trace|detail)"

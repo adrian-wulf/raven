@@ -11,4 +11,16 @@ message: |
   Sensitive endpoint may lack authentication. Add auth middleware or guards.
 patterns:
   - type: regex
-    pattern: "(admin|api/v1|internal|management|dashboard)"
+    pattern: "['\"]/admin"
+  - type: regex
+    pattern: "['\"]/management"
+  - type: regex
+    pattern: "['\"]/dashboard"
+  - type: regex
+    pattern: "['\"]/internal[/\"]"
+  - type: regex
+    pattern: "path\\s*:\\s*['\"]/admin"
+  - type: regex
+    pattern: "@app\\.(route|get|post|put|delete|patch)\\s*\\(\\s*['\"]/admin"
+  - type: regex
+    pattern: "http\\.HandleFunc\\s*\\(\\s*['\"]/admin"

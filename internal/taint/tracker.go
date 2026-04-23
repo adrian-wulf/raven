@@ -203,6 +203,9 @@ func (t *Tracker) analyzeRule(pf *ast.ParsedFile, rule RuleInfo) []Finding {
 			if f := t.checkSinkCall(n, pf.Source, sinks, sources, taintedVars, summaries, rule); f != nil {
 				findings = append(findings, *f)
 			}
+			if f := t.checkInterproceduralSink(n, pf.Source, sources, taintedVars, summaries, rule); f != nil {
+				findings = append(findings, *f)
+			}
 		}
 
 		for i := 0; i < int(n.ChildCount()); i++ {
@@ -225,12 +228,22 @@ func (t *Tracker) propagateAssignment(n *sitter.Node, source []byte, sourcePatte
 		nameNode = n.ChildByFieldName("left")
 		valueNode = n.ChildByFieldName("right")
 	case "assignment":
-		// Python: assignment has identifier on left, value on right (usually child 0 and 2, with = as child 1)
+		// Python: left side is everything before '=', right side everything after
 		for i := 0; i < int(n.ChildCount()); i++ {
 			child := n.Child(i)
-			if child.Type() == "identifier" && nameNode == nil {
+			if child.Type() == "=" {
+				break
+			}
+			if nameNode == nil {
 				nameNode = child
-			} else if child.Type() != "=" && nameNode != nil && valueNode == nil {
+			}
+		}
+		for i := int(n.ChildCount()) - 1; i >= 0; i-- {
+			child := n.Child(i)
+			if child.Type() == "=" {
+				break
+			}
+			if valueNode == nil {
 				valueNode = child
 			}
 		}
@@ -401,6 +414,9 @@ func (t *Tracker) isTaintedExpr(n *sitter.Node, source []byte, sourcePatterns []
 			}
 		}
 		return false
+	case "comparison_operator", "boolean_operator":
+		// Comparison and boolean operations don't propagate taint
+		return false
 	}
 
 	// For any other node type, check children recursively
@@ -493,6 +509,80 @@ func (t *Tracker) checkSinkCall(n *sitter.Node, source []byte, sinkPatterns, sou
 	return nil
 }
 
+func (t *Tracker) checkInterproceduralSink(n *sitter.Node, source []byte, sourcePatterns []string, taintedVars map[string]bool, summaries map[string]*FunctionSummary, rule RuleInfo) *Finding {
+	fn := n.ChildByFieldName("function")
+	if fn == nil {
+		for i := 0; i < int(n.ChildCount()); i++ {
+			child := n.Child(i)
+			if child.Type() == "attribute" || child.Type() == "identifier" {
+				fn = child
+				break
+			}
+		}
+	}
+	if fn == nil {
+		return nil
+	}
+	fnText := nodeText(fn, source)
+	summary, ok := summaries[fnText]
+	if !ok && strings.Contains(fnText, ".") {
+		parts := strings.Split(fnText, ".")
+		summary, ok = summaries[parts[len(parts)-1]]
+	}
+	if !ok || len(summary.TaintedParams) == 0 {
+		return nil
+	}
+
+	args := n.ChildByFieldName("arguments")
+	if args == nil {
+		for i := 0; i < int(n.ChildCount()); i++ {
+			if n.Child(i).Type() == "argument_list" {
+				args = n.Child(i)
+				break
+			}
+		}
+	}
+	if args == nil {
+		return nil
+	}
+
+	argIdx := 0
+	for i := 0; i < int(args.ChildCount()); i++ {
+		arg := args.Child(i)
+		if arg.Type() == "(" || arg.Type() == ")" || arg.Type() == "," {
+			continue
+		}
+		if containsInt(summary.TaintedParams, argIdx) {
+			if t.isTaintedExpr(arg, source, sourcePatterns, taintedVars, summaries) {
+				start := n.StartPoint()
+				return &Finding{
+					RuleID:     rule.ID,
+					RuleName:   rule.Name,
+					Severity:   rule.Severity,
+					Category:   rule.Category,
+					Message:    strings.TrimSpace(rule.Message),
+					File:       t.currentFile,
+					Line:       int(start.Row) + 1,
+					Column:     int(start.Column) + 1,
+					Snippet:    nodeText(n, source),
+					Confidence: rule.Confidence,
+					References: rule.References,
+				}
+			}
+		}
+		argIdx++
+	}
+	return nil
+}
+
+func containsInt(slice []int, val int) bool {
+	for _, v := range slice {
+		if v == val {
+			return true
+		}
+	}
+	return false
+}
 
 // buildFunctionSummaries analyzes all functions in a file and determines
 // which ones return tainted data or have tainted parameters flowing to sinks.
@@ -528,6 +618,12 @@ func (t *Tracker) buildFunctionSummaries(pf *ast.ParsedFile, sources, sinks []st
 			body = n.ChildByFieldName("body")
 		case "func_literal":
 			body = n.ChildByFieldName("body")
+		case "function_definition":
+			// Python
+			if name := n.ChildByFieldName("name"); name != nil {
+				funcName = nodeText(name, pf.Source)
+			}
+			body = n.ChildByFieldName("body")
 		}
 
 		if body != nil && funcName != "" {
@@ -546,17 +642,16 @@ func (t *Tracker) buildFunctionSummaries(pf *ast.ParsedFile, sources, sinks []st
 }
 
 // analyzeFunctionBody checks if a function returns tainted data or passes
-// tainted params to sinks.
+// tainted params to sinks. It simulates taint on each parameter independently.
 func (t *Tracker) analyzeFunctionBody(body *sitter.Node, source []byte, sources, sinks []string) *FunctionSummary {
 	summary := &FunctionSummary{}
 
-	// Build tainted vars for this function's parameters
-	taintedVars := make(map[string]bool)
+	// Extract parameter names
+	var paramNames []string
 	parent := body.Parent()
 	if parent != nil {
 		params := parent.ChildByFieldName("parameters")
 		if params == nil {
-			// Try finding parameter list in parent
 			for i := 0; i < int(parent.ChildCount()); i++ {
 				child := parent.Child(i)
 				if child.Type() == "formal_parameters" || child.Type() == "parameters" || child.Type() == "parameter_list" {
@@ -566,7 +661,6 @@ func (t *Tracker) analyzeFunctionBody(body *sitter.Node, source []byte, sources,
 			}
 		}
 		if params != nil {
-			paramIdx := 0
 			for i := 0; i < int(params.ChildCount()); i++ {
 				param := params.Child(i)
 				if param.Type() == "(" || param.Type() == ")" || param.Type() == "," {
@@ -576,7 +670,6 @@ func (t *Tracker) analyzeFunctionBody(body *sitter.Node, source []byte, sources,
 				if param.Type() == "identifier" {
 					paramName = nodeText(param, source)
 				} else {
-					// Try to find identifier inside parameter node
 					for j := 0; j < int(param.ChildCount()); j++ {
 						if param.Child(j).Type() == "identifier" {
 							paramName = nodeText(param.Child(j), source)
@@ -585,47 +678,68 @@ func (t *Tracker) analyzeFunctionBody(body *sitter.Node, source []byte, sources,
 					}
 				}
 				if paramName != "" {
-					// Check if any source pattern matches this param
-					for _, src := range sources {
-						if strings.Contains(paramName, src) || strings.Contains(src, paramName) {
-							taintedVars[paramName] = true
-							summary.TaintedParams = append(summary.TaintedParams, paramIdx)
-							break
-						}
+					paramNames = append(paramNames, paramName)
+				}
+			}
+		}
+	}
+
+	// Simulate taint on each parameter independently
+	for idx, paramName := range paramNames {
+		if paramName == "self" || paramName == "cls" || paramName == "this" {
+			continue
+		}
+		taintedVars := make(map[string]bool)
+		taintedVars[paramName] = true
+
+		// Only consider returns tainted if this param itself is a source pattern
+		isSourceParam := false
+		for _, src := range sources {
+			if strings.Contains(paramName, src) || strings.Contains(src, paramName) {
+				isSourceParam = true
+				break
+			}
+		}
+
+		var walk func(n *sitter.Node)
+		walk = func(n *sitter.Node) {
+			if n == nil {
+				return
+			}
+
+			switch n.Type() {
+			case "variable_declarator", "assignment_expression":
+				t.propagateAssignment(n, source, sources, taintedVars, nil)
+			case "assignment":
+				t.propagateAssignment(n, source, sources, taintedVars, nil)
+			case "short_var_declaration":
+				t.propagateAssignment(n, source, sources, taintedVars, nil)
+			case "call_expression", "call":
+				if f := t.checkSinkCall(n, source, sinks, sources, taintedVars, nil, RuleInfo{}); f != nil {
+					summary.TaintedParams = append(summary.TaintedParams, idx)
+				}
+			case "return_statement":
+				if !isSourceParam {
+					break
+				}
+				for i := 0; i < int(n.ChildCount()); i++ {
+					child := n.Child(i)
+					if child.Type() == "return" {
+						continue
+					}
+					if t.isTaintedExpr(child, source, sources, taintedVars, nil) {
+						summary.ReturnsTainted = true
 					}
 				}
-				paramIdx++
 			}
-		}
-	}
 
-	// Walk the body to check for returns with tainted data
-	var checkReturns func(n *sitter.Node)
-	checkReturns = func(n *sitter.Node) {
-		if n == nil {
-			return
-		}
-
-		switch n.Type() {
-		case "return_statement":
 			for i := 0; i < int(n.ChildCount()); i++ {
-				child := n.Child(i)
-				if child.Type() == "return" {
-					continue
-				}
-				if t.isTaintedExpr(child, source, sources, taintedVars, nil) {
-					summary.ReturnsTainted = true
-					return
-				}
+				walk(n.Child(i))
 			}
 		}
-
-		for i := 0; i < int(n.ChildCount()); i++ {
-			checkReturns(n.Child(i))
-		}
+		walk(body)
 	}
 
-	checkReturns(body)
 	return summary
 }
 func nodeText(n *sitter.Node, source []byte) string {

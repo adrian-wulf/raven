@@ -11,6 +11,4 @@ message: |
   Weak algorithms (MD5, SHA1, DES, RC4) are cryptographically broken. Use SHA-256+/AES-256-GCM.
 patterns:
   - type: regex
-    pattern: "(md5|sha1|des|rc4)\\s*\\("
-  - type: regex
-    pattern: "MD5|SHA1|DES|RC4"
+    pattern: "(?i)\\b(md5|sha1|des|rc4)\\s*\\("

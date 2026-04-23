@@ -1,0 +1,22 @@
+id: raven-py-markup-xss-001
+name: Explicit Markup Unescape (XSS)
+description: |
+  Detects explicit unescaping using mark_safe(), Markup(), or |safe filter.
+  These bypass HTML escaping and can lead to XSS if user-controlled data
+  reaches them. Even with controlled data, they are a code-smell.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [python]
+message: |
+  mark_safe() and Markup() bypass HTML escaping. If any argument comes
+  from user input, this is a direct XSS vulnerability. Prefer auto-escaping
+  templates or sanitize with bleach.
+patterns:
+  - type: regex
+    pattern: "\\bmark_safe\\s*\\("
+  - type: regex
+    pattern: "\\bMarkup\\s*\\("
+references:
+  - https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.safestring.mark_safe

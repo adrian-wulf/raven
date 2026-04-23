@@ -385,13 +385,17 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 	lang := DetectLanguage(path)
 	findings := []Finding{}
 
-	// Phase 1: Regex-based scanning
+	// Filter rules by language once for both phases
+	var langRules []Rule
 	for _, rule := range rules {
-		// Skip if rule doesn't apply to this language
 		if len(rule.Languages) > 0 && !contains(rule.Languages, lang) && !contains(rule.Languages, "*") {
 			continue
 		}
+		langRules = append(langRules, rule)
+	}
 
+	// Phase 1: Regex-based scanning
+	for _, rule := range langRules {
 		for _, pattern := range rule.Patterns {
 			// Skip AST-only patterns in regex phase
 			if pattern.Type == "ast-query" || pattern.Type == "taint" {
@@ -480,10 +484,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 			pf.Path = path
 
 			// 2a: AST query rules
-			for _, rule := range rules {
-				if len(rule.Languages) > 0 && !contains(rule.Languages, lang) && !contains(rule.Languages, "*") {
-					continue
-				}
+			for _, rule := range langRules {
 				if len(rule.Frameworks) > 0 && !s.hasAnyFramework(rule.Frameworks) {
 					continue
 				}
@@ -574,7 +575,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 			}
 			// Set current file for cross-file resolver
 			tracker.SetCurrentFile(path)
-			taintRules := convertRulesToTaint(rules)
+			taintRules := convertRulesToTaint(langRules)
 			taintFindings, err := tracker.ScanBytes(langName, content, taintRules)
 			if err == nil {
 				for _, f := range taintFindings {

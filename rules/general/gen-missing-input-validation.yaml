@@ -11,4 +11,8 @@ message: |
   User input used without validation. Always validate and sanitize external input.
 patterns:
   - type: regex
-    pattern: "(req\\.|request\\.|params\\.|body\\.|query\\.)\\w+"
+    pattern: "(req\\.|request\\.|params\\.|body\\.|query\\.)(params|body|query|form|input|data|url|path|headers?).*?(Sprintf|Printf|Query|Exec|Redirect|Open|File|Write|ReadFile|os\\.Open|http\\.Redirect|sql\\.Query|db\\.Query|fmt\\.Sprintf|fmt\\.Printf)"
+  - type: regex
+    pattern: "(req\\.|request\\.|params\\.|body\\.|query\\.)(params|body|query|form|input|data|url|path|headers?).*?(\\+\\s*[`\"]|[`\"].*\\+.*req\\.)"
+  - type: regex
+    pattern: "(req\\.|request\\.|params\\.|body\\.|query\\.)(params|body|query|form|input|data|url|path|headers?).*?(render|innerHTML|document\\.write|eval|exec|Function)"

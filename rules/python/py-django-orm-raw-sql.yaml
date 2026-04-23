@@ -1,0 +1,28 @@
+id: raven-py-django-orm-raw-001
+name: Django ORM Raw SQL Query
+description: |
+  Detects use of raw() or extra() in Django ORM with string formatting,
+  which can lead to SQL injection if user input reaches the query.
+severity: high
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [python]
+frameworks: [django]
+message: |
+  Django ORM raw()/extra() with string formatting is SQL injection!
+  Use parameterized queries: Model.objects.raw("SELECT * WHERE id = %s", [id])
+  Never pass user input directly into raw SQL strings.
+patterns:
+  - type: regex
+    pattern: "\\.raw\\s*\\(\\s*['\"].*%s"
+  - type: regex
+    pattern: "\\.raw\\s*\\(\\s*['\"].*%\\("
+  - type: regex
+    pattern: "\\.raw\\s*\\(\\s*['\"].*\\+"
+  - type: regex
+    pattern: "\\.extra\\s*\\(\\s*[^)]*where\\s*=\\s*['\"].*%s"
+  - type: regex
+    pattern: "\\.extra\\s*\\(\\s*[^)]*select\\s*=\\s*['\"].*%s"
+references:
+  - https://docs.djangoproject.com/en/stable/topics/db/sql/

@@ -1,0 +1,18 @@
+id: raven-go-open-redirect-001
+name: Open Redirect via http.Redirect
+description: |
+  Detects http.Redirect calls where the redirect URL may be controlled by user input.
+  Open redirects can be used in phishing attacks.
+severity: medium
+category: injection
+confidence: high
+cwe: CWE-601
+languages: [go]
+message: |
+  http.Redirect with a user-controlled URL can lead to open redirect.
+  Validate the URL against an allowlist or use a mapping of safe destinations.
+patterns:
+  - type: regex
+    pattern: "http\\.Redirect\\s*\\(\\s*[^,]*,\\s*[^,]*,\\s*[^,)]*(req\\.|request\\.|params\\.|r\\.URL|r\\.Form|r\\.PostForm|r\\.Query)"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html

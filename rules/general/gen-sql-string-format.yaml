@@ -4,17 +4,26 @@ description: |
   Detects SQL queries built with string formatting, concatenation, or interpolation.
 severity: critical
 category: sql-injection
-confidence: high
+confidence: medium
 cwe: CWE-89
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   String formatting in SQL queries is injection! Use parameterized queries.
 patterns:
   - type: regex
-    pattern: "(SELECT|INSERT|UPDATE|DELETE).*\\+"
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*[\"']\\s*\\+\\s*[^\"'\\s]"
+    where:
+      - not-sanitized:
+          - "QUOTE(?)"
   - type: regex
     pattern: "(SELECT|INSERT|UPDATE|DELETE).*\\$\\{"
   - type: regex
-    pattern: "(SELECT|INSERT|UPDATE|DELETE).*%s"
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*%s['\"].*(%|\\.format\\s*\\(|\\+)"
+    where:
+      - not-sanitized:
+          - "ON CONFLICT"
+          - "QUOTE(?)"
+  - type: regex
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*%s['\"].*Sprintf\\s*\\("
   - type: regex
     pattern: "(SELECT|INSERT|UPDATE|DELETE).*f['\"]"

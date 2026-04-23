@@ -1,0 +1,21 @@
+id: raven-html-sri-001
+name: Missing Subresource Integrity (SRI)
+description: |
+  Detects external <script> or <link> tags without an integrity attribute.
+  Without SRI, if the CDN is compromised, attackers can inject malicious code.
+severity: medium
+category: injection
+confidence: high
+cwe: CWE-353
+languages: [html]
+message: |
+  External resource is missing the 'integrity' attribute.
+  Add a base64-encoded cryptographic hash of the resource to verify it
+  has not been tampered with.
+patterns:
+  - type: regex
+    pattern: "<script[^>]+src\\s*=\\s*['\"]https?://[^'\"]+['\"][^>]*>"
+  - type: regex
+    pattern: "<link[^>]+href\\s*=\\s*['\"]https?://[^'\"]+['\"][^>]*>"
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
