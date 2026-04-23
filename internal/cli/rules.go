@@ -97,6 +97,7 @@ Examples:
 	cmd.Flags().BoolVarP(&detail, "detail", "d", false, "Show full rule details")
 
 	cmd.AddCommand(rulesValidateCmd())
+	cmd.AddCommand(rulesSearchCmd())
 
 	return cmd
 }
@@ -219,4 +220,51 @@ func contains(slice []string, item string) bool {
 		}
 	}
 	return false
+}
+
+func rulesSearchCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "search <keyword>",
+		Short: "Search rules by name, id, category, or description",
+		Long: `Search through all available rules.
+
+Examples:
+  raven rules search sql           # Rules matching "sql"
+  raven rules search xss           # Rules matching "xss"
+  raven rules search injection     # Rules matching "injection"`,
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			keyword := strings.ToLower(args[0])
+
+			loader := engine.NewRulesLoader()
+			rules, err := loader.Load()
+			if err != nil {
+				return fmt.Errorf("loading rules: %w", err)
+			}
+
+			var matches []engine.Rule
+			for _, rule := range rules {
+				searchable := strings.ToLower(rule.ID + " " + rule.Name + " " + rule.Category + " " + rule.Description + " " + strings.Join(rule.Languages, " "))
+				if strings.Contains(searchable, keyword) {
+					matches = append(matches, rule)
+				}
+			}
+
+			if len(matches) == 0 {
+				fmt.Printf("No rules found for '%s'\n", keyword)
+				return nil
+			}
+
+			fmt.Printf("Found %d rule(s) for '%s':\n\n", len(matches), keyword)
+			for _, rule := range matches {
+				fmt.Printf("  %s (%s)\n", rule.Name, rule.ID)
+				fmt.Printf("    Severity: %s | Category: %s | Languages: %s\n",
+					rule.Severity, rule.Category, strings.Join(rule.Languages, ", "))
+				fmt.Printf("    %s\n", strings.TrimSpace(rule.Description))
+				fmt.Println()
+			}
+
+			return nil
+		},
+	}
 }
