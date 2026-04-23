@@ -13,21 +13,35 @@ import (
 
 func aiFixCmd() *cobra.Command {
 	var dryRun bool
+	var providerName string
 
 	cmd := &cobra.Command{
 		Use:   "fix-ai [paths...]",
 		Short: "Fix security issues using AI",
 		Long: `Use AI (LLM) to generate secure fixes for vulnerabilities.
 
-This sends code snippets to an LLM API (OpenRouter, DeepSeek, etc.)
-and applies the suggested fixes. You can review each fix before applying.
+This sends code snippets to an LLM API and applies the suggested fixes.
+You can review each fix before applying.
 
-Requires: RAVEN_LLM_API_KEY or OPENROUTER_API_KEY environment variable.
+Supported providers (auto-detected from env):
+  • openrouter    — RAVEN_LLM_API_KEY or OPENROUTER_API_KEY
+  • nvidia        — NVIDIA_API_KEY (free tier: 40 req/min!)
+  • openai        — OPENAI_API_KEY
+  • anthropic     — ANTHROPIC_API_KEY (Claude)
+  • groq          — GROQ_API_KEY (very fast)
+  • deepseek      — DEEPSEEK_API_KEY
+  • together      — TOGETHER_API_KEY
+  • gemini        — GEMINI_API_KEY or GOOGLE_API_KEY
+  • ollama        — OLLAMA_HOST (local, free)
+  • azure         — AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT
+
+Set RAVEN_LLM_PROVIDER to force a specific provider.
 
 Examples:
-  raven fix-ai              # AI-fix all issues
-  raven fix-ai ./src        # AI-fix specific directory
-  raven fix-ai --dry-run    # Preview fixes without applying`,
+  raven fix-ai                  # AI-fix all issues with auto-detected provider
+  raven fix-ai --provider nvidia # Use NVIDIA NIM (free)
+  raven fix-ai ./src            # AI-fix specific directory
+  raven fix-ai --dry-run        # Preview fixes without applying`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
@@ -35,17 +49,31 @@ Examples:
 				paths = []string{"."}
 			}
 
-			// Check API key
-			apiKey := os.Getenv("RAVEN_LLM_API_KEY")
-			if apiKey == "" {
-				apiKey = os.Getenv("OPENROUTER_API_KEY")
+			// Setup client
+			var client *llm.Client
+			var err error
+
+			if providerName != "" {
+				client, err = llm.NewClientWithProvider(providerName)
+				if err != nil {
+					fmt.Println(styles.Error.Render("❌ " + err.Error()))
+					printProviderHelp()
+					return err
+				}
+			} else {
+				client = llm.NewClient()
 			}
-			if apiKey == "" {
-				fmt.Println(styles.Error.Render("❌ No LLM API key configured."))
-				fmt.Println("   Set RAVEN_LLM_API_KEY or OPENROUTER_API_KEY environment variable.")
-				fmt.Println("   Get a free key at https://openrouter.ai/keys")
-				return fmt.Errorf("missing API key")
+
+			// Test the client early
+			providerName := client.ProviderName()
+			if providerName == "none" || providerName == "unconfigured" {
+				fmt.Println(styles.Error.Render("❌ No LLM provider configured."))
+				printProviderHelp()
+				return fmt.Errorf("no LLM provider configured")
 			}
+
+			fmt.Printf("🤖 Using provider: %s\n", styles.Info.Render(providerName))
+			fmt.Println()
 
 			// Load rules and scan
 			loader := engine.NewRulesLoader()
@@ -73,7 +101,6 @@ Examples:
 			}
 
 			// AI fix each finding
-			client := llm.NewClient()
 			fixed := 0
 			skipped := 0
 			failed := 0
@@ -100,7 +127,7 @@ Examples:
 				}
 
 				// Call LLM
-				fmt.Println("  🤖 Asking AI for fix...")
+				fmt.Printf("  🤖 Asking %s for fix...\n", providerName)
 				resp, err := client.GenerateFix(llm.FixRequest{
 					Code:        code,
 					Language:    engine.DetectLanguage(finding.File),
@@ -154,8 +181,30 @@ Examples:
 	}
 
 	cmd.Flags().BoolVar(&dryRun, "dry-run", false, "Preview without applying fixes")
+	cmd.Flags().StringVar(&providerName, "provider", "", "LLM provider to use (overrides auto-detection)")
 
 	return cmd
+}
+
+func printProviderHelp() {
+	fmt.Println()
+	fmt.Println("Available providers:")
+	for _, name := range llm.AvailableProviders() {
+		fmt.Printf("  • %s\n", name)
+	}
+	fmt.Println()
+	fmt.Println("Quick start:")
+	fmt.Println("  # Free NVIDIA NIM (40 req/min):")
+	fmt.Println("  export NVIDIA_API_KEY=your-key")
+	fmt.Println("  raven fix-ai")
+	fmt.Println()
+	fmt.Println("  # OpenRouter (many models):")
+	fmt.Println("  export OPENROUTER_API_KEY=your-key")
+	fmt.Println("  raven fix-ai")
+	fmt.Println()
+	fmt.Println("  # Local Ollama (completely free):")
+	fmt.Println("  export OLLAMA_HOST=http://localhost:11434")
+	fmt.Println("  raven fix-ai --provider ollama")
 }
 
 func readLineRange(file string, line, context int) (string, error) {

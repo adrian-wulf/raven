@@ -147,17 +147,34 @@ Then press F5 in VS Code to launch the extension. You'll see:
 
 ### AI-Powered Fixes
 
-Let AI fix vulnerabilities for you:
+Let AI fix vulnerabilities for you. Raven supports **10+ LLM providers** with auto-detection:
+
+| Provider | Setup | Free Tier |
+|----------|-------|-----------|
+| **NVIDIA NIM** | `export NVIDIA_API_KEY=...` | ✅ 40 req/min |
+| **OpenRouter** | `export OPENROUTER_API_KEY=...` | ✅ Available |
+| **Groq** | `export GROQ_API_KEY=...` | ✅ Available |
+| **Ollama** | `export OLLAMA_HOST=...` | ✅ Local, unlimited |
+| **OpenAI** | `export OPENAI_API_KEY=...` | ❌ Paid |
+| **Anthropic** | `export ANTHROPIC_API_KEY=...` | ❌ Paid |
+| **DeepSeek** | `export DEEPSEEK_API_KEY=...` | ✅ Available |
+| **Together** | `export TOGETHER_API_KEY=...` | ✅ Credits |
+| **Google Gemini** | `export GEMINI_API_KEY=...` | ✅ Generous |
+| **Azure OpenAI** | `export AZURE_OPENAI_API_KEY=...` | ❌ Paid |
 
 ```bash
-# Set your API key (OpenRouter recommended - free tier available)
-export OPENROUTER_API_KEY=your-key
-
-# AI-fix all issues interactively
+# Auto-detects any configured provider
 raven fix-ai
+
+# Force a specific provider
+raven fix-ai --provider nvidia
 
 # Preview without applying
 raven fix-ai --dry-run
+
+# Use local Ollama (completely free)
+export OLLAMA_HOST=http://localhost:11434
+raven fix-ai --provider ollama
 ```
 
 ### Pre-commit Hook
