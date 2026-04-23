@@ -5,8 +5,11 @@ import (
 	"strings"
 
 	sitter "github.com/smacker/go-tree-sitter"
+	"github.com/smacker/go-tree-sitter/csharp"
 	"github.com/smacker/go-tree-sitter/golang"
+	"github.com/smacker/go-tree-sitter/java"
 	"github.com/smacker/go-tree-sitter/javascript"
+	"github.com/smacker/go-tree-sitter/kotlin"
 	"github.com/smacker/go-tree-sitter/python"
 	"github.com/smacker/go-tree-sitter/typescript/tsx"
 	"github.com/smacker/go-tree-sitter/typescript/typescript"
@@ -45,6 +48,21 @@ var registry = []Language{
 		Name:       "go",
 		Extensions: []string{".go"},
 		Parser:     golang.GetLanguage(),
+	},
+	{
+		Name:       "java",
+		Extensions: []string{".java"},
+		Parser:     java.GetLanguage(),
+	},
+	{
+		Name:       "kotlin",
+		Extensions: []string{".kt"},
+		Parser:     kotlin.GetLanguage(),
+	},
+	{
+		Name:       "csharp",
+		Extensions: []string{".cs"},
+		Parser:     csharp.GetLanguage(),
 	},
 }
 

@@ -244,6 +244,7 @@ func (s *Scanner) hasSupportedExtension(path string) bool {
 		".java", ".kt",
 		".rb",
 		".swift",
+		".cs",
 	}
 	for _, s := range supported {
 		if ext == s {
@@ -610,6 +611,8 @@ func DetectLanguage(path string) string {
 		return "ruby"
 	case ".swift":
 		return "swift"
+	case ".cs":
+		return "csharp"
 	default:
 		return ""
 	}

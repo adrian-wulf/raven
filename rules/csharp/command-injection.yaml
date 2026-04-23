@@ -1,0 +1,22 @@
+id: raven-csharp-cmd-001
+name: Command Injection via Process.Start
+description: |
+  Detects execution of shell commands with user input in C#.
+severity: critical
+category: command-injection
+confidence: high
+languages: [csharp]
+message: |
+  Potential command injection: user input is passed to Process.Start() or Process().
+  Use ProcessStartInfo with argument list instead of shell strings.
+patterns:
+  - type: regex
+    pattern: 'Process\.Start\s*\([^)]*(Request|Environment|args|input|param)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'new\s+Process\s*\(\)[^;]*StartInfo\.Arguments\s*='
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Command_Injection

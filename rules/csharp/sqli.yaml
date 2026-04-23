@@ -1,0 +1,26 @@
+id: raven-csharp-sqli-001
+name: SQL Injection in C#
+description: |
+  Detects SQL queries built via string concatenation or format in C#.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [csharp]
+message: |
+  SQL injection: Use SqlCommand with SqlParameter for parameterized queries.
+  Never concatenate user input into SQL strings.
+patterns:
+  - type: regex
+    pattern: '(?i)(Execute|ExecuteNonQuery|ExecuteReader)\s*\(\s*\$["''][^"'']*\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)string\.Format\s*\(\s*["''][^"'']*(SELECT|INSERT|UPDATE|DELETE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)query\s*\+?=\s*[^;]*Request\.QueryString'
+    where:
+      - not-test-file: true
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

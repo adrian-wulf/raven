@@ -1,0 +1,28 @@
+id: raven-java-xss-001
+name: XSS via JSP Expression or Response Output
+description: |
+  Detects direct output of user input in JSP or servlets without encoding.
+severity: high
+category: xss
+confidence: high
+languages: [java]
+message: |
+  Potential XSS: user input is output directly without HTML encoding.
+  Use org.owasp.encoder.Encode.forHtml() or ESAPI.encoder().encodeForHTML().
+patterns:
+  - type: regex
+    pattern: 'response\.getWriter\(\)\.print\s*\([^)]*(request|req|param|input)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - Encode.forHtml
+          - encodeForHTML
+  - type: regex
+    pattern: 'out\.print\s*\([^)]*(request|req|param|input)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - Encode.forHtml
+          - encodeForHTML
+references:
+  - https://owasp.org/www-community/attacks/xss/

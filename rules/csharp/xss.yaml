@@ -1,0 +1,28 @@
+id: raven-csharp-xss-001
+name: XSS via Razor or Response Output
+description: |
+  Detects direct output of user input in ASP.NET without encoding.
+severity: high
+category: xss
+confidence: high
+languages: [csharp]
+message: |
+  Potential XSS: user input is output directly without HTML encoding.
+  Use @Html.Encode(), HttpUtility.HtmlEncode(), or AntiXssEncoder.
+patterns:
+  - type: regex
+    pattern: 'Response\.Write\s*\([^)]*(Request|QueryString|Form|Params)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - HtmlEncode
+          - AntiXssEncoder
+  - type: regex
+    pattern: '@\s*\(?\s*(Request|QueryString|Form|Params)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - HtmlEncode
+          - AntiXssEncoder
+references:
+  - https://owasp.org/www-community/attacks/xss/

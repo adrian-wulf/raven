@@ -1,0 +1,22 @@
+id: raven-java-cmd-001
+name: Command Injection via Runtime.exec
+description: |
+  Detects execution of shell commands with user input in Java.
+severity: critical
+category: command-injection
+confidence: high
+languages: [java]
+message: |
+  Potential command injection: user input is passed to Runtime.exec() or ProcessBuilder.
+  Use parameterized execution with ProcessBuilder and validate input.
+patterns:
+  - type: regex
+    pattern: 'Runtime\.getRuntime\(\)\.exec\s*\([^)]*(request|req|param|input|args)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'new\s+ProcessBuilder\s*\([^)]*(request|req|param|input|args)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Command_Injection
