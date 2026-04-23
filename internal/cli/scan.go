@@ -36,6 +36,7 @@ func scanCmd() *cobra.Command {
 		noCache          bool
 		policyPath       string
 		staged           bool
+		quiet            bool
 	)
 
 	cmd := &cobra.Command{
@@ -101,7 +102,9 @@ Examples:
 				for _, fw := range detectedFrameworks {
 					fwNames = append(fwNames, fw.Name)
 				}
-				fmt.Fprintf(os.Stderr, "📦 Frameworks: %s\n\n", framework.FormatFrameworks(detectedFrameworks))
+				if !quiet {
+					fmt.Fprintf(os.Stderr, "📦 Frameworks: %s\n\n", framework.FormatFrameworks(detectedFrameworks))
+				}
 			}
 
 			// Load policy if specified
@@ -176,8 +179,10 @@ Examples:
 
 			// Secrets scanning
 			if secretsFlag {
-				fmt.Fprintln(os.Stderr)
-				fmt.Fprintln(os.Stderr, "🔐 Scanning for secrets...")
+				if !quiet {
+					fmt.Fprintln(os.Stderr)
+					fmt.Fprintln(os.Stderr, "🔐 Scanning for secrets...")
+				}
 				secretDetector := secrets.NewDetector()
 				secretCount := 0
 				for _, path := range paths {
@@ -221,25 +226,33 @@ Examples:
 			// Dependency scanning (before output so JSON includes vulns)
 			var depVulns []deps.Vulnerability
 			if depsFlag {
-				fmt.Fprintln(os.Stderr)
-				fmt.Fprintln(os.Stderr, "🔍 Scanning dependencies...")
+				if !quiet {
+					fmt.Fprintln(os.Stderr)
+					fmt.Fprintln(os.Stderr, "🔍 Scanning dependencies...")
+				}
 				depScanner := deps.NewScanner()
 				var err error
 				depVulns, err = depScanner.Scan(paths[0])
 				if err != nil {
-					fmt.Fprintf(os.Stderr, "Dependency scan error: %v\n", err)
+					if !quiet {
+						fmt.Fprintf(os.Stderr, "Dependency scan error: %v\n", err)
+					}
 				} else if len(depVulns) > 0 {
-					fmt.Fprintf(os.Stderr, "⚠️  Found %d vulnerable dependencies:\n", len(depVulns))
-					for _, v := range depVulns {
-						fixed := v.FixedVersion
-						if fixed == "" {
-							fixed = "unknown"
+					if !quiet {
+						fmt.Fprintf(os.Stderr, "⚠️  Found %d vulnerable dependencies:\n", len(depVulns))
+						for _, v := range depVulns {
+							fixed := v.FixedVersion
+							if fixed == "" {
+								fixed = "unknown"
+							}
+							fmt.Fprintf(os.Stderr, "  %s: %s@%s → %s\n", v.ID, v.Package, v.Version, fixed)
+							fmt.Fprintf(os.Stderr, "    %s\n", v.Summary)
 						}
-						fmt.Fprintf(os.Stderr, "  %s: %s@%s → %s\n", v.ID, v.Package, v.Version, fixed)
-						fmt.Fprintf(os.Stderr, "    %s\n", v.Summary)
 					}
 				} else {
-					fmt.Fprintln(os.Stderr, "✅ No known vulnerabilities in dependencies")
+					if !quiet {
+						fmt.Fprintln(os.Stderr, "✅ No known vulnerabilities in dependencies")
+					}
 				}
 
 				// Convert to engine.Vulnerability for JSON output
@@ -257,14 +270,15 @@ Examples:
 			}
 
 			// Output results
-			formatter := output.Formatter{
-				Format:   format,
-				Color:    !noColor,
-				ShowCode: !noCode,
-			}
-
-			if err := formatter.Print(result); err != nil {
-				return err
+			if !quiet {
+				formatter := output.Formatter{
+					Format:   format,
+					Color:    !noColor,
+					ShowCode: !noCode,
+				}
+				if err := formatter.Print(result); err != nil {
+					return err
+				}
 			}
 
 			// Save baseline if requested
@@ -355,6 +369,7 @@ Examples:
 	cmd.Flags().BoolVar(&noIgnoreComments, "no-ignore-comments", false, "Ignore inline suppression comments")
 	cmd.Flags().StringVar(&policyPath, "policy", "", "Path to policy YAML (.raven-policy.yaml)")
 	cmd.Flags().BoolVar(&staged, "staged", false, "Only scan git staged files (fast pre-commit scan)")
+	cmd.Flags().BoolVar(&quiet, "quiet", false, "Silent mode: only exit code, no output")
 
 	return cmd
 }
