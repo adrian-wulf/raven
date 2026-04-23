@@ -5,6 +5,7 @@ import (
 
 	sitter "github.com/smacker/go-tree-sitter"
 	"github.com/raven-security/raven/internal/ast"
+	"github.com/raven-security/raven/internal/taint/crossfile"
 )
 
 // Finding represents a taint analysis finding
@@ -34,6 +35,7 @@ type RulePattern struct {
 type Tracker struct {
 	config      LanguageConfig
 	currentFile string
+	resolver    *crossfile.Resolver // optional cross-file resolver
 }
 
 // NewTracker creates a taint tracker for the given language
@@ -43,6 +45,11 @@ func NewTracker(language string) *Tracker {
 		config = LanguageConfig{}
 	}
 	return &Tracker{config: config}
+}
+
+// SetResolver sets the cross-file module resolver.
+func (t *Tracker) SetResolver(r *crossfile.Resolver) {
+	t.resolver = r
 }
 
 // ScanFile analyzes a file for taint vulnerabilities
@@ -126,6 +133,36 @@ func (t *Tracker) analyzeRule(pf *ast.ParsedFile, rule RuleInfo) []Finding {
 
 	// Build tainted variable map
 	taintedVars := make(map[string]bool)
+
+	// Add cross-file tainted imports
+	if t.resolver != nil {
+		if mod, ok := t.resolver.GetModuleInfo(t.currentFile); ok {
+			for _, imp := range mod.Imports {
+				resolved, ok := t.resolver.ResolveImport(t.currentFile, imp.Source)
+				if !ok {
+					continue
+				}
+				resolvedMod, hasMod := t.resolver.GetModuleInfo(resolved)
+				if !hasMod {
+					continue
+				}
+				for _, exp := range resolvedMod.Exports {
+					if !t.resolver.IsTaintedSource(resolved, exp.Name) {
+						continue
+					}
+					for _, importedName := range imp.Names {
+						if importedName == exp.Name {
+							// Named import: e.g. import { getInput } from './utils'
+							taintedVars[importedName] = true
+						} else {
+							// Whole module import: e.g. const utils = require('./utils')
+							taintedVars[importedName+"."+exp.Name] = true
+						}
+					}
+				}
+			}
+		}
+	}
 
 	// Walk AST to find sources and propagate taint
 	root := pf.RootNode()
@@ -290,6 +327,16 @@ func (t *Tracker) isTaintedExpr(n *sitter.Node, source []byte, sourcePatterns []
 			fnText := nodeText(fn, source)
 			for _, pattern := range sourcePatterns {
 				if strings.Contains(fnText, pattern) {
+					return true
+				}
+			}
+			// Check if the called function is a tainted import
+			if taintedVars[fnText] {
+				return true
+			}
+			parts := strings.Split(fnText, ".")
+			for _, part := range parts {
+				if taintedVars[part] {
 					return true
 				}
 			}

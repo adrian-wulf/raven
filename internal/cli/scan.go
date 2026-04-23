@@ -12,6 +12,7 @@ import (
 	"github.com/raven-security/raven/internal/output"
 	"github.com/raven-security/raven/internal/secrets"
 	"github.com/raven-security/raven/internal/suppress"
+	"github.com/raven-security/raven/internal/taint/crossfile"
 	"github.com/spf13/cobra"
 )
 
@@ -103,6 +104,12 @@ Examples:
 				suppressMap = suppress.NewMap()
 			}
 
+			// Build cross-file resolver for taint analysis
+			resolver := crossfile.NewResolver()
+			for _, path := range paths {
+				resolver.ScanDirectory(path)
+			}
+
 			scanConfig := engine.ScanConfig{
 				Paths:        paths,
 				Exclude:      cfg.Rules.Exclude,
@@ -111,6 +118,7 @@ Examples:
 				MinSeverity:  engine.Severity(minSev),
 				Baseline:     bl,
 				Suppressions: suppressMap,
+				Resolver:     resolver,
 			}
 
 			scanner := engine.NewScanner(rules, scanConfig)

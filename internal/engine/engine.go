@@ -14,6 +14,7 @@ import (
 	"github.com/raven-security/raven/internal/baseline"
 	"github.com/raven-security/raven/internal/suppress"
 	"github.com/raven-security/raven/internal/taint"
+	"github.com/raven-security/raven/internal/taint/crossfile"
 	"github.com/raven-security/raven/internal/utils"
 )
 
@@ -29,8 +30,9 @@ type ScanConfig struct {
 	Frameworks   []string
 	Confidence   string
 	MinSeverity  Severity
-	Baseline     *baseline.Baseline // optional baseline for diff scanning
-	Suppressions *suppress.Map      // optional inline comment suppressions
+	Baseline     *baseline.Baseline   // optional baseline for diff scanning
+	Suppressions *suppress.Map        // optional inline comment suppressions
+	Resolver     *crossfile.Resolver  // optional cross-file taint resolver
 }
 
 func NewScanner(rules []Rule, config ScanConfig) *Scanner {
@@ -411,6 +413,9 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 				langName = "javascript"
 			}
 			tracker := taint.NewTracker(langName)
+				if s.config.Resolver != nil {
+					tracker.SetResolver(s.config.Resolver)
+				}
 			taintRules := convertRulesToTaint(rules)
 			taintFindings, err := tracker.ScanFile(path, taintRules)
 			if err == nil {
