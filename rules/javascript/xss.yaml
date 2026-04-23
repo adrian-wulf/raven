@@ -12,21 +12,42 @@ message: |
   Use textContent instead, or sanitize input with DOMPurify.
 patterns:
   - type: regex
-    pattern: "\\.innerHTML\\s*=\\s*[^;]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+    pattern: "(?P<var>\\w+)\\.innerHTML\\s*=\\s*[^;]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - DOMPurify.sanitize
+          - escapeHtml
   - type: regex
     pattern: "dangerouslySetInnerHTML\\s*:\\s*\\{\\s*__html\\s*:\\s*[^}]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+    where:
+      - not-test-file: true
   - type: regex
-    pattern: "\\.innerHTML\\s*=\\s*[`\"'].*\\$\\{[^}]+\\}"
+    pattern: "(?P<var>\\w+)\\.innerHTML\\s*=\\s*[`\"'].*\\$\\{[^}]+\\}"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - DOMPurify.sanitize
+          - escapeHtml
   - type: literal
     pattern: "document.write("
+    where:
+      - not-test-file: true
   - type: regex
     pattern: "res\\.send\\s*\\(\\s*[`\"'].*\\$\\{[^}]+\\}"
+    where:
+      - not-test-file: true
   - type: regex
-    pattern: "innerHTML\\s*=\\s*[`\"'].*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+    pattern: "(?P<var>\\w+)\\.innerHTML\\s*=\\s*[`\"'].*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - DOMPurify.sanitize
+          - escapeHtml
 fix:
-  description: Use textContent instead of innerHTML
-  pattern: "\\.innerHTML\\s*=\\s*"
-  replace: ".textContent = "
+  description: Use textContent instead of innerHTML on ${var}
+  pattern: "(?P<var>\\w+)\\.innerHTML\\s*=\\s*"
+  replace: "${var}.textContent = "
 references:
   - https://owasp.org/www-community/attacks/xss/
   - https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html

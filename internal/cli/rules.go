@@ -2,11 +2,15 @@ package cli
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 )
 
 func rulesCmd() *cobra.Command {
@@ -92,7 +96,120 @@ Examples:
 	cmd.Flags().StringVarP(&sev, "sev", "s", "", "Filter by minimum severity")
 	cmd.Flags().BoolVarP(&detail, "detail", "d", false, "Show full rule details")
 
+	cmd.AddCommand(rulesValidateCmd())
+
 	return cmd
+}
+
+func rulesValidateCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "validate [path]",
+		Short: "Validate rule files",
+		Long: `Validate Raven rule files for syntax errors and common mistakes.
+
+Examples:
+  raven rules validate              # Validate all loaded rules
+  raven rules validate ./rules      # Validate rules in directory
+  raven rules validate rule.yaml    # Validate single file`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			var paths []string
+			if len(args) > 0 {
+				paths = args
+			} else {
+				paths = []string{"rules", "/usr/share/raven/rules"}
+			}
+
+			var total, valid, invalid int
+			for _, path := range paths {
+				info, err := os.Stat(path)
+				if err != nil {
+					continue
+				}
+
+				if !info.IsDir() {
+					total++
+					if v := validateRuleFile(path); v == nil {
+						valid++
+						fmt.Printf("✅ %s\n", path)
+					} else {
+						invalid++
+						fmt.Printf("❌ %s: %v\n", path, v)
+					}
+					continue
+				}
+
+				filepath.Walk(path, func(p string, info os.FileInfo, err error) error {
+					if err != nil || info.IsDir() {
+						return nil
+					}
+					ext := filepath.Ext(p)
+					if ext != ".yaml" && ext != ".yml" {
+						return nil
+					}
+					total++
+					if v := validateRuleFile(p); v == nil {
+						valid++
+						fmt.Printf("✅ %s\n", p)
+					} else {
+						invalid++
+						fmt.Printf("❌ %s: %v\n", p, v)
+					}
+					return nil
+				})
+			}
+
+			fmt.Println()
+			if invalid == 0 {
+				fmt.Printf("✅ All %d rule files valid\n", total)
+			} else {
+				fmt.Printf("⚠️  %d/%d rule files invalid\n", invalid, total)
+				return fmt.Errorf("validation failed")
+			}
+			return nil
+		},
+	}
+}
+
+func validateRuleFile(path string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	var rule engine.Rule
+	if err := yaml.Unmarshal(data, &rule); err != nil {
+		return fmt.Errorf("parse error: %w", err)
+	}
+	if rule.ID == "" {
+		return fmt.Errorf("missing 'id' field")
+	}
+	if rule.Name == "" {
+		return fmt.Errorf("missing 'name' field")
+	}
+	if rule.Severity == "" {
+		return fmt.Errorf("missing 'severity' field")
+	}
+	if len(rule.Patterns) == 0 {
+		return fmt.Errorf("no patterns defined")
+	}
+	for i, p := range rule.Patterns {
+		if p.Type == "" {
+			return fmt.Errorf("pattern %d missing 'type'", i+1)
+		}
+		validTypes := map[string]bool{"regex": true, "literal": true, "ast-query": true, "taint": true}
+		if !validTypes[p.Type] {
+			return fmt.Errorf("pattern %d has invalid type: %s", i+1, p.Type)
+		}
+		if p.Type != "taint" && p.Pattern == "" && p.Query == "" {
+			return fmt.Errorf("pattern %d missing 'pattern' or 'query'", i+1)
+		}
+		// Validate regex patterns compile
+		if p.Type == "regex" && p.Pattern != "" {
+			if _, err := regexp.Compile(p.Pattern); err != nil {
+				return fmt.Errorf("pattern %d invalid regex: %w", i+1, err)
+			}
+		}
+	}
+	return nil
 }
 
 func contains(slice []string, item string) bool {

@@ -30,11 +30,21 @@ type Rule struct {
 }
 
 type Pattern struct {
-	Type    string   `yaml:"type"`    // regex, literal, ast-query, taint
-	Pattern string   `yaml:"pattern"`
-	Query   string   `yaml:"query"`   // for ast-query patterns
-	Sources []string `yaml:"sources,omitempty"`
-	Sinks   []string `yaml:"sinks,omitempty"`
+	Type       string        `yaml:"type"`    // regex, literal, ast-query, taint
+	Pattern    string        `yaml:"pattern"`
+	Query      string        `yaml:"query"`   // for ast-query patterns
+	Sources    []string      `yaml:"sources,omitempty"`
+	Sinks      []string      `yaml:"sinks,omitempty"`
+	Where      []WhereClause `yaml:"where,omitempty"`
+	Inside     *Pattern      `yaml:"inside,omitempty"`
+	NotInside  *Pattern      `yaml:"not-inside,omitempty"`
+}
+
+type WhereClause struct {
+	NotConstant  bool     `yaml:"not-constant,omitempty"`
+	NotSanitized []string `yaml:"not-sanitized,omitempty"`
+	NotTestFile  bool     `yaml:"not-test-file,omitempty"`
+	InsideFunction string `yaml:"inside-function,omitempty"`
 }
 
 type Fix struct {
@@ -44,19 +54,20 @@ type Fix struct {
 }
 
 type Finding struct {
-	RuleID       string   `json:"rule_id"`
-	RuleName     string   `json:"rule_name"`
-	Severity     Severity `json:"severity"`
-	Category     string   `json:"category"`
-	Message      string   `json:"message"`
-	File         string   `json:"file"`
-	Line         int      `json:"line"`
-	Column       int      `json:"column"`
-	Snippet      string   `json:"snippet"`
-	Fix          *Fix     `json:"fix,omitempty"`
-	FixAvailable bool     `json:"fix_available"`
-	References   []string `json:"references,omitempty"`
-	Confidence   string   `json:"confidence"`
+	RuleID       string            `json:"rule_id"`
+	RuleName     string            `json:"rule_name"`
+	Severity     Severity          `json:"severity"`
+	Category     string            `json:"category"`
+	Message      string            `json:"message"`
+	File         string            `json:"file"`
+	Line         int               `json:"line"`
+	Column       int               `json:"column"`
+	Snippet      string            `json:"snippet"`
+	Fix          *Fix              `json:"fix,omitempty"`
+	FixAvailable bool              `json:"fix_available"`
+	References   []string          `json:"references,omitempty"`
+	Confidence   string            `json:"confidence"`
+	Metavars     map[string]string `json:"metavars,omitempty"`
 }
 
 type Result struct {

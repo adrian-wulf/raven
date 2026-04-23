@@ -339,21 +339,46 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 			}
 
 			for _, m := range matches {
+				message := rule.Message
+				fix := rule.Fix
+				if len(m.metavars) > 0 {
+					message = expandMetavars(message, m.metavars)
+					if fix != nil {
+						fixCopy := *fix
+						fixCopy.Pattern = expandMetavars(fixCopy.Pattern, m.metavars)
+						fixCopy.Replace = expandMetavars(fixCopy.Replace, m.metavars)
+						fixCopy.Description = expandMetavars(fixCopy.Description, m.metavars)
+						fix = &fixCopy
+					}
+				}
+
 				finding := Finding{
 					RuleID:       rule.ID,
 					RuleName:     rule.Name,
 					Severity:     rule.Severity,
 					Category:     rule.Category,
-					Message:      rule.Message,
+					Message:      message,
 					File:         path,
 					Line:         m.line,
 					Column:       m.column,
 					Snippet:      m.snippet,
-					Fix:          rule.Fix,
-					FixAvailable: rule.Fix != nil,
+					Fix:          fix,
+					FixAvailable: fix != nil,
 					References:   rule.References,
 					Confidence:   rule.Confidence,
+					Metavars:     m.metavars,
 				}
+
+				// Apply where clauses
+				if !s.matchesWhere(finding, pattern.Where, content) {
+					continue
+				}
+
+				// Apply inside/not-inside patterns
+				if !s.matchesContext(content, pattern.Inside, pattern.NotInside) {
+					continue
+				}
+
 				findings = append(findings, finding)
 			}
 		}
@@ -391,11 +416,12 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 
 					for _, match := range matches {
 						var primaryNode *ast.Capture
+						metavars := make(map[string]string)
 						for _, c := range match.Captures {
 							if c.Name == "vuln" || c.Name == "sink" || c.Name == "danger" {
 								primaryNode = &c
-								break
 							}
+							metavars[c.Name] = extractSnippet(pf.Source, c.Node)
 						}
 						if primaryNode == nil && len(match.Captures) > 0 {
 							primaryNode = &match.Captures[0]
@@ -406,21 +432,43 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 
 						node := primaryNode.Node
 						start := node.StartPoint()
-						findings = append(findings, Finding{
+						snippet := extractSnippet(pf.Source, node)
+
+						message := expandMetavars(rule.Message, metavars)
+						fix := rule.Fix
+						if fix != nil {
+							fixCopy := *fix
+							fixCopy.Pattern = expandMetavars(fixCopy.Pattern, metavars)
+							fixCopy.Replace = expandMetavars(fixCopy.Replace, metavars)
+							fixCopy.Description = expandMetavars(fixCopy.Description, metavars)
+							fix = &fixCopy
+						}
+
+						finding := Finding{
 							RuleID:       rule.ID,
 							RuleName:     rule.Name,
 							Severity:     rule.Severity,
 							Category:     rule.Category,
-							Message:      strings.TrimSpace(rule.Message),
+							Message:      strings.TrimSpace(message),
 							File:         path,
 							Line:         int(start.Row) + 1,
 							Column:       int(start.Column) + 1,
-							Snippet:      extractSnippet(pf.Source, node),
+							Snippet:      snippet,
 							Confidence:   rule.Confidence,
 							References:   rule.References,
-							Fix:          rule.Fix,
-							FixAvailable: rule.Fix != nil,
-						})
+							Fix:          fix,
+							FixAvailable: fix != nil,
+							Metavars:     metavars,
+						}
+
+						if !s.matchesWhere(finding, pattern.Where, content) {
+							continue
+						}
+						if !s.matchesContext(content, pattern.Inside, pattern.NotInside) {
+							continue
+						}
+
+						findings = append(findings, finding)
 					}
 				}
 			}
@@ -471,9 +519,10 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 }
 
 type findingMatch struct {
-	line    int
-	column  int
-	snippet string
+	line     int
+	column   int
+	snippet  string
+	metavars map[string]string
 }
 
 func (s *Scanner) matchRegex(content []byte, pattern string, path string) []findingMatch {
@@ -484,6 +533,7 @@ func (s *Scanner) matchRegex(content []byte, pattern string, path string) []find
 
 	var matches []findingMatch
 	lines := bytes.Split(content, []byte("\n"))
+	subexpNames := re.SubexpNames()
 
 	for i, line := range lines {
 		loc := re.FindIndex(line)
@@ -493,7 +543,6 @@ func (s *Scanner) matchRegex(content []byte, pattern string, path string) []find
 
 		snippet := string(line)
 		if len(snippet) > 120 {
-			// Truncate but keep the match visible
 			start := max(0, loc[0]-40)
 			end := min(len(snippet), loc[1]+40)
 			snippet = snippet[start:end]
@@ -505,10 +554,29 @@ func (s *Scanner) matchRegex(content []byte, pattern string, path string) []find
 			}
 		}
 
+		// Extract named capture groups
+		metavars := make(map[string]string)
+		if len(subexpNames) > 1 {
+			matchLocs := re.FindSubmatchIndex(line)
+			if matchLocs != nil {
+				for j, name := range subexpNames {
+					if j == 0 || name == "" {
+						continue
+					}
+					startIdx := matchLocs[2*j]
+					endIdx := matchLocs[2*j+1]
+					if startIdx >= 0 && endIdx >= 0 && endIdx <= len(line) {
+						metavars[name] = string(line[startIdx:endIdx])
+					}
+				}
+			}
+		}
+
 		matches = append(matches, findingMatch{
-			line:    i + 1,
-			column:  loc[0] + 1,
+			line:     i + 1,
+			column:   loc[0] + 1,
 			snippet:  snippet,
+			metavars: metavars,
 		})
 	}
 
@@ -599,6 +667,128 @@ func extractSnippet(source []byte, node interface{ StartByte() uint32; EndByte()
 		return strings.Join(lines[:3], "\n") + "..."
 	}
 	return snippet
+}
+
+// expandMetavars replaces $var and ${var} placeholders with values from metavars
+func expandMetavars(template string, metavars map[string]string) string {
+	result := template
+	for name, value := range metavars {
+		result = strings.ReplaceAll(result, "${"+name+"}", value)
+		result = strings.ReplaceAll(result, "$"+name, value)
+	}
+	return result
+}
+
+// matchesWhere checks if a finding passes all where clauses
+func (s *Scanner) matchesWhere(finding Finding, where []WhereClause, content []byte) bool {
+	for _, clause := range where {
+		if clause.NotConstant {
+			// Check if the matched snippet looks like a constant (no variables, no function calls)
+			if isConstant(string(content), finding.Snippet) {
+				return false
+			}
+		}
+		if len(clause.NotSanitized) > 0 {
+			// Check if any sanitizer is called on the tainted data near this line
+			if isSanitized(string(content), finding.Line, clause.NotSanitized) {
+				return false
+			}
+		}
+		if clause.NotTestFile {
+			if strings.Contains(finding.File, "_test.") || strings.Contains(finding.File, "_spec.") ||
+				strings.Contains(finding.File, "/test/") || strings.Contains(finding.File, "/tests/") {
+				return false
+			}
+		}
+		if clause.InsideFunction != "" {
+			if !isInsideFunction(string(content), finding.Line, clause.InsideFunction) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// matchesContext checks inside/not-inside patterns against file content
+func (s *Scanner) matchesContext(content []byte, inside, notInside *Pattern) bool {
+	if inside != nil {
+		var matched bool
+		switch inside.Type {
+		case "regex":
+			re, err := regexp.Compile(inside.Pattern)
+			if err == nil && !re.Match(content) {
+				return false
+			}
+			matched = true
+		case "literal":
+			matched = bytes.Contains(content, []byte(inside.Pattern))
+		}
+		if !matched {
+			return false
+		}
+	}
+	if notInside != nil {
+		switch notInside.Type {
+		case "regex":
+			re, err := regexp.Compile(notInside.Pattern)
+			if err == nil && re.Match(content) {
+				return false
+			}
+		case "literal":
+			if bytes.Contains(content, []byte(notInside.Pattern)) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// isConstant checks if a snippet appears to be a constant value
+func isConstant(content, snippet string) bool {
+	trimmed := strings.TrimSpace(snippet)
+	// If it's just a string literal, number, or boolean, it's constant
+	if strings.HasPrefix(trimmed, `"`) && strings.HasSuffix(trimmed, `"`) {
+		return true
+	}
+	if strings.HasPrefix(trimmed, `'`) && strings.HasSuffix(trimmed, `'`) {
+		return true
+	}
+	if strings.HasPrefix(trimmed, "`") && strings.HasSuffix(trimmed, "`") {
+		return true
+	}
+	// Check for numeric constants
+	if regexp.MustCompile(`^\d+$`).MatchString(trimmed) {
+		return true
+	}
+	return false
+}
+
+// isSanitized checks if any sanitizer is called near the given line
+func isSanitized(content string, lineNum int, sanitizers []string) bool {
+	lines := strings.Split(content, "\n")
+	start := max(0, lineNum-5)
+	end := min(len(lines), lineNum+2)
+	for i := start; i < end; i++ {
+		for _, san := range sanitizers {
+			if strings.Contains(lines[i], san) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// isInsideFunction checks if a line is inside a function matching the pattern
+func isInsideFunction(content string, lineNum int, funcPattern string) bool {
+	lines := strings.Split(content, "\n")
+	// Scan backwards from the line to find function definition
+	for i := lineNum - 2; i >= 0 && i >= lineNum-20; i-- {
+		re, err := regexp.Compile(funcPattern)
+		if err == nil && re.MatchString(lines[i]) {
+			return true
+		}
+	}
+	return false
 }
 
 // FixApplier applies auto-fixes to files

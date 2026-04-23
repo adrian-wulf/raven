@@ -11,12 +11,20 @@ message: |
   Never use fmt.Sprintf for SQL.
 patterns:
   - type: regex
-    pattern: 'fmt\.Sprintf\s*\(\s*[`"][^`"]*(SELECT|INSERT|UPDATE|DELETE)'
+    pattern: '(?P<func>fmt\.Sprintf)\s*\(\s*[`"][^`"]*(SELECT|INSERT|UPDATE|DELETE)'
+    where:
+      - not-test-file: true
   - type: regex
     pattern: '(?i)(query|exec|queryrow)\s*\(\s*ctx,\s*[`"][^`"]*\+\s*'
+    where:
+      - not-test-file: true
   - type: regex
     pattern: '(?i)query\s*:=\s*[`"][^`"]*\+\s*.*(r\.|req|request|params|input)'
+    where:
+      - not-test-file: true
   - type: regex
     pattern: '(?i)(db\.|sqlx\.|gorm\.)?(Query|Exec|QueryRow)\s*\(\s*[^,]*fmt\.Sprintf'
+    where:
+      - not-test-file: true
 references:
   - https://go.dev/doc/database/sql-injection
