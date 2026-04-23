@@ -14,6 +14,8 @@ import (
 func aiFixCmd() *cobra.Command {
 	var dryRun bool
 	var providerName string
+	var batchMode bool
+	var noCache bool
 
 	cmd := &cobra.Command{
 		Use:   "fix-ai [paths...]",
@@ -22,6 +24,12 @@ func aiFixCmd() *cobra.Command {
 
 This sends code snippets to an LLM API and applies the suggested fixes.
 You can review each fix before applying.
+
+Features:
+  • 10+ providers with auto-detection
+  • AI fix cache — avoids redundant API calls (saves money!)
+  • Batch mode — fix multiple similar issues in one API call
+  • Few-shot prompts — tailored examples per vulnerability type
 
 Supported providers (auto-detected from env):
   • openrouter    — RAVEN_LLM_API_KEY or OPENROUTER_API_KEY
@@ -38,10 +46,12 @@ Supported providers (auto-detected from env):
 Set RAVEN_LLM_PROVIDER to force a specific provider.
 
 Examples:
-  raven fix-ai                  # AI-fix all issues with auto-detected provider
-  raven fix-ai --provider nvidia # Use NVIDIA NIM (free)
-  raven fix-ai ./src            # AI-fix specific directory
-  raven fix-ai --dry-run        # Preview fixes without applying`,
+  raven fix-ai                    # AI-fix all issues
+  raven fix-ai --provider nvidia  # Use NVIDIA NIM (free)
+  raven fix-ai --batch            # Batch fix similar issues (cheaper)
+  raven fix-ai --no-cache         # Skip cache, always call API
+  raven fix-ai --dry-run          # Preview fixes without applying
+  raven fix-ai ./src              # Fix specific directory`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
@@ -72,7 +82,13 @@ Examples:
 				return fmt.Errorf("no LLM provider configured")
 			}
 
-			fmt.Printf("🤖 Using provider: %s\n", styles.Info.Render(providerName))
+			fmt.Printf("🤖 Provider: %s | ", styles.Info.Render(providerName))
+			if !noCache {
+				_, valid := client.CacheStats()
+				fmt.Printf("💰 Cache: %d entries\n", valid)
+			} else {
+				fmt.Println("💰 Cache: disabled")
+			}
 			fmt.Println()
 
 			// Load rules and scan
@@ -100,90 +116,212 @@ Examples:
 				return nil
 			}
 
-			// AI fix each finding
-			fixed := 0
-			skipped := 0
-			failed := 0
-
-			titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#6C5CE7"))
-
-			for i, finding := range result.Findings {
-				fmt.Printf("\n%s Finding %d/%d\n", titleStyle.Render("═══"), i+1, len(result.Findings))
-				fmt.Printf("  [%s] %s\n", finding.Severity, finding.RuleName)
-				fmt.Printf("  %s:%d\n", finding.File, finding.Line)
-				fmt.Printf("  %s\n", finding.Message)
-
-				if dryRun {
-					fmt.Println("  (dry-run: skipping AI call)")
-					continue
-				}
-
-				// Read the vulnerable code
-				code, err := readLineRange(finding.File, finding.Line, 5)
-				if err != nil {
-					fmt.Printf("  ✗ Error reading file: %v\n", err)
-					failed++
-					continue
-				}
-
-				// Call LLM
-				fmt.Printf("  🤖 Asking %s for fix...\n", providerName)
-				resp, err := client.GenerateFix(llm.FixRequest{
-					Code:        code,
-					Language:    engine.DetectLanguage(finding.File),
-					VulnType:    finding.Category,
-					Description: finding.RuleName,
-					Message:     finding.Message,
-				})
-				if err != nil {
-					fmt.Printf("  ✗ AI error: %v\n", err)
-					failed++
-					continue
-				}
-
-				// Show diff
-				fmt.Println()
-				fmt.Println("  Proposed fix:")
-				fmt.Printf("  %s\n", lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4")).Render(resp.FixedCode))
-				fmt.Println()
-				fmt.Printf("  Explanation: %s\n", resp.Explanation)
-				fmt.Printf("  Confidence: %.0f%%\n", resp.Confidence*100)
-
-				// Ask user
-				if !cfg.Fix.AutoApply {
-					fmt.Print("  Apply this fix? [y/n/s]: ")
-					var answer string
-					fmt.Scanln(&answer)
-					if strings.ToLower(answer) != "y" {
-						fmt.Println("  ⏭️  Skipped.")
-						skipped++
-						continue
-					}
-				}
-
-				// Apply fix
-				if err := applyAIFix(finding, resp.FixedCode); err != nil {
-					fmt.Printf("  ✗ Error applying fix: %v\n", err)
-					failed++
-					continue
-				}
-
-				fmt.Println("  ✅ Applied!")
-				fixed++
+			if batchMode && len(result.Findings) > 1 {
+				return runBatchFix(client, result.Findings, dryRun, noCache)
 			}
 
-			fmt.Println()
-			fmt.Println(titleStyle.Render("═══ Summary ═══"))
-			fmt.Printf("  Fixed: %d | Skipped: %d | Failed: %d\n", fixed, skipped, failed)
-
-			return nil
+			return runIndividualFix(client, result.Findings, dryRun, noCache)
 		},
 	}
 
 	cmd.Flags().BoolVar(&dryRun, "dry-run", false, "Preview without applying fixes")
-	cmd.Flags().StringVar(&providerName, "provider", "", "LLM provider to use (overrides auto-detection)")
+	cmd.Flags().StringVar(&providerName, "provider", "", "LLM provider to use")
+	cmd.Flags().BoolVar(&batchMode, "batch", false, "Batch fix similar issues in one API call (cheaper)")
+	cmd.Flags().BoolVar(&noCache, "no-cache", false, "Skip AI fix cache, always call API")
 
 	return cmd
+}
+
+func runIndividualFix(client *llm.Client, findings []engine.Finding, dryRun, noCache bool) error {
+	fixed := 0
+	skipped := 0
+	failed := 0
+	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#6C5CE7"))
+
+	for i, finding := range findings {
+		fmt.Printf("\n%s Finding %d/%d\n", titleStyle.Render("═══"), i+1, len(findings))
+		fmt.Printf("  [%s] %s\n", finding.Severity, finding.RuleName)
+		fmt.Printf("  %s:%d\n", finding.File, finding.Line)
+		fmt.Printf("  %s\n", finding.Message)
+
+		if dryRun {
+			fmt.Println("  (dry-run: skipping AI call)")
+			continue
+		}
+
+		code, err := readLineRange(finding.File, finding.Line, 5)
+		if err != nil {
+			fmt.Printf("  ✗ Error reading file: %v\n", err)
+			failed++
+			continue
+		}
+
+		fmt.Println("  🤖 Asking AI for fix...")
+
+		req := llm.FixRequest{
+			Code:        code,
+			Language:    engine.DetectLanguage(finding.File),
+			VulnType:    finding.Category,
+			Description: finding.RuleName,
+			Message:     finding.Message,
+		}
+
+		var resp *llm.FixResponse
+		if noCache {
+			resp, err = client.GenerateFixNoCache(req)
+		} else {
+			resp, err = client.GenerateFix(req)
+		}
+
+		if err != nil {
+			fmt.Printf("  ✗ AI error: %v\n", err)
+			failed++
+			continue
+		}
+
+		// Heuristic: if explanation contains "cache" it's a cache hit
+		// Actually, we can't distinguish from response. Let's show anyway.
+
+		fmt.Println()
+		fmt.Println("  Proposed fix:")
+		fmt.Printf("  %s\n", lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4")).Render(resp.FixedCode))
+		fmt.Println()
+		fmt.Printf("  Explanation: %s\n", resp.Explanation)
+		fmt.Printf("  Confidence: %.0f%%\n", resp.Confidence*100)
+
+		if !cfg.Fix.AutoApply {
+			fmt.Print("  Apply this fix? [y/n/s]: ")
+			var answer string
+			fmt.Scanln(&answer)
+			if strings.ToLower(answer) != "y" {
+				fmt.Println("  ⏭️  Skipped.")
+				skipped++
+				continue
+			}
+		}
+
+		if err := applyAIFix(finding, resp.FixedCode); err != nil {
+			fmt.Printf("  ✗ Error applying fix: %v\n", err)
+			failed++
+			continue
+		}
+
+		fmt.Println("  ✅ Applied!")
+		fixed++
+	}
+
+	_ = client.SaveCache()
+
+	fmt.Println()
+	fmt.Println(titleStyle.Render("═══ Summary ═══"))
+	fmt.Printf("  Fixed: %d | Skipped: %d | Failed: %d\n", fixed, skipped, failed)
+	if !noCache {
+		_, valid := client.CacheStats()
+		fmt.Printf("  💰 AI cache: %d valid entries (saved API calls!)\n", valid)
+	}
+	return nil
+}
+
+func runBatchFix(client *llm.Client, findings []engine.Finding, dryRun, noCache bool) error {
+	// Group findings by rule ID
+	groups := make(map[string][]engine.Finding)
+	for _, f := range findings {
+		groups[f.RuleID] = append(groups[f.RuleID], f)
+	}
+
+	titleStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#6C5CE7"))
+	fixed := 0
+	skipped := 0
+	failed := 0
+
+	for ruleID, group := range groups {
+		fmt.Printf("\n%s Batch: %s (%d finding(s))\n", titleStyle.Render("═══"), ruleID, len(group))
+
+		if dryRun {
+			fmt.Println("  (dry-run: skipping AI call)")
+			continue
+		}
+
+		// Build batch request
+		var items []llm.BatchFixItem
+		for i, finding := range group {
+			code, err := readLineRange(finding.File, finding.Line, 5)
+			if err != nil {
+				fmt.Printf("  ✗ Error reading file: %v\n", err)
+				failed++
+				continue
+			}
+			items = append(items, llm.BatchFixItem{
+				ID:          i,
+				Code:        code,
+				VulnType:    finding.Category,
+				Description: finding.RuleName,
+				Message:     finding.Message,
+			})
+		}
+
+		if len(items) == 0 {
+			continue
+		}
+
+		fmt.Printf("  🤖 Asking AI for %d fixes in one call...\n", len(items))
+
+		batchReq := llm.BatchFixRequest{
+			Language: engine.DetectLanguage(group[0].File),
+			Items:    items,
+		}
+
+		batchResp, err := client.BatchGenerateFix(batchReq)
+		if err != nil {
+			fmt.Printf("  ✗ Batch AI error: %v\n", err)
+			failed += len(group)
+			continue
+		}
+
+		// Apply fixes
+		for _, result := range batchResp.Fixes {
+			if result.ID < 0 || result.ID >= len(group) {
+				continue
+			}
+			finding := group[result.ID]
+
+			fmt.Println()
+			fmt.Printf("  📍 %s:%d\n", finding.File, finding.Line)
+			fmt.Printf("  Proposed fix:\n")
+			fmt.Printf("  %s\n", lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4")).Render(result.FixedCode))
+			fmt.Printf("  Confidence: %.0f%%\n", result.Confidence*100)
+
+			if !cfg.Fix.AutoApply {
+				fmt.Print("  Apply? [y/n/s]: ")
+				var answer string
+				fmt.Scanln(&answer)
+				if strings.ToLower(answer) != "y" {
+					fmt.Println("  ⏭️  Skipped.")
+					skipped++
+					continue
+				}
+			}
+
+			if err := applyAIFix(finding, result.FixedCode); err != nil {
+				fmt.Printf("  ✗ Error: %v\n", err)
+				failed++
+				continue
+			}
+
+			fmt.Println("  ✅ Applied!")
+			fixed++
+		}
+	}
+
+	_ = client.SaveCache()
+
+	fmt.Println()
+	fmt.Println(titleStyle.Render("═══ Summary ═══"))
+	fmt.Printf("  Fixed: %d | Skipped: %d | Failed: %d\n", fixed, skipped, failed)
+	_, valid := client.CacheStats()
+	fmt.Printf("  💰 AI cache: %d valid entries\n", valid)
+	fmt.Printf("  📦 Batch mode saved ~%d API calls\n", len(findings)-len(groups))
+	return nil
 }
 
 func printProviderHelp() {
@@ -230,7 +368,6 @@ func readLineRange(file string, line, context int) (string, error) {
 }
 
 func applyAIFix(finding engine.Finding, fixedCode string) error {
-	// Simple replacement: replace the finding line with fixed code
 	content, err := os.ReadFile(finding.File)
 	if err != nil {
 		return err
@@ -241,7 +378,6 @@ func applyAIFix(finding engine.Finding, fixedCode string) error {
 		return fmt.Errorf("line %d out of range", finding.Line)
 	}
 
-	// For now, just replace the line. In the future, could be smarter.
 	lines[finding.Line-1] = fixedCode
 
 	newContent := strings.Join(lines, "\n")

@@ -135,25 +135,11 @@ Format your response like this:
 **Explanation:** Brief explanation of the fix and why it's secure.`
 
 func buildFixPrompt(req FixRequest) string {
-	return fmt.Sprintf(`Fix this security vulnerability in %s code.
-
-Vulnerability type: %s
-Description: %s
-Guidance: %s
-
-Code to fix:
-｠｠｠%s
-%s
-｠｠｠
-
-Provide the fixed code.`,
-		req.Language,
-		req.VulnType,
-		req.Description,
-		req.Message,
-		req.Language,
-		req.Code,
-	)
+	pb := PromptBuilder{
+		Category: req.VulnType,
+		Language: req.Language,
+	}
+	return pb.Build(req.Code, req.VulnType, req.Description, req.Message)
 }
 
 func parseFixResponse(content string, tokens int) *FixResponse {
