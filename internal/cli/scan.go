@@ -3,12 +3,14 @@ package cli
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/raven-security/raven/internal/baseline"
 	"github.com/raven-security/raven/internal/deps"
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/raven-security/raven/internal/framework"
 	"github.com/raven-security/raven/internal/output"
+	"github.com/raven-security/raven/internal/secrets"
 	"github.com/raven-security/raven/internal/suppress"
 	"github.com/spf13/cobra"
 )
@@ -22,6 +24,7 @@ func scanCmd() *cobra.Command {
 		confidence     string
 		fixFlag        bool
 		depsFlag       bool
+		secretsFlag    bool
 		baselinePath     string
 		updateBaseline   bool
 		noIgnoreComments bool
@@ -44,7 +47,8 @@ Examples:
   raven scan --min-sev high     # Only show high/critical issues
   raven scan --baseline .raven-baseline.json  # Only report new issues
   raven scan --update-baseline                # Save current findings as baseline
-  raven scan --no-ignore-comments             # Ignore inline suppression comments`,
+  raven scan --no-ignore-comments             # Ignore inline suppression comments
+  raven scan --secrets                        # Deep scan for hardcoded secrets`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
@@ -113,6 +117,50 @@ Examples:
 			result, err := scanner.Scan()
 			if err != nil {
 				return fmt.Errorf("scan failed: %w", err)
+			}
+
+			// Secrets scanning
+			if secretsFlag {
+				fmt.Fprintln(os.Stderr)
+				fmt.Fprintln(os.Stderr, "🔐 Scanning for secrets...")
+				secretDetector := secrets.NewDetector()
+				secretCount := 0
+				for _, path := range paths {
+					// Walk files and scan each
+					filepath.Walk(path, func(file string, info os.FileInfo, err error) error {
+						if err != nil || info.IsDir() {
+							return nil
+						}
+						ext := filepath.Ext(file)
+						if ext != ".js" && ext != ".ts" && ext != ".go" && ext != ".py" && ext != ".php" && ext != ".rb" && ext != ".java" && ext != ".env" && ext != ".yaml" && ext != ".yml" && ext != ".json" {
+							return nil
+						}
+						findings, err := secretDetector.Detect(file)
+						if err != nil {
+							return nil
+						}
+						for _, f := range findings {
+							result.Findings = append(result.Findings, engine.Finding{
+								RuleID:     f.RuleID,
+								RuleName:   f.RuleName,
+								Severity:   engine.Severity(f.Severity),
+								Message:    "Hardcoded secret detected: " + f.Type,
+								File:       f.File,
+								Line:       f.Line,
+								Column:     f.Column,
+								Snippet:    f.Snippet,
+								Confidence: "high",
+							})
+							secretCount++
+						}
+						return nil
+					})
+				}
+				if secretCount > 0 {
+					fmt.Fprintf(os.Stderr, "⚠️  Found %d secrets\n", secretCount)
+				} else {
+					fmt.Fprintln(os.Stderr, "✅ No secrets found")
+				}
 			}
 
 			// Dependency scanning (before output so JSON includes vulns)
@@ -227,6 +275,7 @@ Examples:
 	cmd.Flags().StringVar(&confidence, "confidence", "medium", "Minimum confidence: high, medium, low")
 	cmd.Flags().BoolVar(&fixFlag, "fix", false, "Auto-fix issues where possible")
 	cmd.Flags().BoolVar(&depsFlag, "deps", false, "Scan dependencies for known vulnerabilities (OSV)")
+	cmd.Flags().BoolVar(&secretsFlag, "secrets", false, "Deep scan for hardcoded secrets and high-entropy strings")
 	cmd.Flags().StringVar(&baselinePath, "baseline", "", "Path to baseline JSON (only report new findings)")
 	cmd.Flags().BoolVar(&updateBaseline, "update-baseline", false, "Save current findings as baseline JSON")
 	cmd.Flags().BoolVar(&noIgnoreComments, "no-ignore-comments", false, "Ignore inline suppression comments")
