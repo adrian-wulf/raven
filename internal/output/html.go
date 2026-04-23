@@ -121,6 +121,7 @@ type htmlFinding struct {
 	RuleName   string
 	Severity   string
 	Category   string
+	CWE        string
 	Message    string
 	File       string
 	Line       int
@@ -230,6 +231,7 @@ footer{text-align:center;margin-top:3rem;color:var(--muted);font-size:.85rem}
 <div class="finding-meta">
 <span>ID: {{.RuleID}}</span>
 <span>Category: {{.Category}}</span>
+{{if .CWE}}<span>CWE: {{.CWE}}</span>{{end}}
 <span>Confidence: {{.Confidence}}</span>
 </div>
 {{if .Fix}}<div class="finding-fix">💡 {{.FixDesc}}</div>{{end}}

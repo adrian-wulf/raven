@@ -3,6 +3,7 @@ name: Unsafe gets usage
 severity: critical
 category: buffer-overflow
 confidence: high
+cwe: CWE-121
 languages: [c]
 message: "gets() is extremely dangerous and removed in C11. Never use gets(). Use fgets() instead."
 patterns:

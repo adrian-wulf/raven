@@ -5,6 +5,7 @@ description: |
 severity: high
 category: secrets
 confidence: high
+cwe: CWE-798
 languages: [kotlin]
 message: |
   Hardcoded secret detected! Use BuildConfig fields from environment or a secrets manager.

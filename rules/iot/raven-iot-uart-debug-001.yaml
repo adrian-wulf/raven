@@ -3,6 +3,7 @@ name: UART debug output in production
 severity: medium
 category: iot-security
 confidence: medium
+cwe: CWE-16
 languages: [c, cpp]
 message: "UART debug output can leak sensitive information. Remove debug prints in production builds."
 patterns:

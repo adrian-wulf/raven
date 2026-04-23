@@ -6,6 +6,7 @@ description: |
 severity: high
 category: path-traversal
 confidence: high
+cwe: CWE-22
 languages: [rust]
 message: |
   Potential path traversal: user input used in file path without sanitization.

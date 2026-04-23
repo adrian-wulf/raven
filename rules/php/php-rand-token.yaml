@@ -5,6 +5,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [php]
 message: |
   rand()/mt_rand() is predictable! Use random_int() or random_bytes() for security tokens.

@@ -3,6 +3,7 @@ name: Public Azure Storage account
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Azure Storage account allows public access. Disable public blob access."
 patterns:

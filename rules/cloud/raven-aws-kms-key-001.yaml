@@ -3,6 +3,7 @@ name: Unencrypted sensitive resource
 severity: high
 category: cloud-security
 confidence: medium
+cwe: CWE-16
 languages: ["*"]
 message: "Resource missing KMS encryption. Enable encryption at rest."
 patterns:

@@ -6,6 +6,7 @@ description: |
 severity: high
 category: path-traversal
 confidence: high
+cwe: CWE-22
 languages: [javascript, typescript, python, go, php, rust, java]
 message: |
   Potential path traversal: user input is used in a file path without sanitization.

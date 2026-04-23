@@ -3,6 +3,7 @@ name: Uninitialized variable
 severity: medium
 category: memory-corruption
 confidence: low
+cwe: CWE-457
 languages: [cpp]
 message: "Variable may be uninitialized. Initialize all variables at declaration."
 patterns:

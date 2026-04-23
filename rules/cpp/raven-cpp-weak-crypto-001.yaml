@@ -3,6 +3,7 @@ name: Weak random in C++
 severity: medium
 category: weak-crypto
 confidence: high
+cwe: CWE-327
 languages: [cpp]
 message: "rand() is not cryptographically secure. Use std::random_device or OpenSSL."
 patterns:

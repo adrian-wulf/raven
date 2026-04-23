@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [kotlin, java]
 frameworks: [android]
 message: |

@@ -6,6 +6,7 @@ description: |
 severity: high
 category: ldap-injection
 confidence: high
+cwe: CWE-74
 languages: [javascript, typescript]
 message: |
   LDAP injection: user input is concatenated into an LDAP filter.

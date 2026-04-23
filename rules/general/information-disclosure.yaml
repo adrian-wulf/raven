@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: info-disclosure
 confidence: medium
+cwe: CWE-200
 languages: [javascript, typescript, python, go, php, java, csharp, rust]
 message: |
   Sensitive information may leak through error responses.

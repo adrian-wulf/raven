@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: xxe
 confidence: high
+cwe: CWE-611
 languages: [csharp]
 message: |
   XmlReader without DtdProcessing.Prohibit enables XXE! Disable DTD processing.

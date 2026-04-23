@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [python]
 message: |
   Command injection: user input reaches a shell command.

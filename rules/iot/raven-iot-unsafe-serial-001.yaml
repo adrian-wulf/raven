@@ -3,6 +3,7 @@ name: Unsafe serial command parsing
 severity: high
 category: command-injection
 confidence: medium
+cwe: CWE-78
 languages: [c, cpp]
 message: "Serial commands parsed without validation. Validate all command inputs."
 patterns:

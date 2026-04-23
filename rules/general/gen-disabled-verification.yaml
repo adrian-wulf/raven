@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   Disabling security verification is dangerous! Never do this in production.

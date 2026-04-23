@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [php]
 message: |
   assert() with user input is code execution! Never pass untrusted data to assert().

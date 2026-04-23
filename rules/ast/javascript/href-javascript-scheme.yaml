@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript]
 message: |
   javascript: URLs in href can execute arbitrary code. Use event handlers

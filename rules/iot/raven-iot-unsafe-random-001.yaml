@@ -3,6 +3,7 @@ name: Predictable random for crypto in IoT
 severity: high
 category: weak-crypto
 confidence: high
+cwe: CWE-327
 languages: [c, cpp]
 message: "Using weak random in embedded crypto. Use hardware RNG if available."
 patterns:

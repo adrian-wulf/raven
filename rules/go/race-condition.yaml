@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: bug
 confidence: medium
+cwe: CWE-362
 languages: [go]
 message: |
   Concurrent map write detected without mutex protection.

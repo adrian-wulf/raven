@@ -3,6 +3,7 @@ name: .env File AWS Credentials
 severity: critical
 category: secrets
 confidence: high
+cwe: CWE-798
 languages: [env]
 message: |
   AWS credentials in .env file! Use IAM roles or AWS Secrets Manager.

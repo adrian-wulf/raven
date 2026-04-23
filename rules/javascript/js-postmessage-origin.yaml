@@ -5,6 +5,7 @@ description: |
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [javascript, typescript]
 message: |
   postMessage to '*' allows any origin to receive messages. Specify exact origin.

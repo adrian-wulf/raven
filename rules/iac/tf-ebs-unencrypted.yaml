@@ -5,6 +5,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [terraform]
 message: |
   Enable EBS encryption to protect data at rest.

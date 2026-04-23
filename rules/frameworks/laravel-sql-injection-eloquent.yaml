@@ -3,6 +3,7 @@ name: Laravel Eloquent Unsafe Query
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [php]
 frameworks: [laravel]
 message: |

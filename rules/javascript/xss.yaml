@@ -6,6 +6,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript]
 message: |
   Potential XSS: user input is assigned to innerHTML or dangerouslySetInnerHTML.

@@ -3,6 +3,7 @@ name: Django CSRF Exempt Without Reason
 severity: high
 category: csrf
 confidence: medium
+cwe: CWE-352
 languages: [python]
 frameworks: [django]
 message: |

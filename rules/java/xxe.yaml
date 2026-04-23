@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: xxe
 confidence: high
+cwe: CWE-611
 languages: [java]
 message: |
   XXE vulnerability: XML parser allows external entities.

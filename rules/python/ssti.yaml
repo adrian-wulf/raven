@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: ssti
 confidence: high
+cwe: CWE-1336
 languages: [python]
 message: |
   SSTI: User input flows into a template engine. Use strict context

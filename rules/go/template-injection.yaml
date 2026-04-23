@@ -6,6 +6,7 @@ description: |
 severity: high
 category: ssti
 confidence: medium
+cwe: CWE-1336
 languages: [go]
 message: |
   Template executed with user input. Sanitize data before passing

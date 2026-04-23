@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: auth
 confidence: low
+cwe: CWE-287
 languages: [javascript, typescript, python, go, php]
 message: |
   This endpoint may lack authentication. Ensure sensitive endpoints

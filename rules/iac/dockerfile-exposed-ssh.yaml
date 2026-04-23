@@ -3,6 +3,7 @@ name: Dockerfile Exposes SSH Port
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   Exposing SSH (port 22) in containers is risky. Use docker exec instead.

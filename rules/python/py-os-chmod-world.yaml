@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [python]
 message: |
   World-writable permissions (777) allow any user to modify files. Use 644 or 600.

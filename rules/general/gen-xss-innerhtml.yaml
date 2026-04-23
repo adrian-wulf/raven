@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   innerHTML with user input is XSS! Use textContent or sanitize with DOMPurify.

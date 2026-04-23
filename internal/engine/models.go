@@ -21,6 +21,7 @@ type Rule struct {
 	Severity    Severity  `yaml:"severity"`
 	Category    string    `yaml:"category"`
 	Confidence  string    `yaml:"confidence"` // high, medium, low
+	CWE         string    `yaml:"cwe,omitempty"`
 	Languages   []string  `yaml:"languages"`
 	Frameworks  []string  `yaml:"frameworks,omitempty"`
 	Patterns    []Pattern `yaml:"patterns"`
@@ -58,6 +59,7 @@ type Finding struct {
 	RuleName     string            `json:"rule_name"`
 	Severity     Severity          `json:"severity"`
 	Category     string            `json:"category"`
+	CWE          string            `json:"cwe,omitempty"`
 	Message      string            `json:"message"`
 	File         string            `json:"file"`
 	Line         int               `json:"line"`

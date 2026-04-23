@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [go]
 message: |
   HMAC comparison must use hmac.Equal() to prevent timing attacks.

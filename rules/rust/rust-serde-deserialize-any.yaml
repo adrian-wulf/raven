@@ -5,6 +5,7 @@ description: |
 severity: low
 category: deserialization
 confidence: low
+cwe: CWE-502
 languages: [rust]
 message: |
   Deserializing to untyped Value loses type safety. Use strongly typed structs.

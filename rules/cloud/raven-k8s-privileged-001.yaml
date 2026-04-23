@@ -3,6 +3,7 @@ name: Privileged Kubernetes container
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Container runs in privileged mode. This grants full host access. Avoid privileged mode."
 patterns:

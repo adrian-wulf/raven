@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [python]
 message: |
   exec() with user input is arbitrary code execution! Use safe alternatives like json.loads().

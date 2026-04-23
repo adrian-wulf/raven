@@ -6,6 +6,7 @@ description: |
 severity: high
 category: command-injection
 confidence: medium
+cwe: CWE-78
 languages: [python]
 message: |
   Subprocess with shell=True or user input. Use subprocess.run()

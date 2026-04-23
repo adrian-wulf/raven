@@ -3,6 +3,7 @@ name: Missing security context
 severity: medium
 category: cloud-security
 confidence: low
+cwe: CWE-16
 languages: ["*"]
 message: "Pod missing securityContext. Define runAsNonRoot, readOnlyRootFilesystem, etc."
 patterns:

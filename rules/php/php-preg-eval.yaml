@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [php]
 message: |
   preg_replace /e is deprecated and dangerous (code execution)! Use preg_replace_callback().

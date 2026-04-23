@@ -5,6 +5,7 @@ description: |
 severity: high
 category: path-traversal
 confidence: high
+cwe: CWE-22
 languages: [go]
 message: |
   filepath.Join with user input can traverse outside base dir. Validate with filepath.Clean().

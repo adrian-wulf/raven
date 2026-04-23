@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: cors
 confidence: high
+cwe: CWE-346
 languages: [java, kotlin]
 frameworks: [spring-boot]
 message: |

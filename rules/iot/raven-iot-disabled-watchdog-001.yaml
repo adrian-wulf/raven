@@ -3,6 +3,7 @@ name: Disabled watchdog timer
 severity: low
 category: iot-security
 confidence: high
+cwe: CWE-16
 languages: [c, cpp]
 message: "Watchdog timer disabled. Enable watchdog to prevent device lockups."
 patterns:

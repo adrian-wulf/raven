@@ -5,6 +5,7 @@ description: |
 severity: high
 category: auth
 confidence: high
+cwe: CWE-287
 languages: [terraform]
 message: |
   Lambda function URL is public. Add authorization_type = AWS_IAM.

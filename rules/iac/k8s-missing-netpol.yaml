@@ -3,6 +3,7 @@ name: Kubernetes Missing Network Policy
 severity: low
 category: misconfiguration
 confidence: low
+cwe: CWE-16
 languages: [yaml]
 message: |
   No NetworkPolicy detected. Add network policies to restrict pod-to-pod traffic.

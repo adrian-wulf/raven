@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [javascript, typescript, python, go, php, rust, java, ruby]
 message: |
   Potential command injection: user input is passed to ${func}().

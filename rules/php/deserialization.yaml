@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [php]
 message: |
   Dangerous deserialization! unserialize() with user input can execute

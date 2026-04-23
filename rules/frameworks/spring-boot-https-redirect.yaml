@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [java]
 frameworks: [spring-boot]
 message: |

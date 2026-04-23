@@ -5,6 +5,7 @@ description: |
 severity: high
 category: ldap-injection
 confidence: high
+cwe: CWE-74
 languages: [csharp]
 message: |
   LDAP filter concatenation is injection! Use LDAP injection-safe query builders.

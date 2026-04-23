@@ -3,6 +3,7 @@ name: Hardcoded encryption key
 severity: high
 category: secrets
 confidence: high
+cwe: CWE-798
 languages: [c]
 message: "Hardcoded encryption key detected. Load keys from secure storage at runtime."
 patterns:

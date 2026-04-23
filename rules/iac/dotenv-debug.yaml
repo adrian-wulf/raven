@@ -3,6 +3,7 @@ name: .env File Debug Mode Enabled
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [env]
 message: |
   DEBUG=true in .env file. Ensure this is not committed to production.

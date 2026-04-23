@@ -3,6 +3,7 @@ name: Kubernetes Missing Resource Limits
 severity: medium
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [yaml]
 message: |
   Missing CPU/memory limits can lead to DoS. Add resources.limits.

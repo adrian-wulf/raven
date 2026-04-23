@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [terraform]
 message: |
   Enforce HTTPS-only access. Redirect HTTP to HTTPS at the load balancer level.

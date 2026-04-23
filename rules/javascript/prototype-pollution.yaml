@@ -6,6 +6,7 @@ description: |
 severity: high
 category: prototype-pollution
 confidence: medium
+cwe: CWE-1321
 languages: [javascript, typescript]
 message: |
   Potential prototype pollution. Use Object.create(null) for maps,

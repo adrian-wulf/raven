@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [javascript, typescript]
 message: |
   Debug mode may be enabled. Ensure this is disabled in production

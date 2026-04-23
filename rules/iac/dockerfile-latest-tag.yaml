@@ -3,6 +3,7 @@ name: Dockerfile Uses latest Tag
 severity: low
 category: supply-chain
 confidence: high
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   Avoid 'latest' tag in base images. Pin to specific version.

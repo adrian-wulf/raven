@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: csrf
 confidence: medium
+cwe: CWE-352
 languages: [csharp]
 frameworks: [aspnet-core]
 message: |

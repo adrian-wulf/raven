@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [java]
 message: |
   SQL injection: Use PreparedStatement with parameterized queries.

@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [terraform]
 message: |
   Security group allows traffic from anywhere (0.0.0.0/0). Restrict to specific CIDRs.

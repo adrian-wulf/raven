@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [python]
 message: |
   pickle.loads() executes arbitrary code! Use JSON or msgpack for untrusted data.

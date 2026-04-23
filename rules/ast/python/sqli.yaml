@@ -7,6 +7,7 @@ description: |
 severity: critical
 category: sqli
 confidence: high
+cwe: CWE-89
 languages: [python]
 message: |
   User-controlled input flows into an SQL query without parameterization.

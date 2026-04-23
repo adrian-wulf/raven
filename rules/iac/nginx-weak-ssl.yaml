@@ -3,6 +3,7 @@ name: Nginx Weak SSL Configuration
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [nginx]
 message: |
   Weak SSL protocols (TLSv1, TLSv1.1) or ciphers detected. Use TLSv1.2+ only.

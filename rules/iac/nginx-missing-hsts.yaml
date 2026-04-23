@@ -3,6 +3,7 @@ name: Nginx Missing HSTS
 severity: medium
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [nginx]
 message: |
   Add Strict-Transport-Security header to enforce HTTPS.

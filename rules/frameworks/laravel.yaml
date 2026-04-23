@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: csrf
 confidence: medium
+cwe: CWE-352
 languages: [php]
 frameworks: [laravel]
 message: |

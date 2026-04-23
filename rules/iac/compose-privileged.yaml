@@ -3,6 +3,7 @@ name: Docker Compose Privileged Container
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [yaml]
 message: |
   privileged: true in docker-compose grants full host access. Remove it.

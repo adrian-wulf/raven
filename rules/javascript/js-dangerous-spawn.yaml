@@ -5,6 +5,7 @@ description: |
 severity: high
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [javascript, typescript]
 message: |
   spawn with shell: true is as dangerous as exec(). Use shell: false with array args.

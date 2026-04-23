@@ -3,6 +3,7 @@ name: GitHub Actions Inline Script Injection
 severity: high
 category: injection
 confidence: medium
+cwe: CWE-74
 languages: [yaml]
 message: |
   User input in inline script can inject commands. Use action inputs or sanitize.

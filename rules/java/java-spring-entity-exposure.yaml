@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: info-disclosure
 confidence: medium
+cwe: CWE-200
 languages: [java]
 message: |
   Returning @Entity directly exposes all fields including internal ones. Use DTOs.

@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: open-redirect
 confidence: medium
+cwe: CWE-601
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   Redirect with user input can be used for phishing. Validate against allowlist.

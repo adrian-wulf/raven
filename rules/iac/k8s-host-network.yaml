@@ -3,6 +3,7 @@ name: Kubernetes Host Network
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [yaml]
 message: |
   hostNetwork: true shares host network namespace. Avoid in production.

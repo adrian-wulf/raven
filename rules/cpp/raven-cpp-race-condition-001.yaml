@@ -3,6 +3,7 @@ name: Unprotected shared data
 severity: medium
 category: race-condition
 confidence: low
+cwe: CWE-362
 languages: [cpp]
 message: "Shared data accessed without mutex protection. Use std::mutex or std::atomic."
 patterns:

@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [csharp]
 message: |
   Potential command injection: user input is passed to Process.Start() or Process().

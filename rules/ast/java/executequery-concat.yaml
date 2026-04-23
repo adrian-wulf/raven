@@ -7,6 +7,7 @@ description: |
 severity: critical
 category: sqli
 confidence: high
+cwe: CWE-89
 languages: [java]
 message: |
   SQL query built via string concatenation. Use PreparedStatement

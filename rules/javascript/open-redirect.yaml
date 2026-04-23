@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: open-redirect
 confidence: medium
+cwe: CWE-601
 languages: [javascript, typescript]
 message: |
   Open redirect: user input controls the redirect destination.

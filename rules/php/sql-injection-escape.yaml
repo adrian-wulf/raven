@@ -6,6 +6,7 @@ description: |
 severity: high
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [php]
 message: |
   mysql_real_escape_string() is NOT sufficient protection! Use

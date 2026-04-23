@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: log-injection
 confidence: medium
+cwe: CWE-74
 languages: [javascript, typescript]
 message: |
   Log injection: user input written directly to logs.

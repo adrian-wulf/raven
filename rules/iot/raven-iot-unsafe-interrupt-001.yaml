@@ -3,6 +3,7 @@ name: Unsafe operations in ISR
 severity: medium
 category: iot-security
 confidence: low
+cwe: CWE-16
 languages: [c, cpp]
 message: "Potentially unsafe operations in interrupt service routine. Keep ISRs short and safe."
 patterns:

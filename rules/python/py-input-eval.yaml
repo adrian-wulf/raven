@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [python]
 message: |
   Python 2 input() evaluates user input! Use raw_input() in Python 2 or input() in Python 3.

@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [csharp]
 message: |
   Insecure deserialization! BinaryFormatter is deprecated and dangerous.

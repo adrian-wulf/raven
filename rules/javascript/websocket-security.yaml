@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: auth
 confidence: low
+cwe: CWE-287
 languages: [javascript, typescript]
 message: |
   WebSocket server without visible auth. Validate the JWT/token

@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [ruby]
 message: |
   eval() with user input is arbitrary code execution! Never pass untrusted data to eval().

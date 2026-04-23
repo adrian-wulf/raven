@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: clickjacking
 confidence: medium
+cwe: CWE-1021
 languages: [javascript, typescript, python, go, php]
 message: |
   Missing clickjacking protection. Set X-Frame-Options: DENY or

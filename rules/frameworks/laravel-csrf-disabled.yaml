@@ -3,6 +3,7 @@ name: Laravel CSRF Verification Disabled
 severity: high
 category: csrf
 confidence: high
+cwe: CWE-352
 languages: [php]
 frameworks: [laravel]
 message: |

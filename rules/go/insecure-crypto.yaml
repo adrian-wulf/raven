@@ -6,6 +6,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [go]
 message: |
   Weak hash algorithm. Use crypto/sha256 or better.

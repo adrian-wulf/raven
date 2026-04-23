@@ -3,6 +3,7 @@ name: Weak random number generator
 severity: medium
 category: weak-crypto
 confidence: high
+cwe: CWE-327
 languages: [c]
 message: "rand() produces predictable values. Use arc4random(), getrandom(), or OpenSSL RAND_bytes() for security."
 patterns:

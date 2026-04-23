@@ -3,6 +3,7 @@ name: Public ECR repository
 severity: medium
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "ECR repository policy allows public pull access. Restrict to specific principals."
 patterns:

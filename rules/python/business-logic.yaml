@@ -6,6 +6,7 @@ description: |
 severity: high
 category: business-logic
 confidence: medium
+cwe: CWE-840
 languages: [python]
 message: |
   User input directly assigned to business-critical field (price, role, etc.).

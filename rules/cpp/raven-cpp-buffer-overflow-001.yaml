@@ -3,6 +3,7 @@ name: Unsafe strcpy in C++
 severity: high
 category: buffer-overflow
 confidence: high
+cwe: CWE-121
 languages: [cpp]
 message: "strcpy() is unsafe in C++. Use std::string or strncpy()."
 patterns:

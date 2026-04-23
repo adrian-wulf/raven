@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: cors
 confidence: high
+cwe: CWE-346
 languages: [javascript, typescript]
 message: |
   CORS is set to allow all origins (*). This is dangerous if combined

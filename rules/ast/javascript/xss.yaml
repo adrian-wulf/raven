@@ -6,6 +6,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript]
 message: |
   User-controlled input is used to modify the DOM without sanitization.

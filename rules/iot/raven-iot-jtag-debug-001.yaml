@@ -3,6 +3,7 @@ name: JTAG debug interface enabled
 severity: medium
 category: iot-security
 confidence: high
+cwe: CWE-16
 languages: [c, cpp]
 message: "JTAG/SWD debug interface may be enabled in production. Disable debug interfaces."
 patterns:

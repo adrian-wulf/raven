@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [ruby]
 message: |
   system() with user input is command injection! Use array form: system('cmd', arg1, arg2).

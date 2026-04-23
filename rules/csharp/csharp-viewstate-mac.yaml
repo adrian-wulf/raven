@@ -5,6 +5,7 @@ description: |
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [csharp]
 message: |
   ViewState without MAC can be tampered. Enable enableViewStateMac in web.config.

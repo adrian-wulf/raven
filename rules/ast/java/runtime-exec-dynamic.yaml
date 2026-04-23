@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [java]
 message: |
   Runtime.exec() with dynamic input can lead to command injection.

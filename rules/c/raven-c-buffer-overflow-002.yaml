@@ -3,6 +3,7 @@ name: Unsafe strcat usage
 severity: high
 category: buffer-overflow
 confidence: high
+cwe: CWE-121
 languages: [c]
 message: "strcat() is unsafe and can cause buffer overflows. Use strncat() or strlcat() instead."
 patterns:

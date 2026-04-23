@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: open-redirect
 confidence: high
+cwe: CWE-601
 languages: [javascript, typescript]
 message: |
   window.open() with a user-controlled URL can be used for phishing or open redirect.

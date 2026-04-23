@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   Command concatenation with user input is shell injection! Use parameterized execution.

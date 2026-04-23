@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: injection
 confidence: low
+cwe: CWE-74
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   User input used without validation. Always validate and sanitize external input.

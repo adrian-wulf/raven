@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: info-disclosure
 confidence: high
+cwe: CWE-200
 languages: [kotlin]
 message: |
   allowBackup=true can leak sensitive data via Google cloud backup. Set to false.

@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [python]
 message: |
   Unsafe deserialization! pickle.loads() and yaml.load() can execute

@@ -3,6 +3,7 @@ name: Unsafe buffer operations
 severity: high
 category: buffer-overflow
 confidence: high
+cwe: CWE-121
 languages: [cpp]
 message: "C-style buffer operations are unsafe. Prefer std::vector or std::array."
 patterns:

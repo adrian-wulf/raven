@@ -3,6 +3,7 @@ name: Laravel Debug Mode Enabled
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [php]
 frameworks: [laravel]
 message: |

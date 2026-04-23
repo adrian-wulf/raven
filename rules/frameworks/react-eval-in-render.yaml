@@ -3,6 +3,7 @@ name: React eval in Component
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [javascript, typescript]
 frameworks: [react]
 message: |

@@ -3,6 +3,7 @@ name: Overly permissive IAM policy
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "IAM policy grants Action: * on Resource: *. Use least privilege principle."
 patterns:

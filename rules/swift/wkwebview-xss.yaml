@@ -6,6 +6,7 @@ description: |
 severity: high
 category: xss
 confidence: medium
+cwe: CWE-79
 languages: [swift]
 message: |
   WKWebView loads user-controlled content. Validate URLs and use

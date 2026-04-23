@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: injection
 confidence: medium
+cwe: CWE-74
 languages: [java, kotlin]
 frameworks: [android]
 message: |

@@ -3,6 +3,7 @@ name: React Unsafe href with User Input
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript]
 frameworks: [react]
 message: |

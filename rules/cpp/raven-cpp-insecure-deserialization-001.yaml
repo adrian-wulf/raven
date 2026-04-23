@@ -3,6 +3,7 @@ name: Insecure deserialization
 severity: high
 category: deserialization
 confidence: medium
+cwe: CWE-502
 languages: [cpp]
 message: "Deserializing untrusted data can lead to remote code execution. Validate data before deserialization."
 patterns:

@@ -3,6 +3,7 @@ name: Integer overflow in allocation
 severity: high
 category: integer-overflow
 confidence: medium
+cwe: CWE-190
 languages: [c]
 message: "Integer overflow possible before memory allocation. Check for overflow before malloc()."
 patterns:

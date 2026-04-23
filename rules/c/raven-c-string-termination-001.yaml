@@ -3,6 +3,7 @@ name: Potential unterminated string
 severity: medium
 category: buffer-overflow
 confidence: medium
+cwe: CWE-121
 languages: [c]
 message: "strncpy() does not guarantee null-termination. Ensure the buffer is null-terminated."
 patterns:

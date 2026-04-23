@@ -3,6 +3,7 @@ name: Publicly accessible RDS instance
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "RDS instance is publicly accessible. Restrict to VPC or specific IPs."
 patterns:

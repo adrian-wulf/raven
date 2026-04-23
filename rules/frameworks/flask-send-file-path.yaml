@@ -3,6 +3,7 @@ name: Flask Path Traversal in send_file
 severity: high
 category: path-traversal
 confidence: high
+cwe: CWE-22
 languages: [python]
 frameworks: [flask]
 message: |

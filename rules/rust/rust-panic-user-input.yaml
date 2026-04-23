@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: info-disclosure
 confidence: medium
+cwe: CWE-200
 languages: [rust]
 message: |
   panic! with user input can leak paths/source. Use proper error handling with Result.

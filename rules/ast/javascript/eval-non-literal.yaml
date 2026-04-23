@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [javascript, typescript]
 message: |
   eval() with dynamic input is extremely dangerous. Never pass user input

@@ -3,6 +3,7 @@ name: Terraform S3 backend without encryption
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Terraform S3 backend missing encryption. Enable server-side encryption."
 patterns:

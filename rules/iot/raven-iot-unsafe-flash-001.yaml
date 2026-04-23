@@ -3,6 +3,7 @@ name: Unsafe flash memory operations
 severity: medium
 category: iot-security
 confidence: medium
+cwe: CWE-16
 languages: [c, cpp]
 message: "Direct flash writes without validation can corrupt firmware. Verify writes before committing."
 patterns:

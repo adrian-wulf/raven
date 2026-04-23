@@ -5,6 +5,7 @@ description: |
 severity: low
 category: deserialization
 confidence: low
+cwe: CWE-502
 languages: [go]
 message: |
   Unmarshaling into interface{} loses type safety. Use strongly typed structs.

@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: cryptography
 confidence: medium
+cwe: CWE-327
 languages: [go]
 message: |
   HTTP server without TLS! Use http.ListenAndServeTLS() in production.

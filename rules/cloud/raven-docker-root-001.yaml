@@ -3,6 +3,7 @@ name: Container running as root
 severity: medium
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Docker container runs as root. Use USER directive to run as non-root."
 patterns:

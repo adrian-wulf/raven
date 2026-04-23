@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: xxe
 confidence: high
+cwe: CWE-611
 languages: [python]
 message: |
   XML parsing may allow XXE. Disable external entities and DTD loading.

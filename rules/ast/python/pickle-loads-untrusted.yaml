@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [python]
 message: |
   pickle.loads() on untrusted data is equivalent to eval().

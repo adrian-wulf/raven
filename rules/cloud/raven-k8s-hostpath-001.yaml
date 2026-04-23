@@ -3,6 +3,7 @@ name: Unsafe hostPath mount
 severity: high
 category: cloud-security
 confidence: medium
+cwe: CWE-16
 languages: ["*"]
 message: "hostPath mounts sensitive host directory. Can lead to container escape."
 patterns:

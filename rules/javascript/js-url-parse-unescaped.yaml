@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: ssrf
 confidence: medium
+cwe: CWE-918
 languages: [javascript, typescript]
 message: |
   URL built with user input may allow javascript: or file: schemes. Validate with URL constructor.

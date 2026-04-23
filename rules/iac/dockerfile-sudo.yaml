@@ -3,6 +3,7 @@ name: Dockerfile Uses sudo
 severity: low
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   Don't use sudo in Dockerfiles. Containers run as root by default.

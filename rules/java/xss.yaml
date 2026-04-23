@@ -5,6 +5,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [java]
 message: |
   Potential XSS: user input is output directly without HTML encoding.

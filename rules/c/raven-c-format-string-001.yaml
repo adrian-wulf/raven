@@ -3,6 +3,7 @@ name: Format string vulnerability (printf)
 severity: high
 category: format-string
 confidence: medium
+cwe: CWE-134
 languages: [c]
 message: "Passing user input directly to printf() can lead to format string attacks. Use printf(\"%s\", input) instead."
 patterns:

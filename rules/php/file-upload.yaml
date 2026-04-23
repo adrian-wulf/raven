@@ -6,6 +6,7 @@ description: |
 severity: high
 category: file-upload
 confidence: medium
+cwe: CWE-434
 languages: [php]
 message: |
   File upload without validation. Check MIME type, extension (whitelist),

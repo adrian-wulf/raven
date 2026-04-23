@@ -193,6 +193,7 @@ func (f *Formatter) toSARIFResults(result *engine.Result) []map[string]interface
 		results = append(results, map[string]interface{}{
 			"ruleId":  finding.RuleID,
 			"message": map[string]interface{}{"text": finding.Message},
+			"properties": map[string]interface{}{"cwe": finding.CWE},
 			"locations": []map[string]interface{}{
 				{
 					"physicalLocation": map[string]interface{}{

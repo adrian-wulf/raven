@@ -3,6 +3,7 @@ name: Weak device authentication
 severity: high
 category: iot-security
 confidence: medium
+cwe: CWE-16
 languages: [c, cpp]
 message: "Weak or missing device authentication. Implement strong mutual authentication."
 patterns:

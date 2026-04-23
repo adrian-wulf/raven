@@ -3,6 +3,7 @@ name: Nginx Missing X-Frame-Options
 severity: medium
 category: clickjacking
 confidence: medium
+cwe: CWE-1021
 languages: [nginx]
 message: |
   Add X-Frame-Options header to prevent clickjacking attacks.

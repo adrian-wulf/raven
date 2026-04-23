@@ -3,6 +3,7 @@ name: Django Raw SQL Without Params
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [python]
 frameworks: [django]
 message: |

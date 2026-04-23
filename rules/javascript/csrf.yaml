@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: csrf
 confidence: low
+cwe: CWE-352
 languages: [javascript, typescript]
 message: |
   State-changing endpoint detected without visible CSRF protection.

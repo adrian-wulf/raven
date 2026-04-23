@@ -3,6 +3,7 @@ name: Kubernetes HostPath Volume
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [yaml]
 message: |
   hostPath mounts host filesystem into pod. Use persistent volumes instead.

@@ -5,6 +5,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [kotlin]
 message: |
   Cleartext traffic sends data unencrypted! Use HTTPS only in production.

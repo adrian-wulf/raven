@@ -3,6 +3,7 @@ name: Vue v-html with Dynamic Content
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript]
 frameworks: [vue]
 message: |

@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   Debug mode exposes internal information. Disable in production builds.

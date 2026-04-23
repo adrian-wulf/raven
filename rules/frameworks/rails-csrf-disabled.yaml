@@ -3,6 +3,7 @@ name: Rails CSRF Protection Disabled
 severity: critical
 category: csrf
 confidence: high
+cwe: CWE-352
 languages: [ruby]
 frameworks: [rails]
 message: |

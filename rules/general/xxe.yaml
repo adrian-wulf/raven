@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: xxe
 confidence: medium
+cwe: CWE-611
 languages: [javascript, typescript, python, go, php, java]
 message: |
   Potential XXE: XML parsing without disabling external entities.

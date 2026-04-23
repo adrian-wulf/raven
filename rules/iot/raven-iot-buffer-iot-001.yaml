@@ -3,6 +3,7 @@ name: Buffer overflow in IoT message handling
 severity: high
 category: buffer-overflow
 confidence: medium
+cwe: CWE-121
 languages: [c, cpp]
 message: "IoT message parsing without bounds checking. Validate all message lengths."
 patterns:

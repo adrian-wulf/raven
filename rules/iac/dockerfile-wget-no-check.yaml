@@ -3,6 +3,7 @@ name: Dockerfile wget Without Certificate Check
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   wget --no-check-certificate disables TLS verification. Never use in production.

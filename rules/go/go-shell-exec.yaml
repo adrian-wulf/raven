@@ -5,6 +5,7 @@ description: |
 severity: high
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [go]
 message: |
   exec.Command("/bin/sh", "-c", ...) is shell injection! Use exec.Command with array args.

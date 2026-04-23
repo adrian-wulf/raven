@@ -3,6 +3,7 @@ name: Rails SQL Injection in Dynamic Finder
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [ruby]
 frameworks: [rails]
 message: |

@@ -3,6 +3,7 @@ name: Unsafe sprintf usage
 severity: high
 category: buffer-overflow
 confidence: high
+cwe: CWE-121
 languages: [c]
 message: "sprintf() can overflow buffers. Use snprintf() with size limit instead."
 patterns:

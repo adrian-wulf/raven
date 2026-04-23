@@ -3,6 +3,7 @@ name: Public GCS bucket
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "GCS bucket has allUsers or allAuthenticatedUsers access. Remove public access."
 patterns:

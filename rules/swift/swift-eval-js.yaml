@@ -5,6 +5,7 @@ description: |
 severity: high
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [swift]
 message: |
   evaluateJavaScript with user input is XSS! Sanitize or avoid dynamic JavaScript execution.

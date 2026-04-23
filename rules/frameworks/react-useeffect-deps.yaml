@@ -3,6 +3,7 @@ name: React useEffect Missing Dependencies
 severity: low
 category: bug
 confidence: low
+cwe: CWE-1104
 languages: [javascript, typescript]
 frameworks: [react]
 message: |

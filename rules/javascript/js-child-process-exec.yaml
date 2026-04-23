@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [javascript, typescript]
 message: |
   child_process.exec with variables is command injection! Use execFile with array args.

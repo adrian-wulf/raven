@@ -6,6 +6,7 @@ description: |
 severity: high
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [csharp]
 message: |
   Raw SQL in EF bypasses parameterization. Use FromSqlInterpolated

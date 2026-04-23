@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [rust]
 message: |
   Potential command injection: user input is passed to Command::new or args.

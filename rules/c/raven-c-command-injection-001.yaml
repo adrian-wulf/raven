@@ -3,6 +3,7 @@ name: Command injection via system()
 severity: high
 category: command-injection
 confidence: medium
+cwe: CWE-78
 languages: [c]
 message: "system() with user input allows command injection. Avoid system() or use execve() with argument array."
 patterns:

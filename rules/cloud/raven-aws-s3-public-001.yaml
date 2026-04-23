@@ -3,6 +3,7 @@ name: Public S3 bucket
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "S3 bucket configured as public-read. This exposes data to everyone."
 patterns:

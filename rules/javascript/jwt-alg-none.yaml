@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: auth
 confidence: high
+cwe: CWE-287
 languages: [javascript, typescript]
 message: |
   JWT algorithm confusion vulnerability! Never accept alg: "none".

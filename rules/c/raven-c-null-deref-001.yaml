@@ -3,6 +3,7 @@ name: Null pointer dereference
 severity: medium
 category: null-dereference
 confidence: medium
+cwe: CWE-476
 languages: [c]
 message: "Potential null pointer dereference. Check malloc() return value before use."
 patterns:

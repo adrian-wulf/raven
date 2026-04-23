@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: injection
 confidence: medium
+cwe: CWE-74
 languages: [kotlin]
 message: |
   getParcelableExtra without type validation can be exploited. Validate the parcelable type.

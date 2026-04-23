@@ -6,6 +6,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [ruby]
 frameworks: [rails]
 message: |

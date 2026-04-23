@@ -3,6 +3,7 @@ name: Command injection via popen()
 severity: high
 category: command-injection
 confidence: medium
+cwe: CWE-78
 languages: [c]
 message: "popen() with user input allows command injection. Validate input strictly."
 patterns:

@@ -6,6 +6,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [python]
 message: |
   Weak hash algorithm. Use hashlib.sha256() or better.

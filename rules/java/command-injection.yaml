@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [java]
 message: |
   Potential command injection: user input is passed to Runtime.exec() or ProcessBuilder.

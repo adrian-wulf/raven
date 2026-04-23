@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: info-disclosure
 confidence: medium
+cwe: CWE-200
 languages: [kotlin, java]
 frameworks: [android]
 message: |

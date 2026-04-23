@@ -5,6 +5,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [go]
 message: |
   math/rand is predictable! Use crypto/rand for tokens, nonces, and passwords.

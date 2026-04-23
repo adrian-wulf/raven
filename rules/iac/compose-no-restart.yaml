@@ -3,6 +3,7 @@ name: Docker Compose Missing Restart Policy
 severity: low
 category: misconfiguration
 confidence: low
+cwe: CWE-16
 languages: [yaml]
 message: |
   Add restart policy to containers for production resilience.

@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [javascript, typescript]
 frameworks: [express]
 message: |

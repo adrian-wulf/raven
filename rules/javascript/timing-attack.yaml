@@ -6,6 +6,7 @@ description: |
 severity: low
 category: cryptography
 confidence: medium
+cwe: CWE-327
 languages: [javascript, typescript]
 message: |
   Timing attack: comparing secrets with === leaks timing info.

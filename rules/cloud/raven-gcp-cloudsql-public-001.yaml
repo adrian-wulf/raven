@@ -3,6 +3,7 @@ name: Public Cloud SQL instance
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Cloud SQL instance has public IP enabled. Use private IP only."
 patterns:

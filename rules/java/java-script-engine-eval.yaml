@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [java]
 message: |
   ScriptEngine.eval() executes arbitrary code! Never pass user input to script engines.

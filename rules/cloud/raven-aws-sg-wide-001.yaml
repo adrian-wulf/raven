@@ -3,6 +3,7 @@ name: Overly permissive security group
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Security group allows 0.0.0.0/0 access. Restrict to specific CIDR ranges."
 patterns:

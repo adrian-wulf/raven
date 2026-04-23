@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [python]
 message: |
   text() with f-string is SQL injection! Use bound parameters: text("SELECT * WHERE id = :id").

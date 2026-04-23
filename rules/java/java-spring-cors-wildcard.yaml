@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: cors
 confidence: high
+cwe: CWE-346
 languages: [java]
 message: |
   CORS * with credentials is a critical vulnerability! Specify exact origins.

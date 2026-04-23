@@ -3,6 +3,7 @@ name: Dockerfile Runs apt-get upgrade
 severity: low
 category: supply-chain
 confidence: medium
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   Avoid apt-get upgrade in Dockerfiles. Pin specific versions.

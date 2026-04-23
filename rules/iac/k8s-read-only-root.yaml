@@ -3,6 +3,7 @@ name: Kubernetes Writable Root Filesystem
 severity: medium
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [yaml]
 message: |
   readOnlyRootFilesystem: false allows writing to root FS. Set to true for immutable containers.

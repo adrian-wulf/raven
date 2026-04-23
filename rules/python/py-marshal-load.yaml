@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [python]
 message: |
   marshal.loads() executes arbitrary Python code! Never use with untrusted data.

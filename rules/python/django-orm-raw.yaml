@@ -6,6 +6,7 @@ description: |
 severity: high
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [python]
 message: |
   Raw SQL in Django ORM bypasses protection. Use parameterized raw

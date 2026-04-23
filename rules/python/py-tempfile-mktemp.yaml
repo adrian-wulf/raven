@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: race-condition
 confidence: high
+cwe: CWE-362
 languages: [python]
 message: |
   mktemp() is vulnerable to race conditions. Use mkstemp() or TemporaryFile().

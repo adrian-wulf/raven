@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [php]
 message: |
   include() with user input is LFI/RFI! Whitelist allowed files or use routing.

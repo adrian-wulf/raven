@@ -5,6 +5,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [php]
 message: |
   <?= with user input is XSS! Use htmlspecialchars() or use a template engine.

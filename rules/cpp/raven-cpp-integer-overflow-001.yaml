@@ -3,6 +3,7 @@ name: Integer overflow in C++
 severity: medium
 category: integer-overflow
 confidence: low
+cwe: CWE-190
 languages: [cpp]
 message: "Integer overflow possible. Check bounds before arithmetic operations."
 patterns:

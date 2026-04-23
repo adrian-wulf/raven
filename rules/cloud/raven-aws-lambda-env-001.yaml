@@ -3,6 +3,7 @@ name: Hardcoded secrets in Lambda environment
 severity: high
 category: secrets
 confidence: high
+cwe: CWE-798
 languages: ["*"]
 message: "AWS Lambda environment variables may contain secrets. Use AWS Secrets Manager instead."
 patterns:

@@ -5,6 +5,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   Non-crypto random is predictable! Use crypto-secure RNG for tokens, IDs, and passwords.

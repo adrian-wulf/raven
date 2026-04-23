@@ -5,6 +5,7 @@ description: |
 severity: low
 category: logging
 confidence: low
+cwe: CWE-532
 languages: [terraform]
 message: |
   Enable S3 access logging for security auditing and incident response.

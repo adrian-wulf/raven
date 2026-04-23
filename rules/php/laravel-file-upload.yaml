@@ -6,6 +6,7 @@ description: |
 severity: high
 category: file-upload
 confidence: medium
+cwe: CWE-434
 languages: [php]
 frameworks: [laravel]
 message: |

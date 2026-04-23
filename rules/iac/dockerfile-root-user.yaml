@@ -3,6 +3,7 @@ name: Dockerfile Runs as Root
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   Container runs as root. Add 'USER nonroot' before CMD/ENTRYPOINT.

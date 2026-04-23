@@ -3,6 +3,7 @@ name: Django Unsafe Deserialization
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [python]
 frameworks: [django]
 message: |

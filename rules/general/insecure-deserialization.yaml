@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [javascript, typescript, python, go, php, rust, java]
 message: |
   Insecure deserialization detected! Never deserialize untrusted data

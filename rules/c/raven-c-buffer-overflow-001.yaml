@@ -3,6 +3,7 @@ name: Unsafe strcpy usage
 severity: high
 category: buffer-overflow
 confidence: high
+cwe: CWE-121
 languages: [c]
 message: "strcpy() is unsafe and can cause buffer overflows. Use strncpy() or strlcpy() instead."
 patterns:

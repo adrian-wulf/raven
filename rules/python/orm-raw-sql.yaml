@@ -6,6 +6,7 @@ description: |
 severity: high
 category: sql-injection
 confidence: medium
+cwe: CWE-89
 languages: [python]
 message: |
   Raw SQL in ORM bypasses built-in protection. Use parameterized

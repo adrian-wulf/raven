@@ -5,6 +5,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [go]
 message: |
   TLS 1.0/1.1 are deprecated and insecure. Use tls.VersionTLS12 as minimum.

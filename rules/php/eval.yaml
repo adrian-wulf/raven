@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [php]
 message: |
   Dangerous code execution! Never pass user input to eval() or assert().

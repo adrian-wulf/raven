@@ -3,6 +3,7 @@ name: Nginx Exposes Version
 severity: low
 category: info-disclosure
 confidence: high
+cwe: CWE-200
 languages: [nginx]
 message: |
   server_tokens on exposes Nginx version. Set server_tokens off.

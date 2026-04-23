@@ -6,6 +6,7 @@ description: |
 severity: high
 category: deserialization
 confidence: medium
+cwe: CWE-502
 languages: [javascript, typescript]
 message: |
   Insecure deserialization: parsing untrusted data without validation.

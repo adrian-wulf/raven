@@ -3,6 +3,7 @@ name: Dockerfile curl | bash Pattern
 severity: high
 category: supply-chain
 confidence: high
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   curl | bash is dangerous! Verify checksums before executing remote scripts.

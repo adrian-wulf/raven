@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: supply-chain
 confidence: low
+cwe: CWE-1104
 languages: [javascript, typescript]
 message: |
   Internal package without @scope prefix. Use scoped packages

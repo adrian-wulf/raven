@@ -3,6 +3,7 @@ name: Plaintext protocol (MQTT/CoAP without TLS)
 severity: high
 category: iot-security
 confidence: medium
+cwe: CWE-16
 languages: [c, cpp]
 message: "Using plaintext MQTT or CoAP without DTLS/TLS. Encrypt all device communications."
 patterns:

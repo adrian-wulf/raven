@@ -6,6 +6,7 @@ description: |
 severity: high
 category: nosql-injection
 confidence: high
+cwe: CWE-89
 languages: [javascript, typescript]
 message: |
   Potential NoSQL injection. Never pass user input directly to MongoDB

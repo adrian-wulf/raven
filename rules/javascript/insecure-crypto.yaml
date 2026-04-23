@@ -6,6 +6,7 @@ description: |
 severity: high
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [javascript, typescript]
 message: |
   Weak cryptographic algorithm detected. MD5 and SHA1 are vulnerable to

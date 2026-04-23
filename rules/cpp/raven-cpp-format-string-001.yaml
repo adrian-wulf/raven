@@ -3,6 +3,7 @@ name: Format string vulnerability
 severity: high
 category: format-string
 confidence: medium
+cwe: CWE-134
 languages: [cpp]
 message: "Passing user input to printf-style functions can cause format string attacks."
 patterns:

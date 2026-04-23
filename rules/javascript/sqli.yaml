@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [javascript, typescript]
 message: |
   Potential SQL injection: user input is concatenated into a SQL query.

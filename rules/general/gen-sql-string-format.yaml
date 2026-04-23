@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   String formatting in SQL queries is injection! Use parameterized queries.

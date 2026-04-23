@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [python]
 message: |
   FTP transmits credentials in plaintext. Use FTPS (FTP_TLS) or SFTP instead.

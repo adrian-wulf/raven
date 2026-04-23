@@ -3,6 +3,7 @@ name: Azure SQL without TLS enforcement
 severity: high
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "Azure SQL server does not enforce TLS. Set minimum_tls_version."
 patterns:

@@ -3,6 +3,7 @@ name: CloudTrail logging disabled
 severity: medium
 category: cloud-security
 confidence: high
+cwe: CWE-16
 languages: ["*"]
 message: "CloudTrail or audit logging disabled. Enable comprehensive logging for compliance."
 patterns:

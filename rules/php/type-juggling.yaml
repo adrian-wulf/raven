@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: auth
 confidence: medium
+cwe: CWE-287
 languages: [php]
 message: |
   Loose comparison == uses type juggling. Use === for strict comparison.

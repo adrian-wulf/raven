@@ -14,6 +14,7 @@ type Finding struct {
 	RuleName   string
 	Severity   string
 	Category   string
+	CWE        string
 	Message    string
 	File       string
 	Line       int
@@ -98,6 +99,7 @@ type RuleInfo struct {
 	Name       string
 	Severity   string
 	Category   string
+	CWE        string
 	Message    string
 	Confidence string
 	References []string

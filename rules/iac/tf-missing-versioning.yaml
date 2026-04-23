@@ -5,6 +5,7 @@ description: |
 severity: low
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [terraform]
 message: |
   Enable S3 versioning to protect against accidental deletion and ransomware.

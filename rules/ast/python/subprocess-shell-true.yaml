@@ -7,6 +7,7 @@ description: |
 severity: high
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [python]
 message: |
   subprocess with shell=True is dangerous. Use shell=False and pass

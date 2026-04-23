@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [go]
 message: |
   SQL injection: Use parameterized queries with db.Query("SELECT * FROM users WHERE id = ?", id).

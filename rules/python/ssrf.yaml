@@ -6,6 +6,7 @@ description: |
 severity: high
 category: ssrf
 confidence: medium
+cwe: CWE-918
 languages: [python]
 message: |
   SSRF: User input controls the URL of an outbound request.

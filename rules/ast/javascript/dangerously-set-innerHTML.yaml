@@ -6,6 +6,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [javascript, typescript]
 message: |
   dangerouslySetInnerHTML is dangerous. Ensure the HTML is sanitized

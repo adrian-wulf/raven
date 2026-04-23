@@ -3,6 +3,7 @@ name: SQL injection in C++
 severity: high
 category: sql-injection
 confidence: medium
+cwe: CWE-89
 languages: [cpp]
 message: "Concatenating user input into SQL queries allows SQL injection. Use parameterized queries."
 patterns:

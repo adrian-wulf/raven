@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [python]
 message: |
   Debug mode is enabled. Never run with debug=True in production.

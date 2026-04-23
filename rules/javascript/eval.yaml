@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [javascript, typescript]
 message: |
   Dangerous code execution: eval() or new Function() with user input.

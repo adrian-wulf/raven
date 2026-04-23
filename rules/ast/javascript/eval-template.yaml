@@ -7,6 +7,7 @@ description: |
 severity: high
 category: injection
 confidence: high
+cwe: CWE-74
 languages: [javascript, typescript]
 message: |
   eval() or Function() is called with a template literal. This is

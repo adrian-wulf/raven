@@ -5,6 +5,7 @@ description: |
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [ruby]
 message: |
   VERIFY_NONE disables SSL verification and enables MITM attacks. Never use in production.

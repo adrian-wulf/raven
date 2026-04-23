@@ -3,6 +3,7 @@ name: Dockerfile Uses ADD Instead of COPY
 severity: low
 category: best-practice
 confidence: medium
+cwe: CWE-16
 languages: [dockerfile]
 message: |
   Use COPY instead of ADD. ADD has surprising behavior with URLs and tar extraction.

@@ -5,6 +5,7 @@ description: |
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [terraform]
 message: |
   IAM policy uses wildcard (*) which violates least privilege. Specify exact actions/resources.

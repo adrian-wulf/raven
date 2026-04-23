@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: code-injection
 confidence: high
+cwe: CWE-94
 languages: [javascript, typescript]
 message: |
   Never use eval() for JSON! Use JSON.parse() which is safe and much faster.

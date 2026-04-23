@@ -5,6 +5,7 @@ description: |
 severity: high
 category: misconfiguration
 confidence: high
+cwe: CWE-16
 languages: [php]
 message: |
   allow_url_fopen enables remote file inclusion. Disable in production.

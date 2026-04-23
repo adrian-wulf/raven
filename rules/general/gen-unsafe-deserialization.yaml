@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
   Deserializing untrusted data can execute arbitrary code. Use JSON with schema validation.

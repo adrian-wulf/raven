@@ -6,6 +6,7 @@ description: |
 severity: critical
 category: command-injection
 confidence: high
+cwe: CWE-78
 languages: [python]
 message: |
   os.system() with dynamic strings is dangerous. Use subprocess.run()

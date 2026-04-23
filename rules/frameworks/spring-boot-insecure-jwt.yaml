@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: auth
 confidence: high
+cwe: CWE-287
 languages: [java]
 frameworks: [spring-boot]
 message: |

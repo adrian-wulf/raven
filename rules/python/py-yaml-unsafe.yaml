@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: deserialization
 confidence: high
+cwe: CWE-502
 languages: [python]
 message: |
   yaml.load() without SafeLoader is RCE! Use yaml.safe_load() instead.

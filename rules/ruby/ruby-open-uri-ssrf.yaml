@@ -5,6 +5,7 @@ description: |
 severity: high
 category: ssrf
 confidence: high
+cwe: CWE-918
 languages: [ruby]
 message: |
   open() with user input can access internal services (SSRF). Validate and whitelist URLs.

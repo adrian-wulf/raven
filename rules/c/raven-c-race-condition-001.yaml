@@ -3,6 +3,7 @@ name: TOCTOU race condition
 severity: medium
 category: race-condition
 confidence: low
+cwe: CWE-362
 languages: [c]
 message: "Time-of-check-time-of-use race condition possible. Use file descriptors instead of paths."
 patterns:

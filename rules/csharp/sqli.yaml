@@ -5,6 +5,7 @@ description: |
 severity: critical
 category: sql-injection
 confidence: high
+cwe: CWE-89
 languages: [csharp]
 message: |
   SQL injection: Use SqlCommand with SqlParameter for parameterized queries.

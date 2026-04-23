@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: auth
 confidence: high
+cwe: CWE-287
 languages: [python]
 message: |
   assert is removed in optimized mode! Use proper if/raise for security checks.

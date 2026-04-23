@@ -6,6 +6,7 @@ description: |
 severity: high
 category: injection
 confidence: high
+cwe: CWE-74
 languages: [javascript, typescript]
 message: |
   GraphQL query built with user input. Use parameterized queries

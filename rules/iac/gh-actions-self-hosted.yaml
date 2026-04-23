@@ -3,6 +3,7 @@ name: GitHub Actions Self-Hosted Runner Security
 severity: medium
 category: misconfiguration
 confidence: medium
+cwe: CWE-16
 languages: [yaml]
 message: |
   Self-hosted runners may persist between jobs. Use ephemeral runners for untrusted code.

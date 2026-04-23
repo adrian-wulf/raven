@@ -5,6 +5,7 @@ description: |
 severity: high
 category: xss
 confidence: high
+cwe: CWE-79
 languages: [ruby]
 message: |
   ERB.new with user input is XSS! Use HTML escaping or sanitize with a library.

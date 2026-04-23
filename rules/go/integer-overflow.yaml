@@ -6,6 +6,7 @@ description: |
 severity: medium
 category: integer-overflow
 confidence: medium
+cwe: CWE-190
 languages: [go]
 message: |
   Integer operation on user-controlled value without bounds check.

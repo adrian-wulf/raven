@@ -5,6 +5,7 @@ description: |
 severity: medium
 category: cryptography
 confidence: high
+cwe: CWE-327
 languages: [javascript, typescript]
 message: |
   PBKDF2 with < 100k iterations is too fast. Use >= 600,000 iterations (OWASP 2023).
