@@ -273,16 +273,16 @@ raven scan --quiet
 
 | Język | Status | Taint | AST | Reguły |
 |-------|--------|-------|-----|--------|
-| JavaScript / TypeScript | ✅ Pełny | ✅ | ✅ | 35+ |
-| Python | ✅ Pełny | ✅ | ✅ | 18+ |
-| Go | ✅ Pełny | ✅ | ✅ | 15+ |
-| PHP | ✅ Pełny | ✅ | ✅ | 12+ |
-| Java | ✅ Pełny | ✅ | ✅ | 10+ |
-| Kotlin | ✅ Parser | ✅ | ✅ | Dzieli z Java |
-| C# | ✅ Pełny | ✅ | ✅ | 6+ |
-| Rust | ✅ Podstawowy | ❌ | ✅ | 8+ |
-| Ruby | ✅ Podstawowy | ❌ | ✅ | Dzieli z JS |
-| Swift | ✅ Podstawowy | ❌ | ✅ | Dzieli z JS |
+| JavaScript / TypeScript | ✅ Pełny | ✅ | ✅ | 40+ |
+| Python | ✅ Pełny | ✅ | ✅ | 20+ |
+| Go | ✅ Pełny | ✅ | ✅ | 18+ |
+| PHP | ✅ Pełny | ✅ | ✅ | 15+ |
+| Java | ✅ Pełny | ✅ | ✅ | 15+ |
+| Kotlin | ✅ Pełny | ✅ | ✅ | 8+ |
+| C# | ✅ Pełny | ✅ | ✅ | 10+ |
+| Rust | ✅ Pełny | ✅ | ✅ | 10+ |
+| Ruby | ✅ Pełny | ✅ | ✅ | 8+ |
+| Swift | ✅ Pełny | ✅ | ✅ | 6+ |
 
 ---
 
@@ -334,7 +334,7 @@ severity:
 
 ## Reguły
 
-Raven dostarcza **100+ reguł bezpieczeństwa** pokrywających OWASP Top 10, typowe błędy LLM, analizę opartą na AST i śledzenie taint.
+Raven dostarcza **150+ reguł bezpieczeństwa** pokrywających OWASP Top 10, typowe błędy LLM, analizę opartą na AST i śledzenie taint.
 
 ```bash
 # Wylistuj wszystkie reguły
@@ -409,7 +409,7 @@ raven completion powershell | Out-String | Invoke-Expression
 ## Roadmap
 
 - [x] Silnik reguł
-- [x] 100+ reguł bezpieczeństwa (regex + AST + taint)
+- [x] 150+ reguł bezpieczeństwa (regex + AST + taint)
 - [x] Auto-naprawa
 - [x] Tryb obserwacji
 - [x] Tryb CI + SARIF
