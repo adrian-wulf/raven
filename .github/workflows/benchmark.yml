@@ -1,0 +1,49 @@
+name: Benchmark
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Run benchmarks
+        run: go test -bench=. -benchmem -count=5 ./internal/engine/ > benchmark.txt
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-${{ github.sha }}
+          path: benchmark.txt
+
+      - name: Run per-rule tests
+        run: go test -v ./internal/ruletest/... 2>&1 | tee rule-test-results.txt
+
+      - name: Upload rule test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: rule-test-results-${{ github.sha }}
+          path: rule-test-results.txt
+
+      - name: Run full test suite
+        run: go test ./...
+
+      - name: Quality gate — scan test-vulnerable-app
+        run: |
+          go run ./cmd/raven scan test-vulnerable-app/ --confidence low --format json > scan-results.json
+          FINDINGS=$(jq '.findings | length' scan-results.json)
+          echo "Findings: $FINDINGS"
+          if [ "$FINDINGS" -lt 20 ] || [ "$FINDINGS" -gt 35 ]; then
+            echo "❌ Quality gate failed: expected 20-35 findings, got $FINDINGS"
+            exit 1
+          fi
+          echo "✅ Quality gate passed: $FINDINGS findings in expected range"
