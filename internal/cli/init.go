@@ -56,7 +56,7 @@ rules:
     - build
     - .git
     - "*.min.js"
-  confidence: medium
+  confidence: high
 
 output:
   format: pretty

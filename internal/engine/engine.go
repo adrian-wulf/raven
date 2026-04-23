@@ -215,24 +215,51 @@ func (s *Scanner) collectFiles() ([]string, error) {
 
 func (s *Scanner) isExcluded(path string) bool {
 	// Common auto-exclude patterns for test files, vendors, etc.
-	autoExclude := []string{
-		"_test.go", "_test.py", "_test.js", "_test.ts",
-		"test_", "spec.", "mock", "fixture", "example",
+	base := filepath.Base(path)
+	lowerPath := strings.ToLower(path)
+
+	// File name patterns (basename only)
+	filePatterns := []string{
+		"*_test.go", "*_test.py", "*_test.js", "*_test.ts", "*_test.jsx", "*_test.tsx",
+		"test_*.py", "tests.py", "conftest.py", "test_main*", "*_spec.*",
+		"*.min.js", "*.min.css", "*.bundle.js", "*.map",
+	}
+	for _, p := range filePatterns {
+		if matched, _ := filepath.Match(p, base); matched {
+			return true
+		}
+	}
+
+	// Directory / path segment patterns (must match as exact segment)
+	excludeSegments := []string{
+		"__tests__", "tests", "spec", "specs",
+		"mocks", "fixtures", "e2e", "cypress", "playwright",
+		"storybook", "benchmarks",
+		"examples", "demos", "samples",
+		"docs", "documentation",
 		"node_modules", "vendor", "dist", "build", ".git",
-		"*.min.js", "*.min.css", "*.bundle.js",
+		"output", "coverage",
+		".vscode", ".idea", ".vs",
 	}
-
-	allPatterns := append(s.config.Exclude, autoExclude...)
-
-	for _, pattern := range allPatterns {
-		matched, _ := filepath.Match(pattern, filepath.Base(path))
-		if matched {
-			return true
-		}
-		if strings.Contains(path, pattern) {
-			return true
+	segments := strings.Split(lowerPath, string(filepath.Separator))
+	for _, seg := range segments {
+		for _, ex := range excludeSegments {
+			if seg == ex {
+				return true
+			}
 		}
 	}
+
+	// User-configured exclude patterns
+	for _, pattern := range s.config.Exclude {
+		if matched, _ := filepath.Match(pattern, base); matched {
+			return true
+		}
+		if strings.Contains(lowerPath, strings.ToLower(pattern)) {
+			return true
+		}
+	}
+
 	return false
 }
 
@@ -304,6 +331,28 @@ func (s *Scanner) hasAnyFramework(frameworks []string) bool {
 	return false
 }
 
+// isKnownTestFile detects common test file patterns
+func isKnownTestFile(path string) bool {
+	lower := strings.ToLower(path)
+	testPatterns := []string{
+		"_test.", "_spec.", "_mock.", "_stub.", "_fixture.",
+		".test.", ".spec.", ".mock.", ".stub.",
+		"test_", "tests_", "spec_", "mock_", "stub_",
+		"conftest.py", "tests.py", "test_main",
+		"/test/", "/tests/", "/spec/", "/specs/",
+		"/__tests__/", "/mocks/", "/fixtures/",
+		"/e2e/", "/cypress/", "/playwright/",
+		"/benchmark/", "/benchmarks/",
+		"/example/", "/examples/", "/demo/", "/demos/",
+	}
+	for _, p := range testPatterns {
+		if strings.Contains(lower, p) {
+			return true
+		}
+	}
+	return false
+}
+
 func (s *Scanner) meetsConfidence(conf string) bool {
 	levels := map[string]int{"low": 1, "medium": 2, "high": 3}
 	required := levels[s.config.Confidence]
@@ -316,6 +365,10 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Global test file detection — skip regex scanning for known test files
+	// AST-based scanning still runs for taint analysis accuracy
+	isTestFile := isKnownTestFile(path)
 
 	lang := DetectLanguage(path)
 	var findings []Finding
@@ -331,6 +384,20 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 			// Skip AST-only patterns in regex phase
 			if pattern.Type == "ast-query" || pattern.Type == "taint" {
 				continue
+			}
+
+			// Skip regex scanning for test files unless rule explicitly allows tests
+			if isTestFile && pattern.Type != "ast-query" {
+				var allowsTests bool
+				for _, w := range pattern.Where {
+					if !w.NotTestFile {
+						allowsTests = true
+						break
+					}
+				}
+				if !allowsTests {
+					continue
+				}
 			}
 
 			var matches []findingMatch

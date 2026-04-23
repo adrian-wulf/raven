@@ -360,7 +360,7 @@ Examples:
 	cmd.Flags().BoolVar(&noColor, "no-color", false, "Disable colored output")
 	cmd.Flags().BoolVar(&noCode, "no-code", false, "Hide code snippets")
 	cmd.Flags().StringVar(&minSev, "min-sev", "low", "Minimum severity: critical, high, medium, low, info")
-	cmd.Flags().StringVar(&confidence, "confidence", "medium", "Minimum confidence: high, medium, low")
+	cmd.Flags().StringVar(&confidence, "confidence", "high", "Minimum confidence: high, medium, low")
 	cmd.Flags().BoolVar(&fixFlag, "fix", false, "Auto-fix issues where possible")
 	cmd.Flags().BoolVar(&depsFlag, "deps", false, "Scan dependencies for known vulnerabilities (OSV)")
 	cmd.Flags().BoolVar(&secretsFlag, "secrets", false, "Deep scan for hardcoded secrets and high-entropy strings")
