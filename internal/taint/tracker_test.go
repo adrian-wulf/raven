@@ -146,6 +146,86 @@ function handler(req, res) {
 	}
 }
 
+// TestInterProceduralTaint checks that taint is tracked through function calls
+// when a function returns tainted data.
+func TestInterProceduralTaint(t *testing.T) {
+	tracker := NewTracker("javascript")
+	code := []byte(`
+function getUserInput(req) {
+	return req.body.id;
+}
+
+function handler(req, res) {
+	var userId = getUserInput(req);
+	db.query("SELECT * FROM users WHERE id = " + userId);
+}
+`)
+	path := t.TempDir() + "/interprocedural.js"
+	if err := writeFile(path, code); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	rules := []RuleInfo{{
+		ID:       "js-sqli-inter",
+		Name:     "SQL Injection (Inter-procedural)",
+		Severity: "high",
+		Patterns: []RulePattern{{
+			Type:    "taint",
+			Sources: []string{"req.body", "req.params", "req.query"},
+			Sinks:   []string{".query", ".execute"},
+		}},
+	}}
+
+	findings, err := tracker.ScanFile(path, rules)
+	if err != nil {
+		t.Fatalf("ScanFile failed: %v", err)
+	}
+	if len(findings) == 0 {
+		t.Fatal("expected inter-procedural findings, got none")
+	}
+	if findings[0].RuleID != "js-sqli-inter" {
+		t.Errorf("expected rule js-sqli-inter, got %s", findings[0].RuleID)
+	}
+}
+
+// TestInterProceduralTaintSafe checks that safe function returns don't trigger
+func TestInterProceduralTaintSafe(t *testing.T) {
+	tracker := NewTracker("javascript")
+	code := []byte(`
+function getConstant() {
+	return "safe-value";
+}
+
+function handler(req, res) {
+	var val = getConstant();
+	db.query("SELECT * FROM users WHERE id = " + val);
+}
+`)
+	path := t.TempDir() + "/safe_interprocedural.js"
+	if err := writeFile(path, code); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	rules := []RuleInfo{{
+		ID:       "js-sqli-inter",
+		Name:     "SQL Injection (Inter-procedural)",
+		Severity: "high",
+		Patterns: []RulePattern{{
+			Type:    "taint",
+			Sources: []string{"req.body", "req.params", "req.query"},
+			Sinks:   []string{".query", ".execute"},
+		}},
+	}}
+
+	findings, err := tracker.ScanFile(path, rules)
+	if err != nil {
+		t.Fatalf("ScanFile failed: %v", err)
+	}
+	if len(findings) != 0 {
+		t.Errorf("expected 0 findings for safe inter-procedural code, got %d", len(findings))
+	}
+}
+
 func writeFile(path string, data []byte) error {
 	f, err := os.Create(path)
 	if err != nil {
