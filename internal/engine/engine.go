@@ -2,6 +2,7 @@ package engine
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/raven-security/raven/internal/ast"
 	"github.com/raven-security/raven/internal/baseline"
+	"github.com/raven-security/raven/internal/cache"
 	"github.com/raven-security/raven/internal/suppress"
 	"github.com/raven-security/raven/internal/taint"
 	"github.com/raven-security/raven/internal/taint/crossfile"
@@ -33,6 +35,7 @@ type ScanConfig struct {
 	Baseline     *baseline.Baseline   // optional baseline for diff scanning
 	Suppressions *suppress.Map        // optional inline comment suppressions
 	Resolver     *crossfile.Resolver  // optional cross-file taint resolver
+	Cache        *cache.Cache         // optional file hash cache
 }
 
 func NewScanner(rules []Rule, config ScanConfig) *Scanner {
@@ -73,6 +76,17 @@ func (s *Scanner) Scan() (*Result, error) {
 	sem := make(chan struct{}, 20) // max 20 concurrent files
 
 	for _, file := range files {
+		// Check cache first
+		if s.config.Cache != nil && s.config.Cache.IsFresh(file) {
+			cached := s.config.Cache.Get(file)
+			var cachedFindings []Finding
+			json.Unmarshal(cached, &cachedFindings)
+			mu.Lock()
+			result.Findings = append(result.Findings, cachedFindings...)
+			mu.Unlock()
+			continue
+		}
+
 		wg.Add(1)
 		sem <- struct{}{}
 		go func(f string) {
@@ -82,6 +96,10 @@ func (s *Scanner) Scan() (*Result, error) {
 			findings, err := s.scanFile(f, activeRules)
 			if err != nil {
 				return
+			}
+			if s.config.Cache != nil {
+				cachedData, _ := json.Marshal(findings)
+				s.config.Cache.Store(f, cachedData)
 			}
 			mu.Lock()
 			result.Findings = append(result.Findings, findings...)

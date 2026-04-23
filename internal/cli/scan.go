@@ -9,6 +9,7 @@ import (
 	"github.com/raven-security/raven/internal/deps"
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/raven-security/raven/internal/framework"
+	"github.com/raven-security/raven/internal/cache"
 	"github.com/raven-security/raven/internal/output"
 	"github.com/raven-security/raven/internal/secrets"
 	"github.com/raven-security/raven/internal/suppress"
@@ -25,10 +26,11 @@ func scanCmd() *cobra.Command {
 		confidence     string
 		fixFlag        bool
 		depsFlag       bool
-		secretsFlag    bool
+		secretsFlag      bool
 		baselinePath     string
 		updateBaseline   bool
 		noIgnoreComments bool
+		noCache          bool
 	)
 
 	cmd := &cobra.Command{
@@ -49,7 +51,8 @@ Examples:
   raven scan --baseline .raven-baseline.json  # Only report new issues
   raven scan --update-baseline                # Save current findings as baseline
   raven scan --no-ignore-comments             # Ignore inline suppression comments
-  raven scan --secrets                        # Deep scan for hardcoded secrets`,
+  raven scan --secrets                        # Deep scan for hardcoded secrets
+  raven scan --no-cache                       # Disable incremental caching`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
@@ -110,6 +113,18 @@ Examples:
 				resolver.ScanDirectory(path)
 			}
 
+			// Load cache if enabled
+			var scanCache *cache.Cache
+			if !noCache {
+				var err error
+				scanCache, err = cache.Load(".raven-cache.json")
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "Warning: could not load cache: %v\n", err)
+					scanCache = cache.New()
+				}
+				scanCache.SetPath(".raven-cache.json")
+			}
+
 			scanConfig := engine.ScanConfig{
 				Paths:        paths,
 				Exclude:      cfg.Rules.Exclude,
@@ -119,6 +134,7 @@ Examples:
 				Baseline:     bl,
 				Suppressions: suppressMap,
 				Resolver:     resolver,
+				Cache:        scanCache,
 			}
 
 			scanner := engine.NewScanner(rules, scanConfig)
@@ -259,6 +275,13 @@ Examples:
 					}
 				}
 				fmt.Printf("Fixed %d issues\n", fixed)
+			}
+
+			// Save cache before potential exit
+			if scanCache != nil {
+				if err := scanCache.Save(); err != nil {
+					fmt.Fprintf(os.Stderr, "Warning: could not save cache: %v\n", err)
+				}
 			}
 
 			// Exit code for CI
