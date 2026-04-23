@@ -30,6 +30,7 @@
   "bugs": {
     "url": "https://github.com/adrian-wulf/raven/issues"
   },
+  "icon": "images/icon.png",
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
@@ -211,7 +212,9 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "package": "vsce package"
+    "package": "vsce package",
+    "publish:vscode": "vsce publish",
+    "publish:openvsx": "npx ovsx publish"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

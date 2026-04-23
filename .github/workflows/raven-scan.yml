@@ -1,0 +1,141 @@
+name: 🐦‍⬛ Raven Security Scan
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  security-events: write
+
+jobs:
+  raven-scan:
+    name: Scan for Security Vulnerabilities
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Raven
+        run: |
+          # Download latest Raven release
+          curl -sL https://api.github.com/repos/adrian-wulf/raven/releases/latest | \
+            grep "browser_download_url.*linux_amd64.tar.gz" | \
+            cut -d '"' -f 4 | \
+            xargs curl -sL | tar xz -C /tmp
+          sudo mv /tmp/raven /usr/local/bin/raven
+          raven version
+
+      - name: Run Raven Scan
+        id: scan
+        run: |
+          # Scan with JSON output
+          raven scan --min-sev low --format json --baseline .raven-baseline.json . > raven-results.json || true
+          
+          # Count findings by severity
+          echo "findings=$(jq '.findings | length' raven-results.json)" >> "$GITHUB_OUTPUT"
+          echo "critical=$(jq '[.findings[] | select(.severity == "critical")] | length' raven-results.json)" >> "$GITHUB_OUTPUT"
+          echo "high=$(jq '[.findings[] | select(.severity == "high")] | length' raven-results.json)" >> "$GITHUB_OUTPUT"
+          echo "medium=$(jq '[.findings[] | select(.severity == "medium")] | length' raven-results.json)" >> "$GITHUB_OUTPUT"
+          echo "low=$(jq '[.findings[] | select(.severity == "low")] | length' raven-results.json)" >> "$GITHUB_OUTPUT"
+          
+          # Pretty output for logs
+          raven scan --min-sev low . || true
+
+      - name: Comment PR with Results
+        if: github.event_name == 'pull_request' && steps.scan.outputs.findings != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const results = JSON.parse(fs.readFileSync('raven-results.json', 'utf8'));
+            
+            const findings = results.findings || [];
+            if (findings.length === 0) return;
+            
+            // Group by severity
+            const bySev = {};
+            findings.forEach(f => {
+              bySev[f.severity] = (bySev[f.severity] || 0) + 1;
+            });
+            
+            // Build markdown table
+            let table = '| Severity | Count |\n|----------|-------|\n';
+            ['critical', 'high', 'medium', 'low', 'info'].forEach(sev => {
+              if (bySev[sev]) {
+                const emoji = sev === 'critical' ? '🔴' : sev === 'high' ? '🟠' : sev === 'medium' ? '🟡' : '🔵';
+                table += `| ${emoji} ${sev} | ${bySev[sev]} |\n`;
+              }
+            });
+            
+            // Build findings list (top 10)
+            let list = '';
+            findings.slice(0, 10).forEach(f => {
+              list += `- **${f.rule_id}** — ${f.message}\n`;
+              list += `  📍 \`${f.file}:${f.line}\`\n`;
+            });
+            if (findings.length > 10) {
+              list += `\n_... and ${findings.length - 10} more_\n`;
+            }
+            
+            const body = `## 🐦‍⬛ Raven Security Scan Results
+            
+${table}
+            
+### Findings
+            
+${list}
+            
+---
+            
+*Scanned ${results.files_scanned} files with ${results.rules_run} rules*
+            
+> Run \`raven scan\` locally for full details and auto-fixes with \`raven fix-ai\``;
+            
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const existing = comments.find(c => c.body.includes('🐦‍⬛ Raven Security Scan Results'));
+            
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: raven-results.sarif
+        continue-on-error: true
+
+      - name: Fail on Critical/High
+        if: steps.scan.outputs.critical != '0' || steps.scan.outputs.high != '0'
+        run: |
+          echo "❌ Found ${CRITICAL} critical and ${HIGH} high severity issues!"
+          exit 1
+        env:
+          CRITICAL: ${{ steps.scan.outputs.critical }}
+          HIGH: ${{ steps.scan.outputs.high }}
