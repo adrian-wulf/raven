@@ -27,6 +27,8 @@ func (f *Formatter) Print(result *engine.Result) error {
 		return f.printSARIF(result)
 	case "html":
 		return f.printHTML(result)
+	case "summary":
+		return f.printSummary(result)
 	case "pretty":
 		return f.printPretty(result)
 	default:
@@ -259,4 +261,32 @@ func (f *Formatter) truncateSnippet(snippet string) string {
 		return strings.Join(lines[:3], "\n") + "..."
 	}
 	return snippet
+}
+
+func (f *Formatter) printSummary(result *engine.Result) error {
+	bySev := result.BySeverity()
+	
+	fmt.Printf("Raven scan: %d files, %d findings, %s\n",
+		result.FilesScanned, len(result.Findings), result.Duration)
+	
+	if len(result.Findings) == 0 {
+		fmt.Println("✅ Clean")
+		return nil
+	}
+	
+	for _, sev := range []engine.Severity{engine.Critical, engine.High, engine.Medium, engine.Low, engine.Info} {
+		count := len(bySev[sev])
+		if count > 0 {
+			fmt.Printf("  %s: %d\n", sev, count)
+		}
+	}
+	
+	if len(result.NewFindings) > 0 {
+		fmt.Printf("  new: %d\n", len(result.NewFindings))
+	}
+	if len(result.Vulnerabilities) > 0 {
+		fmt.Printf("  vuln-deps: %d\n", len(result.Vulnerabilities))
+	}
+	
+	return nil
 }
