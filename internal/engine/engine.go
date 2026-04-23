@@ -21,8 +21,9 @@ import (
 )
 
 type Scanner struct {
-	rules   []Rule
-	config  ScanConfig
+	rules    []Rule
+	config   ScanConfig
+	regexCache map[string]*regexp.Regexp
 }
 
 type ScanConfig struct {
@@ -40,8 +41,9 @@ type ScanConfig struct {
 
 func NewScanner(rules []Rule, config ScanConfig) *Scanner {
 	return &Scanner{
-		rules:  rules,
-		config: config,
+		rules:      rules,
+		config:     config,
+		regexCache: make(map[string]*regexp.Regexp),
 	}
 }
 
@@ -527,9 +529,17 @@ type findingMatch struct {
 }
 
 func (s *Scanner) matchRegex(content []byte, pattern string, path string) []findingMatch {
-	re, err := regexp.Compile(pattern)
-	if err != nil {
-		return nil
+	if s.regexCache == nil {
+		s.regexCache = make(map[string]*regexp.Regexp)
+	}
+	re, ok := s.regexCache[pattern]
+	if !ok {
+		var err error
+		re, err = regexp.Compile(pattern)
+		if err != nil {
+			return nil
+		}
+		s.regexCache[pattern] = re
 	}
 
 	var matches []findingMatch
