@@ -395,6 +395,8 @@ references:
 
 ## 🔌 IDE & AI Integration
 
+**📖 Full integration guide:** [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md)
+
 Raven integrates with your favorite tools:
 
 ### VS Code Extension
