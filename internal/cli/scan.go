@@ -9,6 +9,7 @@ import (
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/raven-security/raven/internal/framework"
 	"github.com/raven-security/raven/internal/output"
+	"github.com/raven-security/raven/internal/suppress"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +22,9 @@ func scanCmd() *cobra.Command {
 		confidence     string
 		fixFlag        bool
 		depsFlag       bool
-		baselinePath   string
-		updateBaseline bool
+		baselinePath     string
+		updateBaseline   bool
+		noIgnoreComments bool
 	)
 
 	cmd := &cobra.Command{
@@ -41,7 +43,8 @@ Examples:
   raven scan --format json      # Output as JSON
   raven scan --min-sev high     # Only show high/critical issues
   raven scan --baseline .raven-baseline.json  # Only report new issues
-  raven scan --update-baseline                # Save current findings as baseline`,
+  raven scan --update-baseline                # Save current findings as baseline
+  raven scan --no-ignore-comments             # Ignore inline suppression comments`,
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
@@ -91,13 +94,19 @@ Examples:
 			}
 
 			// Configure scanner
+			var suppressMap *suppress.Map
+			if !noIgnoreComments {
+				suppressMap = suppress.NewMap()
+			}
+
 			scanConfig := engine.ScanConfig{
-				Paths:       paths,
-				Exclude:     cfg.Rules.Exclude,
-				Frameworks:  fwNames,
-				Confidence:  confidence,
-				MinSeverity: engine.Severity(minSev),
-				Baseline:    bl,
+				Paths:        paths,
+				Exclude:      cfg.Rules.Exclude,
+				Frameworks:   fwNames,
+				Confidence:   confidence,
+				MinSeverity:  engine.Severity(minSev),
+				Baseline:     bl,
+				Suppressions: suppressMap,
 			}
 
 			scanner := engine.NewScanner(rules, scanConfig)
@@ -220,6 +229,7 @@ Examples:
 	cmd.Flags().BoolVar(&depsFlag, "deps", false, "Scan dependencies for known vulnerabilities (OSV)")
 	cmd.Flags().StringVar(&baselinePath, "baseline", "", "Path to baseline JSON (only report new findings)")
 	cmd.Flags().BoolVar(&updateBaseline, "update-baseline", false, "Save current findings as baseline JSON")
+	cmd.Flags().BoolVar(&noIgnoreComments, "no-ignore-comments", false, "Ignore inline suppression comments")
 
 	return cmd
 }

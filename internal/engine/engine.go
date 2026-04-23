@@ -12,6 +12,7 @@ import (
 
 	"github.com/raven-security/raven/internal/ast"
 	"github.com/raven-security/raven/internal/baseline"
+	"github.com/raven-security/raven/internal/suppress"
 	"github.com/raven-security/raven/internal/taint"
 	"github.com/raven-security/raven/internal/utils"
 )
@@ -22,13 +23,14 @@ type Scanner struct {
 }
 
 type ScanConfig struct {
-	Paths       []string
-	Exclude     []string
-	Languages   []string
-	Frameworks  []string
-	Confidence  string
-	MinSeverity Severity
-	Baseline    *baseline.Baseline // optional baseline for diff scanning
+	Paths        []string
+	Exclude      []string
+	Languages    []string
+	Frameworks   []string
+	Confidence   string
+	MinSeverity  Severity
+	Baseline     *baseline.Baseline // optional baseline for diff scanning
+	Suppressions *suppress.Map      // optional inline comment suppressions
 }
 
 func NewScanner(rules []Rule, config ScanConfig) *Scanner {
@@ -51,6 +53,13 @@ func (s *Scanner) Scan() (*Result, error) {
 		return nil, err
 	}
 	result.FilesScanned = len(files)
+
+	// Parse suppression comments for all files before scanning
+	if s.config.Suppressions != nil {
+		for _, f := range files {
+			s.config.Suppressions.ParseFile(f)
+		}
+	}
 
 	// Filter rules by language
 	activeRules := s.filterRules()
@@ -422,6 +431,17 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 				}
 			}
 		}
+	}
+
+	// Filter out suppressed findings
+	if s.config.Suppressions != nil {
+		var filtered []Finding
+		for _, f := range findings {
+			if !s.config.Suppressions.IsSuppressed(f.File, f.Line, f.RuleID) {
+				filtered = append(filtered, f)
+			}
+		}
+		findings = filtered
 	}
 
 	return findings, nil
