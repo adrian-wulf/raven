@@ -86,6 +86,7 @@ func init() {
 	rootCmd.AddCommand(hookCmd())
 	rootCmd.AddCommand(aiFixCmd())
 	rootCmd.AddCommand(versionCmd())
+	rootCmd.AddCommand(completionCmd())
 }
 
 func versionCmd() *cobra.Command {
@@ -95,6 +96,51 @@ func versionCmd() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println("Raven v" + version.Version)
 			fmt.Println("Security scanner for vibe coders")
+		},
+	}
+}
+
+func completionCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "completion [bash|zsh|fish|powershell]",
+		Short: "Generate shell completion script",
+		Long: `Generate shell completion script for Raven.
+
+To load completions:
+
+Bash:
+  $ source <(raven completion bash)
+  # Or add to ~/.bashrc:
+  $ echo 'source <(raven completion bash)' >> ~/.bashrc
+
+Zsh:
+  $ source <(raven completion zsh)
+  $ compdef _raven raven
+  # Or add to ~/.zshrc:
+  $ echo 'source <(raven completion zsh)' >> ~/.zshrc
+
+Fish:
+  $ raven completion fish | source
+  $ raven completion fish > ~/.config/fish/completions/raven.fish
+
+PowerShell:
+  PS> raven completion powershell | Out-String | Invoke-Expression
+  PS> raven completion powershell > raven.ps1
+`,
+		DisableFlagsInUseLine: true,
+		ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
+		Args:                  cobra.ExactArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			switch args[0] {
+			case "bash":
+				cmd.Root().GenBashCompletion(cmd.OutOrStdout())
+			case "zsh":
+				cmd.Root().GenZshCompletion(cmd.OutOrStdout())
+			case "fish":
+				cmd.Root().GenFishCompletion(cmd.OutOrStdout(), true)
+			case "powershell":
+				cmd.Root().GenPowerShellCompletionWithDesc(cmd.OutOrStdout())
+			}
 		},
 	}
 }
