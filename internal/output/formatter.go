@@ -25,6 +25,8 @@ func (f *Formatter) Print(result *engine.Result) error {
 		return f.printJSON(result)
 	case "sarif":
 		return f.printSARIF(result)
+	case "html":
+		return f.printHTML(result)
 	case "pretty":
 		return f.printPretty(result)
 	default:
