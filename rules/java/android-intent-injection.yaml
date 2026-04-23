@@ -1,0 +1,22 @@
+id: raven-java-intent-001
+name: Android Intent Injection
+description: |
+  Detects Android activities that process external intents without
+  validation, which can lead to intent injection and data leakage.
+severity: medium
+category: injection
+confidence: medium
+languages: [java, kotlin]
+frameworks: [android]
+message: |
+  External intent data should be validated before use. Check the
+  intent source and validate all extras to prevent injection.
+patterns:
+  - type: regex
+    pattern: "getIntent\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "intent\\.getStringExtra"
+  - type: regex
+    pattern: "intent\\.getData"
+references:
+  - https://developer.android.com/training/best-security-practices

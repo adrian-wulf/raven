@@ -1,0 +1,19 @@
+id: raven-js-timing-001
+name: Timing Attack Vulnerable Comparison
+description: |
+  Detects string comparisons of secrets or tokens using === or ==,
+  which leaks timing information and enables timing attacks.
+severity: low
+category: cryptography
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Timing attack: comparing secrets with === leaks timing info.
+  Use a constant-time comparison function like crypto.timingSafeEqual().
+patterns:
+  - type: regex
+    pattern: "(token|secret|password|signature|apiKey)\\s*===\\s*"
+  - type: regex
+    pattern: "(token|secret|password|signature|apiKey)\\s*==\\s*"
+references:
+  - https://codahale.com/a-lesson-in-timing-attacks/

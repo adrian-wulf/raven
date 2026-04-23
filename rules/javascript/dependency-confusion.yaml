@@ -1,0 +1,17 @@
+id: raven-js-dep-001
+name: Dependency Confusion Risk
+description: |
+  Detects internal package names without organization scope,
+  which can be hijacked in public registries (dependency confusion).
+severity: medium
+category: supply-chain
+confidence: low
+languages: [javascript, typescript]
+message: |
+  Internal package without @scope prefix. Use scoped packages
+  (@company/name) to prevent dependency confusion attacks.
+patterns:
+  - type: regex
+    pattern: "\"name\"\\s*:\\s*\"(?!@)[a-zA-Z0-9_-]+\""
+references:
+  - https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610

@@ -1,0 +1,20 @@
+id: raven-fw-actix-001
+name: Actix-web Missing CORS Restriction
+description: |
+  Detects Actix-web applications with overly permissive CORS settings.
+severity: medium
+category: cors
+confidence: high
+languages: [rust]
+frameworks: [actix-web]
+message: |
+  CORS allows all origins. Restrict to specific domains in production.
+patterns:
+  - type: regex
+    pattern: "Cors::default\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "allow_any_origin\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "AllowOrigin::any\\s*\\(\\s*\\)"
+references:
+  - https://docs.rs/actix-cors/latest/actix_cors/

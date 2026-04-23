@@ -1,0 +1,20 @@
+id: raven-kotlin-storage-001
+name: Android Insecure SharedPreferences
+description: |
+  Detects sensitive data stored in SharedPreferences without encryption,
+  which is accessible to other apps with root access.
+severity: medium
+category: info-disclosure
+confidence: medium
+languages: [kotlin, java]
+frameworks: [android]
+message: |
+  Sensitive data in SharedPreferences should be encrypted. Use
+  EncryptedSharedPreferences from androidx.security:security-crypto.
+patterns:
+  - type: regex
+    pattern: "getSharedPreferences\\s*\\("
+  - type: regex
+    pattern: "SharedPreferences\\.Editor.*putString\\s*\\(\\s*['\"](password|token|secret|key|auth)"
+references:
+  - https://developer.android.com/topic/security/data

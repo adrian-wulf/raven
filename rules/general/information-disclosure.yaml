@@ -1,0 +1,23 @@
+id: raven-gen-info-001
+name: Information Disclosure in Error Handling
+description: |
+  Detects error handling that may leak sensitive information
+  like stack traces, SQL queries, or internal paths to users.
+severity: medium
+category: info-disclosure
+confidence: medium
+languages: [javascript, typescript, python, go, php, java, csharp, rust]
+message: |
+  Sensitive information may leak through error responses.
+  Return generic error messages to users and log details server-side.
+patterns:
+  - type: regex
+    pattern: "res\\.send\\s*\\(\\s*err"
+  - type: regex
+    pattern: "res\\.json\\s*\\(\\s*\\{[^}]*error[^}]*stack"
+  - type: regex
+    pattern: "return\\s+ResponseEntity\\.status\\s*\\(.*err"
+  - type: regex
+    pattern: "catch\\s*\\(.*\\{[^}]*return\\s+[^}]*err"
+references:
+  - https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure

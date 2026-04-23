@@ -1,0 +1,21 @@
+id: raven-js-ws-001
+name: WebSocket Missing Authentication
+description: |
+  Detects WebSocket connections that may lack authentication checks,
+  allowing unauthorized clients to connect.
+severity: medium
+category: auth
+confidence: low
+languages: [javascript, typescript]
+message: |
+  WebSocket server without visible auth. Validate the JWT/token
+  during the WebSocket handshake or on each message.
+patterns:
+  - type: regex
+    pattern: "new\\s+WebSocketServer"
+  - type: regex
+    pattern: "wss?://"
+  - type: regex
+    pattern: "io\\.on\\s*\\(\\s*['\"]connection['\"]"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#websockets

@@ -1,0 +1,21 @@
+id: raven-gen-session-001
+name: Session Fixation Risk
+description: |
+  Detects session handling that may not regenerate session ID
+  after authentication, allowing session fixation attacks.
+severity: medium
+category: auth
+confidence: low
+languages: [javascript, typescript, python, go, php, java, csharp]
+message: |
+  Ensure session ID is regenerated after login to prevent session
+  fixation attacks. Destroy old session and create a new one.
+patterns:
+  - type: regex
+    pattern: "req\\.session\\.regenerate"
+  - type: regex
+    pattern: "session_start\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "HttpContext\\.Session"
+references:
+  - https://owasp.org/www-community/attacks/Session_fixation

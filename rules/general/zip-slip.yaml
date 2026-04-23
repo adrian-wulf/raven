@@ -1,0 +1,23 @@
+id: raven-gen-zip-001
+name: Zip Slip Vulnerability
+description: |
+  Detects archive extraction that doesn't validate file paths,
+  allowing attackers to write files outside the target directory.
+severity: high
+category: path-traversal
+confidence: high
+languages: [javascript, typescript, python, go, java, csharp, rust]
+message: |
+  Zip Slip: archive entry path not validated before extraction.
+  Use Path.GetFileName or similar to ensure entries stay in target dir.
+patterns:
+  - type: regex
+    pattern: "ZipInputStream|ZipFile|ZipArchive|zipfile\\.ZipFile"
+  - type: regex
+    pattern: "extractall\\s*\\("
+  - type: regex
+    pattern: "ExtractToDirectory|extractToDirectory"
+  - type: regex
+    pattern: "tarfile\\.open|tar\\.open"
+references:
+  - https://security.snyk.io/research/zip-slip-vulnerability

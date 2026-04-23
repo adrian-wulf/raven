@@ -1,0 +1,23 @@
+id: raven-fw-rails-001
+name: Rails Missing Strong Parameters
+description: |
+  Detects Rails controllers using params directly without permit,
+  which can lead to mass assignment vulnerabilities.
+severity: high
+category: mass-assignment
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Mass assignment: params used without .permit().
+  Use strong parameters: params.require(:user).permit(:name, :email)
+patterns:
+  - type: regex
+    pattern: "params\\[(?::|')\\w+(?:'|)\\]"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - permit
+          - require
+references:
+  - https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters

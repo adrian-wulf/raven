@@ -1,0 +1,24 @@
+id: raven-fw-fastapi-002
+name: FastAPI Missing Auth Dependency
+description: |
+  Detects FastAPI endpoints without authentication dependencies,
+  which may expose sensitive operations.
+severity: medium
+category: auth
+confidence: medium
+languages: [python]
+frameworks: [fastapi]
+message: |
+  Endpoint may lack authentication. Add Depends(get_current_user)
+  or OAuth2PasswordBearer to protect sensitive routes.
+patterns:
+  - type: regex
+    pattern: "@app\\.(get|post|put|delete|patch)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - Depends
+          - get_current_user
+          - OAuth2
+references:
+  - https://fastapi.tiangolo.com/tutorial/security/

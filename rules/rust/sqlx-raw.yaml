@@ -1,0 +1,19 @@
+id: raven-rust-sqlx-001
+name: SQLx Raw Query
+description: |
+  Detects SQLx queries built with format! or string concatenation,
+  which bypass SQLx's compile-time checking and allow SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [rust]
+message: |
+  SQLx query with string formatting! Use query!() or query_as!()
+  macros for compile-time checked parameterized queries.
+patterns:
+  - type: regex
+    pattern: "sqlx::query\\s*\\(\\s*format!"
+  - type: regex
+    pattern: "sqlx::query_as\\s*\\(\\s*format!"
+references:
+  - https://docs.rs/sqlx/latest/sqlx/macro.query.html

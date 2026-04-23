@@ -1,0 +1,22 @@
+id: raven-php-upload-001
+name: Laravel Unvalidated File Upload
+description: |
+  Detects Laravel file upload handling without proper validation
+  of MIME type, extension, or file size.
+severity: high
+category: file-upload
+confidence: medium
+languages: [php]
+frameworks: [laravel]
+message: |
+  File upload without validation. Use validated() with file rules
+  (mimes, max) and store files outside the web root.
+patterns:
+  - type: regex
+    pattern: "->file\\s*\\("
+  - type: regex
+    pattern: "store\\s*\\("
+  - type: regex
+    pattern: "storeAs\\s*\\("
+references:
+  - https://laravel.com/docs/validation#rule-file

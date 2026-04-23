@@ -1,0 +1,19 @@
+id: raven-swift-wk-001
+name: WKWebView XSS
+description: |
+  Detects WKWebView loading user-controlled URLs or HTML without
+  sanitization, which can lead to XSS or phishing attacks.
+severity: high
+category: xss
+confidence: medium
+languages: [swift]
+message: |
+  WKWebView loads user-controlled content. Validate URLs and use
+  loadHTMLString with a restricted baseURL.
+patterns:
+  - type: regex
+    pattern: "webView\\.load\\s*\\(\\s*[^)]*URL\\s*\\(\\s*string:\\s*[^)]*(input|url|param|request)"
+  - type: regex
+    pattern: "loadHTMLString\\s*\\(\\s*[^)]*(input|url|param|request|data)"
+references:
+  - https://developer.apple.com/documentation/webkit/wkwebview

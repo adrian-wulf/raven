@@ -1,0 +1,20 @@
+id: raven-kotlin-room-001
+name: Android Room SQL Injection
+description: |
+  Detects Room database queries with user input via @Query annotation
+  or rawQuery, which can lead to SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [kotlin, java]
+frameworks: [android]
+message: |
+  Room @Query with concatenated user input. Use parameter placeholders
+  (:paramName) in @Query annotations. Never concatenate into SQL.
+patterns:
+  - type: regex
+    pattern: "@Query\\s*\\(\\s*['\"].*\\$.*['\"]\\s*\\)"
+  - type: regex
+    pattern: "rawQuery\\s*\\(\\s*[^)]*\\+")
+references:
+  - https://developer.android.com/training/data-storage/room

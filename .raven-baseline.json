@@ -1,7 +1,47 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-23T09:52:56.174859979Z",
+  "generated_at": "2026-04-23T10:56:17.724971029Z",
   "findings": [
+    {
+      "rule_id": "raven-gen-deser-001",
+      "file": "internal/taint/config.go",
+      "line": 119,
+      "column": 12,
+      "snippet_hash": "sha256:06aa05353e1504b2",
+      "rule_name": "Insecure Deserialization",
+      "severity": "critical",
+      "snippet": "\t\t\t{Name: \"pickle.loads\", Pattern: \"pickle.loads\"},"
+    },
+    {
+      "rule_id": "raven-gen-deser-001",
+      "file": "internal/taint/config.go",
+      "line": 171,
+      "column": 12,
+      "snippet_hash": "sha256:023d8daf6bc61d58",
+      "rule_name": "Insecure Deserialization",
+      "severity": "critical",
+      "snippet": "\t\t\t{Name: \"ObjectInputStream.readObject\", Pattern: \"readObject\"},"
+    },
+    {
+      "rule_id": "raven-gen-deser-001",
+      "file": "internal/taint/config.go",
+      "line": 236,
+      "column": 36,
+      "snippet_hash": "sha256:f8ad8e6268aeb330",
+      "rule_name": "Insecure Deserialization",
+      "severity": "critical",
+      "snippet": "\t\t\t{Name: \"unserialize\", Pattern: \"unserialize(\"},"
+    },
+    {
+      "rule_id": "raven-gen-deser-001",
+      "file": "internal/taint/config.go",
+      "line": 286,
+      "column": 12,
+      "snippet_hash": "sha256:023d8daf6bc61d58",
+      "rule_name": "Insecure Deserialization",
+      "severity": "critical",
+      "snippet": "\t\t\t{Name: \"ObjectInputStream.readObject\", Pattern: \"readObject\"},"
+    },
     {
       "rule_id": "raven-gen-creds-001",
       "file": "test-vulnerable-app/server.js",

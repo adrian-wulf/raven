@@ -1,0 +1,26 @@
+id: raven-fw-spring-001
+name: Spring Boot Missing @PreAuthorize
+description: |
+  Detects Spring Boot controller methods that handle sensitive operations
+  without @PreAuthorize or @Secured annotations.
+severity: medium
+category: auth
+confidence: medium
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  Sensitive endpoint may lack authorization. Add @PreAuthorize,
+  @Secured, or method-level security to enforce access control.
+patterns:
+  - type: regex
+    pattern: "@(?:RestController|Controller)"
+  - type: regex
+    pattern: "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|PatchMapping|RequestMapping)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - PreAuthorize
+          - Secured
+          - RolesAllowed
+references:
+  - https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html

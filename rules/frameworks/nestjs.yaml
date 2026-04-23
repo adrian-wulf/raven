@@ -1,0 +1,23 @@
+id: raven-fw-nestjs-001
+name: NestJS Missing Auth Guard
+description: |
+  Detects NestJS controllers or handlers without authentication guards,
+  which may expose sensitive endpoints.
+severity: medium
+category: auth
+confidence: medium
+languages: [javascript, typescript]
+frameworks: [nestjs]
+message: |
+  Endpoint may lack authentication. Add @UseGuards(AuthGuard)
+  or apply auth globally with APP_GUARD.
+patterns:
+  - type: regex
+    pattern: "@(?:Get|Post|Put|Delete|Patch)\\s*\\("
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - UseGuards
+          - AuthGuard
+references:
+  - https://docs.nestjs.com/guards

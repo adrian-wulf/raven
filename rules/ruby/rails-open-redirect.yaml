@@ -1,0 +1,20 @@
+id: raven-ruby-redirect-001
+name: Rails Open Redirect
+description: |
+  Detects redirects in Rails using user-controlled params without
+  validation, which can be used in phishing attacks.
+severity: medium
+category: open-redirect
+confidence: medium
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Open redirect: user input controls the redirect destination.
+  Use allowlist validation or the redirect_back method with fallback.
+patterns:
+  - type: regex
+    pattern: "redirect_to\\s+params"
+  - type: regex
+    pattern: "redirect_to\\s+.*params\\["
+references:
+  - https://guides.rubyonrails.org/security.html#redirection

@@ -1,0 +1,20 @@
+id: raven-fw-gin-001
+name: Gin Missing Security Middleware
+description: |
+  Detects Gin applications without common security middleware
+  like CORS restrictions, rate limiting, or recovery.
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [go]
+frameworks: [gin]
+message: |
+  Missing security middleware. Consider adding CORS restrictions,
+  rate limiting, and secure error handling to your Gin application.
+patterns:
+  - type: regex
+    pattern: "gin\\.Default\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "gin\\.New\\s*\\(\\s*\\)"
+references:
+  - https://gin-gonic.com/docs/

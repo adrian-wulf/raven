@@ -1,0 +1,23 @@
+id: raven-fw-aspnet-001
+name: ASP.NET Core Missing Antiforgery
+description: |
+  Detects ASP.NET Core POST endpoints without antiforgery token validation,
+  which can allow CSRF attacks.
+severity: medium
+category: csrf
+confidence: medium
+languages: [csharp]
+frameworks: [aspnet-core]
+message: |
+  POST action missing antiforgery protection. Add [ValidateAntiForgeryToken]
+  or enable auto-validation globally.
+patterns:
+  - type: regex
+    pattern: "\\[Http(?:Post|Put|Delete|Patch)\\]"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - ValidateAntiForgeryToken
+          - AutoValidateAntiforgeryToken
+references:
+  - https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery

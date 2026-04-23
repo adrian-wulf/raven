@@ -1,0 +1,21 @@
+id: raven-js-graphql-001
+name: GraphQL Injection
+description: |
+  Detects GraphQL resolvers that construct queries with user input,
+  which can lead to injection attacks.
+severity: high
+category: injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  GraphQL query built with user input. Use parameterized queries
+  or a query builder. Never concatenate user input into GraphQL.
+patterns:
+  - type: regex
+    pattern: "graphql\\s*\\(\\s*[`\"'].*\\$\\{[^}]+\\}"
+  - type: regex
+    pattern: "gql\\s*`.*\\$\\{[^}]+\\}"
+  - type: regex
+    pattern: "buildSchema\\s*\\(\\s*[`\"'].*\\$\\{[^}]+\\}"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html

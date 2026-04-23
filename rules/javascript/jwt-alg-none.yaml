@@ -1,0 +1,21 @@
+id: raven-js-jwt-002
+name: JWT Algorithm Confusion (alg: none)
+description: |
+  Detects JWT verification that accepts algorithm "none" or allows
+  algorithm switching, which can bypass authentication.
+severity: critical
+category: auth
+confidence: high
+languages: [javascript, typescript]
+message: |
+  JWT algorithm confusion vulnerability! Never accept alg: "none".
+  Always specify the expected algorithm explicitly and verify the signature.
+patterns:
+  - type: regex
+    pattern: "alg\\s*:\\s*['\"]none['\"]"
+  - type: regex
+    pattern: "algorithms\\s*:\\s*\\[\\s*['\"]none['\"]\\s*\\]"
+  - type: regex
+    pattern: "verify\\s*\\(\\s*[^,]*,\\s*[^,]*,\\s*\\{[^}]*algorithms"
+references:
+  - https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/

@@ -1,0 +1,19 @@
+id: raven-swift-url-001
+name: URLSession SSRF
+description: |
+  Detects URLSession requests with user-controlled URLs, which can
+  be exploited for SSRF attacks against internal services.
+severity: high
+category: ssrf
+confidence: medium
+languages: [swift]
+message: |
+  SSRF: User input controls the URL of a network request.
+  Validate URLs against an allowlist and block internal IPs.
+patterns:
+  - type: regex
+    pattern: "URLSession\\.shared\\.dataTask\\s*\\(\\s*[^)]*URL\\s*\\(\\s*string:\\s*[^)]*(input|url|param|request)"
+  - type: regex
+    pattern: "URLRequest\\s*\\(\\s*url:\\s*[^)]*(input|url|param|request)"
+references:
+  - https://owasp.org/www-community/attacks/Server_Side_Request_Forgery

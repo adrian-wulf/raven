@@ -1,0 +1,22 @@
+id: raven-go-goroutine-001
+name: Potential Goroutine Leak
+description: |
+  Detects goroutines that may leak if not properly synchronized
+  or if channels are not closed, leading to resource exhaustion.
+severity: low
+category: bug
+confidence: low
+languages: [go]
+message: |
+  Potential goroutine leak. Ensure goroutines can exit and channels
+  are properly closed. Use context cancellation for graceful shutdown.
+patterns:
+  - type: regex
+    pattern: "go\\s+func\\s*\\(\\s*\\)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - context.WithCancel
+          - sync.WaitGroup
+references:
+  - https://go.dev/blog/pprof

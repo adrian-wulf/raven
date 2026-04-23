@@ -1,0 +1,23 @@
+id: raven-js-nestjs-gql-001
+name: NestJS GraphQL Missing Auth
+description: |
+  Detects NestJS GraphQL resolvers without authentication guards,
+  which may expose sensitive data or mutations.
+severity: medium
+category: auth
+confidence: medium
+languages: [javascript, typescript]
+frameworks: [nestjs]
+message: |
+  GraphQL resolver may lack authentication. Add @UseGuards(AuthGuard)
+  to protect sensitive queries and mutations.
+patterns:
+  - type: regex
+    pattern: "@(?:Query|Mutation|Subscription)\\s*\\("
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - UseGuards
+          - AuthGuard
+references:
+  - https://docs.nestjs.com/graphql/resolvers

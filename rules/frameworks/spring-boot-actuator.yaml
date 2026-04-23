@@ -1,0 +1,22 @@
+id: raven-fw-spring-002
+name: Spring Boot Actuator Exposed
+description: |
+  Detects Spring Boot applications with Actuator endpoints exposed
+  without security, which can leak sensitive runtime information.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  Spring Boot Actuator may be exposed without authentication.
+  Restrict actuator endpoints or disable unused ones in production.
+patterns:
+  - type: regex
+    pattern: "spring-boot-starter-actuator"
+  - type: regex
+    pattern: "management\.endpoints\.web\.exposure\.include\s*=\s*\\*"
+  - type: regex
+    pattern: "management\.endpoint\.health\.show-details\s*=\s*always"
+references:
+  - https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html

@@ -1,0 +1,20 @@
+id: raven-java-session-001
+name: Spring Boot Insecure Session Config
+description: |
+  Detects Spring Boot session configurations that may be insecure,
+  such as missing HttpOnly or Secure flags.
+severity: medium
+category: cookies
+confidence: high
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  Session cookie may lack security flags. Ensure httpOnly, secure,
+  and sameSite are configured in production.
+patterns:
+  - type: regex
+    pattern: "server\\.servlet\\.session\\.cookie"
+  - type: regex
+    pattern: "CookieSerializer"
+references:
+  - https://docs.spring.io/spring-session/reference/configuration.html

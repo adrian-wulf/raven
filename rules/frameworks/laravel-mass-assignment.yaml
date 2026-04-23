@@ -1,0 +1,24 @@
+id: raven-fw-laravel-002
+name: Laravel Mass Assignment
+description: |
+  Detects Laravel Eloquent mass assignment without $fillable or
+  $guarded, which can allow attackers to modify sensitive fields.
+severity: high
+category: mass-assignment
+confidence: high
+languages: [php]
+frameworks: [laravel]
+message: |
+  Mass assignment without $fillable/$guarded protection.
+  Define $fillable (whitelist) or $guarded (blacklist) on your model.
+patterns:
+  - type: regex
+    pattern: "Model::create\\s*\\(\\s*\\$request"
+  - type: regex
+    pattern: "->update\\s*\\(\\s*\\$request"
+  - type: regex
+    pattern: "->fill\\s*\\(\\s*\\$request"
+  - type: regex
+    pattern: "\\$model->\\w+\\s*=\\s*\\$request"
+references:
+  - https://laravel.com/docs/eloquent#mass-assignment

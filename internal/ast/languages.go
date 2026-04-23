@@ -10,7 +10,11 @@ import (
 	"github.com/smacker/go-tree-sitter/java"
 	"github.com/smacker/go-tree-sitter/javascript"
 	"github.com/smacker/go-tree-sitter/kotlin"
+	"github.com/smacker/go-tree-sitter/php"
 	"github.com/smacker/go-tree-sitter/python"
+	"github.com/smacker/go-tree-sitter/ruby"
+	"github.com/smacker/go-tree-sitter/rust"
+	"github.com/smacker/go-tree-sitter/swift"
 	"github.com/smacker/go-tree-sitter/typescript/tsx"
 	"github.com/smacker/go-tree-sitter/typescript/typescript"
 )
@@ -63,6 +67,26 @@ var registry = []Language{
 		Name:       "csharp",
 		Extensions: []string{".cs"},
 		Parser:     csharp.GetLanguage(),
+	},
+	{
+		Name:       "php",
+		Extensions: []string{".php", ".phtml", ".php3", ".php4", ".php5"},
+		Parser:     php.GetLanguage(),
+	},
+	{
+		Name:       "ruby",
+		Extensions: []string{".rb", ".erb", ".rake", ".gemspec"},
+		Parser:     ruby.GetLanguage(),
+	},
+	{
+		Name:       "rust",
+		Extensions: []string{".rs"},
+		Parser:     rust.GetLanguage(),
+	},
+	{
+		Name:       "swift",
+		Extensions: []string{".swift"},
+		Parser:     swift.GetLanguage(),
 	},
 }
 

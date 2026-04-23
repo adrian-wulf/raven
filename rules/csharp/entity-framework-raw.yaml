@@ -1,0 +1,21 @@
+id: raven-csharp-ef-001
+name: Entity Framework Raw SQL
+description: |
+  Detects Entity Framework raw SQL methods (FromSqlRaw, ExecuteSqlRaw)
+  with interpolated strings or concatenation, bypassing parameterization.
+severity: high
+category: sql-injection
+confidence: high
+languages: [csharp]
+message: |
+  Raw SQL in EF bypasses parameterization. Use FromSqlInterpolated
+  or parameterized queries with SqlParameter.
+patterns:
+  - type: regex
+    pattern: "FromSqlRaw\\s*\\(\\s*\\$"
+  - type: regex
+    pattern: "ExecuteSqlRaw\\s*\\(\\s*\\$"
+  - type: regex
+    pattern: "FromSqlRaw\\s*\\(\\s*['\"].*\\+"
+references:
+  - https://learn.microsoft.com/en-us/ef/core/querying/raw-sql

@@ -1,0 +1,19 @@
+id: raven-py-logic-001
+name: Potential Business Logic Flaw
+description: |
+  Detects direct assignment of user input to price, quantity, or role
+  fields, which can allow attackers to manipulate business logic.
+severity: high
+category: business-logic
+confidence: medium
+languages: [python]
+message: |
+  User input directly assigned to business-critical field (price, role, etc.).
+  Validate and enforce business rules server-side. Never trust client data.
+patterns:
+  - type: regex
+    pattern: "\\.(price|amount|total|role|is_admin|isAdmin|balance)\\s*=\\s*[^\\s]*request"
+  - type: regex
+    pattern: "\\['?(price|amount|total|role|is_admin|isAdmin|balance)'?\\]\\s*=\\s*[^\\s]*request"
+references:
+  - https://owasp.org/www-community/vulnerabilities/Business_logic_vulnerability

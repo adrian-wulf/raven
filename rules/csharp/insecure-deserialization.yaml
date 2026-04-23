@@ -1,0 +1,23 @@
+id: raven-csharp-deser-001
+name: Insecure .NET Deserialization
+description: |
+  Detects BinaryFormatter, JavaScriptSerializer, or XmlSerializer
+  with user-controlled data, which can lead to remote code execution.
+severity: critical
+category: deserialization
+confidence: high
+languages: [csharp]
+message: |
+  Insecure deserialization! BinaryFormatter is deprecated and dangerous.
+  Use System.Text.Json or DataContractJsonSerializer with strict typing.
+patterns:
+  - type: regex
+    pattern: "new\\s+BinaryFormatter"
+  - type: regex
+    pattern: "BinaryFormatter\\.Deserialize"
+  - type: regex
+    pattern: "JavaScriptSerializer\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "XmlSerializer\\s*\\(\\s*\\)"
+references:
+  - https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide

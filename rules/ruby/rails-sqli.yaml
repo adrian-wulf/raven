@@ -1,0 +1,22 @@
+id: raven-ruby-sqli-001
+name: Rails SQL Injection
+description: |
+  Detects ActiveRecord queries with string interpolation or concatenation,
+  which can bypass parameterization and allow SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  SQL injection in ActiveRecord! Use parameterized queries:
+  User.where("name = ?", params[:name]). Never use string interpolation.
+patterns:
+  - type: regex
+    pattern: "where\\s*\\(\\s*['\"].*#\\{[^}]+\\}"
+  - type: regex
+    pattern: "find_by_sql\\s*\\(\\s*['\"].*#\\{[^}]+\\}"
+  - type: regex
+    pattern: "execute\\s*\\(\\s*['\"].*#\\{[^}]+\\}"
+references:
+  - https://guides.rubyonrails.org/security.html#sql-injection

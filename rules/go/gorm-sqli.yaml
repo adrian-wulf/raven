@@ -1,0 +1,21 @@
+id: raven-go-gorm-001
+name: GORM SQL Injection
+description: |
+  Detects GORM queries built with fmt.Sprintf or string concatenation,
+  which bypass GORM's parameterization and allow SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [go]
+message: |
+  SQL injection in GORM! Use parameterized queries:
+  db.Where("name = ?", name). Never use fmt.Sprintf for SQL.
+patterns:
+  - type: regex
+    pattern: "db\\.Where\\s*\\(\\s*fmt\\.Sprintf"
+  - type: regex
+    pattern: "db\\.Raw\\s*\\(\\s*fmt\\.Sprintf"
+  - type: regex
+    pattern: "db\\.Exec\\s*\\(\\s*fmt\\.Sprintf"
+references:
+  - https://gorm.io/docs/security.html

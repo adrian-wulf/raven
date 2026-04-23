@@ -1,0 +1,19 @@
+id: raven-java-jsp-001
+name: JSP XSS via Scriptlet
+description: |
+  Detects JSP scriptlets that output user input directly without
+  HTML encoding, which can lead to XSS attacks.
+severity: high
+category: xss
+confidence: high
+languages: [java]
+message: |
+  JSP scriptlet with user input. Use JSTL <c:out> or fn:escapeXml
+  to encode output. Avoid <%= %> with untrusted data.
+patterns:
+  - type: regex
+    pattern: "<%=\\s*[^%]*request\\.getParameter"
+  - type: regex
+    pattern: "<%=\\s*[^%]*param\\."
+references:
+  - https://owasp.org/www-community/attacks/xss/

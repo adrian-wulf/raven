@@ -1,0 +1,22 @@
+id: raven-fw-spring-003
+name: Spring Boot Permissive CORS
+description: |
+  Detects Spring Boot CORS configuration that allows all origins,
+  which can lead to security vulnerabilities when combined with credentials.
+severity: medium
+category: cors
+confidence: high
+languages: [java, kotlin]
+frameworks: [spring-boot]
+message: |
+  CORS allows all origins (*). If allowCredentials is true, this is
+  dangerous. Specify exact allowed origins in production.
+patterns:
+  - type: regex
+    pattern: "@CrossOrigin\\(origins\\s*=\\s*\\{\\s*\\\"\\*\\\"\\s*\\}"
+  - type: regex
+    pattern: "registry\\.addMapping\\(\\\"/\\*\\\"\\)"
+  - type: regex
+    pattern: "allowedOrigins\\(\\\"\\*\\\"\\)"
+references:
+  - https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/CrossOrigin.html

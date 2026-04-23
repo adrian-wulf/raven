@@ -1,0 +1,20 @@
+id: raven-fw-aspnet-002
+name: ASP.NET Core Razor XSS
+description: |
+  Detects Razor views using @Html.Raw with user-controlled data,
+  which bypasses HTML encoding and can lead to XSS.
+severity: high
+category: xss
+confidence: high
+languages: [csharp]
+frameworks: [aspnet-core]
+message: |
+  @Html.Raw renders unescaped HTML. Use @Model.Property instead,
+  or sanitize with a library like HtmlSanitizer.
+patterns:
+  - type: regex
+    pattern: "@Html\\.Raw\\s*\\("
+  - type: regex
+    pattern: "@Html\\.Raw\\s*\\(\\s*[^)]*Model\\."
+references:
+  - https://learn.microsoft.com/en-us/aspnet/core/security/cross-site-scripting

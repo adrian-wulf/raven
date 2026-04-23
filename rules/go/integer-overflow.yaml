@@ -1,0 +1,22 @@
+id: raven-go-int-001
+name: Potential Integer Overflow
+description: |
+  Detects arithmetic operations on user-controlled integers without
+  bounds checking, which can lead to integer overflow.
+severity: medium
+category: integer-overflow
+confidence: medium
+languages: [go]
+message: |
+  Integer operation on user-controlled value without bounds check.
+  Validate inputs before arithmetic operations to prevent overflow.
+patterns:
+  - type: regex
+    pattern: "strconv\\.Atoi\\s*\\(\\s*[^)]*(r\\.|req|request|params|input)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - math.MaxInt
+          - bounds
+references:
+  - https://cwe.mitre.org/data/definitions/190.html

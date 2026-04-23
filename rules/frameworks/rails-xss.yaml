@@ -1,0 +1,20 @@
+id: raven-fw-rails-002
+name: Rails XSS in ERB Templates
+description: |
+  Detects ERB templates using raw() or html_safe with user-controlled data,
+  which can lead to XSS attacks.
+severity: high
+category: xss
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  raw() and html_safe bypass Rails' XSS protection. Use <%= %> which
+  auto-escapes, or sanitize with sanitize() helper.
+patterns:
+  - type: regex
+    pattern: "raw\\s*\\("
+  - type: regex
+    pattern: "\\.html_safe"
+references:
+  - https://guides.rubyonrails.org/security.html#cross-site-scripting-xss

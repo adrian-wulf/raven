@@ -1,0 +1,23 @@
+id: raven-py-ssti-001
+name: Server-Side Template Injection (SSTI)
+description: |
+  Detects Python template engines (Jinja2, Django, Tornado) rendered
+  with user-controlled data, which can lead to remote code execution.
+severity: critical
+category: ssti
+confidence: high
+languages: [python]
+message: |
+  SSTI: User input flows into a template engine. Use strict context
+  variables and sandboxed environments. Never render user input directly.
+patterns:
+  - type: regex
+    pattern: "render_template_string\\s*\\(\\s*[^)]*(request|req|params|body|form|args|input|data)"
+  - type: regex
+    pattern: "Template\\s*\\(\\s*[^)]*(request|req|params|body|form|args|input|data)"
+  - type: regex
+    pattern: "Environment\\s*\\(\\s*\\)\\.from_string\\s*\\(\\s*[^)]*(request|req|params|body|form|args|input|data)"
+  - type: regex
+    pattern: "jinja2\\.Template\\s*\\(\\s*[^)]*(request|req|params|body|form|args|input|data)"
+references:
+  - https://owasp.org/www-community/vulnerabilities/Server-Side_Template_Injection

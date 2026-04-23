@@ -1,0 +1,20 @@
+id: raven-fw-android-001
+name: Android WebView JavaScriptInterface XSS
+description: |
+  Detects Android WebViews with JavaScriptInterface enabled,
+  which can allow JavaScript to access native app methods.
+severity: high
+category: xss
+confidence: high
+languages: [java, kotlin]
+frameworks: [android]
+message: |
+  JavaScriptInterface exposes native methods to web content.
+  Only use with trusted content, or use @JavascriptInterface with care.
+patterns:
+  - type: regex
+    pattern: "addJavascriptInterface"
+  - type: regex
+    pattern: "setJavaScriptEnabled\\s*\\(\\s*true\\s*\\)"
+references:
+  - https://developer.android.com/reference/android/webkit/WebView#addJavascriptInterface(java.lang.Object,%20java.lang.String)

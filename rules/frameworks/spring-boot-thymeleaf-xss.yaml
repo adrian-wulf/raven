@@ -1,0 +1,22 @@
+id: raven-fw-spring-004
+name: Spring Boot Thymeleaf XSS
+description: |
+  Detects Thymeleaf templates using th:utext with user-controlled data,
+  which bypasses HTML escaping and can lead to XSS.
+severity: high
+category: xss
+confidence: high
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  th:utext renders unescaped HTML. Use th:text instead, or sanitize
+  the input with a library like OWASP Java HTML Sanitizer.
+patterns:
+  - type: regex
+    pattern: "th:utext\\s*=\\s*\\\".*\\$\\{.*\\}"
+  - type: regex
+    pattern: "th:utext\\s*=\\s*\\\".*param\\."
+  - type: regex
+    pattern: "th:utext\\s*=\\s*\\\".*request\\."
+references:
+  - https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#unescaped-text

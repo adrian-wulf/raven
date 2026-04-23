@@ -1,0 +1,23 @@
+id: raven-fw-laravel-001
+name: Laravel Missing CSRF Protection
+description: |
+  Detects Laravel forms or routes that may lack CSRF token protection.
+severity: medium
+category: csrf
+confidence: medium
+languages: [php]
+frameworks: [laravel]
+message: |
+  Ensure CSRF tokens are included in all state-changing forms.
+  Use @csrf Blade directive or VerifyCsrfToken middleware.
+patterns:
+  - type: regex
+    pattern: "<form[^>]*>.*(?!@csrf)"
+  - type: regex
+    pattern: "Route::(?:post|put|delete|patch)"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - VerifyCsrfToken
+references:
+  - https://laravel.com/docs/csrf

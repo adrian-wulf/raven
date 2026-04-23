@@ -1,0 +1,24 @@
+id: raven-py-flask-001
+name: Flask Missing CSRF Protection
+description: |
+  Detects Flask applications without Flask-WTF CSRF protection,
+  which makes forms vulnerable to CSRF attacks.
+severity: medium
+category: csrf
+confidence: high
+languages: [python]
+frameworks: [flask]
+message: |
+  Missing CSRF protection. Install Flask-WTF and enable CSRF:
+  app.config['WTF_CSRF_ENABLED'] = True
+patterns:
+  - type: regex
+    pattern: "Flask\\s*\\("
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - FlaskWTF
+          - CSRFProtect
+          - WTF_CSRF_ENABLED
+references:
+  - https://flask-wtf.readthedocs.io/en/stable/csrf.html

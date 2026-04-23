@@ -1,0 +1,22 @@
+id: raven-js-rate-001
+name: Express Missing Rate Limiting
+description: |
+  Detects Express applications without rate limiting middleware,
+  which makes them vulnerable to brute force and DoS attacks.
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [javascript, typescript]
+frameworks: [express]
+message: |
+  No rate limiting detected. Add express-rate-limit to prevent
+  brute force, scraping, and DoS attacks on your API.
+patterns:
+  - type: regex
+    pattern: "express-rate-limit"
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - rateLimit
+references:
+  - https://www.npmjs.com/package/express-rate-limit

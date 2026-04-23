@@ -1,0 +1,17 @@
+id: raven-gen-hsts-001
+name: Missing HSTS Header
+description: |
+  Detects HTTP responses without Strict-Transport-Security header,
+  which makes the application vulnerable to SSL stripping attacks.
+severity: medium
+category: misconfiguration
+confidence: low
+languages: [javascript, typescript, python, go, php, java, csharp]
+message: |
+  Missing HSTS header. Add Strict-Transport-Security with max-age
+  to enforce HTTPS and prevent SSL stripping attacks.
+patterns:
+  - type: regex
+    pattern: "res\\.setHeader\\s*\\(\\s*['\"]Strict-Transport-Security['\"]"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html

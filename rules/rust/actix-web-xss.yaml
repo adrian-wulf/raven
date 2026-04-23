@@ -1,0 +1,20 @@
+id: raven-rust-actix-001
+name: Actix-web XSS
+description: |
+  Detects Actix-web handlers returning raw HTML with user input,
+  which can lead to XSS if not properly escaped.
+severity: high
+category: xss
+confidence: medium
+languages: [rust]
+frameworks: [actix-web]
+message: |
+  Raw HTML response with user input. Use askama/tera templates
+  with auto-escaping, or explicitly escape HTML with ammonia.
+patterns:
+  - type: regex
+    pattern: "HttpResponse::Ok\\s*\\(\\s*\\)\\.body\\s*\\(\\s*[^)]*(req|request|params|input|data)"
+  - type: regex
+    pattern: "HttpResponse::Ok\\s*\\(\\s*\\)\\.content_type\\s*\\(\\s*['\"]text/html['\"]"
+references:
+  - https://actix.rs/docs/response/

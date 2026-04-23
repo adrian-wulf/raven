@@ -1,0 +1,24 @@
+id: raven-fw-laravel-003
+name: Laravel Raw SQL Query
+description: |
+  Detects raw SQL queries in Laravel that bypass Eloquent's
+  parameterization and may be vulnerable to SQL injection.
+severity: high
+category: sql-injection
+confidence: high
+languages: [php]
+frameworks: [laravel]
+message: |
+  Raw SQL in Laravel bypasses built-in protection. Use Eloquent
+  query builder or parameterized raw queries with bindings.
+patterns:
+  - type: regex
+    pattern: "DB::raw\\s*\\("
+  - type: regex
+    pattern: "->selectRaw\\s*\\("
+  - type: regex
+    pattern: "->whereRaw\\s*\\([^)]*\\$"
+  - type: regex
+    pattern: "->orderByRaw\\s*\\([^)]*\\$"
+references:
+  - https://laravel.com/docs/queries#raw-expressions
