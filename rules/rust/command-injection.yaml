@@ -1,0 +1,27 @@
+id: raven-rust-cmd-001
+name: Command Injection in Rust
+description: |
+  Detects command execution with user input via std::process::Command
+  or similar functions in Rust.
+severity: critical
+category: command-injection
+confidence: high
+languages: [rust]
+message: |
+  Potential command injection: user input is passed to Command::new or args.
+  Use Command::arg() with a list instead of shell strings.
+patterns:
+  - type: regex
+    pattern: 'Command::new\s*\(\s*[^)]*(input|arg|param|request|req)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '\.arg\s*\(\s*[^)]*(input|arg|param|request|req)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'std::process::Command'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Command_Injection

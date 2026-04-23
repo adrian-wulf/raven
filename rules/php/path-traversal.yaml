@@ -1,0 +1,23 @@
+id: raven-php-path-001
+name: Path Traversal in PHP
+description: |
+  Detects file operations with user-controlled paths that lack
+  sanitization, allowing directory traversal attacks (../..).
+severity: high
+category: path-traversal
+confidence: high
+languages: [php]
+message: |
+  Potential path traversal: user input used in file path without sanitization.
+  Use basename() and realpath() to validate paths.
+patterns:
+  - type: regex
+    pattern: '(file_get_contents|file_put_contents|fopen|readfile|include|require|include_once|require_once)\s*\(\s*[^)]*\$_(GET|POST|REQUEST|COOKIE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(file_get_contents|file_put_contents|fopen|readfile)\s*\(\s*["''].*\$[^)]+\)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Path_Traversal

@@ -1,0 +1,31 @@
+id: raven-go-path-001
+name: Path Traversal in Go
+description: |
+  Detects file operations with user-controlled paths that lack
+  sanitization, allowing directory traversal attacks (../..).
+severity: high
+category: path-traversal
+confidence: high
+languages: [go]
+message: |
+  Potential path traversal: user input used in file path without sanitization.
+  Use filepath.Clean() and ensure the path stays within the intended directory.
+patterns:
+  - type: regex
+    pattern: 'os\.Open\s*\(\s*[^)]*(r\.|req|request|params|input|url|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'os\.Create\s*\(\s*[^)]*(r\.|req|request|params|input|url|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'ioutil\.(ReadFile|WriteFile)\s*\(\s*[^)]*(r\.|req|request|params|input|url|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'filepath\.Join\s*\(\s*[^)]*(r\.|req|request|params|input|url|path)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Path_Traversal

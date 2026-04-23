@@ -1,0 +1,27 @@
+id: raven-go-cmd-001
+name: Command Injection in Go
+description: |
+  Detects command execution with user input via exec.Command,
+  os/exec, or similar functions in Go.
+severity: critical
+category: command-injection
+confidence: high
+languages: [go]
+message: |
+  Potential command injection: user input is passed to exec.Command.
+  Use exec.Command with a list of arguments instead of shell strings.
+patterns:
+  - type: regex
+    pattern: 'exec\.Command\s*\(\s*[^)]*(r\.|req|request|params|input|args)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'exec\.CommandContext\s*\(\s*[^)]*(r\.|req|request|params|input|args)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'os\.Exec\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Command_Injection

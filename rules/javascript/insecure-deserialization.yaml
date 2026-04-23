@@ -1,0 +1,36 @@
+id: raven-js-deser-001
+name: Insecure Deserialization in JavaScript
+description: |
+  Detects JSON.parse() or similar deserialization without validation,
+  and unsafe deserialization libraries.
+severity: high
+category: deserialization
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Insecure deserialization: parsing untrusted data without validation.
+  Use a schema validator (Joi, Zod, ajv) before processing parsed data.
+patterns:
+  - type: regex
+    pattern: 'JSON\.parse\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - joi
+          - zod
+          - ajv
+          - validate
+  - type: regex
+    pattern: 'node-serialize\.unserialize'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'serialize\.unserialize'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'vm\.(runInNewContext|runInThisContext)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data

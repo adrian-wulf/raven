@@ -1,0 +1,19 @@
+id: raven-gen-log-001
+name: Log Injection
+description: |
+  Detects log statements that include user-controlled input without
+  sanitization, which can lead to log forging and injection attacks.
+severity: medium
+category: log-injection
+confidence: medium
+languages: [javascript, typescript, python, go, php, rust, java]
+message: |
+  Log injection: user input written directly to logs.
+  Sanitize newlines and control characters from logged user input.
+patterns:
+  - type: regex
+    pattern: '(?i)(log|logger|console|print|fmt\.Print|System\.out\.print)\s*\([^)]*(request|req|params|body|input|user|data)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Log_Injection

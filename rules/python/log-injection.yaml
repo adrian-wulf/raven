@@ -1,0 +1,27 @@
+id: raven-py-log-001
+name: Log Injection in Python
+description: |
+  Detects log statements that include user-controlled input without
+  sanitization, which can lead to log forging and injection attacks.
+severity: medium
+category: log-injection
+confidence: medium
+languages: [python]
+message: |
+  Log injection: user input written directly to logs.
+  Sanitize newlines and control characters from logged user input.
+patterns:
+  - type: regex
+    pattern: 'logger\.(debug|info|warning|error|critical)\s*\([^)]*(request|req|params|body|form|args|input|data|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'logging\.(debug|info|warning|error|critical)\s*\([^)]*(request|req|params|body|form|args|input|data|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'print\s*\(\s*f["''][^"'']*(request|req|params|body|form|args|input|data|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Log_Injection

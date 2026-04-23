@@ -1,0 +1,31 @@
+id: raven-js-log-001
+name: Log Injection in JavaScript
+description: |
+  Detects log statements that include user-controlled input without
+  sanitization, which can lead to log forging and injection attacks.
+severity: medium
+category: log-injection
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Log injection: user input written directly to logs.
+  Sanitize newlines and control characters from logged user input.
+patterns:
+  - type: regex
+    pattern: 'console\.(log|warn|error|info)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'logger\.(debug|info|warn|error)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'winston\.(log|info|error|warn)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'pino\.(info|error|warn|debug)\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Log_Injection

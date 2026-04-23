@@ -1,0 +1,27 @@
+id: raven-py-path-001
+name: Path Traversal in Python
+description: |
+  Detects file operations with user-controlled paths that lack
+  sanitization, allowing directory traversal attacks (../..).
+severity: high
+category: path-traversal
+confidence: high
+languages: [python]
+message: |
+  Potential path traversal: user input used in file path without sanitization.
+  Use pathlib.Path.resolve() and ensure the path stays within the intended directory.
+patterns:
+  - type: regex
+    pattern: 'open\s*\(\s*[^)]*(request|req|params|body|form|args|input|data|path|filename)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(os\.path\.join|pathlib\.Path)\s*\([^)]*(request|req|params|body|form|args|input|data|path|filename)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(shutil\.(copy|move)|send_from_directory|send_file)\s*\([^)]*(request|req|params|body|form|args|input|data|path|filename)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Path_Traversal

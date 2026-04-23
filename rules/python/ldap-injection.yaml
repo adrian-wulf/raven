@@ -1,0 +1,27 @@
+id: raven-py-ldap-001
+name: LDAP Injection in Python
+description: |
+  Detects LDAP queries built with user input via string formatting
+  or concatenation in Python LDAP libraries.
+severity: high
+category: ldap-injection
+confidence: high
+languages: [python]
+message: |
+  LDAP injection: user input is concatenated into an LDAP filter.
+  Use parameterized LDAP queries or strict input validation.
+patterns:
+  - type: regex
+    pattern: '(?i)ldap3\.(Connection|search)\s*\([^)]*f["''][^"'']*\{[^}]+\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.search_s\s*\(\s*[^)]*\+\s*.*(request|req|params|body|form|args|input|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)filterstr\s*[:=]\s*[^;]*\+\s*.*(request|req|params|body|form|args|input|data)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/LDAP_Injection

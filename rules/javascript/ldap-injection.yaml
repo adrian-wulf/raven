@@ -1,0 +1,27 @@
+id: raven-js-ldap-001
+name: LDAP Injection in JavaScript
+description: |
+  Detects LDAP queries built with user input via string concatenation
+  or template literals in JavaScript/TypeScript.
+severity: high
+category: ldap-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  LDAP injection: user input is concatenated into an LDAP filter.
+  Use parameterized LDAP queries or strict input validation.
+patterns:
+  - type: regex
+    pattern: '(?i)client\.(search|bind)\s*\(\s*[^)]*[`"''].*\$\{[^}]+\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)filter\s*[:=]\s*[`"''][^`"'']*\+\s*.*(req\.|request\.|params\.|body\.|query\.)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ldapjs\.(search|bind)\s*\(\s*[^)]*\+\s*'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/LDAP_Injection

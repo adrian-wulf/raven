@@ -1,0 +1,27 @@
+id: raven-rust-unwrap-001
+name: Unsafe unwrap() or expect() in Rust
+description: |
+  Detects unwrap() or expect() calls that can panic and crash the
+  application. While not always a security issue, it can lead to DoS.
+severity: low
+category: bug
+confidence: medium
+languages: [rust]
+message: |
+  unwrap() or expect() can panic! Use match or if let for graceful
+  error handling. In security-sensitive code, never unwrap user input.
+patterns:
+  - type: regex
+    pattern: '\.unwrap\s*\(\s*\)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - unwrap_or
+          - unwrap_or_default
+          - unwrap_or_else
+  - type: regex
+    pattern: '\.expect\s*\(\s*["''][^"'']*["'']\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://doc.rust-lang.org/std/result/enum.Result.html

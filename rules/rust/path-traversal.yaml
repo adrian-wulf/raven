@@ -1,0 +1,23 @@
+id: raven-rust-path-001
+name: Path Traversal in Rust
+description: |
+  Detects file operations with user-controlled paths that lack
+  sanitization, allowing directory traversal attacks (../..).
+severity: high
+category: path-traversal
+confidence: high
+languages: [rust]
+message: |
+  Potential path traversal: user input used in file path without sanitization.
+  Use std::path::Path::canonicalize() and validate the resolved path.
+patterns:
+  - type: regex
+    pattern: 'std::fs::(File::open|read|write|read_to_string|copy)\s*\(\s*[^)]*(input|arg|param|request|req|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'File::open\s*\(\s*[^)]*(input|arg|param|request|req|path)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Path_Traversal

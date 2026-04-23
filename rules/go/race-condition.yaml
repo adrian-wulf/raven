@@ -1,0 +1,23 @@
+id: raven-go-race-001
+name: Potential Race Condition via Concurrent Map Write
+description: |
+  Detects concurrent map writes without synchronization,
+  which causes runtime panics in Go.
+severity: medium
+category: bug
+confidence: medium
+languages: [go]
+message: |
+  Concurrent map write detected without mutex protection.
+  Use sync.RWMutex or sync.Map for concurrent access.
+patterns:
+  - type: regex
+    pattern: 'go\s+func\s*\(\s*\)\s*\{[^}]*\w+\s*\[.*\]\s*='
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'go\s+\w+\s*\(\s*\)\s*\{[^}]*\w+\s*\[.*\]\s*='
+    where:
+      - not-test-file: true
+references:
+  - https://go.dev/doc/articles/race_detector

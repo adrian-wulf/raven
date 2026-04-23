@@ -1,0 +1,23 @@
+id: raven-gen-xxe-001
+name: XML External Entity (XXE)
+description: |
+  Detects XML parsers that may allow external entities, which can
+  lead to XXE attacks (file disclosure, SSRF, DoS).
+severity: critical
+category: xxe
+confidence: medium
+languages: [javascript, typescript, python, go, php, java]
+message: |
+  Potential XXE: XML parsing without disabling external entities.
+  Disable DTDs and external entities in your XML parser configuration.
+patterns:
+  - type: regex
+    pattern: '(?i)(parseXML|DOMParser|SAXParser|xml2js|fast-xml-parser|libxmljs)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - noent
+          - dtdload
+          - external
+references:
+  - https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing

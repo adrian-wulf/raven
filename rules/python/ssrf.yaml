@@ -1,0 +1,31 @@
+id: raven-py-ssrf-001
+name: SSRF in Python
+description: |
+  Detects outbound HTTP requests (requests, urllib, httpx) with
+  user-controlled URLs, which can be exploited for SSRF attacks.
+severity: high
+category: ssrf
+confidence: medium
+languages: [python]
+message: |
+  SSRF: User input controls the URL of an outbound request.
+  Validate and sanitize URLs against an allowlist. Block internal IPs.
+patterns:
+  - type: regex
+    pattern: 'requests\.(get|post|put|delete|patch|request)\s*\(\s*[^)]*(request|req|params|body|form|args|input|url|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'urllib\.request\.urlopen\s*\(\s*[^)]*(request|req|params|body|form|args|input|url|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'httpx\.(get|post|put|delete|patch|request)\s*\(\s*[^)]*(request|req|params|body|form|args|input|url|data)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'aiohttp\.ClientSession\s*\(\s*\).*\.(get|post|put|delete)\s*\(\s*[^)]*(request|req|params|body|form|args|input|url|data)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Server_Side_Request_Forgery

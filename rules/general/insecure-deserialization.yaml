@@ -1,0 +1,23 @@
+id: raven-gen-deser-001
+name: Insecure Deserialization
+description: |
+  Detects deserialization of untrusted data across multiple languages,
+  which can lead to remote code execution.
+severity: critical
+category: deserialization
+confidence: high
+languages: [javascript, typescript, python, go, php, rust, java]
+message: |
+  Insecure deserialization detected! Never deserialize untrusted data
+  without validation. Use JSON with schema validation, or safe formats.
+patterns:
+  - type: regex
+    pattern: '(?i)(pickle\.loads|yaml\.load\s*\(|ObjectInputStream|unserialize\s*\(|node-serialize)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - safe_load
+          - yaml.safe_load
+          - ObjectInputFilter
+references:
+  - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data

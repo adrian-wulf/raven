@@ -1,0 +1,27 @@
+id: raven-php-cmd-001
+name: Command Injection in PHP
+description: |
+  Detects execution of shell commands with user input via exec,
+  system, shell_exec, passthru, or proc_open in PHP.
+severity: critical
+category: command-injection
+confidence: high
+languages: [php]
+message: |
+  Potential command injection: user input is passed to a shell command.
+  Use escapeshellarg() and escapeshellcmd(), or avoid shell execution.
+patterns:
+  - type: regex
+    pattern: '(exec|system|shell_exec|passthru|proc_open)\s*\(\s*[^)]*\$_(GET|POST|REQUEST|COOKIE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(exec|system|shell_exec|passthru)\s*\(\s*["''].*\$[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'backticks\s*\$[^`]+`'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Command_Injection

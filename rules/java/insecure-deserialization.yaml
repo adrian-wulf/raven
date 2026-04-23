@@ -1,0 +1,33 @@
+id: raven-java-deser-001
+name: Insecure Java Deserialization
+description: |
+  Detects ObjectInputStream.readObject() or similar deserialization
+  with user-controlled data, which can lead to remote code execution.
+severity: critical
+category: deserialization
+confidence: high
+languages: [java]
+message: |
+  Insecure deserialization! ObjectInputStream.readObject() with
+  untrusted data can execute arbitrary code. Use JSON, protobuf,
+  or implement ObjectInputFilter (Java 9+).
+patterns:
+  - type: regex
+    pattern: 'ObjectInputStream\s*\([^)]*(request|req|param|input|args|body|stream|bytes)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '\.readObject\s*\(\s*\)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - ObjectInputFilter
+          - SerializationFiltering
+  - type: regex
+    pattern: 'new\s+ObjectInputStream'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - ObjectInputFilter
+references:
+  - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data

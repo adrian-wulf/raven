@@ -1,0 +1,31 @@
+id: raven-rust-sqli-001
+name: SQL Injection in Rust
+description: |
+  Detects SQL queries built via string formatting or concatenation in Rust,
+  commonly seen with sqlx, diesel, or raw database clients.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [rust]
+message: |
+  SQL injection: Never use format!() or string concatenation for SQL queries.
+  Use parameterized queries or query builders provided by your ORM.
+patterns:
+  - type: regex
+    pattern: 'format!\s*\(\s*["''][^"'']*(SELECT|INSERT|UPDATE|DELETE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '\.query\s*\(\s*format!'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'sqlx::query\s*\(\s*[^)]*format!'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '\.execute\s*\(\s*format!'
+    where:
+      - not-test-file: true
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

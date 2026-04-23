@@ -1,0 +1,31 @@
+id: raven-java-path-001
+name: Path Traversal in Java
+description: |
+  Detects file operations with user-controlled paths that lack
+  sanitization, allowing directory traversal attacks (../..).
+severity: high
+category: path-traversal
+confidence: high
+languages: [java]
+message: |
+  Potential path traversal: user input used in file path without sanitization.
+  Validate paths and ensure they stay within the intended directory.
+patterns:
+  - type: regex
+    pattern: 'new\s+File\s*\(\s*[^)]*(request|req|param|input|args|body)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'new\s+FileInputStream\s*\(\s*[^)]*(request|req|param|input|args|body)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'Files\.(read|write|copy|move)\s*\(\s*[^)]*(request|req|param|input|args|body)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'Paths\.get\s*\(\s*[^)]*(request|req|param|input|args|body)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/Path_Traversal

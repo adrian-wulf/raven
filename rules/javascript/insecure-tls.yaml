@@ -1,0 +1,31 @@
+id: raven-js-tls-001
+name: Insecure TLS/SSL Configuration
+description: |
+  Detects TLS configurations that skip certificate verification
+  or use insecure settings, which enable MITM attacks.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript]
+message: |
+  rejectUnauthorized: false disables TLS certificate verification!
+  Never use this in production. It makes you vulnerable to MITM attacks.
+patterns:
+  - type: regex
+    pattern: 'rejectUnauthorized\s*[:=]\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'NODE_TLS_REJECT_UNAUTHORIZED\s*[:=]\s*["'']0["'']'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'strictSSL\s*[:=]\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'insecure\s*[:=]\s*true'
+    where:
+      - not-test-file: true
+references:
+  - https://nodejs.org/api/tls.html#tls_tls_connect_options_callback

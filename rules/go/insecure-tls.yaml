@@ -1,0 +1,27 @@
+id: raven-go-tls-001
+name: Insecure TLS Configuration in Go
+description: |
+  Detects TLS configurations that skip certificate verification
+  or use insecure settings, which enable MITM attacks.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [go]
+message: |
+  InsecureSkipVerify disables TLS certificate verification!
+  Never use this in production. It makes you vulnerable to MITM attacks.
+patterns:
+  - type: regex
+    pattern: 'InsecureSkipVerify\s*:\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'tls\.Config\s*\{[^}]*InsecureSkipVerify'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'tls\.InsecureSkipVerify'
+    where:
+      - not-test-file: true
+references:
+  - https://pkg.go.dev/crypto/tls#Config

@@ -1,0 +1,33 @@
+id: raven-go-random-001
+name: Weak Random Number Generation in Go
+description: |
+  Detects use of math/rand for security-sensitive operations
+  like tokens, passwords, or session IDs.
+severity: medium
+category: cryptography
+confidence: high
+languages: [go]
+message: |
+  math/rand is not cryptographically secure! Use crypto/rand
+  for tokens, passwords, session IDs, and nonces.
+patterns:
+  - type: regex
+    pattern: 'math/rand'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - crypto/rand
+  - type: regex
+    pattern: 'rand\.Intn\s*\(\s*\)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - crypto/rand
+  - type: regex
+    pattern: 'rand\.Seed\s*\('
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - crypto/rand
+references:
+  - https://pkg.go.dev/crypto/rand

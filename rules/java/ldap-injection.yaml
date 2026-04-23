@@ -1,0 +1,27 @@
+id: raven-java-ldap-001
+name: LDAP Injection
+description: |
+  Detects LDAP queries built with user input via string concatenation
+  or format, which can allow attackers to modify LDAP filters.
+severity: high
+category: ldap-injection
+confidence: high
+languages: [java]
+message: |
+  LDAP injection: user input is concatenated into an LDAP filter.
+  Use parameterized LDAP queries or whitelist validation.
+patterns:
+  - type: regex
+    pattern: '(?i)(search\s*\(\s*[^,]*,\s*["''][^"'']*\+|filter\s*\(\s*["''][^"'']*\+|\bfilter\s*\(\s*["''][^"'']*\$\{)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DirContext\.search\s*\([^)]*\+[^)]*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)LdapQueryBuilder\s*.*\+\s*.*(request|req|param|input|args)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/LDAP_Injection

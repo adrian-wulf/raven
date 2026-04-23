@@ -1,0 +1,27 @@
+id: raven-java-random-001
+name: Weak Random Number Generation in Java
+description: |
+  Detects use of java.util.Random for security-sensitive operations
+  like tokens, passwords, or session IDs.
+severity: medium
+category: cryptography
+confidence: high
+languages: [java]
+message: |
+  java.util.Random is not cryptographically secure! Use
+  java.security.SecureRandom for tokens, passwords, and session IDs.
+patterns:
+  - type: regex
+    pattern: 'new\s+Random\s*\(\s*\)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - SecureRandom
+  - type: regex
+    pattern: 'Math\.random\s*\(\s*\)'
+    where:
+      - not-test-file: true
+      - not-sanitized:
+          - SecureRandom
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html

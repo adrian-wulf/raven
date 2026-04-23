@@ -1,0 +1,27 @@
+id: raven-js-xpath-001
+name: XPath Injection in JavaScript
+description: |
+  Detects XPath queries built with user input via string concatenation
+  or template literals in JavaScript/TypeScript.
+severity: high
+category: xpath-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  XPath injection: user input is concatenated into an XPath query.
+  Use parameterized XPath or validate input strictly.
+patterns:
+  - type: regex
+    pattern: '(?i)evaluate\s*\(\s*[^)]*[`"''].*\$\{[^}]+\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.evaluate\s*\(\s*[^)]*\+\s*.*(req\.|request\.|params\.|body\.|query\.)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xpath\s*\(\s*[^)]*\+\s*'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/XPATH_Injection

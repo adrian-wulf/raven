@@ -1,0 +1,27 @@
+id: raven-php-redirect-001
+name: Open Redirect in PHP
+description: |
+  Detects redirects that use user-controlled input without validation,
+  which can be used in phishing attacks.
+severity: medium
+category: open-redirect
+confidence: medium
+languages: [php]
+message: |
+  Open redirect: user input controls the redirect destination.
+  Validate URLs against an allowlist of allowed domains.
+patterns:
+  - type: regex
+    pattern: 'header\s*\(\s*["'']Location:\s*["''].*\$_(GET|POST|REQUEST|COOKIE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'header\s*\(\s*["'']Location:\s*["''].*\$[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: 'wp_redirect\s*\(\s*[^)]*\$_(GET|POST|REQUEST|COOKIE)'
+    where:
+      - not-test-file: true
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html

@@ -1,0 +1,23 @@
+id: raven-gen-ldap-001
+name: LDAP Injection
+description: |
+  Detects LDAP queries built with user input via string formatting
+  or concatenation across multiple languages.
+severity: high
+category: ldap-injection
+confidence: high
+languages: [javascript, typescript, python, go, php, java]
+message: |
+  LDAP injection: user input is concatenated into an LDAP filter.
+  Use parameterized LDAP queries or strict input validation.
+patterns:
+  - type: regex
+    pattern: '(?i)(ldap|directory)\.(search|query|filter)\s*\([^)]*\+\s*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)filter\s*[:=]\s*["''][^"'']*\+\s*.*(request|req|params|body|input|data)'
+    where:
+      - not-test-file: true
+references:
+  - https://owasp.org/www-community/attacks/LDAP_Injection
