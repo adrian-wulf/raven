@@ -32,7 +32,8 @@ type RulePattern struct {
 
 // Tracker performs intra-procedural taint analysis
 type Tracker struct {
-	config LanguageConfig
+	config      LanguageConfig
+	currentFile string
 }
 
 // NewTracker creates a taint tracker for the given language
@@ -46,6 +47,7 @@ func NewTracker(language string) *Tracker {
 
 // ScanFile analyzes a file for taint vulnerabilities
 func (t *Tracker) ScanFile(path string, rules []RuleInfo) ([]Finding, error) {
+	t.currentFile = path
 	if !ast.IsSupported(path) {
 		return nil, nil
 	}
@@ -397,7 +399,7 @@ func (t *Tracker) checkSinkCall(n *sitter.Node, source []byte, sinkPatterns, sou
 				Severity:   rule.Severity,
 				Category:   rule.Category,
 				Message:    strings.TrimSpace(rule.Message),
-				File:       "",
+				File:       t.currentFile,
 				Line:       int(start.Row) + 1,
 				Column:     int(start.Column) + 1,
 				Snippet:    nodeText(n, source),

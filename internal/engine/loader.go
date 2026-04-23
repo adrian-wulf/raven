@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/raven-security/raven/internal/utils"
 	"gopkg.in/yaml.v3"
 )
 
@@ -31,7 +32,7 @@ func (rl *RulesLoader) Load() ([]Rule, error) {
 			continue
 		}
 
-		err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		err := utils.Walk(dir, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return nil
 			}

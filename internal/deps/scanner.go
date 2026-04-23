@@ -9,6 +9,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	toml "github.com/pelletier/go-toml/v2"
 )
 
 const osvAPIURL = "https://api.osv.dev/v1/query"
@@ -196,10 +198,9 @@ func (s *Scanner) scanCargoToml(root string) ([]Vulnerability, error) {
 	}
 
 	var cargo struct {
-		Dependencies map[string]interface{} `json:"dependencies"`
+		Dependencies map[string]interface{} `toml:"dependencies"`
 	}
-	if err := json.Unmarshal(data, &cargo); err != nil {
-		// Cargo.toml is not pure JSON, skip for now
+	if err := toml.Unmarshal(data, &cargo); err != nil {
 		return nil, err
 	}
 

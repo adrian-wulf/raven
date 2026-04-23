@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -76,7 +77,7 @@ func DefaultConfig() *Config {
 func Load() (*Config, error) {
 	cfg := DefaultConfig()
 	v := viper.New()
-	v.SetConfigName("raven")
+	v.SetConfigName(".raven")
 	v.SetConfigType("yaml")
 
 	home, err := os.UserHomeDir()
@@ -94,6 +95,7 @@ func Load() (*Config, error) {
 	}
 
 	v.SetEnvPrefix("RAVEN")
+	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	v.AutomaticEnv()
 
 	if err := v.Unmarshal(cfg); err != nil {

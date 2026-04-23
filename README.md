@@ -218,7 +218,7 @@ All free. All local. All fast.
 
 ## Configuration
 
-Create `raven.yaml` in your project root:
+Create `.raven.yaml` in your project root:
 
 ```yaml
 rules:
@@ -247,7 +247,7 @@ severity:
 
 ## Rules
 
-Raven ships with **30+ security rules** covering OWASP Top 10 and common LLM mistakes.
+Raven ships with **62 security rules** covering OWASP Top 10, common LLM mistakes, AST-based analysis, and taint tracking.
 
 ```bash
 # List all rules
@@ -279,21 +279,20 @@ raven rules --detail
 ## Roadmap
 
 - [x] Core rule engine
-- [x] 28 security rules (OWASP Top 10 + AI-specific)
+- [x] 62 security rules (regex + AST + taint)
 - [x] Auto-fix
 - [x] Watch mode
 - [x] CI mode + SARIF
-- [x] 49 rules covering OWASP Top 10 + AI-specific mistakes
-- [x] 49 rules (SQLi, XSS, RCE, secrets, crypto, SSRF, CORS, auth, etc.)
 - [x] VS Code / Cursor Extension (LSP-based)
 - [x] AI-powered fixes (OpenRouter/DeepSeek)
 - [x] Pre-commit hook
 - [x] GitHub Action
-- [ ] 50+ rules
+- [x] AST-based analysis (Tree-sitter)
+- [x] Framework-aware rules
+- [x] Supply chain scanning (OSV)
 - [ ] Zed / Vim support
-- [ ] AST-based analysis (not just regex)
-- [ ] Framework-aware rules
-- [ ] Supply chain scanning
+- [ ] Cross-function taint tracking
+- [ ] IDE inline fixes
 
 ---
 

@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/termenv"
 	"github.com/raven-security/raven/internal/engine"
+	"github.com/raven-security/raven/internal/version"
 )
 
 type Formatter struct {
@@ -160,7 +161,7 @@ func (f *Formatter) printSARIF(result *engine.Result) error {
 				"tool": map[string]interface{}{
 					"driver": map[string]interface{}{
 						"name":            "Raven",
-						"version":         "0.1.0",
+						"version":         version.Version,
 						"informationUri":  "https://github.com/raven-security/raven",
 					},
 				},

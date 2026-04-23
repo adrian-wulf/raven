@@ -166,7 +166,8 @@ func (d *Detector) detectPython() []Framework {
 	if data, err := os.ReadFile(reqPath); err == nil {
 		content := string(data)
 
-		if strings.Contains(content, "Flask") {
+		lower := strings.ToLower(content)
+		if strings.Contains(lower, "flask") {
 			frameworks = append(frameworks, Framework{
 				Name:       "flask",
 				Language:   "python",
@@ -174,7 +175,7 @@ func (d *Detector) detectPython() []Framework {
 				Files:      []string{reqPath},
 			})
 		}
-		if strings.Contains(content, "Django") {
+		if strings.Contains(lower, "django") {
 			frameworks = append(frameworks, Framework{
 				Name:       "django",
 				Language:   "python",
@@ -182,7 +183,7 @@ func (d *Detector) detectPython() []Framework {
 				Files:      []string{reqPath},
 			})
 		}
-		if strings.Contains(content, "FastAPI") {
+		if strings.Contains(lower, "fastapi") {
 			frameworks = append(frameworks, Framework{
 				Name:       "fastapi",
 				Language:   "python",

@@ -10,6 +10,7 @@ import (
 
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/raven-security/raven/internal/output"
+	"github.com/raven-security/raven/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -62,7 +63,7 @@ Examples:
 
 				changed := false
 				for _, root := range paths {
-					filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+					utils.Walk(root, func(path string, info os.FileInfo, err error) error {
 						if err != nil || info.IsDir() {
 							return nil
 						}

@@ -19,7 +19,7 @@ the built-in rules to your project for customization.
 Examples:
   raven init`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			configPath := "raven.yaml"
+			configPath := ".raven.yaml"
 
 			if _, err := os.Stat(configPath); err == nil {
 				return fmt.Errorf("raven.yaml already exists")

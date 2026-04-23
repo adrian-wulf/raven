@@ -5,6 +5,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/raven-security/raven/internal/config"
+	"github.com/raven-security/raven/internal/version"
 	"github.com/spf13/cobra"
 )
 
@@ -92,7 +93,7 @@ func versionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Print Raven version",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Raven v0.7.0")
+			fmt.Println("Raven v" + version.Version)
 			fmt.Println("Security scanner for vibe coders")
 		},
 	}

@@ -12,6 +12,7 @@ import (
 
 	"github.com/raven-security/raven/internal/ast"
 	"github.com/raven-security/raven/internal/taint"
+	"github.com/raven-security/raven/internal/utils"
 )
 
 type Scanner struct {
@@ -101,7 +102,7 @@ func (s *Scanner) collectFiles() ([]string, error) {
 	var files []string
 
 	for _, root := range s.config.Paths {
-		err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		err := utils.Walk(root, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return nil // skip errors
 			}
