@@ -1,0 +1,10 @@
+id: raven-cpp-todo-unsafe-001
+name: TODO/FIXME with security note
+severity: info
+category: code-quality
+confidence: low
+languages: [cpp]
+message: "Security-related TODO found. Address before production."
+patterns:
+  - type: regex
+    pattern: "(TODO|FIXME|XXX|HACK).*[Ss]ecur"

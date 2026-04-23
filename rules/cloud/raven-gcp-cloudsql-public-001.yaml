@@ -1,0 +1,10 @@
+id: raven-gcp-cloudsql-public-001
+name: Public Cloud SQL instance
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Cloud SQL instance has public IP enabled. Use private IP only."
+patterns:
+  - type: regex
+    pattern: "ipv4_enabled.*=.*true|require_ssl.*=.*false"

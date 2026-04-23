@@ -1,0 +1,10 @@
+id: raven-cloud-batch-003
+name: cloud-security detection (*) batch-003
+severity: high
+category: cloud-security
+confidence: medium
+languages: [*]
+message: "Cloud security misconfiguration"
+patterns:
+  - type: regex
+    pattern: "public|open|allow"

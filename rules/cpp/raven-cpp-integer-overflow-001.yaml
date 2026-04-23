@@ -1,0 +1,10 @@
+id: raven-cpp-integer-overflow-001
+name: Integer overflow in C++
+severity: medium
+category: integer-overflow
+confidence: low
+languages: [cpp]
+message: "Integer overflow possible. Check bounds before arithmetic operations."
+patterns:
+  - type: regex
+    pattern: "\\+.*\\*|\\*.*\\+"

@@ -1,0 +1,12 @@
+id: raven-c-double-free-001
+name: Potential double free
+severity: high
+category: memory-corruption
+confidence: medium
+languages: [c]
+message: "Potential double free detected. Ensure memory is freed exactly once."
+patterns:
+  - type: regex
+    pattern: "free\\s*\\(.*\\);.*\\n.*free\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/415.html

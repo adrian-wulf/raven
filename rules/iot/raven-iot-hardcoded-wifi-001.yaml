@@ -1,0 +1,10 @@
+id: raven-iot-hardcoded-wifi-001
+name: Hardcoded WiFi credentials
+severity: high
+category: secrets
+confidence: high
+languages: [c, cpp]
+message: "Hardcoded WiFi SSID or password. Use provisioning or secure storage."
+patterns:
+  - type: regex
+    pattern: "(ssid|SSID|password|PASSWORD|psk|PSK).*=.*[\"']"

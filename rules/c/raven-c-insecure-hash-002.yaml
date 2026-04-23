@@ -1,0 +1,10 @@
+id: raven-c-insecure-hash-002
+name: Insecure hash function (SHA1)
+severity: medium
+category: weak-crypto
+confidence: high
+languages: [c]
+message: "SHA1 is deprecated for security use. Use SHA-256 or higher."
+patterns:
+  - type: regex
+    pattern: "SHA1|sha1|SHA_1"

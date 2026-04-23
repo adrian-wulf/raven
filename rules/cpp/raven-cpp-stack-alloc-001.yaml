@@ -1,0 +1,10 @@
+id: raven-cpp-stack-alloc-001
+name: Large stack allocation
+severity: low
+category: code-quality
+confidence: low
+languages: [cpp]
+message: "Large stack allocation can cause stack overflow. Use heap allocation for large buffers."
+patterns:
+  - type: regex
+    pattern: "char\\s+\\w+\\[\\s*[0-9]{5,}\\s*\\]"

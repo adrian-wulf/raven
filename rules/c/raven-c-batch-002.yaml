@@ -1,0 +1,10 @@
+id: raven-c-batch-002
+name: buffer-overflow detection (c) batch-002
+severity: high
+category: buffer-overflow
+confidence: medium
+languages: [c]
+message: "Potential buffer overflow"
+patterns:
+  - type: regex
+    pattern: "strcpy|strcat|gets|sprintf"

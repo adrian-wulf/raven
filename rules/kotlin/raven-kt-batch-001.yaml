@@ -1,0 +1,10 @@
+id: raven-kt-batch-001
+name: injection detection (kotlin) batch-001
+severity: high
+category: injection
+confidence: medium
+languages: [kotlin]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "Runtime\.exec|eval|ProcessBuilder"

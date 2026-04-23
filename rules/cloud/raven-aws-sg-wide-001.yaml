@@ -1,0 +1,10 @@
+id: raven-aws-sg-wide-001
+name: Overly permissive security group
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Security group allows 0.0.0.0/0 access. Restrict to specific CIDR ranges."
+patterns:
+  - type: regex
+    pattern: "0\\.0\\.0\\.0/0|cidr_blocks.*0\\.0\\.0\\.0"

@@ -1,0 +1,10 @@
+id: raven-k8s-hostpath-001
+name: Unsafe hostPath mount
+severity: high
+category: cloud-security
+confidence: medium
+languages: ["*"]
+message: "hostPath mounts sensitive host directory. Can lead to container escape."
+patterns:
+  - type: regex
+    pattern: "hostPath.*(/etc|/var|/proc|/sys|/root)"

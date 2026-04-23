@@ -1,0 +1,10 @@
+id: raven-rb-batch-020
+name: injection detection (ruby) batch-020
+severity: high
+category: injection
+confidence: medium
+languages: [ruby]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "eval|exec|system|backtick"

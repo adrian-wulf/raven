@@ -1,0 +1,10 @@
+id: raven-iot-batch-005
+name: iot-security detection (c,cpp) batch-005
+severity: medium
+category: iot-security
+confidence: medium
+languages: [c,cpp]
+message: "IoT security issue"
+patterns:
+  - type: regex
+    pattern: "uart|serial|flash|ota"

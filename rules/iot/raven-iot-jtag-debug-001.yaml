@@ -1,0 +1,10 @@
+id: raven-iot-jtag-debug-001
+name: JTAG debug interface enabled
+severity: medium
+category: iot-security
+confidence: high
+languages: [c, cpp]
+message: "JTAG/SWD debug interface may be enabled in production. Disable debug interfaces."
+patterns:
+  - type: regex
+    pattern: "JTAG.*enable|SWD.*enable|debug.*enable|JTAGEN"

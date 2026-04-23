@@ -1,0 +1,10 @@
+id: raven-k8s-no-security-context-001
+name: Missing security context
+severity: medium
+category: cloud-security
+confidence: low
+languages: ["*"]
+message: "Pod missing securityContext. Define runAsNonRoot, readOnlyRootFilesystem, etc."
+patterns:
+  - type: regex
+    pattern: "kind.*Pod|containers:"

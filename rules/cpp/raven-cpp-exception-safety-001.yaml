@@ -1,0 +1,10 @@
+id: raven-cpp-exception-safety-001
+name: Missing exception handling
+severity: medium
+category: error-handling
+confidence: low
+languages: [cpp]
+message: "Function may throw but has no exception handling. Consider try/catch blocks."
+patterns:
+  - type: regex
+    pattern: "^(?!.*\\btry\\b).*(new\\s+|throw\\s+)"

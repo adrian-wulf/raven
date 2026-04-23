@@ -1,0 +1,10 @@
+id: raven-iot-unsafe-interrupt-001
+name: Unsafe operations in ISR
+severity: medium
+category: iot-security
+confidence: low
+languages: [c, cpp]
+message: "Potentially unsafe operations in interrupt service routine. Keep ISRs short and safe."
+patterns:
+  - type: regex
+    pattern: "ISR|interrupt.*malloc|interrupt.*printf"

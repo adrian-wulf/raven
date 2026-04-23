@@ -1,0 +1,10 @@
+id: raven-php-batch-020
+name: injection detection (php) batch-020
+severity: high
+category: injection
+confidence: medium
+languages: [php]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "eval\(|exec\(|system\("

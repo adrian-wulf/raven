@@ -1,0 +1,12 @@
+id: raven-c-weak-random-001
+name: Weak random number generator
+severity: medium
+category: weak-crypto
+confidence: high
+languages: [c]
+message: "rand() produces predictable values. Use arc4random(), getrandom(), or OpenSSL RAND_bytes() for security."
+patterns:
+  - type: regex
+    pattern: "rand\\s*\\(\\s*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

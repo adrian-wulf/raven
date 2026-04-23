@@ -1,0 +1,10 @@
+id: raven-cpp-raw-pointer-001
+name: Raw pointer instead of smart pointer
+severity: low
+category: code-quality
+confidence: low
+languages: [cpp]
+message: "Consider using std::unique_ptr or std::shared_ptr instead of raw pointers for automatic memory management."
+patterns:
+  - type: regex
+    pattern: "new\\s+[A-Za-z_]+"

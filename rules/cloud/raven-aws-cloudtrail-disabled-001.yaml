@@ -1,0 +1,10 @@
+id: raven-aws-cloudtrail-disabled-001
+name: CloudTrail logging disabled
+severity: medium
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "CloudTrail or audit logging disabled. Enable comprehensive logging for compliance."
+patterns:
+  - type: regex
+    pattern: "cloudtrail.*disable|audit.*disable|logging.*disable"

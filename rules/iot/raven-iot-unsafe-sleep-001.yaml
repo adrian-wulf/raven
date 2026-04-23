@@ -1,0 +1,10 @@
+id: raven-iot-unsafe-sleep-001
+name: Deep sleep without secure state
+severity: low
+category: iot-security
+confidence: low
+languages: [c, cpp]
+message: "Entering deep sleep without clearing sensitive RAM. Clear secrets before sleep."
+patterns:
+  - type: regex
+    pattern: "deep_sleep|light_sleep|esp_sleep"

@@ -1,0 +1,10 @@
+id: raven-cpp-dangling-reference-001
+name: Dangling reference
+severity: high
+category: memory-corruption
+confidence: medium
+languages: [cpp]
+message: "Returning reference to local variable creates dangling reference. Return by value instead."
+patterns:
+  - type: regex
+    pattern: "return\\s+[A-Za-z_]+&"

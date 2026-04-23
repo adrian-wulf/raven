@@ -1,0 +1,10 @@
+id: raven-cpp-race-condition-001
+name: Unprotected shared data
+severity: medium
+category: race-condition
+confidence: low
+languages: [cpp]
+message: "Shared data accessed without mutex protection. Use std::mutex or std::atomic."
+patterns:
+  - type: regex
+    pattern: "^(?!.*\\block\\b).*(shared_|global_)"

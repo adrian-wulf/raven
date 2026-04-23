@@ -1,0 +1,12 @@
+id: raven-c-null-deref-001
+name: Null pointer dereference
+severity: medium
+category: null-dereference
+confidence: medium
+languages: [c]
+message: "Potential null pointer dereference. Check malloc() return value before use."
+patterns:
+  - type: regex
+    pattern: "malloc\\s*\\(.*\\);.*\\n.*->"
+references:
+  - https://cwe.mitre.org/data/definitions/476.html

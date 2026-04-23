@@ -1,0 +1,10 @@
+id: raven-aws-rds-public-001
+name: Publicly accessible RDS instance
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "RDS instance is publicly accessible. Restrict to VPC or specific IPs."
+patterns:
+  - type: regex
+    pattern: "publicly_accessible.*=.*true|PubliclyAccessible.*true"

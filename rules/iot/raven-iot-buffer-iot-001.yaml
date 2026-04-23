@@ -1,0 +1,10 @@
+id: raven-iot-buffer-iot-001
+name: Buffer overflow in IoT message handling
+severity: high
+category: buffer-overflow
+confidence: medium
+languages: [c, cpp]
+message: "IoT message parsing without bounds checking. Validate all message lengths."
+patterns:
+  - type: regex
+    pattern: "recv.*buf|read.*socket|mqtt.*message"

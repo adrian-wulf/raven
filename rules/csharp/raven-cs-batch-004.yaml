@@ -1,0 +1,10 @@
+id: raven-cs-batch-004
+name: injection detection (csharp) batch-004
+severity: high
+category: injection
+confidence: medium
+languages: [csharp]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "Process\.Start|eval|ScriptEngine"

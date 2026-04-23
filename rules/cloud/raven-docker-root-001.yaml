@@ -1,0 +1,10 @@
+id: raven-docker-root-001
+name: Container running as root
+severity: medium
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Docker container runs as root. Use USER directive to run as non-root."
+patterns:
+  - type: regex
+    pattern: "USER root|FROM.*root|user.*root"

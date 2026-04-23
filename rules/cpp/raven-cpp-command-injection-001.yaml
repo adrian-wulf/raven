@@ -1,0 +1,10 @@
+id: raven-cpp-command-injection-001
+name: Command injection via system()
+severity: high
+category: command-injection
+confidence: medium
+languages: [cpp]
+message: "std::system() with user input allows command injection. Use execve() family or validate strictly."
+patterns:
+  - type: regex
+    pattern: "std::system\\s*\\("

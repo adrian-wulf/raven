@@ -1,0 +1,10 @@
+id: raven-aws-lambda-env-001
+name: Hardcoded secrets in Lambda environment
+severity: high
+category: secrets
+confidence: high
+languages: ["*"]
+message: "AWS Lambda environment variables may contain secrets. Use AWS Secrets Manager instead."
+patterns:
+  - type: regex
+    pattern: "AWS_SECRET|LAMBDA_ENV.*password|environment.*secret"

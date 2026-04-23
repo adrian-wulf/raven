@@ -1,0 +1,10 @@
+id: raven-cpp-buffer-overflow-002
+name: Unsafe buffer operations
+severity: high
+category: buffer-overflow
+confidence: high
+languages: [cpp]
+message: "C-style buffer operations are unsafe. Prefer std::vector or std::array."
+patterns:
+  - type: regex
+    pattern: "(memcpy|memmove|memset)\\s*\\("

@@ -1,0 +1,10 @@
+id: raven-cpp-buffer-overflow-001
+name: Unsafe strcpy in C++
+severity: high
+category: buffer-overflow
+confidence: high
+languages: [cpp]
+message: "strcpy() is unsafe in C++. Use std::string or strncpy()."
+patterns:
+  - type: regex
+    pattern: "strcpy\\s*\\("

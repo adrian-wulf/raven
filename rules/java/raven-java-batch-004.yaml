@@ -1,0 +1,10 @@
+id: raven-java-batch-004
+name: injection detection (java) batch-004
+severity: high
+category: injection
+confidence: medium
+languages: [java]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "Runtime\.exec|eval|ScriptEngine"

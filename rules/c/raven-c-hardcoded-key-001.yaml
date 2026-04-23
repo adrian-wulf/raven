@@ -1,0 +1,12 @@
+id: raven-c-hardcoded-key-001
+name: Hardcoded encryption key
+severity: high
+category: secrets
+confidence: high
+languages: [c]
+message: "Hardcoded encryption key detected. Load keys from secure storage at runtime."
+patterns:
+  - type: regex
+    pattern: "(AES|DES|RSA|HMAC|SECRET|KEY|PASSWORD|TOKEN).*=.*[\"'][a-zA-Z0-9]{16,}[\"']"
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

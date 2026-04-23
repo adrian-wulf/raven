@@ -1,0 +1,10 @@
+id: raven-cpp-uninit-var-001
+name: Uninitialized variable
+severity: medium
+category: memory-corruption
+confidence: low
+languages: [cpp]
+message: "Variable may be uninitialized. Initialize all variables at declaration."
+patterns:
+  - type: regex
+    pattern: "int\\s+\\w+\\s*;|char\\s+\\w+\\s*;|bool\\s+\\w+\\s*;"

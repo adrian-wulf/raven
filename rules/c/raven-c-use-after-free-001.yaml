@@ -1,0 +1,12 @@
+id: raven-c-use-after-free-001
+name: Use after free
+severity: critical
+category: memory-corruption
+confidence: medium
+languages: [c]
+message: "Pointer used after free. Set pointer to NULL after freeing."
+patterns:
+  - type: regex
+    pattern: "free\\s*\\(.*\\);.*\\n.*\\b\\w+\\b.*="
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

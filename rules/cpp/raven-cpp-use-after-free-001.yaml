@@ -1,0 +1,10 @@
+id: raven-cpp-use-after-free-001
+name: Use after free in C++
+severity: critical
+category: memory-corruption
+confidence: medium
+languages: [cpp]
+message: "Pointer used after delete. Use smart pointers to prevent use-after-free."
+patterns:
+  - type: regex
+    pattern: "delete\\s+.*;.*\\n.*\\b\\w+\\b.*->"

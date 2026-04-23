@@ -1,0 +1,12 @@
+id: raven-c-memcpy-overlap-001
+name: memcpy with overlapping regions
+severity: medium
+category: memory-corruption
+confidence: low
+languages: [c]
+message: "memcpy() behavior is undefined for overlapping regions. Use memmove() instead."
+patterns:
+  - type: regex
+    pattern: "memcpy\\s*\\(.*,.*,.*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/475.html

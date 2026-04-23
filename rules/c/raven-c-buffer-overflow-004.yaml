@@ -1,0 +1,12 @@
+id: raven-c-buffer-overflow-004
+name: Unsafe sprintf usage
+severity: high
+category: buffer-overflow
+confidence: high
+languages: [c]
+message: "sprintf() can overflow buffers. Use snprintf() with size limit instead."
+patterns:
+  - type: regex
+    pattern: "sprintf\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/120.html

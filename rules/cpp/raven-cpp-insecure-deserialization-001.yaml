@@ -1,0 +1,10 @@
+id: raven-cpp-insecure-deserialization-001
+name: Insecure deserialization
+severity: high
+category: deserialization
+confidence: medium
+languages: [cpp]
+message: "Deserializing untrusted data can lead to remote code execution. Validate data before deserialization."
+patterns:
+  - type: regex
+    pattern: "(deserialize|unserialize|readObject)\\s*\\("

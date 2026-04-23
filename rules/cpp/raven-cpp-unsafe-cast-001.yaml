@@ -1,0 +1,10 @@
+id: raven-cpp-unsafe-cast-001
+name: Unsafe C-style cast
+severity: low
+category: code-quality
+confidence: low
+languages: [cpp]
+message: "C-style casts are unsafe. Use static_cast, dynamic_cast, or reinterpret_cast explicitly."
+patterns:
+  - type: regex
+    pattern: "\\(.*\\*\\).*\\("

@@ -1,0 +1,10 @@
+id: raven-cpp-null-deref-001
+name: Null pointer dereference in C++
+severity: medium
+category: null-dereference
+confidence: medium
+languages: [cpp]
+message: "Dereferencing potentially null pointer. Check for null before use."
+patterns:
+  - type: regex
+    pattern: "->\\s*[a-zA-Z]"

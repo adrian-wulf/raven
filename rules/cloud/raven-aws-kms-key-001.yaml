@@ -1,0 +1,10 @@
+id: raven-aws-kms-key-001
+name: Unencrypted sensitive resource
+severity: high
+category: cloud-security
+confidence: medium
+languages: ["*"]
+message: "Resource missing KMS encryption. Enable encryption at rest."
+patterns:
+  - type: regex
+    pattern: "encrypted.*=.*false|kms_key_id.*null|encryption.*disable"

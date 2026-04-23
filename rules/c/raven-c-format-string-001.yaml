@@ -1,0 +1,12 @@
+id: raven-c-format-string-001
+name: Format string vulnerability (printf)
+severity: high
+category: format-string
+confidence: medium
+languages: [c]
+message: "Passing user input directly to printf() can lead to format string attacks. Use printf(\"%s\", input) instead."
+patterns:
+  - type: regex
+    pattern: "printf\\s*\\(\\s*[^\"']*\\$"
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

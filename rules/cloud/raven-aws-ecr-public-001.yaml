@@ -1,0 +1,10 @@
+id: raven-aws-ecr-public-001
+name: Public ECR repository
+severity: medium
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "ECR repository policy allows public pull access. Restrict to specific principals."
+patterns:
+  - type: regex
+    pattern: "ecr.*public|ecr:*Pull|Principal.*\\*"

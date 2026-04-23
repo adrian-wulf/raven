@@ -1,0 +1,10 @@
+id: raven-terraform-s3-backend-001
+name: Terraform S3 backend without encryption
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Terraform S3 backend missing encryption. Enable server-side encryption."
+patterns:
+  - type: regex
+    pattern: "backend.*s3.*encrypt.*false|backend.*s3[^e]*$"

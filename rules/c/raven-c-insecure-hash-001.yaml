@@ -1,0 +1,10 @@
+id: raven-c-insecure-hash-001
+name: Insecure hash function (MD5)
+severity: medium
+category: weak-crypto
+confidence: high
+languages: [c]
+message: "MD5 is cryptographically broken. Use SHA-256 or BLAKE2 instead."
+patterns:
+  - type: regex
+    pattern: "MD5|md5"

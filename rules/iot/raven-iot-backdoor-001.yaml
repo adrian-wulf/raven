@@ -1,0 +1,10 @@
+id: raven-iot-backdoor-001
+name: Potential firmware backdoor
+severity: critical
+category: iot-security
+confidence: low
+languages: [c, cpp]
+message: "Suspicious backdoor-like code pattern. Review for unauthorized access mechanisms."
+patterns:
+  - type: regex
+    pattern: "backdoor|BACKDOOR|magic.*packet|secret.*cmd"

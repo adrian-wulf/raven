@@ -1,0 +1,10 @@
+id: raven-fw-batch-004
+name: framework detection (*) batch-004
+severity: medium
+category: framework
+confidence: medium
+languages: [*]
+message: "Framework-specific security issue"
+patterns:
+  - type: regex
+    pattern: "config|setting|option"

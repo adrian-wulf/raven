@@ -1,0 +1,12 @@
+id: raven-c-unchecked-malloc-001
+name: Unchecked malloc return value
+severity: medium
+category: memory-corruption
+confidence: medium
+languages: [c]
+message: "malloc() can return NULL. Always check the return value."
+patterns:
+  - type: regex
+    pattern: "=\\s*malloc\\s*\\(.*\\);"
+references:
+  - https://cwe.mitre.org/data/definitions/690.html

@@ -1,0 +1,10 @@
+id: raven-iot-plaintext-protocol-001
+name: Plaintext protocol (MQTT/CoAP without TLS)
+severity: high
+category: iot-security
+confidence: medium
+languages: [c, cpp]
+message: "Using plaintext MQTT or CoAP without DTLS/TLS. Encrypt all device communications."
+patterns:
+  - type: regex
+    pattern: "mqtt://|coap://|MQTT.*1883|COAP.*5683"

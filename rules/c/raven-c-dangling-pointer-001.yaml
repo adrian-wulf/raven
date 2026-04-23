@@ -1,0 +1,12 @@
+id: raven-c-dangling-pointer-001
+name: Return of stack variable address
+severity: high
+category: memory-corruption
+confidence: medium
+languages: [c]
+message: "Returning address of local variable creates dangling pointer. Use heap allocation or return by value."
+patterns:
+  - type: regex
+    pattern: "return\\s*&"
+references:
+  - https://cwe.mitre.org/data/definitions/562.html

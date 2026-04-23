@@ -1,0 +1,10 @@
+id: raven-iot-unsafe-eeprom-001
+name: Sensitive data in EEPROM/flash
+severity: medium
+category: secrets
+confidence: medium
+languages: [c, cpp]
+message: "Sensitive data stored in EEPROM without encryption. Encrypt at rest."
+patterns:
+  - type: regex
+    pattern: "eeprom_write.*key|eeprom_write.*pass|nvs_set.*secret"

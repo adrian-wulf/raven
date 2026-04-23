@@ -1,0 +1,10 @@
+id: raven-py-batch-027
+name: injection detection (python) batch-027
+severity: high
+category: injection
+confidence: medium
+languages: [python]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "eval\(|exec\(|os\.system\("

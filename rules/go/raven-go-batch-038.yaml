@@ -1,0 +1,10 @@
+id: raven-go-batch-038
+name: injection detection (go) batch-038
+severity: high
+category: injection
+confidence: medium
+languages: [go]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "exec\.Command|eval|unsafe"

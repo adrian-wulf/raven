@@ -1,0 +1,10 @@
+id: raven-cpp-virtual-destructor-001
+name: Missing virtual destructor
+severity: medium
+category: memory-corruption
+confidence: low
+languages: [cpp]
+message: "Class with virtual functions should have virtual destructor to prevent undefined behavior."
+patterns:
+  - type: regex
+    pattern: "virtual\\s+.*\\(.*\\)"

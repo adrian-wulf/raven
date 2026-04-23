@@ -1,0 +1,10 @@
+id: raven-iot-unsafe-random-001
+name: Predictable random for crypto in IoT
+severity: high
+category: weak-crypto
+confidence: high
+languages: [c, cpp]
+message: "Using weak random in embedded crypto. Use hardware RNG if available."
+patterns:
+  - type: regex
+    pattern: "rand\\(\\)|srand\\(|HAL_RNG|esp_random"

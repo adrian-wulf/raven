@@ -1,0 +1,10 @@
+id: raven-cpp-batch-008
+name: buffer-overflow detection (cpp) batch-008
+severity: high
+category: buffer-overflow
+confidence: medium
+languages: [cpp]
+message: "Potential buffer overflow"
+patterns:
+  - type: regex
+    pattern: "strcpy|strcat|gets|sprintf"

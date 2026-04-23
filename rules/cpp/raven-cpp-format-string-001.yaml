@@ -1,0 +1,10 @@
+id: raven-cpp-format-string-001
+name: Format string vulnerability
+severity: high
+category: format-string
+confidence: medium
+languages: [cpp]
+message: "Passing user input to printf-style functions can cause format string attacks."
+patterns:
+  - type: regex
+    pattern: "(printf|fprintf|sprintf|snprintf)\\s*\\(\\s*[^\"']*\\$"

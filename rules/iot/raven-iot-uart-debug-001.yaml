@@ -1,0 +1,10 @@
+id: raven-iot-uart-debug-001
+name: UART debug output in production
+severity: medium
+category: iot-security
+confidence: medium
+languages: [c, cpp]
+message: "UART debug output can leak sensitive information. Remove debug prints in production builds."
+patterns:
+  - type: regex
+    pattern: "UART_[Pp]rint|HAL_UART_Transmit|printf.*UART"

@@ -1,0 +1,10 @@
+id: raven-terraform-plaintext-state-001
+name: Unencrypted Terraform state
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Terraform state not encrypted. Enable state encryption and remote backend locking."
+patterns:
+  - type: regex
+    pattern: "backend.*local|encrypt.*=.*false|state.*disable"

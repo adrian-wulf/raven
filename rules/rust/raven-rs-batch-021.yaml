@@ -1,0 +1,10 @@
+id: raven-rs-batch-021
+name: injection detection (rust) batch-021
+severity: high
+category: injection
+confidence: medium
+languages: [rust]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "Command::new|std::process|unsafe"

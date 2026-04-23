@@ -1,0 +1,10 @@
+id: raven-iot-unsafe-flash-001
+name: Unsafe flash memory operations
+severity: medium
+category: iot-security
+confidence: medium
+languages: [c, cpp]
+message: "Direct flash writes without validation can corrupt firmware. Verify writes before committing."
+patterns:
+  - type: regex
+    pattern: "flash_write|spi_flash_write|nvs_set"

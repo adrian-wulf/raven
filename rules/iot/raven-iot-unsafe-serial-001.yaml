@@ -1,0 +1,10 @@
+id: raven-iot-unsafe-serial-001
+name: Unsafe serial command parsing
+severity: high
+category: command-injection
+confidence: medium
+languages: [c, cpp]
+message: "Serial commands parsed without validation. Validate all command inputs."
+patterns:
+  - type: regex
+    pattern: "serial.*parse|uart.*cmd|Serial.*read"

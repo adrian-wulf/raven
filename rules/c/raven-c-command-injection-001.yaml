@@ -1,0 +1,12 @@
+id: raven-c-command-injection-001
+name: Command injection via system()
+severity: high
+category: command-injection
+confidence: medium
+languages: [c]
+message: "system() with user input allows command injection. Avoid system() or use execve() with argument array."
+patterns:
+  - type: regex
+    pattern: "system\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

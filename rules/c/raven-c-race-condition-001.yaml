@@ -1,0 +1,12 @@
+id: raven-c-race-condition-001
+name: TOCTOU race condition
+severity: medium
+category: race-condition
+confidence: low
+languages: [c]
+message: "Time-of-check-time-of-use race condition possible. Use file descriptors instead of paths."
+patterns:
+  - type: regex
+    pattern: "access\\s*\\(.*\\).*\\n.*open\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/367.html

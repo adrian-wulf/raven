@@ -1,0 +1,10 @@
+id: raven-iot-insecure-ota-001
+name: Insecure OTA update (no TLS)
+severity: high
+category: iot-security
+confidence: medium
+languages: [c, cpp]
+message: "OTA update without TLS verification allows MITM attacks. Always verify server certificate."
+patterns:
+  - type: regex
+    pattern: "OTA|ota.*http://|OTA.*skip.*cert|ota_begin"

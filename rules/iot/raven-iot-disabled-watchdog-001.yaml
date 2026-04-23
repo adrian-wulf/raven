@@ -1,0 +1,10 @@
+id: raven-iot-disabled-watchdog-001
+name: Disabled watchdog timer
+severity: low
+category: iot-security
+confidence: high
+languages: [c, cpp]
+message: "Watchdog timer disabled. Enable watchdog to prevent device lockups."
+patterns:
+  - type: regex
+    pattern: "watchdog.*disable|WDT.*off|wdt_disable"

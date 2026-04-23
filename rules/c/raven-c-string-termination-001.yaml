@@ -1,0 +1,12 @@
+id: raven-c-string-termination-001
+name: Potential unterminated string
+severity: medium
+category: buffer-overflow
+confidence: medium
+languages: [c]
+message: "strncpy() does not guarantee null-termination. Ensure the buffer is null-terminated."
+patterns:
+  - type: regex
+    pattern: "strncpy\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/170.html

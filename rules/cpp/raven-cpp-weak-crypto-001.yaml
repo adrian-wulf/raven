@@ -1,0 +1,10 @@
+id: raven-cpp-weak-crypto-001
+name: Weak random in C++
+severity: medium
+category: weak-crypto
+confidence: high
+languages: [cpp]
+message: "rand() is not cryptographically secure. Use std::random_device or OpenSSL."
+patterns:
+  - type: regex
+    pattern: "rand\\s*\\(\\s*\\)"

@@ -1,0 +1,10 @@
+id: raven-iot-weak-auth-001
+name: Weak device authentication
+severity: high
+category: iot-security
+confidence: medium
+languages: [c, cpp]
+message: "Weak or missing device authentication. Implement strong mutual authentication."
+patterns:
+  - type: regex
+    pattern: "auth.*none|no_auth|AUTH_NONE|skip.*auth"

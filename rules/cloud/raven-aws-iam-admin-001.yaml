@@ -1,0 +1,10 @@
+id: raven-aws-iam-admin-001
+name: Overly permissive IAM policy
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "IAM policy grants Action: * on Resource: *. Use least privilege principle."
+patterns:
+  - type: regex
+    pattern: "Action.*\\*.*Resource.*\\*|Effect.*Allow.*Action.*\\*"

@@ -1,0 +1,10 @@
+id: raven-azure-public-storage-001
+name: Public Azure Storage account
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Azure Storage account allows public access. Disable public blob access."
+patterns:
+  - type: regex
+    pattern: "allow_blob_public_access.*=.*true|public_access.*blob"

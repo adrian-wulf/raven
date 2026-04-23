@@ -1,0 +1,10 @@
+id: raven-cpp-sql-injection-001
+name: SQL injection in C++
+severity: high
+category: sql-injection
+confidence: medium
+languages: [cpp]
+message: "Concatenating user input into SQL queries allows SQL injection. Use parameterized queries."
+patterns:
+  - type: regex
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*%s|\\+.*query"

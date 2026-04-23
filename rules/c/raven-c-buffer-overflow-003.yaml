@@ -1,0 +1,12 @@
+id: raven-c-buffer-overflow-003
+name: Unsafe gets usage
+severity: critical
+category: buffer-overflow
+confidence: high
+languages: [c]
+message: "gets() is extremely dangerous and removed in C11. Never use gets(). Use fgets() instead."
+patterns:
+  - type: regex
+    pattern: "gets\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/120.html

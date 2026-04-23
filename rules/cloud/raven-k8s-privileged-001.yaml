@@ -1,0 +1,10 @@
+id: raven-k8s-privileged-001
+name: Privileged Kubernetes container
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "Container runs in privileged mode. This grants full host access. Avoid privileged mode."
+patterns:
+  - type: regex
+    pattern: "privileged.*=.*true|securityContext.*privileged"

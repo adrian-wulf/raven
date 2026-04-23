@@ -5,6 +5,8 @@ import (
 	"strings"
 
 	sitter "github.com/smacker/go-tree-sitter"
+	cparser "github.com/smacker/go-tree-sitter/c"
+	"github.com/smacker/go-tree-sitter/cpp"
 	"github.com/smacker/go-tree-sitter/csharp"
 	"github.com/smacker/go-tree-sitter/golang"
 	"github.com/smacker/go-tree-sitter/java"
@@ -62,6 +64,16 @@ var registry = []Language{
 		Name:       "kotlin",
 		Extensions: []string{".kt"},
 		Parser:     kotlin.GetLanguage(),
+	},
+	{
+		Name:       "c",
+		Extensions: []string{".c", ".h"},
+		Parser:     cparser.GetLanguage(),
+	},
+	{
+		Name:       "cpp",
+		Extensions: []string{".cpp", ".cc", ".cxx", ".hpp", ".hxx"},
+		Parser:     cpp.GetLanguage(),
 	},
 	{
 		Name:       "csharp",

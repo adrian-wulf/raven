@@ -1,0 +1,10 @@
+id: raven-swift-batch-007
+name: injection detection (swift) batch-007
+severity: high
+category: injection
+confidence: medium
+languages: [swift]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "NSTask|Process|eval|unsafe"

@@ -1,0 +1,10 @@
+id: raven-js-batch-024
+name: injection detection (javascript,typescript) batch-024
+severity: high
+category: injection
+confidence: medium
+languages: [javascript,typescript]
+message: "Potential injection vulnerability detected"
+patterns:
+  - type: regex
+    pattern: "eval\(|exec\(|Function\("

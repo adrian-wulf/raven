@@ -1,0 +1,12 @@
+id: raven-c-command-injection-002
+name: Command injection via popen()
+severity: high
+category: command-injection
+confidence: medium
+languages: [c]
+message: "popen() with user input allows command injection. Validate input strictly."
+patterns:
+  - type: regex
+    pattern: "popen\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

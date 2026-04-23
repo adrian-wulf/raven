@@ -1,0 +1,10 @@
+id: raven-aws-s3-public-001
+name: Public S3 bucket
+severity: high
+category: cloud-security
+confidence: high
+languages: ["*"]
+message: "S3 bucket configured as public-read. This exposes data to everyone."
+patterns:
+  - type: regex
+    pattern: "public-read|PublicRead|public-read-write"
