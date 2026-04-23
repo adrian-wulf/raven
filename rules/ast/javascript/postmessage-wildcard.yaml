@@ -1,0 +1,23 @@
+id: raven-ast-js-postmessage-001
+name: postMessage with Wildcard Origin
+description: |
+  Detects window.postMessage() calls where the target origin is "*",
+  allowing any origin to receive the message and potentially leak data.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript]
+message: |
+  postMessage with targetOrigin "*" allows any origin to receive messages.
+  Specify the exact expected origin instead of "*".
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (member_expression
+          property: (property_identifier) @prop (#eq? @prop "postMessage"))
+        arguments: (arguments
+          (_)
+          (string) @vuln (#eq? @vuln "\"*\"")))
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage

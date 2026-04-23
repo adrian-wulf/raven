@@ -1,0 +1,20 @@
+id: raven-ast-js-react-innerhtml-001
+name: React dangerouslySetInnerHTML
+description: |
+  Detects usage of dangerouslySetInnerHTML in React/JSX with dynamic
+  content, which is the React equivalent of innerHTML and can lead to XSS.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+message: |
+  dangerouslySetInnerHTML is dangerous. Ensure the HTML is sanitized
+  with DOMPurify or a similar library before assignment.
+patterns:
+  - type: ast-query
+    query: |
+      (jsx_attribute
+        (property_identifier) @prop (#eq? @prop "dangerouslySetInnerHTML")
+        (jsx_expression (_) @vuln))
+references:
+  - https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html

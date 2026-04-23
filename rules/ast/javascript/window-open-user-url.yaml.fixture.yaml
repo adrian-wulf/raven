@@ -1,0 +1,18 @@
+rule_id: raven-ast-js-windowopen-001
+positive:
+  - name: window.open with user variable
+    source: |
+      window.open(userUrl);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: window.open with constant URL
+    source: |
+      window.open("https://example.com");
+    language: javascript
+    expect_findings: 0
+  - name: window.open with blank target
+    source: |
+      window.open("/dashboard", "_self");
+    language: javascript
+    expect_findings: 0

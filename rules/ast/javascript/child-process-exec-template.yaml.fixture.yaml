@@ -1,0 +1,23 @@
+rule_id: raven-ast-js-exec-template-001
+positive:
+  - name: exec with template literal
+    source: |
+      exec(`ls ${dir}`);
+    language: javascript
+    expect_findings: 1
+  - name: execSync with template literal
+    source: |
+      execSync(`cat ${file}`);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: exec with constant string
+    source: |
+      exec("ls -la");
+    language: javascript
+    expect_findings: 0
+  - name: execFile with array args
+    source: |
+      execFile("ls", ["-la"]);
+    language: javascript
+    expect_findings: 0

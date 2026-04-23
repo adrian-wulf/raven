@@ -1,0 +1,23 @@
+rule_id: raven-ast-js-eval-002
+positive:
+  - name: eval with identifier
+    source: |
+      eval(userInput);
+    language: javascript
+    expect_findings: 1
+  - name: eval with template literal
+    source: |
+      eval(`return ${x}`);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: eval with string literal
+    source: |
+      eval("1 + 1");
+    language: javascript
+    expect_findings: 0
+  - name: eval with number literal
+    source: |
+      eval(42);
+    language: javascript
+    expect_findings: 0

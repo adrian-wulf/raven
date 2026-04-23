@@ -1,0 +1,18 @@
+rule_id: raven-ast-py-yaml-001
+positive:
+  - name: yaml.load without loader
+    source: |
+      yaml.load(data)
+    language: python
+    expect_findings: 1
+negative:
+  - name: yaml.safe_load
+    source: |
+      yaml.safe_load(data)
+    language: python
+    expect_findings: 0
+  - name: yaml.dump instead
+    source: |
+      yaml.dump(data)
+    language: python
+    expect_findings: 0

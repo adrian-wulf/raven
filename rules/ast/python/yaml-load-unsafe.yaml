@@ -1,0 +1,22 @@
+id: raven-ast-py-yaml-001
+name: yaml.load without Safe Loader
+description: |
+  Detects yaml.load() called without an explicit safe Loader,
+  which can execute arbitrary code via YAML deserialization.
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+message: |
+  yaml.load() without Loader=yaml.SafeLoader can execute arbitrary code.
+  Use yaml.safe_load() or yaml.load(..., Loader=yaml.SafeLoader).
+patterns:
+  - type: ast-query
+    query: |
+      (call
+        function: (attribute
+          object: (identifier) @obj (#eq? @obj "yaml")
+          attribute: (identifier) @attr (#eq? @attr "load"))
+        arguments: (argument_list (_) @vuln))
+references:
+  - https://pyyaml.org/wiki/PyYAMLDocumentation

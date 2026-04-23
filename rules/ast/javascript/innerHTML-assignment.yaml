@@ -1,0 +1,23 @@
+id: raven-ast-js-innerhtml-001
+name: Unsafe innerHTML Assignment
+description: |
+  Detects assignment to innerHTML with potentially user-controlled data,
+  which can lead to DOM-based XSS.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+message: |
+  innerHTML assignment with dynamic content can lead to XSS.
+  Use textContent, innerText, or a safe sanitizer like DOMPurify.
+patterns:
+  - type: ast-query
+    query: |
+      (assignment_expression
+        left: (member_expression
+          property: (property_identifier) @prop (#eq? @prop "innerHTML"))
+        right: (_) @vuln)
+    where:
+      - not-constant: true
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html

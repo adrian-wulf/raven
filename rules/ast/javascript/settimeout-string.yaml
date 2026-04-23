@@ -1,0 +1,20 @@
+id: raven-ast-js-settimeout-001
+name: setTimeout/setInterval with String Argument
+description: |
+  Detects setTimeout() or setInterval() called with a string argument,
+  which is equivalent to eval() and can lead to code injection.
+severity: high
+category: code-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  setTimeout/setInterval with a string is evaluated via eval().
+  Pass a function reference instead: setTimeout(() => { ... }, delay).
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (identifier) @fn (#match? @fn "^(setTimeout|setInterval)$")
+        arguments: (arguments . (string) @vuln))
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout

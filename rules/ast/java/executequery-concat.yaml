@@ -1,0 +1,21 @@
+id: raven-ast-java-sqli-001
+name: executeQuery with String Concatenation
+description: |
+  Detects Statement.executeQuery() or similar methods called with a
+  binary expression (string concatenation), which is a clear SQL
+  injection vulnerability.
+severity: critical
+category: sqli
+confidence: high
+languages: [java]
+message: |
+  SQL query built via string concatenation. Use PreparedStatement
+  with parameterized queries to prevent SQL injection.
+patterns:
+  - type: ast-query
+    query: |
+      (method_invocation
+        name: (identifier) @fn (#match? @fn "^(executeQuery|execute|executeUpdate)$")
+        arguments: (argument_list (binary_expression) @vuln))
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

@@ -1,0 +1,18 @@
+rule_id: raven-ast-go-exec-001
+positive:
+  - name: exec.Command with concatenation
+    source: |
+      exec.Command("sh", "-c", "echo "+userInput)
+    language: go
+    expect_findings: 1
+negative:
+  - name: exec.Command with constant
+    source: |
+      exec.Command("ls", "-la")
+    language: go
+    expect_findings: 0
+  - name: exec.Command with array
+    source: |
+      exec.Command("ls", args...)
+    language: go
+    expect_findings: 0

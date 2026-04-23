@@ -1,0 +1,13 @@
+rule_id: raven-ast-go-template-001
+positive:
+  - name: template.Parse with user variable
+    source: |
+      template.New("name").Parse(userTemplate)
+    language: go
+    expect_findings: 1
+negative:
+  - name: template.Parse with constant
+    source: |
+      template.New("name").Parse("Hello {{.Name}}")
+    language: go
+    expect_findings: 0

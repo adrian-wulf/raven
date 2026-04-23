@@ -854,8 +854,9 @@ func isConstant(content, snippet string) bool {
 	if strings.HasPrefix(trimmed, `'`) && strings.HasSuffix(trimmed, `'`) {
 		return true
 	}
+	// Template literals with interpolation are NOT constants
 	if strings.HasPrefix(trimmed, "`") && strings.HasSuffix(trimmed, "`") {
-		return true
+		return !strings.Contains(trimmed, "${")
 	}
 	// Check for numeric constants
 	if regexp.MustCompile(`^\d+$`).MatchString(trimmed) {

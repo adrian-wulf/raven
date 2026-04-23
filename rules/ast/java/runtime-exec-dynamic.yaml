@@ -1,0 +1,25 @@
+id: raven-ast-java-runtime-001
+name: Runtime.exec with Dynamic Input
+description: |
+  Detects Runtime.getRuntime().exec() called with non-literal arguments,
+  which can lead to command injection if the input is user-controlled.
+severity: critical
+category: command-injection
+confidence: high
+languages: [java]
+message: |
+  Runtime.exec() with dynamic input can lead to command injection.
+  Use ProcessBuilder with a list of arguments instead of string concatenation.
+patterns:
+  - type: ast-query
+    query: |
+      (method_invocation
+        object: (method_invocation
+          object: (identifier) @cls (#eq? @cls "Runtime")
+          name: (identifier) @meth1 (#eq? @meth1 "getRuntime"))
+        name: (identifier) @meth2 (#eq? @meth2 "exec")
+        arguments: (argument_list (_) @vuln))
+    where:
+      - not-constant: true
+references:
+  - https://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#exec-java.lang.String-

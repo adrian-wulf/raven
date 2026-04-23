@@ -1,0 +1,23 @@
+rule_id: raven-ast-py-subprocess-001
+positive:
+  - name: subprocess.call with shell=True
+    source: |
+      subprocess.call('ls ' + user_input, shell=True)
+    language: python
+    expect_findings: 1
+  - name: subprocess.run with shell=True
+    source: |
+      subprocess.run(cmd, shell=True)
+    language: python
+    expect_findings: 1
+negative:
+  - name: subprocess.call without shell
+    source: |
+      subprocess.call(['ls', '-la'])
+    language: python
+    expect_findings: 0
+  - name: subprocess.call with shell=False
+    source: |
+      subprocess.call(cmd, shell=False)
+    language: python
+    expect_findings: 0

@@ -1,0 +1,23 @@
+rule_id: raven-ast-js-innerhtml-001
+positive:
+  - name: innerHTML with user input
+    source: |
+      document.body.innerHTML = req.body.content;
+    language: javascript
+    expect_findings: 1
+  - name: innerHTML with template literal
+    source: |
+      el.innerHTML = `<div>${userData}</div>`;
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: innerHTML with constant string
+    source: |
+      el.innerHTML = "<b>hello</b>";
+    language: javascript
+    expect_findings: 0
+  - name: textContent instead of innerHTML
+    source: |
+      el.textContent = userData;
+    language: javascript
+    expect_findings: 0

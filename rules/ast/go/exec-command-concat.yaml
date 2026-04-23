@@ -1,0 +1,26 @@
+id: raven-ast-go-exec-001
+name: exec.Command with String Concatenation
+description: |
+  Detects exec.Command() where the last argument is a binary expression
+  (string concatenation), which can lead to command injection if the
+  concatenated part is user-controlled.
+severity: high
+category: command-injection
+confidence: high
+languages: [go]
+message: |
+  exec.Command() with string concatenation is dangerous.
+  Use exec.Command() with separate arguments or exec.CommandContext().
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (selector_expression
+          operand: (identifier) @pkg (#eq? @pkg "exec")
+          field: (field_identifier) @fn (#eq? @fn "Command"))
+        arguments: (argument_list
+          (_)
+          (_)
+          (binary_expression) @vuln))
+references:
+  - https://pkg.go.dev/os/exec

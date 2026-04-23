@@ -1,0 +1,13 @@
+rule_id: raven-ast-py-pickle-001
+positive:
+  - name: pickle.loads with user data
+    source: |
+      pickle.loads(user_data)
+    language: python
+    expect_findings: 1
+negative:
+  - name: pickle.dumps instead
+    source: |
+      pickle.dumps(data)
+    language: python
+    expect_findings: 0

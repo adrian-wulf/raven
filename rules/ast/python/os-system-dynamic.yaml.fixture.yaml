@@ -1,0 +1,13 @@
+rule_id: raven-ast-py-os-system-001
+positive:
+  - name: os.system with f-string
+    source: |
+      os.system(f'rm {path}')
+    language: python
+    expect_findings: 1
+negative:
+  - name: os.system with constant
+    source: |
+      os.system('ls -la')
+    language: python
+    expect_findings: 0

@@ -1,0 +1,22 @@
+id: raven-ast-py-pickle-001
+name: pickle.loads on Untrusted Data
+description: |
+  Detects pickle.loads() called with potentially untrusted data,
+  which can lead to arbitrary code execution during deserialization.
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+message: |
+  pickle.loads() on untrusted data is equivalent to eval().
+  Use JSON or a safe serialization format for external data.
+patterns:
+  - type: ast-query
+    query: |
+      (call
+        function: (attribute
+          object: (identifier) @obj (#eq? @obj "pickle")
+          attribute: (identifier) @attr (#eq? @attr "loads"))
+        arguments: (argument_list (_) @vuln))
+references:
+  - https://docs.python.org/3/library/pickle.html

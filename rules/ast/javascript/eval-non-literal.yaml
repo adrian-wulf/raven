@@ -1,0 +1,24 @@
+id: raven-ast-js-eval-002
+name: eval() with Non-Literal Argument
+description: |
+  Detects eval() called with an identifier or template literal argument,
+  which can lead to code injection if the input is user-controlled.
+severity: critical
+category: code-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  eval() with dynamic input is extremely dangerous. Never pass user input
+  to eval(). Use JSON.parse for data parsing or refactor to avoid eval().
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (identifier) @fn (#eq? @fn "eval")
+        arguments: (arguments
+          [
+            (identifier) @vuln
+            (template_string) @vuln
+          ]))
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!

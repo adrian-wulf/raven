@@ -1,0 +1,24 @@
+id: raven-ast-js-docwrite-001
+name: Dangerous document.write()
+description: |
+  Detects calls to document.write() or document.writeln() with dynamic
+  content, which can lead to XSS.
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+message: |
+  document.write() with dynamic content is dangerous and deprecated.
+  Use modern DOM APIs like insertAdjacentHTML with a sanitizer, or refactor.
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (member_expression
+          object: (identifier) @obj (#eq? @obj "document")
+          property: (property_identifier) @prop (#match? @prop "^(write|writeln)$"))
+        arguments: (arguments (_) @vuln))
+    where:
+      - not-constant: true
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/API/Document/write

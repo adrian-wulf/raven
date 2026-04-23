@@ -1,0 +1,23 @@
+rule_id: raven-ast-js-postmessage-001
+positive:
+  - name: postMessage with wildcard origin
+    source: |
+      window.postMessage(data, "*");
+    language: javascript
+    expect_findings: 1
+  - name: iframe postMessage with wildcard
+    source: |
+      iframe.contentWindow.postMessage(secret, "*");
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: postMessage with specific origin
+    source: |
+      window.postMessage(data, "https://example.com");
+    language: javascript
+    expect_findings: 0
+  - name: postMessage with variable origin
+    source: |
+      window.postMessage(data, allowedOrigin);
+    language: javascript
+    expect_findings: 0

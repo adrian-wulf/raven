@@ -1,0 +1,13 @@
+rule_id: raven-ast-java-sqli-001
+positive:
+  - name: executeQuery with concatenation
+    source: |
+      stmt.executeQuery("SELECT * WHERE id = " + userId);
+    language: java
+    expect_findings: 1
+negative:
+  - name: executeQuery with constant
+    source: |
+      stmt.executeQuery("SELECT * FROM users");
+    language: java
+    expect_findings: 0

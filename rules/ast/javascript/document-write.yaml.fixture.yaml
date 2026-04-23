@@ -1,0 +1,23 @@
+rule_id: raven-ast-js-docwrite-001
+positive:
+  - name: document.write with user input
+    source: |
+      document.write(req.query.html);
+    language: javascript
+    expect_findings: 1
+  - name: document.writeln with template literal
+    source: |
+      document.writeln(`<div>${data}</div>`);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: document.write with constant
+    source: |
+      document.write("<b>hello</b>");
+    language: javascript
+    expect_findings: 0
+  - name: other document method
+    source: |
+      document.createElement("div");
+    language: javascript
+    expect_findings: 0

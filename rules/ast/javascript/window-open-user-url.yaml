@@ -1,0 +1,23 @@
+id: raven-ast-js-windowopen-001
+name: window.open() with User-Controlled URL
+description: |
+  Detects window.open() calls where the URL comes from user input,
+  which can lead to open redirect, tabnabbing, or phishing.
+severity: medium
+category: open-redirect
+confidence: high
+languages: [javascript, typescript]
+message: |
+  window.open() with a user-controlled URL can be used for phishing or open redirect.
+  Validate and whitelist allowed URLs before opening.
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (member_expression
+          object: (identifier) @obj (#eq? @obj "window")
+          property: (property_identifier) @prop (#eq? @prop "open"))
+        arguments: (arguments
+          (identifier) @vuln))
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html

@@ -1,0 +1,21 @@
+id: raven-ast-js-exec-template-001
+name: child_process.exec with Template Literal
+description: |
+  Detects exec(), execSync(), or spawn() from child_process called with
+  a template literal, which can lead to command injection if the template
+  contains user-controlled data.
+severity: critical
+category: command-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Shell command built from a template literal. Use parameterized execution
+  or child_process.execFile() with an array of arguments instead.
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (identifier) @fn (#match? @fn "^(exec|execSync|spawn)$")
+        arguments: (arguments (template_string) @vuln))
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html

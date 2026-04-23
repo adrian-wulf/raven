@@ -1,0 +1,23 @@
+id: raven-ast-go-template-001
+name: template.Parse with User Input
+description: |
+  Detects template.Parse() or template.ParseFiles() called with
+  user-controlled input, which can lead to SSTI (Server-Side Template
+  Injection) if the template content is attacker-controlled.
+severity: high
+category: ssti
+confidence: high
+languages: [go]
+message: |
+  template.Parse() with user input can lead to SSTI.
+  Parse templates from trusted files only, never from user input.
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (selector_expression
+          operand: (call_expression)
+          field: (field_identifier) @fn (#eq? @fn "Parse"))
+        arguments: (argument_list (identifier) @vuln))
+references:
+  - https://pkg.go.dev/html/template

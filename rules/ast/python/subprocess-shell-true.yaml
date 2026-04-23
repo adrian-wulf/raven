@@ -1,0 +1,27 @@
+id: raven-ast-py-subprocess-001
+name: subprocess with shell=True
+description: |
+  Detects subprocess.call(), subprocess.run(), or similar functions
+  called with shell=True, which enables shell injection if any argument
+  contains user input.
+severity: high
+category: command-injection
+confidence: high
+languages: [python]
+message: |
+  subprocess with shell=True is dangerous. Use shell=False and pass
+  a list of arguments, or sanitize all inputs thoroughly.
+patterns:
+  - type: ast-query
+    query: |
+      (call
+        function: (attribute
+          object: (identifier) @obj (#eq? @obj "subprocess")
+          attribute: (identifier) @attr (#match? @attr "^(call|run|Popen)$"))
+        arguments: (argument_list
+          (_)
+          (keyword_argument
+            name: (identifier) @kw (#eq? @kw "shell")
+            value: (true) @vuln)))
+references:
+  - https://docs.python.org/3/library/subprocess.html#security-considerations

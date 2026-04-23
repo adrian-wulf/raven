@@ -1,0 +1,18 @@
+rule_id: raven-ast-js-href-js-001
+positive:
+  - name: href with javascript scheme
+    source: |
+      <a href="javascript:alert(1)">click</a>
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: href with regular URL
+    source: |
+      <a href="https://example.com">link</a>
+    language: javascript
+    expect_findings: 0
+  - name: href with relative path
+    source: |
+      <a href="/dashboard">dashboard</a>
+    language: javascript
+    expect_findings: 0

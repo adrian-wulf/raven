@@ -1,0 +1,18 @@
+rule_id: raven-ast-js-function-ctor-001
+positive:
+  - name: new Function with user input
+    source: |
+      const fn = new Function(userInput);
+    language: javascript
+    expect_findings: 1
+  - name: new Function with template literal
+    source: |
+      const fn = new Function(`return ${x} + 1`);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: new Function with constant string
+    source: |
+      const fn = new Function("return 42");
+    language: javascript
+    expect_findings: 0

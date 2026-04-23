@@ -1,0 +1,24 @@
+id: raven-ast-py-os-system-001
+name: os.system with Dynamic String
+description: |
+  Detects os.system() called with an f-string or other dynamic string,
+  which can lead to command injection.
+severity: critical
+category: command-injection
+confidence: high
+languages: [python]
+message: |
+  os.system() with dynamic strings is dangerous. Use subprocess.run()
+  with a list of arguments and shell=False instead.
+patterns:
+  - type: ast-query
+    query: |
+      (call
+        function: (attribute
+          object: (identifier) @obj (#eq? @obj "os")
+          attribute: (identifier) @attr (#eq? @attr "system"))
+        arguments: (argument_list (string) @vuln))
+    where:
+      - not-constant: true
+references:
+  - https://docs.python.org/3/library/os.html#os.system

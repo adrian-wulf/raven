@@ -1,0 +1,13 @@
+rule_id: raven-ast-java-runtime-001
+positive:
+  - name: Runtime.exec with user input
+    source: |
+      Runtime.getRuntime().exec(userCmd);
+    language: java
+    expect_findings: 1
+negative:
+  - name: Runtime.exec with constant
+    source: |
+      Runtime.getRuntime().exec("ls -la");
+    language: java
+    expect_findings: 0

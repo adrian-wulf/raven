@@ -1,0 +1,18 @@
+rule_id: raven-ast-js-react-innerhtml-001
+positive:
+  - name: dangerouslySetInnerHTML with user data
+    source: |
+      <div dangerouslySetInnerHTML={{__html: userInput}} />
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: no dangerouslySetInnerHTML
+    source: |
+      <div>{userInput}</div>
+    language: javascript
+    expect_findings: 0
+  - name: innerHTML instead
+    source: |
+      <div className="safe">hello</div>
+    language: javascript
+    expect_findings: 0
