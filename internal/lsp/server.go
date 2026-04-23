@@ -400,7 +400,12 @@ func (s *Server) handleDidChange(msg *Message) error {
 	}
 
 	if len(params.ContentChanges) > 0 {
-		s.documents[params.TextDocument.URI] = params.ContentChanges[0].Text
+		content := params.ContentChanges[0].Text
+		s.documents[params.TextDocument.URI] = content
+		// Scan on change for small files (<1000 lines) to provide real-time feedback
+		if strings.Count(content, "\n") < 1000 {
+			return s.scanDocument(params.TextDocument.URI, content, params.TextDocument.Version)
+		}
 	}
 
 	return nil
@@ -451,6 +456,14 @@ func (s *Server) scanDocument(uri, content string, version int) error {
 		lang = "rust"
 	case ".java":
 		lang = "java"
+	case ".kt":
+		lang = "kotlin"
+	case ".cs":
+		lang = "csharp"
+	case ".rb":
+		lang = "ruby"
+	case ".swift":
+		lang = "swift"
 	}
 
 	// Filter rules by language
@@ -519,19 +532,43 @@ func (s *Server) handleCodeAction(msg *Message) error {
 			continue
 		}
 
-		actions = append(actions, CodeAction{
-			Title: fmt.Sprintf("🔒 Fix %s", diag.Code),
-			Kind:  "quickfix",
-			Command: &Command{
-				Title:   "Fix with Raven",
-				Command: "raven.fix",
-				Arguments: []interface{}{
-					params.TextDocument.URI,
-					diag.Range.Start.Line,
-					diag.Code,
+		// Find the rule and its fix
+		var fix *engine.Fix
+		for _, rule := range s.rules {
+			if rule.ID == diag.Code && rule.Fix != nil {
+				fix = rule.Fix
+				break
+			}
+		}
+
+		if fix != nil {
+			actions = append(actions, CodeAction{
+				Title: fmt.Sprintf("🔒 %s", fix.Description),
+				Kind:  "quickfix",
+				Edit: &WorkspaceEdit{
+					Changes: map[string][]TextEdit{
+						params.TextDocument.URI: {{
+							Range:   diag.Range,
+							NewText: fix.Replace,
+						}},
+					},
 				},
-			},
-		})
+			})
+		} else {
+			actions = append(actions, CodeAction{
+				Title: fmt.Sprintf("🔒 Fix %s", diag.Code),
+				Kind:  "quickfix",
+				Command: &Command{
+					Title:   "Fix with Raven",
+					Command: "raven.fix",
+					Arguments: []interface{}{
+						params.TextDocument.URI,
+						diag.Range.Start.Line,
+						diag.Code,
+					},
+				},
+			})
+		}
 	}
 
 	resp := &Response{
