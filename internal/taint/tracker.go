@@ -360,6 +360,12 @@ func (t *Tracker) isTaintedExpr(n *sitter.Node, source []byte, sourcePatterns []
 					return true
 				}
 			}
+			// Sanitizer check: if this is a sanitizer call, the result is safe
+			for _, san := range t.config.Sanitizers {
+				if strings.Contains(fnText, san) || strings.Contains(san, fnText) {
+					return false
+				}
+			}
 		}
 		// Check if any argument is tainted (for propagation)
 		args := n.ChildByFieldName("arguments")

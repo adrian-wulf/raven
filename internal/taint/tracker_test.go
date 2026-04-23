@@ -235,3 +235,37 @@ func writeFile(path string, data []byte) error {
 	f.Close()
 	return err
 }
+
+// TestSanitizerFiltering checks that sanitized input doesn't trigger findings
+func TestSanitizerFiltering(t *testing.T) {
+	tracker := NewTracker("javascript")
+	code := []byte(`
+function handler(req, res) {
+	var userId = DOMPurify.sanitize(req.body.id);
+	db.query("SELECT * FROM users WHERE id = " + userId);
+}
+`)
+	path := t.TempDir() + "/sanitized.js"
+	if err := writeFile(path, code); err != nil {
+		t.Fatalf("write file: %v", err)
+	}
+
+	rules := []RuleInfo{{
+		ID:       "js-sqli-san",
+		Name:     "SQL Injection (Sanitized)",
+		Severity: "high",
+		Patterns: []RulePattern{{
+			Type:    "taint",
+			Sources: []string{"req.body", "req.params", "req.query"},
+			Sinks:   []string{".query", ".execute"},
+		}},
+	}}
+
+	findings, err := tracker.ScanFile(path, rules)
+	if err != nil {
+		t.Fatalf("ScanFile failed: %v", err)
+	}
+	if len(findings) != 0 {
+		t.Errorf("expected 0 findings for sanitized input, got %d", len(findings))
+	}
+}

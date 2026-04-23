@@ -23,10 +23,11 @@ type Rule struct {
 	Sinks    []SinkPattern   `yaml:"sinks"`
 }
 
-// LanguageConfig holds taint sources and sinks for a language
+// LanguageConfig holds taint sources, sinks, and sanitizers for a language
 type LanguageConfig struct {
-	Sources []SourcePattern
-	Sinks   []SinkPattern
+	Sources    []SourcePattern
+	Sinks      []SinkPattern
+	Sanitizers []string // function names that sanitize tainted input
 }
 
 // DefaultConfigs provides built-in taint configs per language
@@ -62,6 +63,14 @@ var DefaultConfigs = map[string]LanguageConfig{
 			{Name: "cp.spawn", Pattern: "cp.spawn"},
 			{Name: "fetch", Pattern: "fetch("},
 		},
+		Sanitizers: []string{
+			"DOMPurify.sanitize",
+			"escapeHtml",
+			"htmlspecialchars",
+			"encodeURIComponent",
+			"he.encode",
+			"validator.escape",
+		},
 	},
 	"typescript": {
 		Sources: []SourcePattern{
@@ -77,6 +86,10 @@ var DefaultConfigs = map[string]LanguageConfig{
 			{Name: "innerHTML", Pattern: ".innerHTML"},
 			{Name: "exec", Pattern: ".exec"},
 			{Name: "document.write", Pattern: "document.write"},
+		},
+		Sanitizers: []string{
+			"DOMPurify.sanitize",
+			"escapeHtml",
 		},
 	},
 	"python": {
@@ -104,6 +117,12 @@ var DefaultConfigs = map[string]LanguageConfig{
 			{Name: "render_template_string", Pattern: "render_template_string"},
 			{Name: "pickle.loads", Pattern: "pickle.loads"},
 		},
+		Sanitizers: []string{
+			"bleach.clean",
+			"html.escape",
+			"urllib.parse.quote",
+			"sqlalchemy.text",
+		},
 	},
 	"go": {
 		Sources: []SourcePattern{
@@ -125,6 +144,11 @@ var DefaultConfigs = map[string]LanguageConfig{
 			{Name: "os/exec.Command", Pattern: "os/exec.Command"},
 			{Name: "template.Parse", Pattern: "template.Parse"},
 			{Name: "template.Execute", Pattern: "template.Execute"},
+		},
+		Sanitizers: []string{
+			"html.EscapeString",
+			"url.QueryEscape",
+			"strconv.Quote",
 		},
 	},
 }
