@@ -84,6 +84,9 @@ func (s *Scanner) Scan() (*Result, error) {
 			cached := s.config.Cache.Get(file)
 			var cachedFindings []Finding
 			json.Unmarshal(cached, &cachedFindings)
+			if cachedFindings == nil {
+				cachedFindings = []Finding{}
+			}
 			mu.Lock()
 			result.Findings = append(result.Findings, cachedFindings...)
 			mu.Unlock()
@@ -171,7 +174,7 @@ func recordsToFindings(records []baseline.Record, source []Finding) []Finding {
 
 func deduplicate(findings []Finding) []Finding {
 	seen := make(map[string]bool)
-	var unique []Finding
+	unique := []Finding{}
 	for _, f := range findings {
 		key := fmt.Sprintf("%s:%d:%s", f.File, f.Line, f.RuleID)
 		if !seen[key] {
@@ -380,7 +383,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 	isTestFile := isKnownTestFile(path)
 
 	lang := DetectLanguage(path)
-	var findings []Finding
+	findings := []Finding{}
 
 	// Phase 1: Regex-based scanning
 	for _, rule := range rules {
@@ -596,7 +599,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 
 	// Filter out suppressed findings
 	if s.config.Suppressions != nil {
-		var filtered []Finding
+		filtered := []Finding{}
 		for _, f := range findings {
 			if !s.config.Suppressions.IsSuppressed(f.File, f.Line, f.RuleID) {
 				filtered = append(filtered, f)
