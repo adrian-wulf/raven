@@ -1,0 +1,18 @@
+id: raven-fw-spring-008
+name: Spring Boot Missing HTTPS Redirect
+description: |
+  Detects Spring Boot applications without HTTPS redirect configuration.
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  Configure HTTPS redirect or HSTS headers to enforce secure connections.
+patterns:
+  - type: regex
+    pattern: "server\\.port\\s*=\\s*8080"
+  - type: regex
+    pattern: "server\\.ssl\\.enabled\\s*=\\s*false"
+references:
+  - https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.webserver.configure-ssl

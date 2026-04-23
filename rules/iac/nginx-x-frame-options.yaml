@@ -1,0 +1,14 @@
+id: raven-iac-nginx-004
+name: Nginx Missing X-Frame-Options
+severity: medium
+category: clickjacking
+confidence: medium
+languages: [nginx]
+message: |
+  Add X-Frame-Options header to prevent clickjacking attacks.
+patterns:
+  - type: regex
+    pattern: "server"
+    where:
+      - not-sanitized:
+          - X-Frame-Options

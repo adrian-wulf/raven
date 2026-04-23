@@ -1,0 +1,13 @@
+id: raven-kotlin-intent-001
+name: Kotlin Unsafe Intent Parcelable
+description: |
+  Detects getParcelableExtra without type checking which can lead to intent injection.
+severity: medium
+category: injection
+confidence: medium
+languages: [kotlin]
+message: |
+  getParcelableExtra without type validation can be exploited. Validate the parcelable type.
+patterns:
+  - type: regex
+    pattern: "getParcelableExtra"

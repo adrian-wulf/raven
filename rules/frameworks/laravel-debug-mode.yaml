@@ -1,0 +1,12 @@
+id: raven-fw-laravel-006
+name: Laravel Debug Mode Enabled
+severity: high
+category: misconfiguration
+confidence: high
+languages: [php]
+frameworks: [laravel]
+message: |
+  APP_DEBUG=true exposes sensitive information. Always disable in production.
+patterns:
+  - type: regex
+    pattern: "APP_DEBUG\\s*=\\s*true"

@@ -1,0 +1,15 @@
+id: raven-iac-tf-007
+name: Terraform IAM Wildcard Permissions
+description: |
+  Detects IAM policies with * wildcard in Action or Resource.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [terraform]
+message: |
+  IAM policy uses wildcard (*) which violates least privilege. Specify exact actions/resources.
+patterns:
+  - type: regex
+    pattern: "Action\\s*=\\s*\\[\"\\*\\\"\\]"
+  - type: regex
+    pattern: "Resource\\s*=\\s*\\[\"\\*\\\"\\]"

@@ -1,0 +1,12 @@
+id: raven-fw-react-005
+name: React eval in Component
+severity: critical
+category: code-injection
+confidence: high
+languages: [javascript, typescript]
+frameworks: [react]
+message: |
+  eval() in React component is extremely dangerous. Never execute dynamic code.
+patterns:
+  - type: regex
+    pattern: "eval\\s*\\("

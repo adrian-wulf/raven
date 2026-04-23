@@ -1,0 +1,13 @@
+id: raven-gen-log-002
+name: Sensitive Data in Log Output
+description: |
+  Detects logging of passwords, tokens, or PII which can leak in logs.
+severity: high
+category: info-disclosure
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Never log sensitive data! Logs are often shipped to SIEMs and stored indefinitely.
+patterns:
+  - type: regex
+    pattern: "(log|print|console|fmt\\.Print).*(password|token|secret|key|ssn|credit|card)"

@@ -1,0 +1,11 @@
+id: raven-iac-k8s-006
+name: Kubernetes Container Uses latest Tag
+severity: medium
+category: supply-chain
+confidence: high
+languages: [yaml]
+message: |
+  Pin container images to specific digests or versions, not 'latest'.
+patterns:
+  - type: regex
+    pattern: "image:\\s+[^:]*:latest"

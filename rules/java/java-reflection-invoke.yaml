@@ -1,0 +1,15 @@
+id: raven-java-reflection-001
+name: Java Reflection with User Input
+description: |
+  Detects reflection (Class.forName, Method.invoke) with user-controlled class/method names.
+severity: high
+category: code-injection
+confidence: high
+languages: [java]
+message: |
+  Reflection with user input can invoke arbitrary methods. Whitelist allowed classes/methods.
+patterns:
+  - type: regex
+    pattern: "Class\\.forName\\s*\\(\\s*[^)]*(request|req|param|input|args)"
+  - type: regex
+    pattern: "getMethod\\s*\\(\\s*[^)]*(request|req|param|input|args)"

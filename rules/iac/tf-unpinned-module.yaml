@@ -1,0 +1,16 @@
+id: raven-iac-tf-010
+name: Terraform Unpinned Module Version
+description: |
+  Detects Terraform modules without pinned version.
+severity: medium
+category: supply-chain
+confidence: medium
+languages: [terraform]
+message: |
+  Pin module versions to prevent unexpected breaking changes.
+patterns:
+  - type: regex
+    pattern: "source\\s*=\\s*\"[^\"]+\""
+    where:
+      - not-sanitized:
+          - version

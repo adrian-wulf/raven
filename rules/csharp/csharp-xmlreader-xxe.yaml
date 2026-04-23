@@ -1,0 +1,16 @@
+id: raven-csharp-xml-001
+name: C# XMLReader XXE
+description: |
+  Detects XmlReader without DTD processing disabled which enables XXE.
+severity: critical
+category: xxe
+confidence: high
+languages: [csharp]
+message: |
+  XmlReader without DtdProcessing.Prohibit enables XXE! Disable DTD processing.
+patterns:
+  - type: regex
+    pattern: "XmlReader\\.Create"
+    where:
+      - not-sanitized:
+          - DtdProcessing

@@ -1,0 +1,11 @@
+id: raven-iac-gh-007
+name: GitHub Actions Cache Poisoning Risk
+severity: medium
+category: supply-chain
+confidence: medium
+languages: [yaml]
+message: |
+  Cache keys based on attacker-controlled files (package.json) can be poisoned. Add hash of lockfile.
+patterns:
+  - type: regex
+    pattern: "actions/cache"

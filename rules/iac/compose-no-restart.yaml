@@ -1,0 +1,14 @@
+id: raven-iac-compose-004
+name: Docker Compose Missing Restart Policy
+severity: low
+category: misconfiguration
+confidence: low
+languages: [yaml]
+message: |
+  Add restart policy to containers for production resilience.
+patterns:
+  - type: regex
+    pattern: "services:"
+    where:
+      - not-sanitized:
+          - restart

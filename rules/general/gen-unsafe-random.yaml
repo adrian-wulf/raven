@@ -1,0 +1,17 @@
+id: raven-gen-random-001
+name: Non-Cryptographic Random for Security
+description: |
+  Detects use of non-cryptographic PRNG for security-sensitive operations.
+severity: high
+category: cryptography
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Non-crypto random is predictable! Use crypto-secure RNG for tokens, IDs, and passwords.
+patterns:
+  - type: regex
+    pattern: "Math\\.random\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "rand\\s*\\(\\s*\\)"
+  - type: regex
+    pattern: "Random\\s*\\(\\s*\\)"

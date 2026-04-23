@@ -1,0 +1,11 @@
+id: raven-iac-k8s-010
+name: Kubernetes Allow Privilege Escalation
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  allowPrivilegeEscalation: true allows processes to gain more privileges. Set to false.
+patterns:
+  - type: regex
+    pattern: "allowPrivilegeEscalation:\\s*true"

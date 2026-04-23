@@ -1,0 +1,18 @@
+id: raven-fw-spring-005
+name: Spring Boot Insecure JWT Config
+description: |
+  Detects JWT configuration with weak secrets or disabled signature verification.
+severity: critical
+category: auth
+confidence: high
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  Weak JWT configuration detected. Use strong secrets (256+ bits) and never disable signature verification.
+patterns:
+  - type: regex
+    pattern: "jwt\\.secret\\s*=\\s*['\"][^'\"]{0,31}['\"]"
+  - type: regex
+    pattern: "signature-algorithm:\\s*none"
+references:
+  - https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/

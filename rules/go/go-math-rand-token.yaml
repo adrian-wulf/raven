@@ -1,0 +1,15 @@
+id: raven-go-mathrand-001
+name: Go math/rand for Security Tokens
+description: |
+  Detects math/rand used for generating security tokens which is not cryptographically secure.
+severity: high
+category: cryptography
+confidence: high
+languages: [go]
+message: |
+  math/rand is predictable! Use crypto/rand for tokens, nonces, and passwords.
+patterns:
+  - type: regex
+    pattern: "rand\\.Intn\\s*\\(.*token"
+  - type: regex
+    pattern: "rand\\.Intn\\s*\\(.*password"

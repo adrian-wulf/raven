@@ -1,0 +1,11 @@
+id: raven-py-batch-013
+name: Python Security Pattern 13
+severity: medium
+category: injection
+confidence: medium
+languages: [python]
+message: |
+  Potential security issue detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "dangerous_pattern_13"

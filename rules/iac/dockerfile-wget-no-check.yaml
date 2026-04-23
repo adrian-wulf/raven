@@ -1,0 +1,15 @@
+id: raven-iac-docker-010
+name: Dockerfile wget Without Certificate Check
+severity: high
+category: misconfiguration
+confidence: high
+languages: [dockerfile]
+message: |
+  wget --no-check-certificate disables TLS verification. Never use in production.
+patterns:
+  - type: regex
+    pattern: "wget.*--no-check-certificate"
+  - type: regex
+    pattern: "curl.*-k\\s"
+  - type: regex
+    pattern: "curl.*--insecure"

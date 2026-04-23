@@ -1,0 +1,11 @@
+id: raven-csharp-batch-008
+name: C# Security Pattern 8
+severity: medium
+category: injection
+confidence: medium
+languages: [csharp]
+message: |
+  Potential security issue detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "dangerous_pattern_8"

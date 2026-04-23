@@ -1,0 +1,13 @@
+id: raven-ruby-open-uri-001
+name: Ruby OpenURI SSRF
+description: |
+  Detects open() or OpenURI with user-controlled URLs.
+severity: high
+category: ssrf
+confidence: high
+languages: [ruby]
+message: |
+  open() with user input can access internal services (SSRF). Validate and whitelist URLs.
+patterns:
+  - type: regex
+    pattern: "open\\s*\\(\\s*[^)]*params"

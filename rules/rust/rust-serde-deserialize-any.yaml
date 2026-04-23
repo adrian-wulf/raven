@@ -1,0 +1,13 @@
+id: raven-rust-serde-001
+name: Rust Serde Deserialize Any
+description: |
+  Detects serde deserialize to serde_json::Value or untagged enums which can be exploited.
+severity: low
+category: deserialization
+confidence: low
+languages: [rust]
+message: |
+  Deserializing to untyped Value loses type safety. Use strongly typed structs.
+patterns:
+  - type: regex
+    pattern: "serde_json::from_str::<Value>"

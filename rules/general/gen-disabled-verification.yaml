@@ -1,0 +1,19 @@
+id: raven-gen-verify-001
+name: Disabled Security Verification
+description: |
+  Detects code disabling SSL verification, signature checks, or security validations.
+severity: critical
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Disabling security verification is dangerous! Never do this in production.
+patterns:
+  - type: regex
+    pattern: "verify\\s*=\\s*False"
+  - type: regex
+    pattern: "verify_ssl\\s*=\\s*False"
+  - type: regex
+    pattern: "InsecureSkipVerify\\s*=\\s*true"
+  - type: regex
+    pattern: "rejectUnauthorized\\s*=\\s*false"

@@ -1,0 +1,13 @@
+id: raven-go-tls-version-001
+name: Go TLS 1.0 or 1.1
+description: |
+  Detects TLS configurations allowing deprecated TLS 1.0 or 1.1 protocols.
+severity: high
+category: cryptography
+confidence: high
+languages: [go]
+message: |
+  TLS 1.0/1.1 are deprecated and insecure. Use tls.VersionTLS12 as minimum.
+patterns:
+  - type: regex
+    pattern: "VersionTLS10|VersionTLS11"

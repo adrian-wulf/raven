@@ -1,0 +1,11 @@
+id: raven-iac-compose-005
+name: Docker Compose Root User
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  user: root in docker-compose runs container as root. Use non-root user.
+patterns:
+  - type: regex
+    pattern: "user:\\s*root"

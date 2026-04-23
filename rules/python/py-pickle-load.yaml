@@ -1,0 +1,13 @@
+id: raven-py-pickle-001
+name: Python Pickle Deserialization
+description: |
+  Detects pickle.load or pickle.loads with untrusted data which is RCE.
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+message: |
+  pickle.loads() executes arbitrary code! Use JSON or msgpack for untrusted data.
+patterns:
+  - type: regex
+    pattern: "pickle\\.load[s]?\\s*\\("

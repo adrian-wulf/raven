@@ -1,0 +1,16 @@
+id: raven-iac-tf-008
+name: Terraform S3 Without Logging
+description: |
+  Detects S3 buckets without access logging enabled.
+severity: low
+category: logging
+confidence: low
+languages: [terraform]
+message: |
+  Enable S3 access logging for security auditing and incident response.
+patterns:
+  - type: regex
+    pattern: "aws_s3_bucket"
+    where:
+      - not-sanitized:
+          - logging

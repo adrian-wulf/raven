@@ -1,0 +1,13 @@
+id: raven-java-script-001
+name: Java ScriptEngine eval
+description: |
+  Detects Java ScriptEngine.eval() or Nashorn JavaScript execution with user input.
+severity: critical
+category: code-injection
+confidence: high
+languages: [java]
+message: |
+  ScriptEngine.eval() executes arbitrary code! Never pass user input to script engines.
+patterns:
+  - type: regex
+    pattern: "\\.eval\\s*\\(\\s*[^)]*(request|req|param|input|args)"

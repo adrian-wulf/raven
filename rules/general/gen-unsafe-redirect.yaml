@@ -1,0 +1,15 @@
+id: raven-gen-redirect-001
+name: Open Redirect Vulnerability
+description: |
+  Detects redirects using user-controlled URLs without validation.
+severity: medium
+category: open-redirect
+confidence: medium
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Redirect with user input can be used for phishing. Validate against allowlist.
+patterns:
+  - type: regex
+    pattern: "redirect.*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+  - type: regex
+    pattern: "location\\s*=\\s*[^;]*\\+"

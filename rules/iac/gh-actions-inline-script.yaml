@@ -1,0 +1,14 @@
+id: raven-iac-gh-004
+name: GitHub Actions Inline Script Injection
+severity: high
+category: injection
+confidence: medium
+languages: [yaml]
+message: |
+  User input in inline script can inject commands. Use action inputs or sanitize.
+patterns:
+  - type: regex
+    pattern: "run:\\s*\\|"
+    where:
+      - not-sanitized:
+          - env

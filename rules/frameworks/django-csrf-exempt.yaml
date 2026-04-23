@@ -1,0 +1,12 @@
+id: raven-fw-django-003
+name: Django CSRF Exempt Without Reason
+severity: high
+category: csrf
+confidence: medium
+languages: [python]
+frameworks: [django]
+message: |
+  @csrf_exempt disables CSRF protection. Only use for API endpoints with token auth.
+patterns:
+  - type: regex
+    pattern: "@csrf_exempt"

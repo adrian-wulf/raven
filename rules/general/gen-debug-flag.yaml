@@ -1,0 +1,17 @@
+id: raven-gen-debug-001
+name: Debug Mode Enabled in Production Code
+description: |
+  Detects debug flags or verbose logging enabled.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Debug mode exposes internal information. Disable in production builds.
+patterns:
+  - type: regex
+    pattern: "debug\\s*[:=]\\s*true"
+  - type: regex
+    pattern: "DEBUG\\s*[:=]\\s*True"
+  - type: regex
+    pattern: "verbose\\s*[:=]\\s*true"

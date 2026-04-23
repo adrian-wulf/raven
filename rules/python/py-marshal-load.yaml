@@ -1,0 +1,13 @@
+id: raven-py-marshal-001
+name: Python Marshal Deserialization
+description: |
+  Detects marshal.load or marshal.loads which can execute arbitrary code.
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+message: |
+  marshal.loads() executes arbitrary Python code! Never use with untrusted data.
+patterns:
+  - type: regex
+    pattern: "marshal\\.load[s]?\\s*\\("

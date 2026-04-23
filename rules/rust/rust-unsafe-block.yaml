@@ -1,0 +1,13 @@
+id: raven-rust-unsafe-002
+name: Rust Unsafe Block with Raw Pointers
+description: |
+  Detects unsafe blocks using raw pointers which can cause memory corruption.
+severity: high
+category: memory-safety
+confidence: medium
+languages: [rust]
+message: |
+  Raw pointers in unsafe blocks can cause UAF and buffer overflows. Minimize unsafe code.
+patterns:
+  - type: regex
+    pattern: "unsafe\\s*\\{[^}]*\\*const|\\*mut"

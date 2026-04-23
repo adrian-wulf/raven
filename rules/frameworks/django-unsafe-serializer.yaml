@@ -1,0 +1,14 @@
+id: raven-fw-django-004
+name: Django Unsafe Deserialization
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+frameworks: [django]
+message: |
+  Pickle or yaml.load with user data is RCE. Use JSON or yaml.safe_load.
+patterns:
+  - type: regex
+    pattern: "pickle\\.loads\\s*\\(\\s*[^)]*(request|body|data)"
+  - type: regex
+    pattern: "yaml\\.load\\s*\\(\\s*[^)]*(request|body|data)"

@@ -1,0 +1,11 @@
+id: raven-iac-k8s-011
+name: Kubernetes Writable Root Filesystem
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [yaml]
+message: |
+  readOnlyRootFilesystem: false allows writing to root FS. Set to true for immutable containers.
+patterns:
+  - type: regex
+    pattern: "readOnlyRootFilesystem:\\s*false"

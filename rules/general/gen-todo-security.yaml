@@ -1,0 +1,13 @@
+id: raven-gen-todo-001
+name: Security TODO Comment
+description: |
+  Detects TODO/FIXME comments mentioning security which may indicate unfinished fixes.
+severity: low
+category: best-practice
+confidence: low
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Security TODO found! Unfinished security fixes are vulnerabilities waiting to be exploited.
+patterns:
+  - type: regex
+    pattern: "(?i)(TODO|FIXME|HACK).*(security|auth|encrypt|hash|sanitize|validate)"

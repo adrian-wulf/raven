@@ -1,0 +1,15 @@
+id: raven-ruby-eval-001
+name: Ruby eval with User Input
+description: |
+  Detects eval(), instance_eval(), or class_eval with user input.
+severity: critical
+category: code-injection
+confidence: high
+languages: [ruby]
+message: |
+  eval() with user input is arbitrary code execution! Never pass untrusted data to eval().
+patterns:
+  - type: regex
+    pattern: "eval\\s*\\(\\s*[^)]*params"
+  - type: regex
+    pattern: "instance_eval\\s*\\(\\s*[^)]*params"

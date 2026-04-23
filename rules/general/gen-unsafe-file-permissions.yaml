@@ -1,0 +1,15 @@
+id: raven-gen-perm-001
+name: Overly Permissive File Permissions
+description: |
+  Detects file creation with world-writable or world-executable permissions.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  World-writable files (777) allow any user to modify them. Use restrictive permissions.
+patterns:
+  - type: regex
+    pattern: "0o?777"
+  - type: regex
+    pattern: "0o?666"

@@ -1,0 +1,13 @@
+id: raven-iac-env-003
+name: .env File AWS Credentials
+severity: critical
+category: secrets
+confidence: high
+languages: [env]
+message: |
+  AWS credentials in .env file! Use IAM roles or AWS Secrets Manager.
+patterns:
+  - type: regex
+    pattern: "^AWS_ACCESS_KEY_ID=.+"
+  - type: regex
+    pattern: "^AWS_SECRET_ACCESS_KEY=.+"

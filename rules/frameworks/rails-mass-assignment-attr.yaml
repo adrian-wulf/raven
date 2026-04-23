@@ -1,0 +1,12 @@
+id: raven-fw-rails-006
+name: Rails Dangerous Attribute Assignment
+severity: high
+category: mass-assignment
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Direct assignment of params to model attributes bypasses strong parameters.
+patterns:
+  - type: regex
+    pattern: "@\\w+\\.\\w+\\s*=\\s*params"

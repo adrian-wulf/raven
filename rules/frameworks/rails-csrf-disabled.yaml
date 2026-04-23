@@ -1,0 +1,12 @@
+id: raven-fw-rails-003
+name: Rails CSRF Protection Disabled
+severity: critical
+category: csrf
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  skip_before_action :verify_authenticity_token disables CSRF. Never do this globally.
+patterns:
+  - type: regex
+    pattern: "skip_before_action\\s*:verify_authenticity_token"

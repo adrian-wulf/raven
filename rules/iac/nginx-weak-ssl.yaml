@@ -1,0 +1,13 @@
+id: raven-iac-nginx-002
+name: Nginx Weak SSL Configuration
+severity: high
+category: cryptography
+confidence: high
+languages: [nginx]
+message: |
+  Weak SSL protocols (TLSv1, TLSv1.1) or ciphers detected. Use TLSv1.2+ only.
+patterns:
+  - type: regex
+    pattern: "ssl_protocols\\s+.*TLSv1(?!\\.2)"
+  - type: regex
+    pattern: "ssl_ciphers\\s+.*LOW|EXPORT|MD5|RC4"

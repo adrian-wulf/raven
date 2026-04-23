@@ -1,0 +1,13 @@
+id: raven-go-shell-001
+name: Go Shell Command Execution
+description: |
+  Detects exec.Command with /bin/sh -c which enables shell injection.
+severity: high
+category: command-injection
+confidence: high
+languages: [go]
+message: |
+  exec.Command("/bin/sh", "-c", ...) is shell injection! Use exec.Command with array args.
+patterns:
+  - type: regex
+    pattern: "exec\\.Command\\s*\\(\\s*[`\"]/bin/sh['\"]\\s*,\\s*[`\"]-c['\"]"

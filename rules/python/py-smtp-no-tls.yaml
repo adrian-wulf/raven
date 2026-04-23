@@ -1,0 +1,16 @@
+id: raven-py-smtp-001
+name: Python SMTP Without TLS
+description: |
+  Detects smtplib.SMTP without starttls() which sends emails unencrypted.
+severity: medium
+category: cryptography
+confidence: high
+languages: [python]
+message: |
+  SMTP without TLS sends emails in plaintext. Call starttls() after connecting.
+patterns:
+  - type: regex
+    pattern: "smtplib\\.SMTP\\s*\\("
+    where:
+      - not-sanitized:
+          - starttls

@@ -1,0 +1,15 @@
+id: raven-iac-docker-007
+name: Dockerfile curl | bash Pattern
+severity: high
+category: supply-chain
+confidence: high
+languages: [dockerfile]
+message: |
+  curl | bash is dangerous! Verify checksums before executing remote scripts.
+patterns:
+  - type: regex
+    pattern: "curl.*\\|.*bash"
+  - type: regex
+    pattern: "curl.*\\|.*sh"
+  - type: regex
+    pattern: "wget.*\\|.*bash"

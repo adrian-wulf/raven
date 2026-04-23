@@ -1,0 +1,19 @@
+id: raven-gen-sql-001
+name: SQL Query String Formatting
+description: |
+  Detects SQL queries built with string formatting, concatenation, or interpolation.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  String formatting in SQL queries is injection! Use parameterized queries.
+patterns:
+  - type: regex
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*\\+"
+  - type: regex
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*\\$\\{"
+  - type: regex
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*%s"
+  - type: regex
+    pattern: "(SELECT|INSERT|UPDATE|DELETE).*f['\"]"

@@ -1,0 +1,13 @@
+id: raven-iac-docker-001
+name: Dockerfile Uses latest Tag
+severity: low
+category: supply-chain
+confidence: high
+languages: [dockerfile]
+message: |
+  Avoid 'latest' tag in base images. Pin to specific version.
+patterns:
+  - type: regex
+    pattern: "FROM\\s+[^:]*:latest"
+references:
+  - https://docs.docker.com/develop/dev-best-practices/dockerfile_best-practices/

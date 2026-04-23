@@ -1,0 +1,11 @@
+id: raven-iac-nginx-005
+name: Nginx Large Buffer Size
+severity: medium
+category: dos
+confidence: medium
+languages: [nginx]
+message: |
+  Large client_body_buffer_size can enable DoS. Keep reasonable limits.
+patterns:
+  - type: regex
+    pattern: "client_body_buffer_size\\s+[^;]*[mM]"

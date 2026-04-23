@@ -1,0 +1,13 @@
+id: raven-iac-tf-012
+name: Terraform Lambda Public URL
+description: |
+  Detects Lambda functions with public URL enabled without auth.
+severity: high
+category: auth
+confidence: high
+languages: [terraform]
+message: |
+  Lambda function URL is public. Add authorization_type = AWS_IAM.
+patterns:
+  - type: regex
+    pattern: "authorization_type\\s*=\\s*\"NONE\""

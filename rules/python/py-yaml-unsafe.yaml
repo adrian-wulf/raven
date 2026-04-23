@@ -1,0 +1,17 @@
+id: raven-py-yaml-002
+name: Python Unsafe YAML Load
+description: |
+  Detects yaml.load without Loader=SafeLoader which can execute arbitrary code.
+severity: critical
+category: deserialization
+confidence: high
+languages: [python]
+message: |
+  yaml.load() without SafeLoader is RCE! Use yaml.safe_load() instead.
+patterns:
+  - type: regex
+    pattern: "yaml\\.load\\s*\\("
+    where:
+      - not-sanitized:
+          - SafeLoader
+          - safe_load

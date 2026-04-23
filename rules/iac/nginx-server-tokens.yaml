@@ -1,0 +1,11 @@
+id: raven-iac-nginx-001
+name: Nginx Exposes Version
+severity: low
+category: info-disclosure
+confidence: high
+languages: [nginx]
+message: |
+  server_tokens on exposes Nginx version. Set server_tokens off.
+patterns:
+  - type: regex
+    pattern: "server_tokens\\s+on"

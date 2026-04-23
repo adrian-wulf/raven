@@ -1,0 +1,11 @@
+id: raven-rust-batch-010
+name: Rust Security Pattern 10
+severity: medium
+category: injection
+confidence: medium
+languages: [rust]
+message: |
+  Potential security issue detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "dangerous_pattern_10"

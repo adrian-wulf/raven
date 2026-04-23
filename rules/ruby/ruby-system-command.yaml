@@ -1,0 +1,15 @@
+id: raven-ruby-system-001
+name: Ruby System Command with User Input
+description: |
+  Detects system(), exec(), or backticks with user-controlled strings.
+severity: critical
+category: command-injection
+confidence: high
+languages: [ruby]
+message: |
+  system() with user input is command injection! Use array form: system('cmd', arg1, arg2).
+patterns:
+  - type: regex
+    pattern: "system\\s*\\(\\s*['\"].*#\\{[^}]+\\}"
+  - type: regex
+    pattern: "`[^`]*#\\{[^}]+\\}"

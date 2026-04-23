@@ -1,0 +1,13 @@
+id: raven-swift-load-001
+name: Swift UIWebView loadRequest
+description: |
+  Detects deprecated UIWebView which has known security issues. Use WKWebView.
+severity: medium
+category: best-practice
+confidence: high
+languages: [swift]
+message: |
+  UIWebView is deprecated and has security issues. Migrate to WKWebView.
+patterns:
+  - type: regex
+    pattern: "UIWebView"

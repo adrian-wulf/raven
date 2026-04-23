@@ -1,0 +1,13 @@
+id: raven-go-loopvar-001
+name: Go Goroutine Loop Variable Capture
+description: |
+  Detects goroutines inside loops capturing loop variables by reference (pre-Go 1.22 bug).
+severity: medium
+category: bug
+confidence: medium
+languages: [go]
+message: |
+  Loop variable captured by reference in goroutine. Pass as parameter or upgrade to Go 1.22+.
+patterns:
+  - type: regex
+    pattern: "for\\s+.*range\\s+.*\\{[^}]*go\\s+func\\s*\\(\\s*\\)"

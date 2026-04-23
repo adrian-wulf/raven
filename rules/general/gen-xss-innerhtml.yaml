@@ -1,0 +1,15 @@
+id: raven-gen-xss-002
+name: XSS via innerHTML or Equivalent
+description: |
+  Detects assignment to innerHTML or similar properties with user input.
+severity: critical
+category: xss
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  innerHTML with user input is XSS! Use textContent or sanitize with DOMPurify.
+patterns:
+  - type: regex
+    pattern: "innerHTML\\s*=\\s*[^;]*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+  - type: regex
+    pattern: "innerHTML\\s*=\\s*[`\"'].*\\$\\{"

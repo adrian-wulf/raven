@@ -1,0 +1,15 @@
+id: raven-fw-django-002
+name: Django Raw SQL Without Params
+severity: critical
+category: sql-injection
+confidence: high
+languages: [python]
+frameworks: [django]
+message: |
+  Raw SQL without parameterization is SQL injection. Use params argument.
+patterns:
+  - type: regex
+    pattern: "raw\\s*\\(\\s*['\"].*%s"
+    where:
+      - not-sanitized:
+          - params

@@ -1,0 +1,13 @@
+id: raven-rust-panic-001
+name: Rust panic with User Input
+description: |
+  Detects panic! with user-controlled strings which can leak info or cause DoS.
+severity: medium
+category: info-disclosure
+confidence: medium
+languages: [rust]
+message: |
+  panic! with user input can leak paths/source. Use proper error handling with Result.
+patterns:
+  - type: regex
+    pattern: "panic!\\s*\\(\\s*[^)]*(req|request|params|input|data)"

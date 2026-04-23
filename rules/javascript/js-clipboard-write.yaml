@@ -1,0 +1,13 @@
+id: raven-js-clipboard-001
+name: Clipboard API Without User Gesture
+description: |
+  Detects clipboard.writeText without user interaction which may be abused.
+severity: low
+category: privacy
+confidence: low
+languages: [javascript, typescript]
+message: |
+  Clipboard access should only happen on user gesture (click). Auto-write is suspicious.
+patterns:
+  - type: regex
+    pattern: "navigator\\.clipboard\\.writeText"

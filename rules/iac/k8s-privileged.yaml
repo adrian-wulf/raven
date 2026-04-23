@@ -1,0 +1,11 @@
+id: raven-iac-k8s-001
+name: Kubernetes Privileged Container
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  privileged: true gives container full host access. Remove unless absolutely necessary.
+patterns:
+  - type: regex
+    pattern: "privileged:\\s*true"

@@ -1,0 +1,15 @@
+id: raven-fw-vue-002
+name: Vue v-html with Dynamic Content
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+frameworks: [vue]
+message: |
+  v-html with dynamic content bypasses Vue's auto-escaping. Sanitize with DOMPurify.
+patterns:
+  - type: regex
+    pattern: "v-html\\s*=\\s*['\"]"
+    where:
+      - not-sanitized:
+          - DOMPurify

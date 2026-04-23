@@ -1,0 +1,13 @@
+id: raven-gen-stack-001
+name: Stack Trace Exposure
+description: |
+  Detects error handling that may expose stack traces to users.
+severity: medium
+category: info-disclosure
+confidence: medium
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Stack traces leak internal paths and code structure. Return generic errors to users.
+patterns:
+  - type: regex
+    pattern: "(error|exception|stack).*(message|trace|detail)"

@@ -1,0 +1,15 @@
+id: raven-php-url-001
+name: PHP allow_url_fopen Enabled
+description: |
+  Detects allow_url_fopen or allow_url_include which enables SSRF and RFI.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [php]
+message: |
+  allow_url_fopen enables remote file inclusion. Disable in production.
+patterns:
+  - type: regex
+    pattern: "allow_url_fopen\\s*=\\s*On"
+  - type: regex
+    pattern: "allow_url_include\\s*=\\s*On"

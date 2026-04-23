@@ -1,0 +1,14 @@
+id: raven-fw-laravel-004
+name: Laravel DB Facade Raw SQL
+severity: critical
+category: sql-injection
+confidence: high
+languages: [php]
+frameworks: [laravel]
+message: |
+  DB::raw or DB::select with string concatenation allows SQL injection.
+patterns:
+  - type: regex
+    pattern: "DB::select\\s*\\(\\s*['\"].*\\$"
+  - type: regex
+    pattern: "DB::insert\\s*\\(\\s*['\"].*\\$"

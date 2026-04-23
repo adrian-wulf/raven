@@ -1,0 +1,11 @@
+id: raven-iac-env-002
+name: .env File Debug Mode Enabled
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [env]
+message: |
+  DEBUG=true in .env file. Ensure this is not committed to production.
+patterns:
+  - type: regex
+    pattern: "^DEBUG\\s*=\\s*true"

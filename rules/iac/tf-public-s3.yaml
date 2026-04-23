@@ -1,0 +1,15 @@
+id: raven-iac-tf-001
+name: Terraform Public S3 Bucket
+description: |
+  Detects S3 buckets with public read or write access.
+severity: critical
+category: misconfiguration
+confidence: high
+languages: [terraform]
+message: |
+  Public S3 bucket detected! Use private ACL with IAM policies for access control.
+patterns:
+  - type: regex
+    pattern: "acl\\s*=\\s*\"public-read"
+  - type: regex
+    pattern: "acl\\s*=\\s*\"public-read-write"

@@ -1,0 +1,11 @@
+id: raven-swift-batch-005
+name: Swift Security Pattern 5
+severity: medium
+category: injection
+confidence: medium
+languages: [swift]
+message: |
+  Potential security issue detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "dangerous_pattern_5"

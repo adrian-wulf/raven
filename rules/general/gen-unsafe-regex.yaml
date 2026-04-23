@@ -1,0 +1,15 @@
+id: raven-gen-regex-001
+name: Unsafe Regular Expression Pattern
+description: |
+  Detects regex patterns vulnerable to catastrophic backtracking (ReDoS).
+severity: medium
+category: dos
+confidence: medium
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Nested quantifiers can cause ReDoS. Test regex with safe-regex library.
+patterns:
+  - type: regex
+    pattern: "\\(\\[\\^\\]\\]\\*\\)\\*"
+  - type: regex
+    pattern: "\\(\\.\\*\\)\\+"

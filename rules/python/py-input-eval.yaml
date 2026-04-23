@@ -1,0 +1,13 @@
+id: raven-py-input-001
+name: Python input() in Python 2
+description: |
+  Detects Python 2 input() which evaluates user input as code (equivalent to eval).
+severity: critical
+category: code-injection
+confidence: high
+languages: [python]
+message: |
+  Python 2 input() evaluates user input! Use raw_input() in Python 2 or input() in Python 3.
+patterns:
+  - type: regex
+    pattern: "\\binput\\s*\\(\\s*\\)"

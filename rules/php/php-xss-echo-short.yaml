@@ -1,0 +1,13 @@
+id: raven-php-xss-short-001
+name: PHP Short Echo Tag XSS
+description: |
+  Detects PHP short echo tags (<?=) with user input without escaping.
+severity: high
+category: xss
+confidence: high
+languages: [php]
+message: |
+  <?= with user input is XSS! Use htmlspecialchars() or use a template engine.
+patterns:
+  - type: regex
+    pattern: "<\\?=\\s*\\$_(GET|POST|REQUEST|COOKIE)"

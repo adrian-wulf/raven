@@ -1,0 +1,15 @@
+id: raven-fw-react-003
+name: React useEffect Missing Dependencies
+severity: low
+category: bug
+confidence: low
+languages: [javascript, typescript]
+frameworks: [react]
+message: |
+  useEffect with empty deps [] may miss updates. Ensure all dependencies are listed.
+patterns:
+  - type: regex
+    pattern: "useEffect\\s*\\(\\s*\\(\\s*\\)\\s*=>"
+    where:
+      - not-sanitized:
+          - deps

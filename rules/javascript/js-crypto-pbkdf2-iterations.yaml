@@ -1,0 +1,13 @@
+id: raven-js-crypto-001
+name: Weak PBKDF2 Iterations
+description: |
+  Detects PBKDF2 with less than 100,000 iterations which is weak for password hashing.
+severity: medium
+category: cryptography
+confidence: high
+languages: [javascript, typescript]
+message: |
+  PBKDF2 with < 100k iterations is too fast. Use >= 600,000 iterations (OWASP 2023).
+patterns:
+  - type: regex
+    pattern: "pbkdf2Sync\\s*\\([^,]*,\\s*[^,]*,\\s*(\\d{1,4}|[1-9]\\d{4})\\s*[,)]"

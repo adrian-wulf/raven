@@ -1,0 +1,16 @@
+id: raven-fw-spring-006
+name: Spring Boot Unsafe CORS with Credentials
+description: |
+  Detects CORS configuration allowing all origins with credentials enabled.
+severity: high
+category: cors
+confidence: high
+languages: [java, kotlin]
+frameworks: [spring-boot]
+message: |
+  CORS allows all origins with credentials=true. This is a critical security vulnerability.
+patterns:
+  - type: regex
+    pattern: "allowedOrigins\\s*\\(\\s*['\"]\\*['\"]\\s*\\).*allowCredentials\\s*\\(\\s*true\\s*\\)"
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/CORS_Configuration_Cheat_Sheet.html

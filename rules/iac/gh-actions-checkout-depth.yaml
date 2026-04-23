@@ -1,0 +1,11 @@
+id: raven-iac-gh-006
+name: GitHub Actions Full History Checkout
+severity: low
+category: info-disclosure
+confidence: low
+languages: [yaml]
+message: |
+  fetch-depth: 0 downloads full git history. Use fetch-depth: 1 unless needed.
+patterns:
+  - type: regex
+    pattern: "fetch-depth:\\s*0"

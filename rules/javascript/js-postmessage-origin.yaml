@@ -1,0 +1,13 @@
+id: raven-js-pm-001
+name: postMessage Without Origin Check
+description: |
+  Detects postMessage without target origin validation allowing cross-origin attacks.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript]
+message: |
+  postMessage to '*' allows any origin to receive messages. Specify exact origin.
+patterns:
+  - type: regex
+    pattern: "postMessage\\s*\\([^,]*,\\s*['\"]\\*['\"]"

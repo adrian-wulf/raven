@@ -1,0 +1,16 @@
+id: raven-iac-tf-005
+name: Terraform S3 Without Versioning
+description: |
+  Detects S3 buckets without versioning enabled.
+severity: low
+category: misconfiguration
+confidence: medium
+languages: [terraform]
+message: |
+  Enable S3 versioning to protect against accidental deletion and ransomware.
+patterns:
+  - type: regex
+    pattern: "versioning"
+    where:
+      - not-sanitized:
+          - enabled

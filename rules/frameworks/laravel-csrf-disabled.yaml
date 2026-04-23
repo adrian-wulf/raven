@@ -1,0 +1,14 @@
+id: raven-fw-laravel-005
+name: Laravel CSRF Verification Disabled
+severity: high
+category: csrf
+confidence: high
+languages: [php]
+frameworks: [laravel]
+message: |
+  CSRF middleware disabled. Never disable VerifyCsrfToken in production.
+patterns:
+  - type: regex
+    pattern: "VerifyCsrfToken.*except"
+  - type: regex
+    pattern: "\\$except\\s*=\\s*\\[\\s*['\"]\\*['\"]"

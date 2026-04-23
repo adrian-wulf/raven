@@ -1,0 +1,13 @@
+id: raven-iac-k8s-009
+name: Kubernetes Adds Dangerous Capabilities
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  Adding ALL or NET_ADMIN capabilities is dangerous. Use drop: [ALL] and add only needed ones.
+patterns:
+  - type: regex
+    pattern: "add:\\s*\\n\\s*-\\s*ALL"
+  - type: regex
+    pattern: "add:\\s*\\n\\s*-\\s*NET_ADMIN"

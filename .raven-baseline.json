@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-23T10:56:17.724971029Z",
+  "generated_at": "2026-04-23T11:26:05.430362644Z",
   "findings": [
     {
       "rule_id": "raven-gen-deser-001",

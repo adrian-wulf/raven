@@ -1,0 +1,15 @@
+id: raven-py-sqlalchemy-001
+name: SQLAlchemy text() with Format
+description: |
+  Detects SQLAlchemy text() with Python f-strings or .format() which is SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [python]
+message: |
+  text() with f-string is SQL injection! Use bound parameters: text("SELECT * WHERE id = :id").
+patterns:
+  - type: regex
+    pattern: "text\\s*\\(\\s*f['\"].*\\{[^}]+\\}"
+  - type: regex
+    pattern: "text\\s*\\(\\s*['\"].*\\.format"

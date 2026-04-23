@@ -1,0 +1,14 @@
+id: raven-iac-gh-002
+name: GitHub Actions Unpinned Action
+severity: medium
+category: supply-chain
+confidence: high
+languages: [yaml]
+message: |
+  Pin actions to full commit SHA to prevent supply chain attacks via tag hijacking.
+patterns:
+  - type: regex
+    pattern: "uses:\\s+[^@]+@[^\\s]+"
+    where:
+      - not-sanitized:
+          - "[a-f0-9]{40}"

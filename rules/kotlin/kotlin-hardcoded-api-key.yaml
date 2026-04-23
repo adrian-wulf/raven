@@ -1,0 +1,13 @@
+id: raven-kotlin-secret-001
+name: Kotlin Hardcoded API Key
+description: |
+  Detects hardcoded API keys or secrets in Kotlin source code.
+severity: high
+category: secrets
+confidence: high
+languages: [kotlin]
+message: |
+  Hardcoded secret detected! Use BuildConfig fields from environment or a secrets manager.
+patterns:
+  - type: regex
+    pattern: "(?:apiKey|api_key|secret|token|password)\\s*=\\s*['\"][^'\"]{8,}['\"]"

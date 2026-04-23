@@ -1,0 +1,11 @@
+id: raven-iac-compose-002
+name: Docker Compose Host Network
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  network_mode: host shares host network namespace. Use bridge networks instead.
+patterns:
+  - type: regex
+    pattern: "network_mode:\\s*host"

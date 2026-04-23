@@ -1,0 +1,13 @@
+id: raven-php-include-001
+name: PHP File Include with User Input
+description: |
+  Detects include/require with user-controlled paths allowing LFI/RFI.
+severity: critical
+category: code-injection
+confidence: high
+languages: [php]
+message: |
+  include() with user input is LFI/RFI! Whitelist allowed files or use routing.
+patterns:
+  - type: regex
+    pattern: "(include|require|include_once|require_once)\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"

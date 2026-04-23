@@ -1,0 +1,11 @@
+id: raven-iac-docker-009
+name: Dockerfile Exposes SSH Port
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [dockerfile]
+message: |
+  Exposing SSH (port 22) in containers is risky. Use docker exec instead.
+patterns:
+  - type: regex
+    pattern: "EXPOSE\\s+22"

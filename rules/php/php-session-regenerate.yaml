@@ -1,0 +1,16 @@
+id: raven-php-session-001
+name: PHP Missing Session Regeneration
+description: |
+  Detects login code without session_regenerate_id() which enables session fixation.
+severity: medium
+category: auth
+confidence: medium
+languages: [php]
+message: |
+  Regenerate session ID after login to prevent session fixation attacks.
+patterns:
+  - type: regex
+    pattern: "session_start\\s*\\(\\s*\\)"
+    where:
+      - not-sanitized:
+          - session_regenerate_id

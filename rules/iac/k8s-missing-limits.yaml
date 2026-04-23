@@ -1,0 +1,14 @@
+id: raven-iac-k8s-002
+name: Kubernetes Missing Resource Limits
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [yaml]
+message: |
+  Missing CPU/memory limits can lead to DoS. Add resources.limits.
+patterns:
+  - type: regex
+    pattern: "containers:"
+    where:
+      - not-sanitized:
+          - resources

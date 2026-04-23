@@ -1,0 +1,13 @@
+id: raven-swift-nsurl-001
+name: Swift NSURLConnection Deprecated
+description: |
+  Detects deprecated NSURLConnection which lacks modern security features.
+severity: low
+category: best-practice
+confidence: high
+languages: [swift]
+message: |
+  NSURLConnection is deprecated. Use URLSession with proper delegate authentication.
+patterns:
+  - type: regex
+    pattern: "NSURLConnection"

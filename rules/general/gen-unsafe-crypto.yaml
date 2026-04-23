@@ -1,0 +1,15 @@
+id: raven-gen-crypto-001
+name: Weak Cryptographic Algorithm
+description: |
+  Detects use of weak/broken cryptographic algorithms.
+severity: high
+category: cryptography
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Weak algorithms (MD5, SHA1, DES, RC4) are cryptographically broken. Use SHA-256+/AES-256-GCM.
+patterns:
+  - type: regex
+    pattern: "(md5|sha1|des|rc4)\\s*\\("
+  - type: regex
+    pattern: "MD5|SHA1|DES|RC4"

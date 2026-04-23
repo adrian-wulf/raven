@@ -1,0 +1,11 @@
+id: raven-iac-gh-005
+name: GitHub Actions Self-Hosted Runner Security
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [yaml]
+message: |
+  Self-hosted runners may persist between jobs. Use ephemeral runners for untrusted code.
+patterns:
+  - type: regex
+    pattern: "self-hosted"

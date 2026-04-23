@@ -1,0 +1,13 @@
+id: raven-ruby-erb-001
+name: Ruby ERB Template XSS
+description: |
+  Detects ERB templates rendering user input without HTML escaping.
+severity: high
+category: xss
+confidence: high
+languages: [ruby]
+message: |
+  ERB.new with user input is XSS! Use HTML escaping or sanitize with a library.
+patterns:
+  - type: regex
+    pattern: "ERB\\.new\\s*\\(\\s*[^)]*params"

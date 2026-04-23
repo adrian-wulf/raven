@@ -1,0 +1,15 @@
+id: raven-fw-react-002
+name: React Missing Key in List
+severity: low
+category: bug
+confidence: high
+languages: [javascript, typescript]
+frameworks: [react]
+message: |
+  Rendering lists without key prop causes reconciliation issues. Add unique key.
+patterns:
+  - type: regex
+    pattern: "\\.map\\s*\\("
+    where:
+      - not-sanitized:
+          - key=

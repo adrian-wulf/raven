@@ -1,0 +1,13 @@
+id: raven-py-django-debug-001
+name: Django Settings Debug Enabled
+description: |
+  Detects DEBUG = True in Django settings which exposes sensitive information.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [python]
+message: |
+  DEBUG = True in production exposes stack traces and settings. Set DEBUG = False.
+patterns:
+  - type: regex
+    pattern: "DEBUG\\s*=\\s*True"

@@ -1,0 +1,11 @@
+id: raven-iac-gh-001
+name: GitHub Actions pull_request_target
+severity: critical
+category: supply-chain
+confidence: high
+languages: [yaml]
+message: |
+  pull_request_target runs with write token on fork PRs. Extremely dangerous if misused.
+patterns:
+  - type: regex
+    pattern: "pull_request_target"

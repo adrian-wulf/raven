@@ -1,0 +1,13 @@
+id: raven-php-preg-001
+name: PHP preg_replace with /e Modifier
+description: |
+  Detects preg_replace with /e modifier which executes replacement as PHP code.
+severity: critical
+category: code-injection
+confidence: high
+languages: [php]
+message: |
+  preg_replace /e is deprecated and dangerous (code execution)! Use preg_replace_callback().
+patterns:
+  - type: regex
+    pattern: "preg_replace\\s*\\(\\s*['\"]/[^'\"]*/e['\"]"

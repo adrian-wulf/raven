@@ -1,0 +1,15 @@
+id: raven-java-spring-002
+name: Spring Boot CORS Wildcard with Credentials
+description: |
+  Detects Spring CORS allowing all origins with allowCredentials=true.
+severity: critical
+category: cors
+confidence: high
+languages: [java]
+message: |
+  CORS * with credentials is a critical vulnerability! Specify exact origins.
+patterns:
+  - type: regex
+    pattern: "allowedOrigins\\s*\\(\\s*['\"]\\*['\"]\\s*\\)"
+  - type: regex
+    pattern: "allowCredentials\\s*\\(\\s*true\\s*\\)"

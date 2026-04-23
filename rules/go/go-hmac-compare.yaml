@@ -1,0 +1,16 @@
+id: raven-go-hmac-001
+name: Go HMAC Without Constant Time Compare
+description: |
+  Detects HMAC verification without hmac.Equal which enables timing attacks.
+severity: medium
+category: cryptography
+confidence: high
+languages: [go]
+message: |
+  HMAC comparison must use hmac.Equal() to prevent timing attacks.
+patterns:
+  - type: regex
+    pattern: "hmac\\.New"
+    where:
+      - not-sanitized:
+          - hmac.Equal

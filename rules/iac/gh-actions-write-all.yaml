@@ -1,0 +1,11 @@
+id: raven-iac-gh-008
+name: GitHub Actions Write-All Permissions
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  permissions: write-all grants excessive write access. Use least-privilege permissions.
+patterns:
+  - type: regex
+    pattern: "permissions:\\s*write-all"

@@ -1,0 +1,15 @@
+id: raven-go-sql-concat-001
+name: Go SQL String Concatenation
+description: |
+  Detects SQL query string concatenation in Go which bypasses parameterization.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [go]
+message: |
+  SQL string concatenation is injection! Use parameterized queries with ? placeholders.
+patterns:
+  - type: regex
+    pattern: "query\\s*:=\\s*[`\"][^`\"]*\"\\s*\\+"
+  - type: regex
+    pattern: "query\\s*\\+?=\\s*[^;]*\\+\\s*.*(r\\.|req|request|params|input)"

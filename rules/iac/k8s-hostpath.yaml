@@ -1,0 +1,11 @@
+id: raven-iac-k8s-003
+name: Kubernetes HostPath Volume
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  hostPath mounts host filesystem into pod. Use persistent volumes instead.
+patterns:
+  - type: regex
+    pattern: "hostPath:"

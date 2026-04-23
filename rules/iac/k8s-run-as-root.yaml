@@ -1,0 +1,11 @@
+id: raven-iac-k8s-007
+name: Kubernetes Container Runs as Root
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  Container runs as root (runAsUser: 0). Set runAsUser to non-zero UID.
+patterns:
+  - type: regex
+    pattern: "runAsUser:\\s*0"

@@ -1,0 +1,15 @@
+id: raven-js-redos-002
+name: ReDoS Vulnerable Regex Pattern
+description: |
+  Detects regex patterns with nested quantifiers that can cause catastrophic backtracking.
+severity: medium
+category: dos
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Nested quantifiers (a+)+ can cause ReDoS. Test with safe-regex or use linear-time matching.
+patterns:
+  - type: regex
+    pattern: "\\(\\[\\^\\]\\]\\+\\)\\+"
+  - type: regex
+    pattern: "\\(\\w\\+\\)\\+"

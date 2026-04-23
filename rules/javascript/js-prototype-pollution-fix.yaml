@@ -1,0 +1,15 @@
+id: raven-js-proto-fix-001
+name: Prototype Pollution via Merge
+description: |
+  Detects Object.assign or lodash.merge with user input that can pollute prototype.
+severity: high
+category: prototype-pollution
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Prototype pollution risk! Validate keys against '__proto__', 'constructor', 'prototype'.
+patterns:
+  - type: regex
+    pattern: "Object\\.assign\\s*\\(\\s*\\{\\s*\\}\\s*,\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.)"
+  - type: regex
+    pattern: "_\\.merge\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.)"

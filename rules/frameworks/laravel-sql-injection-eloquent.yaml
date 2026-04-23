@@ -1,0 +1,14 @@
+id: raven-fw-laravel-007
+name: Laravel Eloquent Unsafe Query
+severity: critical
+category: sql-injection
+confidence: high
+languages: [php]
+frameworks: [laravel]
+message: |
+  orderByRaw or groupBy with user input is SQL injection. Use safe methods.
+patterns:
+  - type: regex
+    pattern: "->orderByRaw\\s*\\(\\s*['\"].*\\$"
+  - type: regex
+    pattern: "->groupByRaw\\s*\\(\\s*['\"].*\\$"

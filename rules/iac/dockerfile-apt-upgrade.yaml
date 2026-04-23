@@ -1,0 +1,15 @@
+id: raven-iac-docker-005
+name: Dockerfile Runs apt-get upgrade
+severity: low
+category: supply-chain
+confidence: medium
+languages: [dockerfile]
+message: |
+  Avoid apt-get upgrade in Dockerfiles. Pin specific versions.
+patterns:
+  - type: regex
+    pattern: "apt-get\\s+(upgrade|dist-upgrade)"
+  - type: regex
+    pattern: "yum\\s+update"
+  - type: regex
+    pattern: "apk\\s+upgrade"

@@ -1,0 +1,17 @@
+id: raven-java-spring-001
+name: Spring Boot @Entity Exposure
+description: |
+  Detects returning JPA @Entity directly from REST endpoints which can expose internal fields.
+severity: medium
+category: info-disclosure
+confidence: medium
+languages: [java]
+message: |
+  Returning @Entity directly exposes all fields including internal ones. Use DTOs.
+patterns:
+  - type: regex
+    pattern: "@(?:GetMapping|PostMapping|RequestMapping)"
+    where:
+      - not-sanitized:
+          - JsonView
+          - DTO

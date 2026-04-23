@@ -1,0 +1,14 @@
+id: raven-iac-docker-002
+name: Dockerfile Runs as Root
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [dockerfile]
+message: |
+  Container runs as root. Add 'USER nonroot' before CMD/ENTRYPOINT.
+patterns:
+  - type: regex
+    pattern: "CMD|ENTRYPOINT"
+    where:
+      - not-sanitized:
+          - USER

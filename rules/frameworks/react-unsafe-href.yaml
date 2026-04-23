@@ -1,0 +1,12 @@
+id: raven-fw-react-004
+name: React Unsafe href with User Input
+severity: high
+category: xss
+confidence: high
+languages: [javascript, typescript]
+frameworks: [react]
+message: |
+  href with user-controlled URL can be javascript: or data:. Validate URL scheme.
+patterns:
+  - type: regex
+    pattern: "href=\\{[^}]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"

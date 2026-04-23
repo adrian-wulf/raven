@@ -1,0 +1,16 @@
+id: raven-js-axios-001
+name: Axios Request Without Timeout
+description: |
+  Detects HTTP requests without timeout which can hang indefinitely.
+severity: low
+category: dos
+confidence: low
+languages: [javascript, typescript]
+message: |
+  Add timeout to axios requests to prevent DoS from slow responses.
+patterns:
+  - type: regex
+    pattern: "axios\\.(get|post|put|delete|request)\\s*\\("
+    where:
+      - not-sanitized:
+          - timeout

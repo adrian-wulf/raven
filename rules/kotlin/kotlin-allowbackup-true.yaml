@@ -1,0 +1,13 @@
+id: raven-kotlin-backup-001
+name: Kotlin Android allowBackup True
+description: |
+  Detects Android allowBackup=true which can leak app data via cloud backup.
+severity: medium
+category: info-disclosure
+confidence: high
+languages: [kotlin]
+message: |
+  allowBackup=true can leak sensitive data via Google cloud backup. Set to false.
+patterns:
+  - type: regex
+    pattern: "android:allowBackup=['\"]true['\"]"

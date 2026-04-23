@@ -1,0 +1,15 @@
+id: raven-php-mysqli-001
+name: PHP MySQLi SQL Injection
+description: |
+  Detects MySQLi queries with string concatenation or interpolation.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [php]
+message: |
+  MySQLi query concatenation is SQL injection! Use prepared statements with bind_param().
+patterns:
+  - type: regex
+    pattern: "mysqli_query\\s*\\(\\s*[^,]*,\\s*['\"].*\\$"
+  - type: regex
+    pattern: "->query\\s*\\(\\s*['\"].*\\$"

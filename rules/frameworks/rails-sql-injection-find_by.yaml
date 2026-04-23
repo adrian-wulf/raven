@@ -1,0 +1,12 @@
+id: raven-fw-rails-004
+name: Rails SQL Injection in Dynamic Finder
+severity: critical
+category: sql-injection
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Dynamic finders with user input can be SQL injected. Use parameterized queries.
+patterns:
+  - type: regex
+    pattern: "find_by_\\w+\\s*\\(\\s*params"

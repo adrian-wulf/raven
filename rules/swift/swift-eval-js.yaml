@@ -1,0 +1,13 @@
+id: raven-swift-eval-001
+name: Swift WKWebView evaluateJavaScript
+description: |
+  Detects evaluateJavaScript with user-controlled strings which is XSS/code injection.
+severity: high
+category: code-injection
+confidence: high
+languages: [swift]
+message: |
+  evaluateJavaScript with user input is XSS! Sanitize or avoid dynamic JavaScript execution.
+patterns:
+  - type: regex
+    pattern: "evaluateJavaScript\\s*\\(\\s*[^)]*(input|param|request|data|user)"

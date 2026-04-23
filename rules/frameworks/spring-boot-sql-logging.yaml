@@ -1,0 +1,18 @@
+id: raven-fw-spring-007
+name: Spring Boot SQL Logging Enabled
+description: |
+  Detects SQL logging enabled in production which can leak sensitive data.
+severity: medium
+category: info-disclosure
+confidence: medium
+languages: [java]
+frameworks: [spring-boot]
+message: |
+  SQL logging enabled. Disable in production to prevent sensitive data leakage.
+patterns:
+  - type: regex
+    pattern: "spring\\.jpa\\.show-sql\\s*=\\s*true"
+  - type: regex
+    pattern: "logging\\.level\\.org\\.hibernate\\.SQL\\s*=\\s*DEBUG"
+references:
+  - https://docs.spring.io/spring-boot/docs/current/reference/html/data.html

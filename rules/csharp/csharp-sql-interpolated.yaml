@@ -1,0 +1,15 @@
+id: raven-csharp-sql-interp-001
+name: C# Interpolated SQL String
+description: |
+  Detects SQL commands with interpolated strings ($"...") which is SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [csharp]
+message: |
+  Interpolated SQL string is injection! Use SqlParameter with value assignment.
+patterns:
+  - type: regex
+    pattern: "new\\s+SqlCommand\\s*\\(\\s*\\$['\"]"
+  - type: regex
+    pattern: "CommandText\\s*=\\s*\\$['\"]"

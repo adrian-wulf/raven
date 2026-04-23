@@ -1,0 +1,11 @@
+id: raven-iac-k8s-012
+name: Kubernetes Unsafe Sysctls
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  Modifying kernel sysctls from pods is dangerous. Avoid or use allowedUnsafeSysctls whitelist.
+patterns:
+  - type: regex
+    pattern: "sysctls:"

@@ -1,0 +1,16 @@
+id: raven-iac-tf-002
+name: Terraform Open Security Group
+description: |
+  Detects AWS security groups allowing 0.0.0.0/0 inbound access.
+severity: critical
+category: misconfiguration
+confidence: high
+languages: [terraform]
+message: |
+  Security group allows traffic from anywhere (0.0.0.0/0). Restrict to specific CIDRs.
+patterns:
+  - type: regex
+    pattern: "0\\.0\\.0\\.0/0"
+    where:
+      - not-sanitized:
+          - egress

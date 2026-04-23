@@ -1,0 +1,13 @@
+id: raven-ruby-net-http-001
+name: Ruby Net::HTTP Without SSL Verification
+description: |
+  Detects Net::HTTP with verify_mode = OpenSSL::SSL::VERIFY_NONE.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [ruby]
+message: |
+  VERIFY_NONE disables SSL verification and enables MITM attacks. Never use in production.
+patterns:
+  - type: regex
+    pattern: "VERIFY_NONE"

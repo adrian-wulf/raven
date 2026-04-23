@@ -1,0 +1,13 @@
+id: raven-py-temp-001
+name: Python Insecure Temporary File
+description: |
+  Detects tempfile.mktemp which is race-condition prone. Use mkstemp instead.
+severity: medium
+category: race-condition
+confidence: high
+languages: [python]
+message: |
+  mktemp() is vulnerable to race conditions. Use mkstemp() or TemporaryFile().
+patterns:
+  - type: regex
+    pattern: "tempfile\\.mktemp"

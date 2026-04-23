@@ -1,0 +1,13 @@
+id: raven-iac-tf-003
+name: Terraform Unencrypted Storage
+description: |
+  Detects RDS, EBS, or S3 buckets without encryption enabled.
+severity: high
+category: cryptography
+confidence: high
+languages: [terraform]
+message: |
+  Storage resource lacks encryption. Enable encryption at rest with KMS.
+patterns:
+  - type: regex
+    pattern: "encrypted\\s*=\\s*false"

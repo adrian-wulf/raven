@@ -1,0 +1,11 @@
+id: raven-iac-compose-001
+name: Docker Compose Privileged Container
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  privileged: true in docker-compose grants full host access. Remove it.
+patterns:
+  - type: regex
+    pattern: "privileged:\\s*true"

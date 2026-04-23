@@ -245,16 +245,16 @@ Colored, readable terminal output with code snippets.
 
 | Language | Status | Taint | AST | Rules |
 |----------|--------|-------|-----|-------|
-| JavaScript / TypeScript | ✅ Full | ✅ | ✅ | 40+ |
-| Python | ✅ Full | ✅ | ✅ | 20+ |
-| Go | ✅ Full | ✅ | ✅ | 18+ |
-| PHP | ✅ Full | ✅ | ✅ | 15+ |
-| Java | ✅ Full | ✅ | ✅ | 15+ |
-| Kotlin | ✅ Full | ✅ | ✅ | 8+ |
-| C# | ✅ Full | ✅ | ✅ | 10+ |
-| Rust | ✅ Full | ✅ | ✅ | 10+ |
-| Ruby | ✅ Full | ✅ | ✅ | 8+ |
-| Swift | ✅ Full | ✅ | ✅ | 6+ |
+| JavaScript / TypeScript | ✅ Full | ✅ | ✅ | 60+ |
+| Python | ✅ Full | ✅ | ✅ | 50+ |
+| Go | ✅ Full | ✅ | ✅ | 40+ |
+| PHP | ✅ Full | ✅ | ✅ | 40+ |
+| Java | ✅ Full | ✅ | ✅ | 40+ |
+| Kotlin | ✅ Full | ✅ | ✅ | 25+ |
+| C# | ✅ Full | ✅ | ✅ | 30+ |
+| Rust | ✅ Full | ✅ | ✅ | 30+ |
+| Ruby | ✅ Full | ✅ | ✅ | 25+ |
+| Swift | ✅ Full | ✅ | ✅ | 20+ |
 
 ---
 
@@ -306,7 +306,7 @@ severity:
 
 ## Rules
 
-Raven ships with **150+ security rules** covering OWASP Top 10, common LLM mistakes, AST-based analysis, and taint tracking.
+Raven ships with **500+ security rules** covering OWASP Top 10, common LLM mistakes, AST-based analysis, taint tracking, and IaC scanning.
 
 ```bash
 # List all rules
@@ -338,7 +338,7 @@ raven rules --detail
 ## Roadmap
 
 - [x] Core rule engine
-- [x] 150+ security rules (regex + AST + taint)
+- [x] 500+ security rules (regex + AST + taint + IaC)
 - [x] Auto-fix
 - [x] Watch mode
 - [x] CI mode + SARIF

@@ -1,0 +1,16 @@
+id: raven-fw-vue-003
+name: Vue Router Missing Auth Guard
+severity: medium
+category: auth
+confidence: medium
+languages: [javascript, typescript]
+frameworks: [vue]
+message: |
+  Route without beforeEnter guard may be accessible without authentication.
+patterns:
+  - type: regex
+    pattern: "path:\\s*['\"]/admin"
+    where:
+      - not-sanitized:
+          - beforeEnter
+          - meta

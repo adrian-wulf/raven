@@ -1,0 +1,17 @@
+id: raven-py-ftp-001
+name: Python FTP Without TLS
+description: |
+  Detects ftplib.FTP or FTP connections without FTPS/TLS encryption.
+severity: medium
+category: cryptography
+confidence: high
+languages: [python]
+message: |
+  FTP transmits credentials in plaintext. Use FTPS (FTP_TLS) or SFTP instead.
+patterns:
+  - type: regex
+    pattern: "ftplib\\.FTP\\s*\\("
+    where:
+      - not-sanitized:
+          - FTP_TLS
+          - FTPS

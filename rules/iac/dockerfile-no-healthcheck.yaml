@@ -1,0 +1,14 @@
+id: raven-iac-docker-004
+name: Dockerfile Missing HEALTHCHECK
+severity: low
+category: misconfiguration
+confidence: low
+languages: [dockerfile]
+message: |
+  Add HEALTHCHECK to enable orchestrators to detect unhealthy containers.
+patterns:
+  - type: regex
+    pattern: "FROM"
+    where:
+      - not-sanitized:
+          - HEALTHCHECK

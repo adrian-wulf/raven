@@ -1,0 +1,12 @@
+id: raven-fw-flask-003
+name: Flask Path Traversal in send_file
+severity: high
+category: path-traversal
+confidence: high
+languages: [python]
+frameworks: [flask]
+message: |
+  User input in send_file() without sanitization allows path traversal.
+patterns:
+  - type: regex
+    pattern: "send_file\\s*\\(\\s*[^)]*(request|args|form|files)"

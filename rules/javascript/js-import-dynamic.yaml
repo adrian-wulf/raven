@@ -1,0 +1,13 @@
+id: raven-js-import-001
+name: Dynamic Import with User Input
+description: |
+  Detects dynamic import() with user-controlled paths which can load arbitrary modules.
+severity: high
+category: code-injection
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Dynamic import with user input can load malicious modules. Whitelist allowed paths.
+patterns:
+  - type: regex
+    pattern: "import\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.)"

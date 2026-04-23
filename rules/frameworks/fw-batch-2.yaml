@@ -1,0 +1,11 @@
+id: raven-fw-batch-002
+name: Framework Security Pattern 2
+severity: medium
+category: misconfiguration
+confidence: medium
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Framework security pattern detected. Review configuration.
+patterns:
+  - type: regex
+    pattern: "framework_pattern_2"

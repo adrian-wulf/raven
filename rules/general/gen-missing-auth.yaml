@@ -1,0 +1,13 @@
+id: raven-gen-auth-002
+name: Missing Authentication Check
+description: |
+  Detects admin/sensitive endpoints without visible authentication checks.
+severity: medium
+category: auth
+confidence: low
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Sensitive endpoint may lack authentication. Add auth middleware or guards.
+patterns:
+  - type: regex
+    pattern: "(admin|api/v1|internal|management|dashboard)"

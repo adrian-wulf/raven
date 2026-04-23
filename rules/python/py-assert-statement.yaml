@@ -1,0 +1,13 @@
+id: raven-py-assert-001
+name: Python Assert Used for Security Check
+description: |
+  Detects assert statements used for security validation which are removed with -O flag.
+severity: medium
+category: auth
+confidence: high
+languages: [python]
+message: |
+  assert is removed in optimized mode! Use proper if/raise for security checks.
+patterns:
+  - type: regex
+    pattern: "assert\\s+.*(auth|login|permission|role|admin)"

@@ -1,0 +1,13 @@
+id: raven-go-filepath-001
+name: Go Path Traversal via filepath.Join
+description: |
+  Detects filepath.Join with user input without Clean() validation.
+severity: high
+category: path-traversal
+confidence: high
+languages: [go]
+message: |
+  filepath.Join with user input can traverse outside base dir. Validate with filepath.Clean().
+patterns:
+  - type: regex
+    pattern: "filepath\\.Join\\s*\\(\\s*[^)]*(r\\.|req|request|params|input|path)"

@@ -1,0 +1,15 @@
+id: raven-py-chmod-001
+name: Python Overly Permissive File Permissions
+description: |
+  Detects os.chmod with world-writable permissions (777, 666) which is insecure.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [python]
+message: |
+  World-writable permissions (777) allow any user to modify files. Use 644 or 600.
+patterns:
+  - type: regex
+    pattern: "os\\.chmod\\s*\\(\\s*[^,]*,\\s*0o?777"
+  - type: regex
+    pattern: "os\\.chmod\\s*\\(\\s*[^,]*,\\s*0o?666"

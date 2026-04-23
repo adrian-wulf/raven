@@ -1,0 +1,11 @@
+id: raven-gen-batch-004
+name: General Security Pattern 4
+severity: medium
+category: injection
+confidence: medium
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Security pattern detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "general_pattern_4"

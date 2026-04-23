@@ -1,0 +1,13 @@
+id: raven-js-url-001
+name: URL Parsing Without Validation
+description: |
+  Detects URL construction with user input without scheme validation.
+severity: medium
+category: ssrf
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  URL built with user input may allow javascript: or file: schemes. Validate with URL constructor.
+patterns:
+  - type: regex
+    pattern: "new\\s+URL\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.)"

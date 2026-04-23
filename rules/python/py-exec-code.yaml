@@ -1,0 +1,15 @@
+id: raven-py-exec-001
+name: Python exec with Dynamic Code
+description: |
+  Detects exec() or compile() with user-controlled strings which is code injection.
+severity: critical
+category: code-injection
+confidence: high
+languages: [python]
+message: |
+  exec() with user input is arbitrary code execution! Use safe alternatives like json.loads().
+patterns:
+  - type: regex
+    pattern: "exec\\s*\\(\\s*[^)]*(request|req|params|body|form|args|input|data)"
+  - type: regex
+    pattern: "compile\\s*\\(\\s*[^)]*(request|req|params|body|form|args|input|data)"

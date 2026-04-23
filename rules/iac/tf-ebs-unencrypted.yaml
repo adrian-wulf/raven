@@ -1,0 +1,16 @@
+id: raven-iac-tf-011
+name: Terraform Unencrypted EBS Volume
+description: |
+  Detects EBS volumes without encryption enabled.
+severity: high
+category: cryptography
+confidence: high
+languages: [terraform]
+message: |
+  Enable EBS encryption to protect data at rest.
+patterns:
+  - type: regex
+    pattern: "aws_ebs_volume"
+    where:
+      - not-sanitized:
+          - encrypted

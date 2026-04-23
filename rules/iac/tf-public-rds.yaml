@@ -1,0 +1,13 @@
+id: raven-iac-tf-006
+name: Terraform Publicly Accessible RDS
+description: |
+  Detects RDS instances with public accessibility enabled.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [terraform]
+message: |
+  RDS is publicly accessible. Disable public_access and use VPC peering or VPN.
+patterns:
+  - type: regex
+    pattern: "publicly_accessible\\s*=\\s*true"

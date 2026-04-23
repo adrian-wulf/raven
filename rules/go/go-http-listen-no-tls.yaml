@@ -1,0 +1,16 @@
+id: raven-go-http-001
+name: Go HTTP Server Without TLS
+description: |
+  Detects http.ListenAndServe without TLS which transmits data unencrypted.
+severity: medium
+category: cryptography
+confidence: medium
+languages: [go]
+message: |
+  HTTP server without TLS! Use http.ListenAndServeTLS() in production.
+patterns:
+  - type: regex
+    pattern: "http\\.ListenAndServe\\s*\\("
+    where:
+      - not-sanitized:
+          - ListenAndServeTLS

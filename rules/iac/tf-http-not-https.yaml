@@ -1,0 +1,13 @@
+id: raven-iac-tf-009
+name: Terraform HTTP Instead of HTTPS
+description: |
+  Detects load balancers or CloudFront without HTTPS redirect.
+severity: medium
+category: cryptography
+confidence: high
+languages: [terraform]
+message: |
+  Enforce HTTPS-only access. Redirect HTTP to HTTPS at the load balancer level.
+patterns:
+  - type: regex
+    pattern: "protocol\\s*=\\s*\"HTTP\""

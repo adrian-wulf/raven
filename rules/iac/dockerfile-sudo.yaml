@@ -1,0 +1,11 @@
+id: raven-iac-docker-006
+name: Dockerfile Uses sudo
+severity: low
+category: misconfiguration
+confidence: high
+languages: [dockerfile]
+message: |
+  Don't use sudo in Dockerfiles. Containers run as root by default.
+patterns:
+  - type: regex
+    pattern: "sudo\\s+"

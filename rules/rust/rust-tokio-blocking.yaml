@@ -1,0 +1,13 @@
+id: raven-rust-tokio-001
+name: Rust Blocking Operation in Async
+description: |
+  Detects blocking operations (std::fs, sleep) in async tokio code which blocks the runtime.
+severity: medium
+category: bug
+confidence: medium
+languages: [rust]
+message: |
+  Blocking std::fs in async code blocks tokio runtime! Use tokio::fs instead.
+patterns:
+  - type: regex
+    pattern: "async\\s+fn.*std::fs::"

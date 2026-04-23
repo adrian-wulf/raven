@@ -1,0 +1,15 @@
+id: raven-php-rand-001
+name: PHP Weak Random for Tokens
+description: |
+  Detects rand() or mt_rand() used for security tokens which is predictable.
+severity: high
+category: cryptography
+confidence: high
+languages: [php]
+message: |
+  rand()/mt_rand() is predictable! Use random_int() or random_bytes() for security tokens.
+patterns:
+  - type: regex
+    pattern: "rand\\s*\\(\\s*\\).*token"
+  - type: regex
+    pattern: "mt_rand\\s*\\(\\s*\\).*token"

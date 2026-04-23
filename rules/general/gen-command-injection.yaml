@@ -1,0 +1,15 @@
+id: raven-gen-cmd-002
+name: Command Injection via String Concatenation
+description: |
+  Detects shell commands built with user input via concatenation.
+severity: critical
+category: command-injection
+confidence: high
+languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
+message: |
+  Command concatenation with user input is shell injection! Use parameterized execution.
+patterns:
+  - type: regex
+    pattern: "(exec|system|shell|spawn|run)\\s*\\(\\s*['\"`].*\\+"
+  - type: regex
+    pattern: "(exec|system|shell|spawn|run)\\s*\\(\\s*[`\"'].*\\$\\{"

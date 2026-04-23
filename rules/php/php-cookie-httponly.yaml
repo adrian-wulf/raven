@@ -1,0 +1,16 @@
+id: raven-php-cookie-001
+name: PHP Cookie Without HttpOnly
+description: |
+  Detects setcookie() calls without httponly flag which makes cookies accessible to XSS.
+severity: medium
+category: cookies
+confidence: high
+languages: [php]
+message: |
+  Cookie without httponly is accessible to JavaScript/XSS. Add httponly and secure flags.
+patterns:
+  - type: regex
+    pattern: "setcookie\\s*\\("
+    where:
+      - not-sanitized:
+          - httponly

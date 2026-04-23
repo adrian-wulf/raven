@@ -1,0 +1,13 @@
+id: raven-js-sw-001
+name: Service Worker Overly Broad Scope
+description: |
+  Detects service workers with scope '/' which can intercept all requests.
+severity: low
+category: misconfiguration
+confidence: low
+languages: [javascript, typescript]
+message: |
+  Broad service worker scope can enable cache poisoning. Restrict to specific paths.
+patterns:
+  - type: regex
+    pattern: "navigator\\.serviceWorker\\.register\\s*\\([^)]*scope:\\s*['\"]/['\"]"

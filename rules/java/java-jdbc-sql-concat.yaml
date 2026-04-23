@@ -1,0 +1,15 @@
+id: raven-java-jdbc-001
+name: Java JDBC SQL Concatenation
+description: |
+  Detects JDBC queries built with string concatenation which allows SQL injection.
+severity: critical
+category: sql-injection
+confidence: high
+languages: [java]
+message: |
+  JDBC string concatenation is SQL injection! Use PreparedStatement with ? placeholders.
+patterns:
+  - type: regex
+    pattern: "createStatement\\s*\\(\\s*\\).*execute(Query|Update)?\\s*\\(\\s*['\"].*\\+"
+  - type: regex
+    pattern: "execute(Query|Update)?\\s*\\(\\s*['\"].*\\+.*(request|req|param|input)"

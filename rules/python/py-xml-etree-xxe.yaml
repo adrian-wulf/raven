@@ -1,0 +1,15 @@
+id: raven-py-xml-001
+name: Python XML External Entity (XXE)
+description: |
+  Detects xml.etree or lxml parsing without disabling external entities.
+severity: critical
+category: xxe
+confidence: high
+languages: [python]
+message: |
+  XML parsing may allow XXE. Disable external entities and DTD loading.
+patterns:
+  - type: regex
+    pattern: "ET\\.parse\\s*\\("
+  - type: regex
+    pattern: "lxml\\.etree\\.parse"

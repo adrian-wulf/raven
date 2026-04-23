@@ -1,0 +1,13 @@
+id: raven-csharp-json-001
+name: C# Unsafe JSON Deserialization
+description: |
+  Detects JsonConvert.DeserializeObject with TypeNameHandling.All which enables RCE.
+severity: critical
+category: deserialization
+confidence: high
+languages: [csharp]
+message: |
+  TypeNameHandling.All enables arbitrary type deserialization (RCE)! Use TypeNameHandling.None.
+patterns:
+  - type: regex
+    pattern: "TypeNameHandling\\.All"

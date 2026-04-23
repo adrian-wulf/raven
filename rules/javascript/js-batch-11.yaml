@@ -1,0 +1,11 @@
+id: raven-js-batch-011
+name: JS Security Pattern 11
+severity: medium
+category: injection
+confidence: medium
+languages: [javascript, typescript]
+message: |
+  Potential security issue detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "dangerous_pattern_11"

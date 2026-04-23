@@ -1,0 +1,14 @@
+id: raven-iac-k8s-008
+name: Kubernetes Missing Network Policy
+severity: low
+category: misconfiguration
+confidence: low
+languages: [yaml]
+message: |
+  No NetworkPolicy detected. Add network policies to restrict pod-to-pod traffic.
+patterns:
+  - type: regex
+    pattern: "kind:\\s*Deployment"
+    where:
+      - not-sanitized:
+          - NetworkPolicy

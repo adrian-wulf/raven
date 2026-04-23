@@ -1,0 +1,13 @@
+id: raven-js-domain-001
+name: document.domain Assignment
+description: |
+  Detects assignment to document.domain which relaxes same-origin policy.
+severity: medium
+category: misconfiguration
+confidence: high
+languages: [javascript, typescript]
+message: |
+  Setting document.domain is deprecated and dangerous. Use postMessage with origin check instead.
+patterns:
+  - type: regex
+    pattern: "document\\.domain\\s*=\\s*"

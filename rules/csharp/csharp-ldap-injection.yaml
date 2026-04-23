@@ -1,0 +1,15 @@
+id: raven-csharp-ldap-001
+name: C# LDAP Injection
+description: |
+  Detects LDAP search filters built with string concatenation.
+severity: high
+category: ldap-injection
+confidence: high
+languages: [csharp]
+message: |
+  LDAP filter concatenation is injection! Use LDAP injection-safe query builders.
+patterns:
+  - type: regex
+    pattern: "DirectorySearcher\\s*\\(\\s*[^)]*\\+"
+  - type: regex
+    pattern: "Filter\\s*=\\s*['\"].*\\+"

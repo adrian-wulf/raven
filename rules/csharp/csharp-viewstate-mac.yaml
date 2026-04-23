@@ -1,0 +1,13 @@
+id: raven-csharp-viewstate-001
+name: C# ViewState Without MAC
+description: |
+  Detects ASP.NET ViewState without MAC validation which enables tampering.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [csharp]
+message: |
+  ViewState without MAC can be tampered. Enable enableViewStateMac in web.config.
+patterns:
+  - type: regex
+    pattern: "enableViewStateMac\\s*=\\s*['\"]false['\"]"

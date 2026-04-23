@@ -1,0 +1,11 @@
+id: raven-go-batch-004
+name: Go Security Pattern 4
+severity: medium
+category: injection
+confidence: medium
+languages: [go]
+message: |
+  Potential security issue detected. Review this code carefully.
+patterns:
+  - type: regex
+    pattern: "dangerous_pattern_4"

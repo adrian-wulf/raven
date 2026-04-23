@@ -1,0 +1,14 @@
+id: raven-fw-rails-005
+name: Rails Insecure Session Store
+severity: high
+category: cookies
+confidence: high
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Cookie store without secret or with old secret is vulnerable. Rotate secrets regularly.
+patterns:
+  - type: regex
+    pattern: "config\\.session_store\\s*:cookie_store"
+  - type: regex
+    pattern: "secrets\\.secret_key_base"

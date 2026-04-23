@@ -1,0 +1,13 @@
+id: raven-php-assert-001
+name: PHP assert with User Input
+description: |
+  Detects assert() with user input which can execute arbitrary PHP code.
+severity: critical
+category: code-injection
+confidence: high
+languages: [php]
+message: |
+  assert() with user input is code execution! Never pass untrusted data to assert().
+patterns:
+  - type: regex
+    pattern: "assert\\s*\\(\\s*[^)]*\\$_(GET|POST|REQUEST|COOKIE)"

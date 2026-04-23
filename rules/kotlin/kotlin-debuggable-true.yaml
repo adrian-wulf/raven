@@ -1,0 +1,13 @@
+id: raven-kotlin-debug-001
+name: Kotlin Android debuggable True
+description: |
+  Detects android:debuggable=true in manifest which enables debugging in production.
+severity: high
+category: misconfiguration
+confidence: high
+languages: [kotlin]
+message: |
+  debuggable=true allows attaching debuggers to production builds. Remove before release.
+patterns:
+  - type: regex
+    pattern: "android:debuggable=['\"]true['\"]"

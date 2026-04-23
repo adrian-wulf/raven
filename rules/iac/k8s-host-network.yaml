@@ -1,0 +1,11 @@
+id: raven-iac-k8s-004
+name: Kubernetes Host Network
+severity: high
+category: misconfiguration
+confidence: high
+languages: [yaml]
+message: |
+  hostNetwork: true shares host network namespace. Avoid in production.
+patterns:
+  - type: regex
+    pattern: "hostNetwork:\\s*true"
