@@ -29,7 +29,7 @@ jobs:
 
     - name: Security Scan
       run: |
-        go run ./cmd/raven scan --format sarif --baseline .raven-baseline.json > raven-results.sarif
+        go run ./cmd/raven scan --format sarif --baseline .raven-baseline.json --secrets --deps > raven-results.sarif
       continue-on-error: true
 
     - name: Upload SARIF

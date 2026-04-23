@@ -1,37 +1,7 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-23T06:13:23.010283648Z",
+  "generated_at": "2026-04-23T09:52:56.174859979Z",
   "findings": [
-    {
-      "rule_id": "raven-js-cmd-001",
-      "file": "internal/cli/init.go",
-      "line": 155,
-      "column": 3,
-      "snippet_hash": "sha256:9f65d559d0ca7109",
-      "rule_name": "Command Injection via exec/spawn",
-      "severity": "critical",
-      "snippet": "  exec(\"ping \" + req.params.host);"
-    },
-    {
-      "rule_id": "raven-js-secrets-001",
-      "file": "internal/cli/init.go",
-      "line": 135,
-      "column": 9,
-      "snippet_hash": "sha256:e03642149dd65427",
-      "rule_name": "Hardcoded API Key or Secret",
-      "severity": "high",
-      "snippet": "  const API_KEY = \"sk-live-abc123...\";"
-    },
-    {
-      "rule_id": "raven-gen-creds-001",
-      "file": "internal/secrets/scanner.go",
-      "line": 235,
-      "column": 41,
-      "snippet_hash": "sha256:f980adbf234509ad",
-      "rule_name": "Default / Weak Credentials",
-      "severity": "high",
-      "snippet": "\t\t\"password123\", \"abc123\", \"changeme\", \"default_password\","
-    },
     {
       "rule_id": "raven-gen-creds-001",
       "file": "test-vulnerable-app/server.js",
@@ -216,7 +186,7 @@
       "rule_id": "raven-js-xss-001",
       "file": "test-vulnerable-app/server.js",
       "line": 46,
-      "column": 34,
+      "column": 30,
       "snippet_hash": "sha256:eecd3f1c7916f453",
       "rule_name": "XSS via innerHTML or dangerouslySetInnerHTML",
       "severity": "high",
