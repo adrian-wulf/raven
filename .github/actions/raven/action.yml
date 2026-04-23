@@ -1,0 +1,99 @@
+name: 'Raven Security Scanner'
+author: 'RedWulf'
+description: >
+  Scan your code for AI-generated security vulnerabilities.
+  Raven detects SQL injection, XSS, hardcoded secrets, and 40+ other
+  vulnerability classes that LLMs commonly introduce.
+branding:
+  icon: 'shield'
+  color: 'purple'
+
+inputs:
+  path:
+    description: 'Path to scan (default: current directory)'
+    required: false
+    default: '.'
+  fail-on:
+    description: 'Minimum severity to fail on (critical, high, medium, low, info)'
+    required: false
+    default: 'high'
+  format:
+    description: 'Output format (sarif, json, pretty)'
+    required: false
+    default: 'sarif'
+  output:
+    description: 'Output file path'
+    required: false
+    default: 'raven-results.sarif'
+  rules-path:
+    description: 'Path to custom rules directory (optional)'
+    required: false
+    default: ''
+  min-confidence:
+    description: 'Minimum rule confidence (low, medium, high)'
+    required: false
+    default: 'medium'
+
+outputs:
+  findings:
+    description: 'Number of findings detected'
+  sarif:
+    description: 'Path to SARIF output file'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+
+    - name: Build Raven
+      shell: bash
+      run: |
+        echo "🔨 Building Raven from source..."
+        cd "${{ github.action_path }}/../../.."
+        go build -o /tmp/raven ./cmd/raven
+        /tmp/raven version
+
+    - name: Run Raven Scan
+      id: scan
+      shell: bash
+      run: |
+        echo "🐦‍⬛ Starting Raven security scan..."
+        RAVEN_ARGS="${{ inputs.path }} --format ${{ inputs.format }} --output ${{ inputs.output }} --min-sev ${{ inputs.fail-on }} --confidence ${{ inputs.min-confidence }}"
+        
+        if [ -n "${{ inputs.rules-path }}" ]; then
+          RAVEN_ARGS="$RAVEN_ARGS --rules ${{ inputs.rules-path }}"
+        fi
+        
+        /tmp/raven scan $RAVEN_ARGS
+        
+        # Count findings for output
+        if [ "${{ inputs.format }}" = "json" ] || [ "${{ inputs.format }}" = "sarif" ]; then
+          if [ -f "${{ inputs.output }}" ]; then
+            FINDINGS=$(grep -o '"rule_id"' "${{ inputs.output }}" | wc -l || echo "0")
+            echo "findings=$FINDINGS" >> $GITHUB_OUTPUT
+          fi
+        fi
+
+    - name: Upload SARIF to GitHub Security
+      if: inputs.format == 'sarif' && always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ inputs.output }}
+        category: raven
+
+    - name: Report Results
+      if: always()
+      shell: bash
+      run: |
+        echo ""
+        echo "═══════════════════════════════════════════════════════════"
+        echo "  Raven Scan Complete"
+        echo "═══════════════════════════════════════════════════════════"
+        if [ -f "${{ inputs.output }}" ]; then
+          echo "📄 Report: ${{ inputs.output }}"
+        fi
+        echo ""
+        echo "View results in: Security → Code scanning alerts"
