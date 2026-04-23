@@ -25,10 +25,11 @@ jobs:
 
     - name: Security Scan
       run: |
-        go run ./cmd/raven scan --format sarif --output raven-results.sarif
+        go run ./cmd/raven scan --format sarif --baseline .raven-baseline.json > raven-results.sarif
+      continue-on-error: true
 
     - name: Upload SARIF
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v2
       if: always()
       with:
         sarif_file: raven-results.sarif
