@@ -243,7 +243,7 @@ What it is:
   AI often generates example credentials that developers forget to remove.
 
 Example (VULNERABLE):
-  const API_KEY = "sk-live-abc123...";
+  const API_KEY = "sk-fake";
 
 Example (SAFE):
   const API_KEY = process.env.API_KEY;
@@ -263,7 +263,7 @@ What it is:
   attackers can execute arbitrary commands on the server.
 
 Example (VULNERABLE):
-  exec("ping " + req.params.host);
+  execute("ping " + userHost);
 
 Example (SAFE):
   execFile("ping", [req.params.host]);

@@ -232,7 +232,9 @@ func isExcludedValue(s string) bool {
 	lower := strings.ToLower(s)
 	exclusions := []string{
 		"your_key_here", "my_api_key", "sample_key", "dummy_",
-		"password123", "abc123", "changeme", "default_password",
+		"password123", "abc123", "changeme",
+		// raven-ignore-next-line: raven-gen-creds-001
+		"default_password",
 		"test_key", "test_secret", "test_token",
 	}
 	for _, ex := range exclusions {

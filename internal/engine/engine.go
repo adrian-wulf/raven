@@ -21,9 +21,10 @@ import (
 )
 
 type Scanner struct {
-	rules    []Rule
-	config   ScanConfig
+	rules      []Rule
+	config     ScanConfig
 	regexCache map[string]*regexp.Regexp
+	regexMu    sync.RWMutex
 }
 
 type ScanConfig struct {
@@ -532,14 +533,18 @@ func (s *Scanner) matchRegex(content []byte, pattern string, path string) []find
 	if s.regexCache == nil {
 		s.regexCache = make(map[string]*regexp.Regexp)
 	}
+	s.regexMu.RLock()
 	re, ok := s.regexCache[pattern]
+	s.regexMu.RUnlock()
 	if !ok {
 		var err error
 		re, err = regexp.Compile(pattern)
 		if err != nil {
 			return nil
 		}
+		s.regexMu.Lock()
 		s.regexCache[pattern] = re
+		s.regexMu.Unlock()
 	}
 
 	var matches []findingMatch
