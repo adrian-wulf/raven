@@ -365,7 +365,16 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 	if err != nil {
 		return nil, err
 	}
+	return s.scanContent(path, content, rules)
+}
 
+// ScanString runs the full scanning pipeline on in-memory source code.
+// This is useful for testing and programmatic scanning without writing temp files.
+func (s *Scanner) ScanString(source []byte, filename string, rules []Rule) ([]Finding, error) {
+	return s.scanContent(filename, source, rules)
+}
+
+func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Finding, error) {
 	// Global test file detection — skip regex scanning for known test files
 	// AST-based scanning still runs for taint analysis accuracy
 	isTestFile := isKnownTestFile(path)
@@ -456,10 +465,15 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 	}
 
 	// Phase 2: AST-based scanning (for supported languages)
-	if ast.IsSupported(path) {
-		pf, err := ast.Parse(path)
+	langObj := ast.GetLanguageByName(lang)
+	if langObj == nil {
+		langObj = ast.GetLanguageByExtension(path)
+	}
+	if langObj != nil {
+		pf, err := ast.ParseBytes(langObj, content)
 		if err == nil {
 			defer pf.Close()
+			pf.Path = path
 
 			// 2a: AST query rules
 			for _, rule := range rules {
@@ -550,11 +564,13 @@ func (s *Scanner) scanFile(path string, rules []Rule) ([]Finding, error) {
 				langName = "javascript"
 			}
 			tracker := taint.NewTracker(langName)
-				if s.config.Resolver != nil {
-					tracker.SetResolver(s.config.Resolver)
-				}
+			if s.config.Resolver != nil {
+				tracker.SetResolver(s.config.Resolver)
+			}
+			// Set current file for cross-file resolver
+			tracker.SetCurrentFile(path)
 			taintRules := convertRulesToTaint(rules)
-			taintFindings, err := tracker.ScanFile(path, taintRules)
+			taintFindings, err := tracker.ScanBytes(langName, content, taintRules)
 			if err == nil {
 				for _, f := range taintFindings {
 					findings = append(findings, Finding{

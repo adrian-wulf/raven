@@ -15,6 +15,6 @@ patterns:
   - type: regex
     pattern: "@Query\\s*\\(\\s*['\"].*\\$.*['\"]\\s*\\)"
   - type: regex
-    pattern: "rawQuery\\s*\\(\\s*[^)]*\\+")
+    pattern: "rawQuery\\s*\\(\\s*[^)]*\\+\\)"
 references:
   - https://developer.android.com/training/data-storage/room

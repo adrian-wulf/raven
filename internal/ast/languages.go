@@ -120,6 +120,17 @@ func IsSupported(path string) bool {
 	return GetLanguageByExtension(path) != nil
 }
 
+// GetLanguageByName returns the language for a given language name
+func GetLanguageByName(name string) *Language {
+	lower := strings.ToLower(name)
+	for _, lang := range registry {
+		if strings.ToLower(lang.Name) == lower {
+			return &lang
+		}
+	}
+	return nil
+}
+
 // SupportedLanguages returns a list of supported language names
 func SupportedLanguages() []string {
 	var names []string

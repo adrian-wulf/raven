@@ -1,5 +1,5 @@
 id: raven-js-jwt-002
-name: JWT Algorithm Confusion (alg: none)
+name: "JWT Algorithm Confusion (alg: none)"
 description: |
   Detects JWT verification that accepts algorithm "none" or allows
   algorithm switching, which can bypass authentication.

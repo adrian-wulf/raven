@@ -15,8 +15,8 @@ patterns:
   - type: regex
     pattern: "spring-boot-starter-actuator"
   - type: regex
-    pattern: "management\.endpoints\.web\.exposure\.include\s*=\s*\\*"
+    pattern: "management\\.endpoints\\.web\\.exposure\\.include\\s*=\\s*\\*"
   - type: regex
-    pattern: "management\.endpoint\.health\.show-details\s*=\s*always"
+    pattern: "management\\.endpoint\\.health\\.show-details\\s*=\\s*always"
 references:
   - https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html

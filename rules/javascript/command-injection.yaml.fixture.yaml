@@ -1,0 +1,27 @@
+rule_id: raven-js-cmd-001
+positive:
+  - name: exec with template literal
+    source: |
+      const { exec } = require('child_process');
+      exec(`ls ${req.query.dir}`);
+    language: javascript
+    expect_findings: 2
+  - name: execSync with user input
+    source: |
+      const { execSync } = require('child_process');
+      execSync(req.body.command);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: exec with constant command
+    source: |
+      const { exec } = require('child_process');
+      exec("ls -la");
+    language: javascript
+    expect_findings: 0
+  - name: spawn with array args
+    source: |
+      const { spawn } = require('child_process');
+      spawn('ls', ['-la']);
+    language: javascript
+    expect_findings: 0

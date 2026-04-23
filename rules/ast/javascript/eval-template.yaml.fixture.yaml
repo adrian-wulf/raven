@@ -1,0 +1,28 @@
+rule_id: raven-ast-js-eval-001
+positive:
+  - name: eval with template literal
+    source: |
+      eval(`return ${x} + 1`);
+    language: javascript
+    expect_findings: 1
+  - name: window.eval with template literal
+    source: |
+      window.eval(`console.log(${data})`);
+    language: javascript
+    expect_findings: 1
+  - name: call to Function with template literal
+    source: |
+      Function(`return ${userInput}`);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: eval with string literal
+    source: |
+      eval("1 + 1");
+    language: javascript
+    expect_findings: 0
+  - name: Function with string literal
+    source: |
+      new Function("return 42");
+    language: javascript
+    expect_findings: 0

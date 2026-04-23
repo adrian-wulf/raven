@@ -1,0 +1,28 @@
+rule_id: raven-ast-js-sqli-001
+positive:
+  - name: req.body flows into query
+    source: |
+      app.post('/user', (req, res) => {
+        const query = `SELECT * FROM users WHERE id = ${req.body.id}`;
+        db.query(query);
+      });
+    language: javascript
+    expect_findings: 1
+  - name: req.params in execute
+    source: |
+      db.execute("SELECT * FROM products WHERE id = " + req.params.id);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: parameterized query
+    source: |
+      app.post('/user', (req, res) => {
+        db.query("SELECT * FROM users WHERE id = ?", [req.body.id]);
+      });
+    language: javascript
+    expect_findings: 0
+  - name: constant query
+    source: |
+      db.query("SELECT * FROM users");
+    language: javascript
+    expect_findings: 0

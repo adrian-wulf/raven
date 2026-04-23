@@ -1,0 +1,35 @@
+rule_id: raven-js-eval-001
+positive:
+  - name: eval with req.body
+    source: |
+      app.post('/api', (req, res) => {
+        eval(req.body.code);
+      });
+    language: javascript
+    expect_findings: 1
+  - name: new Function with user input
+    source: |
+      const fn = new Function(req.query.script);
+    language: javascript
+    expect_findings: 1
+  - name: setTimeout with template literal
+    source: |
+      setTimeout(`${userInput}`, 1000);
+    language: javascript
+    expect_findings: 1
+negative:
+  - name: eval with constant
+    source: |
+      eval("1 + 1");
+    language: javascript
+    expect_findings: 0
+  - name: new Function with constant
+    source: |
+      const fn = new Function("return 42");
+    language: javascript
+    expect_findings: 0
+  - name: setTimeout with function reference
+    source: |
+      setTimeout(myCallback, 1000);
+    language: javascript
+    expect_findings: 0

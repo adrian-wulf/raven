@@ -59,6 +59,11 @@ func (t *Tracker) SetResolver(r *crossfile.Resolver) {
 	t.resolver = r
 }
 
+// SetCurrentFile sets the current file path for cross-file resolution.
+func (t *Tracker) SetCurrentFile(path string) {
+	t.currentFile = path
+}
+
 // ScanFile analyzes a file for taint vulnerabilities
 func (t *Tracker) ScanFile(path string, rules []RuleInfo) ([]Finding, error) {
 	t.currentFile = path
