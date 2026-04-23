@@ -33,7 +33,7 @@ func createHook(hookPath string) error {
 echo "🐦‍⬛ Raven: Scanning for security vulnerabilities..."
 
 # Run Raven scan
-raven scan --format pretty --min-sev high
+raven scan --staged --format pretty --min-sev high
 
 # Check exit code
 if [ $? -ne 0 ]; then
@@ -74,7 +74,7 @@ func appendToHook(hookPath string) error {
 # --- Raven Security Scanner ---
 # https://github.com/raven-security/raven
 echo "🐦‍⬛ Raven: Scanning for security vulnerabilities..."
-raven scan --format pretty --min-sev high
+raven scan --staged --format pretty --min-sev high
 if [ $? -ne 0 ]; then
     echo ""
     echo "❌ Raven found security issues. Commit blocked."

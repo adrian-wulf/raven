@@ -3,7 +3,9 @@ package cli
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/raven-security/raven/internal/baseline"
 	"github.com/raven-security/raven/internal/deps"
@@ -33,6 +35,7 @@ func scanCmd() *cobra.Command {
 		noIgnoreComments bool
 		noCache          bool
 		policyPath       string
+		staged           bool
 	)
 
 	cmd := &cobra.Command{
@@ -58,7 +61,20 @@ Examples:
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			paths := args
-			if len(paths) == 0 {
+			if staged {
+				stagedFiles, err := getStagedFiles()
+				if err != nil {
+					return fmt.Errorf("getting staged files: %w", err)
+				}
+				if len(stagedFiles) == 0 {
+					fmt.Println("No staged files to scan.")
+					return nil
+				}
+				paths = stagedFiles
+				if verbose {
+					fmt.Printf("Scanning %d staged files\n", len(paths))
+				}
+			} else if len(paths) == 0 {
 				paths = []string{"."}
 			}
 
@@ -338,6 +354,29 @@ Examples:
 	cmd.Flags().BoolVar(&updateBaseline, "update-baseline", false, "Save current findings as baseline JSON")
 	cmd.Flags().BoolVar(&noIgnoreComments, "no-ignore-comments", false, "Ignore inline suppression comments")
 	cmd.Flags().StringVar(&policyPath, "policy", "", "Path to policy YAML (.raven-policy.yaml)")
+	cmd.Flags().BoolVar(&staged, "staged", false, "Only scan git staged files (fast pre-commit scan)")
 
 	return cmd
+}
+
+// getStagedFiles returns a list of staged files from git
+func getStagedFiles() ([]string, error) {
+	cmd := exec.Command("git", "diff", "--cached", "--name-only", "--diff-filter=ACM")
+	out, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("git diff failed: %w", err)
+	}
+
+	var files []string
+	for _, line := range strings.Split(string(out), "\n") {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		// Only include files that exist and have supported extensions
+		if _, err := os.Stat(line); err == nil {
+			files = append(files, line)
+		}
+	}
+	return files, nil
 }
