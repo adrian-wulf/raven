@@ -83,6 +83,7 @@ type Finding struct {
 	References   []string          `json:"references,omitempty"`
 	Confidence     string            `json:"confidence"`
 	ConfidenceScore float64          `json:"confidence_score,omitempty"`
+	QualityScore   int               `json:"quality_score,omitempty"`
 	Metavars       map[string]string `json:"metavars,omitempty"`
 }
 

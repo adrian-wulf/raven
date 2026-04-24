@@ -463,6 +463,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 					FixAvailable: fix != nil,
 					References:   rule.References,
 					Confidence:   rule.Confidence,
+					QualityScore: CalculateQualityScore(rule),
 					Metavars:     m.metavars,
 				}
 
@@ -558,6 +559,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 							References:   rule.References,
 							Fix:          fix,
 							FixAvailable: fix != nil,
+							QualityScore: CalculateQualityScore(rule),
 							Metavars:     metavars,
 						}
 
@@ -1028,4 +1030,42 @@ func min(a, b int) int {
 		return a
 	}
 	return b
+}
+
+// calculateQualityScore assigns a heuristic quality score to a rule.
+// Higher score = higher precision / lower expected false-positive rate.
+func CalculateQualityScore(rule Rule) int {
+	score := 50 // base
+
+	for _, p := range rule.Patterns {
+		switch p.Type {
+		case "ast-query", "ast":
+			score += 20
+		case "taint":
+			score += 15
+		case "regex":
+			score += 5
+		case "literal":
+			score += 8
+		}
+	}
+
+	switch rule.Confidence {
+	case "high":
+		score += 10
+	case "medium":
+		score += 5
+	case "low":
+		score -= 10
+	}
+
+	if len(rule.Frameworks) > 0 {
+		score += 10
+	}
+
+	if len(rule.Languages) > 0 && !contains(rule.Languages, "*") {
+		score += 5
+	}
+
+	return score
 }

@@ -18,6 +18,7 @@ func rulesCmd() *cobra.Command {
 		lang   string
 		sev    string
 		detail bool
+		score  bool
 	)
 
 	cmd := &cobra.Command{
@@ -29,7 +30,8 @@ Examples:
   raven rules              # List all rules
   raven rules --lang go    # Only Go rules
   raven rules --sev high   # Only high/critical severity
-  raven rules --detail     # Show full rule details`,
+  raven rules --detail     # Show full rule details
+  raven rules --score      # Show quality score for each rule`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			loader := engine.NewRulesLoader()
 			rules, err := loader.Load()
@@ -73,6 +75,23 @@ Examples:
 				fmt.Printf("  Category: %s | Languages: %s | Confidence: %s\n",
 					rule.Category, strings.Join(rule.Languages, ", "), rule.Confidence)
 
+				if score {
+					qs := engine.CalculateQualityScore(rule)
+					scoreColor := "#00B894"
+					if qs < 60 {
+						scoreColor = "#E17055"
+					} else if qs < 75 {
+						scoreColor = "#FDCB6E"
+					}
+					scoreBadge := lipgloss.NewStyle().
+						Background(lipgloss.Color(scoreColor)).
+						Foreground(lipgloss.Color("#FFFFFF")).
+						Bold(true).
+						Padding(0, 1).
+						Render(fmt.Sprintf("Q%d", qs))
+					fmt.Printf("  %s Quality Score\n", scoreBadge)
+				}
+
 				if detail {
 					fmt.Printf("  %s\n", rule.Description)
 					if rule.Fix != nil {
@@ -95,6 +114,7 @@ Examples:
 	cmd.Flags().StringVarP(&lang, "lang", "l", "", "Filter by language")
 	cmd.Flags().StringVarP(&sev, "sev", "s", "", "Filter by minimum severity")
 	cmd.Flags().BoolVarP(&detail, "detail", "d", false, "Show full rule details")
+	cmd.Flags().BoolVar(&score, "score", false, "Show quality score for each rule")
 
 	cmd.AddCommand(rulesValidateCmd())
 	cmd.AddCommand(rulesSearchCmd())
