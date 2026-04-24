@@ -4,7 +4,7 @@
 >
 > 1,900+ rules. 35 language categories. 10 LLM providers for auto-fix. 7-layer false positive reduction.
 
-[![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8?logo=go)](https://golang.org)
+[![Go Version](https://img.shields.io/badge/go-1.25+-00ADD8?logo=go)](https://golang.org)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Rules](https://img.shields.io/badge/rules-1,900+-success?logo=shield)](rules)
 [![Languages](https://img.shields.io/badge/languages-35+-orange?logo=code)](rules)
@@ -56,12 +56,60 @@ raven scan --policy .raven-policy.yaml
 
 # Baseline comparison (reports ONLY NEW issues)
 raven scan --baseline .raven-baseline.json
-raven scan --save-baseline baseline.json
+raven scan --update-baseline
+
+# HTML report for sharing with your team
+raven scan --format html -o security-report.html
+
+# Deep scan with secrets detection + no cache
+raven scan --secrets --no-cache
+
+# Only high-confidence findings
+raven scan --confidence high --min-sev medium
+
+# Validate all rules before CI
+raven rules validate
+
+# See rule quality scores
+raven rules --score | head -20
 ```
 
 ---
 
-## v2.5 Highlights
+## What's New in v3.3
+
+### File Output (`--output`)
+Write reports directly to files in any format:
+
+```bash
+raven scan --format html -o security-report.html
+raven scan --format sarif -o results.sarif
+raven scan --format json -o findings.json --quiet
+```
+
+### Rule Quality Scoring
+Every finding gets a quality score (0–100). AST-based rules score highest (~85), taint rules next (~75), regex lowest (~50–60). Filter by quality in CI:
+
+```bash
+raven rules --score          # audit all rules by quality
+raven rules validate         # validate syntax + AST queries
+```
+
+### Cross-File Taint Resolver v2
+Taint analysis now follows data across file boundaries for **6 languages**: JavaScript/TypeScript, Go, Python, Java, and C#. Detects when user input from an exported function flows into a dangerous sink in another file.
+
+### Circuit Breaker
+Rules that produce >30 findings per file or >100 per project are automatically downgraded or dropped as likely false-positive storms. No more spam from overly broad regex rules.
+
+### Auto-FP Detection
+Raven tracks how many times each rule is suppressed via `#raven-ignore`. Rules suppressed ≥3 times trigger a post-scan warning suggesting you tighten the rule or lower its confidence.
+
+### `regexp2` Fallback
+Complex regex patterns with lookahead/lookbehind (e.g. `(?!...)` ) now compile via `regexp2` instead of failing silently. 17 broken rules were moved to `rules/.disabled-broken/` for manual repair.
+
+---
+
+## v3.3 Highlights
 
 ### 1,900+ Security Rules
 
@@ -152,9 +200,9 @@ Support for advanced rule composition:
 
 ## Competitive Comparison
 
-| Feature | **Raven v2.5** | Semgrep CE | CodeQL | Snyk Code | Brakeman | Bearer |
+| Feature | **Raven v3.3** | Semgrep CE | CodeQL | Snyk Code | Brakeman | Bearer |
 |---------|---------------|------------|--------|-----------|----------|--------|
-| **Rules** | **1,915** | 2,800+ | 483 | 156 | 84 | 124 |
+| **Rules** | **1,911** | 2,800+ | 483 | 156 | 84 | 124 |
 | **Languages** | **35** | 30+ | 11 | 8 | 1 (Ruby) | 2 |
 | **AI-Aware Rules** | **Yes** | No | No | No | No | No |
 | **LLM Auto-Fix** | **10 providers** | No | No (Copilot sep.) | 1 (Snyk AI) | No | No |
@@ -171,6 +219,9 @@ Support for advanced rule composition:
 | **Quality Gates** | **Yes** | No | No | Yes | No | No |
 | **Scan Comparison** | **Yes** | No | No | Yes | Yes | No |
 | **Confidence Scoring** | **Yes (0.0-1.0)** | Partial | Partial | Yes | High/Med/Low | No |
+| **Rule Validation** | **Yes (AST + regex)** | Partial | Yes | No | No | No |
+| **Quality Scoring** | **Yes (0–100)** | No | No | No | No | No |
+| **Cross-File Taint** | **Yes (6 langs)** | No | Partial | No | No | No |
 | **Exploitability Scorer** | **Yes (CVSS-like)** | No | No | No | No | No |
 
 **Sources:** Semgrep CE blog (2024), CodeQL changelog 2.23.5 (2025), Cycode SAST benchmark (2023), Snyk documentation (2025), Brakeman docs, Bearer benchmark.
@@ -258,6 +309,88 @@ Raven maps every rule to CWE. We cover the **CWE Top 25 2024** in full:
 14. **Export** to SARIF v2.1.0, GitLab SAST JSON, HTML, or terminal
 
 **Everything is local. Everything is fast. Everything is free.**
+
+---
+
+## User Guide
+
+### Reading the Output
+
+Every finding shows:
+- **Severity**: `critical` → `high` → `medium` → `low` → `info`
+- **Confidence**: `high` (definite) / `medium` (likely) / `low` (possible)
+- **Quality Score**: 0–100 heuristic (AST rules ~85, taint ~75, regex ~50–60)
+- **Location**: `file:line:column`
+- **Fix hint**: 💡 when auto-fix is available
+
+```bash
+# Only show high-confidence findings
+raven scan --confidence high
+
+# Only show critical and high severity
+raven scan --min-sev high
+```
+
+### Baseline Workflow
+
+Track only *new* issues introduced since your last scan:
+
+```bash
+# 1. Save current state as baseline
+raven scan --update-baseline
+
+# 2. In CI, report only new findings
+raven scan --baseline .raven-baseline.json
+
+# 3. Update baseline after intentional fixes
+raven scan --update-baseline
+```
+
+### Circuit Breaker
+
+Raven automatically detects rules producing too many findings:
+- **>30 findings/file** → confidence downgraded to `low`
+- **>100 findings/project** → rule is dropped entirely
+
+This protects you from false-positive storms caused by overly broad regex rules. You'll see a warning like:
+
+```
+⚠️  Circuit breaker: rule gen-rp-001 produced 1881 findings — treating as potential false-positive storm
+```
+
+### Ignoring Findings
+
+Use `#raven-ignore` comments with a required justification:
+
+```javascript
+// #raven-ignore: This is a deliberate open redirect for OAuth callback
+res.redirect(req.query.callback_url);
+```
+
+### Writing Custom Rules
+
+Create a `.yaml` file in `rules/<category>/`:
+
+```yaml
+id: my-team-sql-001
+name: Custom SQLi Pattern
+severity: critical
+category: sqli
+confidence: high
+cwe: "CWE-89"
+languages: [javascript]
+message: "Our internal ORM requires raw SQL here — use QueryBuilder instead"
+patterns:
+  - type: regex
+    pattern: "db\.raw\\(.*\\+.*\\)"
+references:
+  - https://internal.docs/query-builder
+```
+
+Validate your rule:
+```bash
+raven rules validate
+```
 
 ---
 

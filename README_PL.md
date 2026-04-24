@@ -4,7 +4,7 @@
 >
 > 1,900+ regul. 35 kategorii jezykowych. 10 dostawcow LLM do auto-naprawy. 7-warstwowa redukcja FP.
 
-[![Go Version](https://img.shields.io/badge/go-1.23+-00ADD8?logo=go)](https://golang.org)
+[![Go Version](https://img.shields.io/badge/go-1.25+-00ADD8?logo=go)](https://golang.org)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Reguly](https://img.shields.io/badge/reguly-1,900+-success?logo=shield)](rules)
 [![Jezyki](https://img.shields.io/badge/jezyki-35+-orange?logo=code)](rules)
@@ -56,12 +56,60 @@ raven scan --policy .raven-policy.yaml
 
 # Porownanie z baseline (zglasza TYLKO NOWE problemy)
 raven scan --baseline .raven-baseline.json
-raven scan --save-baseline baseline.json
+raven scan --update-baseline
+
+# Raport HTML do podzielenia sie z zespolem
+raven scan --format html -o raport-bezpieczenstwa.html
+
+# Gleboki skan z detekcja sekretow + bez cache
+raven scan --secrets --no-cache
+
+# Tylko findings z wysoka confidence
+raven scan --confidence high --min-sev medium
+
+# Walidacja wszystkich regul przed CI
+raven rules validate
+
+# Zobacz score jakosci regul
+raven rules --score | head -20
 ```
 
 ---
 
-## Nowosci w v2.5
+## Co nowego w v3.3
+
+### Zapis do pliku (`--output`)
+Zapisuj raporty bezpośrednio do plików w dowolnym formacie:
+
+```bash
+raven scan --format html -o raport-bezpieczenstwa.html
+raven scan --format sarif -o wyniki.sarif
+raven scan --format json -o findings.json --quiet
+```
+
+### Ocenianie jakosci regul
+Kazde finding otrzymuje wynik jakosci (0–100). Reguly AST score'uja najwyzej (~85), taint next (~75), regex najnizej (~50–60). Filtruj po jakosci w CI:
+
+```bash
+raven rules --score          # audytuj wszystkie reguly
+raven rules validate         # waliduj skladnie + AST queries
+```
+
+### Cross-File Taint Resolver v2
+Analiza taint teraz podaza za danymi miedzy plikami dla **6 jezykow**: JavaScript/TypeScript, Go, Python, Java i C#. Wykrywa gdy user input z eksportowanej funkcji plynie do dangerous sink w innym pliku.
+
+### Circuit Breaker
+Reguly produkujace >30 findings na plik lub >100 na projekt sa automatycznie obnizane lub usuwane jako prawdopodobne false-positive storm. Koniec ze spamem od zbyt szerokich regexow.
+
+### Auto-FP Detection
+Raven sledzi ile razy kazda regula jest thumiona przez `#raven-ignore`. Reguly thumione ≥3 razy triggeruja ostrzezenie po skanie sugerujace zacisniecie reguly lub obnizenie confidence.
+
+### Fallback `regexp2`
+Zlozone wzorce regex z lookahead/lookbehind (np. `(?!...)`) teraz kompiluja sie przez `regexp2` zamiast failowac. 17 zepsutych regul przeniesiono do `rules/.disabled-broken/` do recznej naprawy.
+
+---
+
+## Nowosci w v3.3
 
 ### 1,900+ Regul Bezpieczenstwa
 
@@ -152,9 +200,9 @@ Wsparcie dla zaawansowanej kompozycji regul:
 
 ## Porownanie z Konkurencja
 
-| Funkcja | **Raven v2.5** | Semgrep CE | CodeQL | Snyk Code | Brakeman | Bearer |
+| Funkcja | **Raven v3.3** | Semgrep CE | CodeQL | Snyk Code | Brakeman | Bearer |
 |---------|---------------|------------|--------|-----------|----------|--------|
-| **Reguly** | **1,915** | 2,800+ | 483 | 156 | 84 | 124 |
+| **Reguly** | **1,911** | 2,800+ | 483 | 156 | 84 | 124 |
 | **Jezyki** | **35** | 30+ | 11 | 8 | 1 (Ruby) | 2 |
 | **Reguly swiadome AI** | **Tak** | Nie | Nie | Nie | Nie | Nie |
 | **Auto-Fix LLM** | **10 dostawcow** | Nie | Nie (Copilot osobno) | 1 (Snyk AI) | Nie | Nie |
@@ -171,6 +219,9 @@ Wsparcie dla zaawansowanej kompozycji regul:
 | **Bramy Jakosciowe** | **Tak** | Nie | Nie | Tak | Nie | Nie |
 | **Porownanie Skanow** | **Tak** | Nie | Nie | Tak | Tak | Nie |
 | **Confidence Scoring** | **Tak (0.0-1.0)** | Czesciowo | Czesciowo | Tak | High/Med/Low | Nie |
+| **Walidacja Regul** | **Tak (AST + regex)** | Czesciowo | Tak | Nie | Nie | Nie |
+| **Ocenianie Jakosci** | **Tak (0–100)** | Nie | Nie | Nie | Nie | Nie |
+| **Taint Miedzy Plikami** | **Tak (6 jezykow)** | Nie | Czesciowo | Nie | Nie | Nie |
 | **Exploitability Scorer** | **Tak (jak CVSS)** | Nie | Nie | Nie | Nie | Nie |
 
 **Zrodla:** Blog Semgrep CE (2024), CodeQL changelog 2.23.5 (2025), Benchmark SAST Cycode (2023), Dokumentacja Snyk (2025), Dokumentacja Brakeman, Benchmark Bearer.
@@ -258,6 +309,88 @@ Raven mapuje kazda regule do CWE. Pokrywamy **CWE Top 25 2024** w calosci:
 14. **Eksport** do SARIF v2.1.0, GitLab SAST JSON, HTML lub terminala
 
 **Wszystko lokalne. Wszystko szybkie. Wszystko darmowe.**
+
+---
+
+## Poradnik Uzytkownika
+
+### Czytanie Outputu
+
+Kazde finding pokazuje:
+- **Severity**: `critical` → `high` → `medium` → `low` → `info`
+- **Confidence**: `high` (pewne) / `medium` (prawdopodobne) / `low` (mozliwe)
+- **Quality Score**: 0–100 heurystyka (reguly AST ~85, taint ~75, regex ~50–60)
+- **Lokacja**: `plik:linia:kolumna`
+- **Podpowiedz naprawy**: 💡 gdy auto-fix jest dostepny
+
+```bash
+# Tylko findings z wysoka confidence
+raven scan --confidence high
+
+# Tylko critical i high severity
+raven scan --min-sev high
+```
+
+### Workflow z Baseline
+
+Sledz tylko *nowe* problemy od ostatniego skanu:
+
+```bash
+# 1. Zapisz aktualny stan jako baseline
+raven scan --update-baseline
+
+# 2. W CI, zglaszaj tylko nowe findings
+raven scan --baseline .raven-baseline.json
+
+# 3. Zaktualizuj baseline po celowych naprawach
+raven scan --update-baseline
+```
+
+### Circuit Breaker
+
+Raven automatycznie wykrywa reguly produkujace za duzo findings:
+- **>30 findings/plik** → confidence obnizone do `low`
+- **>100 findings/projekt** → regula calkowicie usuwana
+
+To chroni przed false-positive storm od zbyt szerokich regexow. Zobaczysz ostrzezenie:
+
+```
+⚠️  Circuit breaker: rule gen-rp-001 produced 1881 findings — treating as potential false-positive storm
+```
+
+### Ignorowanie Findings
+
+Uzyj komentarzy `#raven-ignore` z wymaganym uzasadnieniem:
+
+```javascript
+// #raven-ignore: To jest celowy open redirect dla OAuth callback
+res.redirect(req.query.callback_url);
+```
+
+### Pisanie Wlasnych Regul
+
+Stworz plik `.yaml` w `rules/<kategoria>/`:
+
+```yaml
+id: moj-zespol-sql-001
+name: Niestandardowy wzorzec SQLi
+severity: critical
+category: sqli
+confidence: high
+cwe: "CWE-89"
+languages: [javascript]
+message: "Nasz wewnetrzny ORM wymaga tu raw SQL — uzyj QueryBuilder"
+patterns:
+  - type: regex
+    pattern: "db\\.raw\\(.*\\+.*\\)"
+references:
+  - https://internal.docs/query-builder
+```
+
+Waliduj swoja regule:
+```bash
+raven rules validate
+```
 
 ---
 
