@@ -128,7 +128,16 @@ match structural patterns rather than substrings.
 - **Auto-FP report** successfully flags `gen-auth-001` after 4 suppressions
   in a demo file, proving the feedback loop works.
 
-## 8. Faza 1 Results (v2.5.1 Hotfix)
+## 9. Faza 4 Results (v3.0 Quality Scoring + SARIF)
+
+- **Rule quality scores** now differentiate high-precision AST rules (Q85)
+  from broad regex rules (Q50). This enables CI gates like
+  `reject findings with quality_score < 70`.
+- **SARIF output** verified schema-compliant and ready for GitHub Advanced
+  Security ingestion.
+- **`raven rules --score`** gives maintainers an audit trail for rule health.
+
+## 10. Faza 1 Results (v2.5.1 Hotfix)
 
 After applying the Phase-1 fixes (circuit breaker + rule tightening):
 

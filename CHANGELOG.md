@@ -2,6 +2,19 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v3.0.0] - 2026-04-24
+
+### Added
+- Rule quality scoring heuristic (`CalculateQualityScore`):
+  - AST-based rules score highest (+20), taint next (+15), regex lowest (+5)
+  - Confidence and framework-specificity adjust the score
+  - Every JSON/SARIF finding now includes `quality_score`
+- `raven rules --score` — audit rule quality from the CLI
+
+### Notes
+- SARIF output was already schema-compliant; v3.0 makes it production-grade
+  by attaching quality metadata to every result.
+
 ## [v2.7.0] - 2026-04-24
 
 ### Added
