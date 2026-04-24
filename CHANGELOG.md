@@ -2,6 +2,22 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v2.5.1] - 2026-04-24
+
+### Added
+- Circuit breaker in scan engine: auto-downgrades or drops overly noisy rules
+  (>30 findings/file → low confidence, >100/project → dropped with warning)
+- `--no-cache` CLI flag (was documented but never registered)
+
+### Fixed
+- `concurrent map writes` panic in cache (`sync.RWMutex` added)
+
+### Changed
+- Tightened 14 regex rules to reduce false-positive storm:
+  - Downgraded confidence from high → low/medium for broad patterns
+  - Added `not-test-file` filters where applicable
+  - Removed `java-null-001` (matched every method call in Java)
+
 ## [v1.7.0] - 2026-04-22
 
 ### Added

@@ -105,12 +105,30 @@ These rules have been **temporarily disabled** for this benchmark and are target
 
 ---
 
-## 5. Recommendations
+## 5. Faza 1 Results (v2.5.1 Hotfix)
 
-1. **Refine or remove** the 6 overly broad regex rules identified above; replace with AST-aware equivalents where possible.
-2. **Add severity-based filtering** to the BenchmarkJava quality gate — raw counts are misleading when Semgrep generates 3 000+ low-confidence matches.
-3. **Fix JSON output** so it is machine-readable without `sed` preprocessing.
-4. **Publish benchmark as CI artifact** on every merge to `main` to catch rule-quality regressions.
+After applying the Phase-1 fixes (circuit breaker + rule tightening):
+
+| Target | `--confidence low` | `--confidence medium` | `--confidence high` |
+|--------|-------------------|----------------------|---------------------|
+| NodeGoat | 192 | **102** | **37** |
+| DVNA | 430 | **107** | **32** |
+| WebGoat | 550 | **473** | **317** |
+| BenchmarkJava | 94 | **62** | **57** |
+
+At `--confidence medium` the FP rate dropped significantly. The remaining
+high-confidence findings are predominantly AST-based and taint-analysis
+results, which have much higher precision.
+
+## 6. Recommendations
+
+1. ✅ ~~Fix cache race condition~~ (done in v2.5.1)
+2. ✅ ~~Register `--no-cache` flag~~ (done in v2.5.1)
+3. ✅ ~~Add circuit breaker for noisy rules~~ (done in v2.5.1)
+4. **Refine or remove** the remaining overly broad regex rules; replace with AST-aware equivalents where possible.
+5. **Add severity-based filtering** to the BenchmarkJava quality gate — raw counts are misleading when Semgrep generates 3 000+ low-confidence matches.
+6. **Fix JSON output** so it is machine-readable without `sed` preprocessing.
+7. **Publish benchmark as CI artifact** on every merge to `main` to catch rule-quality regressions.
 
 ---
 
