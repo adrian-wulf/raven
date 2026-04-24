@@ -2,6 +2,16 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v3.2.0] - 2026-04-24
+
+### Added
+- Cross-file resolver support for Java and C#:
+  - `parseJavaImports/Exports`, `parseCSharpImports/Exports`
+  - `.java` and `.cs` added to `isSourceFile`
+
+### Changed
+- Resolver now covers 6 languages: JS/TS, Go, Python, Java, C#.
+
 ## [v3.1.0] - 2026-04-24
 
 ### Added

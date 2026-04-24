@@ -146,7 +146,14 @@ match structural patterns rather than substrings.
 - **CI gate**: every PR now runs `raven rules validate` — regresje reguł
   są łapane zanim trafią na `main`.
 
-## 12. Faza 1 Results (v2.5.1 Hotfix)
+## 13. Faza 6 Results (v3.2 Cross-File Taint v2)
+
+- Cross-file resolver expanded from 4 to **6 languages** (JS/TS, Go, Python,
+  Java, C#).
+- Java test on WebGoat: `JWTSecretKeyEndpoint.java` → 21 imports, 4 exports
+  correctly parsed.
+
+## 14. Faza 1 Results (v2.5.1 Hotfix)
 
 After applying the Phase-1 fixes (circuit breaker + rule tightening):
 
