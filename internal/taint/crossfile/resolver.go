@@ -76,6 +76,12 @@ func (r *Resolver) parseFile(path string) error {
 	case ".py":
 		info.Imports = parsePythonImports(content)
 		info.Exports = parsePythonExports(content)
+	case ".java":
+		info.Imports = parseJavaImports(content)
+		info.Exports = parseJavaExports(content)
+	case ".cs":
+		info.Imports = parseCSharpImports(content)
+		info.Exports = parseCSharpExports(content)
 	}
 
 	r.modules[path] = info
@@ -164,7 +170,7 @@ func (r *Resolver) GetModuleInfo(path string) (*ModuleInfo, bool) {
 func isSourceFile(path string) bool {
 	ext := filepath.Ext(path)
 	switch ext {
-	case ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".go", ".py":
+	case ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".go", ".py", ".java", ".cs":
 		return true
 	}
 	return false
@@ -354,6 +360,66 @@ func parsePythonExports(content string) []Export {
 	for lineNum, line := range lines {
 		if matches := exportRe.FindStringSubmatch(line); matches != nil {
 			if !strings.HasPrefix(matches[1], "_") {
+				exports = append(exports, Export{Name: matches[1], Line: lineNum + 1})
+			}
+		}
+	}
+	return exports
+}
+
+func parseJavaImports(content string) []Import {
+	var imports []Import
+	lines := strings.Split(content, "\n")
+	importRe := regexp.MustCompile(`^import\s+(?:static\s+)?([\w.]+(?:\.\*)?);`)
+	for lineNum, line := range lines {
+		if matches := importRe.FindStringSubmatch(line); matches != nil {
+			imports = append(imports, Import{
+				Source: matches[1],
+				Line:   lineNum + 1,
+			})
+		}
+	}
+	return imports
+}
+
+func parseJavaExports(content string) []Export {
+	var exports []Export
+	lines := strings.Split(content, "\n")
+	// public class/interface/enum/record/method
+	exportRe := regexp.MustCompile(`^\s*public\s+(?:class|interface|enum|record|(?:static\s+)?(?:void|[\w<>,\s\[\]]+)\s+(\w+))`)
+	for lineNum, line := range lines {
+		if matches := exportRe.FindStringSubmatch(line); matches != nil {
+			if matches[1] != "" {
+				exports = append(exports, Export{Name: matches[1], Line: lineNum + 1})
+			}
+		}
+	}
+	return exports
+}
+
+func parseCSharpImports(content string) []Import {
+	var imports []Import
+	lines := strings.Split(content, "\n")
+	usingRe := regexp.MustCompile(`^using\s+(?:static\s+)?([\w.]+);`)
+	for lineNum, line := range lines {
+		if matches := usingRe.FindStringSubmatch(line); matches != nil {
+			imports = append(imports, Import{
+				Source: matches[1],
+				Line:   lineNum + 1,
+			})
+		}
+	}
+	return imports
+}
+
+func parseCSharpExports(content string) []Export {
+	var exports []Export
+	lines := strings.Split(content, "\n")
+	// public class/interface/struct/enum/method/property
+	exportRe := regexp.MustCompile(`^\s*public\s+(?:class|interface|struct|enum|(?:static\s+)?(?:void|Task|[\w<>,\s\[\]?]+)\s+(\w+))`)
+	for lineNum, line := range lines {
+		if matches := exportRe.FindStringSubmatch(line); matches != nil {
+			if matches[1] != "" {
 				exports = append(exports, Export{Name: matches[1], Line: lineNum + 1})
 			}
 		}
