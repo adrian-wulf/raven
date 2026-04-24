@@ -105,7 +105,23 @@ These rules have been **temporarily disabled** for this benchmark and are target
 
 ---
 
-## 5. Faza 1 Results (v2.5.1 Hotfix)
+## 5. Faza 2 Results (v2.6 AST-First)
+
+5 new AST-based rules added. They produce fewer findings but with much higher
+precision than the regex equivalents they complement:
+
+| New Rule | WebGoat | NodeGoat | DVNA | Notes |
+|----------|---------|----------|------|-------|
+| raven-ast-java-insecure-random-001 | **10** | — | — | Every `new Random()` hit is a TP |
+| raven-ast-java-sqli-concat-001 | 0 | — | — | Needs explicit `+` in executeQuery args |
+| raven-ast-js-open-redirect-001 | — | **1** | **1** | `res.redirect(req.query.url)` |
+| raven-ast-js-proto-001 | — | 0 | 0 | No prototype pollution in these apps |
+| raven-ast-js-json-parse-001 | — | 0 | 0 | No insecure JSON.parse in these apps |
+
+Key takeaway: AST rules have **near-zero false-positive rate** because they
+match structural patterns rather than substrings.
+
+## 6. Faza 1 Results (v2.5.1 Hotfix)
 
 After applying the Phase-1 fixes (circuit breaker + rule tightening):
 

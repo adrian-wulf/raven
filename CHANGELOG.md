@@ -2,6 +2,17 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v2.6.0] - 2026-04-24
+
+### Added
+- `type: ast` alias for `ast-query` pattern type.
+- 5 new high-precision AST-based rules:
+  - `raven-ast-java-insecure-random-001` — detects `new Random()` in Java
+  - `raven-ast-java-sqli-concat-001` — detects SQL injection via string `+` in `executeQuery`
+  - `raven-ast-js-open-redirect-001` — detects `res.redirect(req.query.*)`
+  - `raven-ast-js-proto-001` — detects prototype pollution via `__proto__` or `Object.assign`
+  - `raven-ast-js-json-parse-001` — detects insecure `JSON.parse(req.body)`
+
 ## [v2.5.1] - 2026-04-24
 
 ### Added
