@@ -37,6 +37,7 @@ func scanCmd() *cobra.Command {
 		policyPath       string
 		staged           bool
 		quiet            bool
+		outputPath       string
 	)
 
 	cmd := &cobra.Command{
@@ -289,8 +290,19 @@ Examples:
 					Color:    !noColor,
 					ShowCode: !noCode,
 				}
+				if outputPath != "" {
+					f, err := os.Create(outputPath)
+					if err != nil {
+						return fmt.Errorf("creating output file: %w", err)
+					}
+					defer f.Close()
+					formatter.Writer = f
+				}
 				if err := formatter.Print(result); err != nil {
 					return err
+				}
+				if outputPath != "" {
+					fmt.Fprintf(os.Stderr, "\n📝 Output written to %s\n", outputPath)
 				}
 			}
 
@@ -369,7 +381,8 @@ Examples:
 		},
 	}
 
-	cmd.Flags().StringVarP(&format, "format", "f", "pretty", "Output format: pretty, json, sarif")
+	cmd.Flags().StringVarP(&format, "format", "f", "pretty", "Output format: pretty, json, sarif, html, summary")
+	cmd.Flags().StringVarP(&outputPath, "output", "o", "", "Write output to file instead of stdout")
 	cmd.Flags().BoolVar(&noColor, "no-color", false, "Disable colored output")
 	cmd.Flags().BoolVar(&noCode, "no-code", false, "Hide code snippets")
 	cmd.Flags().StringVar(&minSev, "min-sev", "low", "Minimum severity: critical, high, medium, low, info")

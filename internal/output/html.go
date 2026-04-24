@@ -3,7 +3,6 @@ package output
 import (
 	"fmt"
 	"html/template"
-	"os"
 	"time"
 
 	"github.com/raven-security/raven/internal/engine"
@@ -97,7 +96,7 @@ func (f *Formatter) printHTML(result *engine.Result) error {
 		return fmt.Errorf("parsing HTML template: %w", err)
 	}
 
-	return tmpl.Execute(os.Stdout, data)
+	return tmpl.Execute(f.writer(), data)
 }
 
 type htmlData struct {

@@ -3,6 +3,7 @@ package output
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,6 +18,14 @@ type Formatter struct {
 	Format   string
 	Color    bool
 	ShowCode bool
+	Writer   io.Writer // defaults to os.Stdout
+}
+
+func (f *Formatter) writer() io.Writer {
+	if f.Writer != nil {
+		return f.Writer
+	}
+	return os.Stdout
 }
 
 func (f *Formatter) Print(result *engine.Result) error {
@@ -37,7 +46,7 @@ func (f *Formatter) Print(result *engine.Result) error {
 }
 
 func (f *Formatter) printJSON(result *engine.Result) error {
-	enc := json.NewEncoder(os.Stdout)
+	enc := json.NewEncoder(f.writer())
 	enc.SetIndent("", "  ")
 	return enc.Encode(result)
 }
@@ -51,15 +60,15 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 	title := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#6C5CE7"))
 	subtitle := lipgloss.NewStyle().Foreground(lipgloss.Color("#A29BFE"))
 
-	fmt.Println()
-	fmt.Println(title.Render("🐦‍⬛ Raven Security Scan"))
-	fmt.Println(subtitle.Render(fmt.Sprintf("  %d files scanned in %s", result.FilesScanned, result.Duration)))
-	fmt.Println()
+	fmt.Fprintln(f.writer())
+	fmt.Fprintln(f.writer(), title.Render("🐦‍⬛ Raven Security Scan"))
+	fmt.Fprintln(f.writer(), subtitle.Render(fmt.Sprintf("  %d files scanned in %s", result.FilesScanned, result.Duration)))
+	fmt.Fprintln(f.writer())
 
 	if len(result.Findings) == 0 {
 		green := lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4")).Bold(true)
-		fmt.Println(green.Render("✅ No security issues found!"))
-		fmt.Println()
+		fmt.Fprintln(f.writer(), green.Render("✅ No security issues found!"))
+		fmt.Fprintln(f.writer())
 		return nil
 	}
 
@@ -73,27 +82,27 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 		engine.Info:     "#A29BFE",
 	}
 
-	fmt.Println("Summary:")
+	fmt.Fprintln(f.writer(), "Summary:")
 	for _, sev := range []engine.Severity{engine.Critical, engine.High, engine.Medium, engine.Low, engine.Info} {
 		count := len(bySev[sev])
 		if count > 0 {
 			color := sevColors[sev]
 			style := lipgloss.NewStyle().Foreground(lipgloss.Color(color)).Bold(true)
-			fmt.Printf("  %s: %d\n", style.Render(string(sev)), count)
+			fmt.Fprintf(f.writer(), "  %s: %d\n", style.Render(string(sev)), count)
 		}
 	}
 	if len(result.Vulnerabilities) > 0 {
 		vulnStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#FF6B6B")).Bold(true)
-		fmt.Printf("  %s: %d\n", vulnStyle.Render("vulnerable deps"), len(result.Vulnerabilities))
+		fmt.Fprintf(f.writer(), "  %s: %d\n", vulnStyle.Render("vulnerable deps"), len(result.Vulnerabilities))
 	}
 	// Baseline diff info
 	if len(result.NewFindings) > 0 || len(result.BaselineFindings) > 0 {
 		newStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4")).Bold(true)
 		baseStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#A29BFE"))
 		_ = baseStyle
-		fmt.Printf("  %s: %d new, %d baseline\n", newStyle.Render("baseline diff"), len(result.NewFindings), len(result.BaselineFindings))
+		fmt.Fprintf(f.writer(), "  %s: %d new, %d baseline\n", newStyle.Render("baseline diff"), len(result.NewFindings), len(result.BaselineFindings))
 	}
-	fmt.Println()
+	fmt.Fprintln(f.writer())
 
 	// Findings
 	for _, sev := range []engine.Severity{engine.Critical, engine.High, engine.Medium, engine.Low, engine.Info} {
@@ -111,15 +120,15 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 
 		for _, finding := range findings {
 			// Severity badge + rule name
-			fmt.Printf("%s %s\n", sevStyle.Render(strings.ToUpper(string(finding.Severity))), finding.RuleName)
+			fmt.Fprintf(f.writer(), "%s %s\n", sevStyle.Render(strings.ToUpper(string(finding.Severity))), finding.RuleName)
 
 			// Location
 			locStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#636E72"))
-			fmt.Printf("  %s\n", locStyle.Render(fmt.Sprintf("%s:%d:%d", f.shortenPath(finding.File), finding.Line, finding.Column)))
+			fmt.Fprintf(f.writer(), "  %s\n", locStyle.Render(fmt.Sprintf("%s:%d:%d", f.shortenPath(finding.File), finding.Line, finding.Column)))
 
 			// Message
 			msgStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#DFE6E9"))
-			fmt.Printf("  %s\n", msgStyle.Render(f.wrapText(finding.Message, 70)))
+			fmt.Fprintf(f.writer(), "  %s\n", msgStyle.Render(f.wrapText(finding.Message, 70)))
 
 			// Code snippet
 			if f.ShowCode && finding.Snippet != "" {
@@ -128,35 +137,35 @@ func (f *Formatter) printPretty(result *engine.Result) error {
 					Foreground(lipgloss.Color("#DFE6E9")).
 					Padding(0, 1).
 					MarginLeft(2)
-				fmt.Printf("  %s\n", codeStyle.Render(f.truncateSnippet(finding.Snippet)))
+				fmt.Fprintf(f.writer(), "  %s\n", codeStyle.Render(f.truncateSnippet(finding.Snippet)))
 			}
 
 			// Fix hint
 			if finding.FixAvailable {
 				fixStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#55EFC4"))
-				fmt.Printf("  %s\n", fixStyle.Render("💡 Fix available: raven fix"))
+				fmt.Fprintf(f.writer(), "  %s\n", fixStyle.Render("💡 Fix available: raven fix"))
 			}
 
-			fmt.Println()
+			fmt.Fprintln(f.writer())
 		}
 	}
 
 	// Dependency vulnerabilities
 	if len(result.Vulnerabilities) > 0 {
 		vulnTitle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#FF6B6B"))
-		fmt.Println(vulnTitle.Render("Vulnerable Dependencies:"))
+		fmt.Fprintln(f.writer(), vulnTitle.Render("Vulnerable Dependencies:"))
 		for _, v := range result.Vulnerabilities {
 			fixed := v.FixedVersion
 			if fixed == "" {
 				fixed = "unknown"
 			}
-			fmt.Printf("  %s: %s@%s → %s\n", v.ID, v.Package, v.Version, fixed)
+			fmt.Fprintf(f.writer(), "  %s: %s@%s → %s\n", v.ID, v.Package, v.Version, fixed)
 			if v.Summary != "" {
 				sumStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#DFE6E9"))
-				fmt.Printf("    %s\n", sumStyle.Render(v.Summary))
+				fmt.Fprintf(f.writer(), "    %s\n", sumStyle.Render(v.Summary))
 			}
 		}
-		fmt.Println()
+		fmt.Fprintln(f.writer())
 	}
 
 	return nil
@@ -181,7 +190,7 @@ func (f *Formatter) printSARIF(result *engine.Result) error {
 		},
 	}
 
-	enc := json.NewEncoder(os.Stdout)
+	enc := json.NewEncoder(f.writer())
 	enc.SetIndent("", "  ")
 	return enc.Encode(sarif)
 }
@@ -267,26 +276,26 @@ func (f *Formatter) truncateSnippet(snippet string) string {
 func (f *Formatter) printSummary(result *engine.Result) error {
 	bySev := result.BySeverity()
 	
-	fmt.Printf("Raven scan: %d files, %d findings, %s\n",
+	fmt.Fprintf(f.writer(), "Raven scan: %d files, %d findings, %s\n",
 		result.FilesScanned, len(result.Findings), result.Duration)
 	
 	if len(result.Findings) == 0 {
-		fmt.Println("✅ Clean")
+		fmt.Fprintln(f.writer(), "✅ Clean")
 		return nil
 	}
 	
 	for _, sev := range []engine.Severity{engine.Critical, engine.High, engine.Medium, engine.Low, engine.Info} {
 		count := len(bySev[sev])
 		if count > 0 {
-			fmt.Printf("  %s: %d\n", sev, count)
+			fmt.Fprintf(f.writer(), "  %s: %d\n", sev, count)
 		}
 	}
 	
 	if len(result.NewFindings) > 0 {
-		fmt.Printf("  new: %d\n", len(result.NewFindings))
+		fmt.Fprintf(f.writer(), "  new: %d\n", len(result.NewFindings))
 	}
 	if len(result.Vulnerabilities) > 0 {
-		fmt.Printf("  vuln-deps: %d\n", len(result.Vulnerabilities))
+		fmt.Fprintf(f.writer(), "  vuln-deps: %d\n", len(result.Vulnerabilities))
 	}
 	
 	return nil
