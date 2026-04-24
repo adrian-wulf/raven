@@ -1,7 +1,7 @@
-# Raven v2.5 — Real-World Benchmark Report
+# Raven v3.3 — Real-World Benchmark Report
 
 **Date:** 2026-04-24  
-**Raven version:** v2.5 (commit `d7664fa`)  
+**Raven version:** v3.3 (commit `8e5be7e`)  
 **Comparators:** Semgrep CE 1.161.0, Bearer 2.0.1, Trivy 0.70.0  
 **Methodology:** Each tool was run with its default/open-source rule-set against four intentionally vulnerable OWASP applications. Findings counts and wall-clock runtime were recorded.
 

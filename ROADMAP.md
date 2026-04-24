@@ -2,7 +2,7 @@
 
 ## ✅ COMPLETED — v0.9.0 through v0.19.0+
 
-Features that have been implemented and are available in Raven v2.5:
+Features that have been implemented and are available in Raven v3.3:
 
 - ✅ **Baseline & Diff Scanning** — `--baseline`, `--save-baseline`, `--compare` flags. Shows NEW, FIXED, UNCHANGED findings.
 - ✅ **Ignore Comments & Inline Suppressions** — `#raven-ignore` annotations with required justification. Single-line and block formats.

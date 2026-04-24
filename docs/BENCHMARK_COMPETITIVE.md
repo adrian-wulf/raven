@@ -1,7 +1,7 @@
 # Competitive Benchmark: Raven vs Semgrep, Bandit, gosec
 
 **Date:** 2026-04-22  
-**Raven version:** v0.14.0+ (po czterech falach poprawek FP)  
+**Raven version:** v3.3 (all FP waves completed)  
 **Competitors:** Semgrep OSS 1.161.0, Bandit 1.9.4, gosec v2.25.0  
 
 ---
