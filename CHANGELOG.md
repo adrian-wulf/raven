@@ -2,6 +2,18 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v3.1.0] - 2026-04-24
+
+### Added
+- `regexp2` fallback for regex patterns: supports lookahead, lookbehind,
+  backreferences, and other PCRE syntax unsupported by Go's standard regexp.
+- AST query compilation validation in `raven rules validate`.
+- CI gate: `raven rules validate` runs on every PR.
+
+### Changed
+- 302 previously-broken rules now pass validation thanks to regexp2 fallback.
+- 17 irreparably broken rules moved to `rules/.disabled-broken/` for manual fix.
+
 ## [v3.0.0] - 2026-04-24
 
 ### Added

@@ -137,7 +137,16 @@ match structural patterns rather than substrings.
   Security ingestion.
 - **`raven rules --score`** gives maintainers an audit trail for rule health.
 
-## 10. Faza 1 Results (v2.5.1 Hotfix)
+## 11. Faza 5 Results (v3.1 Rule Validator + regexp2)
+
+- **302 broken rules** fixed overnight by adding `regexp2` fallback for
+  advanced regex syntax (lookahead, backreferences).
+- **17 irreparably broken rules** quarantined to `rules/.disabled-broken/`
+  instead of silently failing during scans.
+- **CI gate**: every PR now runs `raven rules validate` — regresje reguł
+  są łapane zanim trafią na `main`.
+
+## 12. Faza 1 Results (v2.5.1 Hotfix)
 
 After applying the Phase-1 fixes (circuit breaker + rule tightening):
 
