@@ -133,6 +133,18 @@ var secretPatterns = []secretPattern{
 		Severity: "critical",
 		Type:     "db_connection",
 	},
+	{
+		Name:     "Generic Secret Key",
+		Regex:    regexp.MustCompile(`(?i)(secret[_-]?key|secret_token|auth[_-]?secret)\s*[:=]\s*['"\s]?([a-zA-Z0-9_\-!@#$%^&*+=]{8,})['"\s]?`),
+		Severity: "high",
+		Type:     "secret_key",
+	},
+	{
+		Name:     "Bearer Token",
+		Regex:    regexp.MustCompile(`(?i)bearer\s+[a-zA-Z0-9_\-\.]{20,}`),
+		Severity: "critical",
+		Type:     "bearer_token",
+	},
 }
 
 func (p secretPattern) findMatches(line string, lineNum int, path string) []Finding {

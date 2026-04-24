@@ -28,5 +28,9 @@ patterns:
     pattern: 'Paths\.get\s*\(\s*[^)]*(request|req|param|input|args|body)'
     where:
       - not-test-file: true
+  - type: regex
+    pattern: "new\\s+File\\s*\\(\\s*['\"][^'\"]*['\"]\\s*\\+\\s*\\w+"
+    where:
+      - not-test-file: true
 references:
   - https://owasp.org/www-community/attacks/Path_Traversal

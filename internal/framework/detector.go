@@ -56,6 +56,11 @@ func (d *Detector) Detect() ([]Framework, error) {
 		frameworks = append(frameworks, fw...)
 	}
 
+	// Fallback: detect frameworks from source files when no dependency files exist
+	if fw := d.detectFromSource(); fw != nil {
+		frameworks = append(frameworks, fw...)
+	}
+
 	return frameworks, nil
 }
 
@@ -375,4 +380,144 @@ func FormatFrameworks(frameworks []Framework) string {
 		parts = append(parts, fmt.Sprintf("%s@%s", fw.Name, version))
 	}
 	return strings.Join(parts, ", ")
+}
+
+// detectFromSource scans a sample of source files for framework imports
+// as a fallback when no dependency manifest files are present.
+func (d *Detector) detectFromSource() []Framework {
+	var frameworks []Framework
+	seen := make(map[string]bool)
+
+	// Walk at most 20 files to keep detection fast
+	count := 0
+	filepath.Walk(d.root, func(path string, info os.FileInfo, err error) error {
+		if err != nil || info.IsDir() {
+			return nil
+		}
+		if count >= 20 {
+			return filepath.SkipDir
+		}
+		ext := strings.ToLower(filepath.Ext(path))
+		if ext != ".py" && ext != ".js" && ext != ".ts" && ext != ".go" && ext != ".java" {
+			return nil
+		}
+		count++
+
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return nil
+		}
+		content := string(data)
+		lower := strings.ToLower(content)
+
+		// Python frameworks
+		if ext == ".py" {
+			if strings.Contains(lower, "from flask import") || strings.Contains(lower, "import flask") {
+				if !seen["flask"] {
+					seen["flask"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "flask",
+						Language:   "python",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+			if strings.Contains(lower, "from django") || strings.Contains(lower, "import django") {
+				if !seen["django"] {
+					seen["django"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "django",
+						Language:   "python",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+			if strings.Contains(lower, "from fastapi") || strings.Contains(lower, "import fastapi") {
+				if !seen["fastapi"] {
+					seen["fastapi"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "fastapi",
+						Language:   "python",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+		}
+
+		// Node.js frameworks
+		if ext == ".js" || ext == ".ts" {
+			if strings.Contains(lower, "require('express')") || strings.Contains(lower, `require("express")`) ||
+				strings.Contains(lower, "from 'express'") || strings.Contains(lower, `from "express"`) {
+				if !seen["express"] {
+					seen["express"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "express",
+						Language:   "javascript",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+			if strings.Contains(lower, "require('fastify')") || strings.Contains(lower, `require("fastify")`) ||
+				strings.Contains(lower, "from 'fastify'") || strings.Contains(lower, `from "fastify"`) {
+				if !seen["fastify"] {
+					seen["fastify"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "fastify",
+						Language:   "javascript",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+		}
+
+		// Go frameworks
+		if ext == ".go" {
+			if strings.Contains(lower, `"github.com/gin-gonic/gin"`) {
+				if !seen["gin"] {
+					seen["gin"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "gin",
+						Language:   "go",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+			if strings.Contains(lower, `"github.com/labstack/echo"`) {
+				if !seen["echo"] {
+					seen["echo"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "echo",
+						Language:   "go",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+		}
+
+		// Java frameworks
+		if ext == ".java" {
+			if strings.Contains(lower, "import org.springframework") {
+				if !seen["spring"] {
+					seen["spring"] = true
+					frameworks = append(frameworks, Framework{
+						Name:       "spring",
+						Language:   "java",
+						Confidence: 0.8,
+						Files:      []string{path},
+					})
+				}
+			}
+		}
+
+		return nil
+	})
+
+	return frameworks
 }

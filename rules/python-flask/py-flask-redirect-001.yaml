@@ -9,7 +9,7 @@ languages:
 message: redirect() with user-controlled URL enables open redirect. Validate against allowlist.
 patterns:
 - type: regex
-  pattern: redirect\s*\(\s*(?P<input>request\.(args|form|headers)|f[\"\'])
+  pattern: redirect\s*\(\s*(request\.[^)]*)
   where:
   - not-constant: true
 references:
