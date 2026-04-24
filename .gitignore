@@ -7,7 +7,8 @@ raven-bin
 *.dylib
 
 # Test output
-test-vulnerable-app/
+# Ignored test output directory (not the fixture)
+test-output/
 *.test
 *.out
 

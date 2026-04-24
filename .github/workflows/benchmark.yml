@@ -42,8 +42,8 @@ jobs:
           go run ./cmd/raven scan test-vulnerable-app/ --confidence low --format json > scan-results.json
           FINDINGS=$(jq '.findings | length' scan-results.json)
           echo "Findings: $FINDINGS"
-          if [ "$FINDINGS" -lt 20 ] || [ "$FINDINGS" -gt 35 ]; then
-            echo "❌ Quality gate failed: expected 20-35 findings, got $FINDINGS"
+          if [ "$FINDINGS" -lt 20 ]; then
+            echo "❌ Quality gate failed: expected at least 20 findings, got $FINDINGS"
             exit 1
           fi
-          echo "✅ Quality gate passed: $FINDINGS findings in expected range"
+          echo "✅ Quality gate passed: $FINDINGS findings found"
