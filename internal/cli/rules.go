@@ -8,6 +8,9 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/dlclark/regexp2"
+	sitter "github.com/smacker/go-tree-sitter"
+	"github.com/raven-security/raven/internal/ast"
 	"github.com/raven-security/raven/internal/engine"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
@@ -160,11 +163,22 @@ Examples:
 				}
 
 				filepath.Walk(path, func(p string, info os.FileInfo, err error) error {
-					if err != nil || info.IsDir() {
+					if err != nil {
+						return nil
+					}
+					// Skip hidden and disabled directories
+					if info.IsDir() && (strings.HasPrefix(info.Name(), ".") || strings.HasPrefix(info.Name(), "_")) {
+						return filepath.SkipDir
+					}
+					if info.IsDir() {
 						return nil
 					}
 					ext := filepath.Ext(p)
 					if ext != ".yaml" && ext != ".yml" {
+						return nil
+					}
+					// Skip fixture files used for rule testing
+					if strings.Contains(filepath.Base(p), ".fixture.") {
 						return nil
 					}
 					total++
@@ -212,21 +226,44 @@ func validateRuleFile(path string) error {
 	if len(rule.Patterns) == 0 {
 		return fmt.Errorf("no patterns defined")
 	}
+
+	// Collect languages to test AST queries against
+	langsToTest := make(map[string]*ast.Language)
+	for _, langName := range rule.Languages {
+		if lang := ast.GetLanguageByName(langName); lang != nil {
+			langsToTest[langName] = lang
+		}
+	}
+
 	for i, p := range rule.Patterns {
 		if p.Type == "" {
 			return fmt.Errorf("pattern %d missing 'type'", i+1)
 		}
-		validTypes := map[string]bool{"regex": true, "literal": true, "ast-query": true, "taint": true}
+		validTypes := map[string]bool{"regex": true, "literal": true, "ast-query": true, "ast": true, "taint": true}
 		if !validTypes[p.Type] {
 			return fmt.Errorf("pattern %d has invalid type: %s", i+1, p.Type)
 		}
 		if p.Type != "taint" && p.Pattern == "" && p.Query == "" {
 			return fmt.Errorf("pattern %d missing 'pattern' or 'query'", i+1)
 		}
-		// Validate regex patterns compile
+		// Validate regex patterns compile (standard or regexp2 fallback)
 		if p.Type == "regex" && p.Pattern != "" {
 			if _, err := regexp.Compile(p.Pattern); err != nil {
-				return fmt.Errorf("pattern %d invalid regex: %w", i+1, err)
+				if _, err2 := regexp2.Compile(p.Pattern, regexp2.None); err2 != nil {
+					return fmt.Errorf("pattern %d invalid regex: %w", i+1, err2)
+				}
+			}
+		}
+		// Validate AST queries compile against each supported language
+		if (p.Type == "ast-query" || p.Type == "ast") && p.Query != "" {
+			if len(langsToTest) == 0 {
+				return fmt.Errorf("pattern %d is ast-query but rule has no valid languages", i+1)
+			}
+			for langName, langObj := range langsToTest {
+				_, err := sitter.NewQuery([]byte(p.Query), langObj.Parser)
+				if err != nil {
+					return fmt.Errorf("pattern %d invalid ast-query for %s: %w", i+1, langName, err)
+				}
 			}
 		}
 	}

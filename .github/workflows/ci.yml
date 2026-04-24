@@ -27,6 +27,9 @@ jobs:
     - name: Test
       run: go test -v ./...
 
+    - name: Validate Rules
+      run: go run ./cmd/raven rules validate
+
     - name: Security Scan
       run: |
         go run ./cmd/raven scan --format sarif --baseline .raven-baseline.json --secrets --deps > raven-results.sarif

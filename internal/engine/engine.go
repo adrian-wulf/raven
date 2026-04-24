@@ -11,6 +11,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dlclark/regexp2"
 	"github.com/raven-security/raven/internal/ast"
 	"github.com/raven-security/raven/internal/baseline"
 	"github.com/raven-security/raven/internal/cache"
@@ -24,6 +25,7 @@ type Scanner struct {
 	rules            []Rule
 	config           ScanConfig
 	regexCache       map[string]*regexp.Regexp
+	regex2Cache      map[string]*regexp2.Regexp
 	regexMu          sync.RWMutex
 	suppressedCounts map[string]int // rule_id -> count
 }
@@ -46,6 +48,7 @@ func NewScanner(rules []Rule, config ScanConfig) *Scanner {
 		rules:            rules,
 		config:           config,
 		regexCache:       make(map[string]*regexp.Regexp),
+		regex2Cache:      make(map[string]*regexp2.Regexp),
 		suppressedCounts: make(map[string]int),
 	}
 }
@@ -636,31 +639,86 @@ func (s *Scanner) matchRegex(content []byte, pattern string, path string) []find
 	if s.regexCache == nil {
 		s.regexCache = make(map[string]*regexp.Regexp)
 	}
+	if s.regex2Cache == nil {
+		s.regex2Cache = make(map[string]*regexp2.Regexp)
+	}
+
 	s.regexMu.RLock()
 	re, ok := s.regexCache[pattern]
+	re2, ok2 := s.regex2Cache[pattern]
 	s.regexMu.RUnlock()
-	if !ok {
+
+	useRe2 := false
+	if !ok && !ok2 {
 		var err error
 		re, err = regexp.Compile(pattern)
 		if err != nil {
-			return nil
+			re2, err = regexp2.Compile(pattern, regexp2.None)
+			if err != nil {
+				return nil
+			}
+			useRe2 = true
+			s.regexMu.Lock()
+			s.regex2Cache[pattern] = re2
+			s.regexMu.Unlock()
+		} else {
+			s.regexMu.Lock()
+			s.regexCache[pattern] = re
+			s.regexMu.Unlock()
 		}
-		s.regexMu.Lock()
-		s.regexCache[pattern] = re
-		s.regexMu.Unlock()
+	} else if ok2 {
+		useRe2 = true
 	}
 
 	var matches []findingMatch
 	lines := bytes.Split(content, []byte("\n"))
-	subexpNames := re.SubexpNames()
 
 	for i, line := range lines {
-		loc := re.FindIndex(line)
+		lineStr := string(line)
+		var loc []int
+		var metavars map[string]string
+
+		if useRe2 {
+			m, err := re2.FindStringMatch(lineStr)
+			if err != nil || m == nil {
+				continue
+			}
+			loc = []int{m.Index, m.Index + m.Length}
+			metavars = make(map[string]string)
+			for _, g := range m.Groups() {
+				if g.Name != "" && g.Name != "0" && len(g.Captures) > 0 {
+					metavars[g.Name] = g.Captures[0].String()
+				}
+			}
+		} else {
+			loc = re.FindIndex(line)
+			if loc == nil {
+				continue
+			}
+			metavars = make(map[string]string)
+			subexpNames := re.SubexpNames()
+			if len(subexpNames) > 1 {
+				matchLocs := re.FindSubmatchIndex(line)
+				if matchLocs != nil {
+					for j, name := range subexpNames {
+						if j == 0 || name == "" {
+							continue
+						}
+						startIdx := matchLocs[2*j]
+						endIdx := matchLocs[2*j+1]
+						if startIdx >= 0 && endIdx >= 0 && endIdx <= len(line) {
+							metavars[name] = string(line[startIdx:endIdx])
+						}
+					}
+				}
+			}
+		}
+
 		if loc == nil {
 			continue
 		}
 
-		snippet := string(line)
+		snippet := lineStr
 		if len(snippet) > 120 {
 			start := max(0, loc[0]-40)
 			end := min(len(snippet), loc[1]+40)
@@ -668,26 +726,8 @@ func (s *Scanner) matchRegex(content []byte, pattern string, path string) []find
 			if start > 0 {
 				snippet = "..." + snippet
 			}
-			if end < len(string(line)) {
+			if end < len(lineStr) {
 				snippet = snippet + "..."
-			}
-		}
-
-		// Extract named capture groups
-		metavars := make(map[string]string)
-		if len(subexpNames) > 1 {
-			matchLocs := re.FindSubmatchIndex(line)
-			if matchLocs != nil {
-				for j, name := range subexpNames {
-					if j == 0 || name == "" {
-						continue
-					}
-					startIdx := matchLocs[2*j]
-					endIdx := matchLocs[2*j+1]
-					if startIdx >= 0 && endIdx >= 0 && endIdx <= len(line) {
-						metavars[name] = string(line[startIdx:endIdx])
-					}
-				}
 			}
 		}
 
