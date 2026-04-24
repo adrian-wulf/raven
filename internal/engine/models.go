@@ -91,6 +91,7 @@ type Result struct {
 	NewFindings      []Finding       `json:"new_findings,omitempty"`
 	BaselineFindings []Finding       `json:"baseline_findings,omitempty"`
 	Vulnerabilities  []Vulnerability `json:"vulnerabilities,omitempty"`
+	SuppressedCounts map[string]int  `json:"suppressed_counts,omitempty"`
 	FilesScanned     int             `json:"files_scanned"`
 	RulesRun         int             `json:"rules_run"`
 	Duration         time.Duration   `json:"duration"`

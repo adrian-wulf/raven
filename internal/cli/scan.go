@@ -269,6 +269,19 @@ Examples:
 				}
 			}
 
+			// Auto-FP report: show rules with many suppressions
+			if len(result.SuppressedCounts) > 0 && !quiet {
+				fmt.Fprintln(os.Stderr)
+				fmt.Fprintln(os.Stderr, "📊 Auto-FP Report (suppressed findings):")
+				for ruleID, count := range result.SuppressedCounts {
+					if count >= 3 {
+						fmt.Fprintf(os.Stderr, "  ⚠️  Rule %s was suppressed %d times — consider tightening or lowering confidence\n", ruleID, count)
+					} else {
+						fmt.Fprintf(os.Stderr, "  ℹ️  Rule %s was suppressed %d time(s)\n", ruleID, count)
+					}
+				}
+			}
+
 			// Output results
 			if !quiet {
 				formatter := output.Formatter{

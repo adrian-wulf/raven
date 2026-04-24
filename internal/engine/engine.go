@@ -21,10 +21,11 @@ import (
 )
 
 type Scanner struct {
-	rules      []Rule
-	config     ScanConfig
-	regexCache map[string]*regexp.Regexp
-	regexMu    sync.RWMutex
+	rules            []Rule
+	config           ScanConfig
+	regexCache       map[string]*regexp.Regexp
+	regexMu          sync.RWMutex
+	suppressedCounts map[string]int // rule_id -> count
 }
 
 type ScanConfig struct {
@@ -42,9 +43,10 @@ type ScanConfig struct {
 
 func NewScanner(rules []Rule, config ScanConfig) *Scanner {
 	return &Scanner{
-		rules:      rules,
-		config:     config,
-		regexCache: make(map[string]*regexp.Regexp),
+		rules:            rules,
+		config:           config,
+		regexCache:       make(map[string]*regexp.Regexp),
+		suppressedCounts: make(map[string]int),
 	}
 }
 
@@ -121,6 +123,9 @@ func (s *Scanner) Scan() (*Result, error) {
 
 	// Apply circuit breaker to suppress noisy rules
 	result.Findings = s.applyCircuitBreaker(result.Findings)
+
+	// Attach suppressed counts for auto-FP analysis
+	result.SuppressedCounts = s.suppressedCounts
 
 	// Apply baseline diff if configured
 	if s.config.Baseline != nil {
@@ -238,14 +243,15 @@ func (s *Scanner) isExcluded(path string) bool {
 
 	// Directory / path segment patterns (must match as exact segment)
 	excludeSegments := []string{
-		"__tests__", "tests", "spec", "specs",
+		"__tests__", "tests", "test", "spec", "specs",
 		"mocks", "fixtures", "e2e", "cypress", "playwright",
 		"storybook", "benchmarks",
 		"examples", "demos", "samples",
 		"docs", "documentation",
-		"node_modules", "vendor", "dist", "build", ".git",
+		"node_modules", "vendor", "vendors", "dist", "build", ".git",
 		"output", "coverage",
 		".vscode", ".idea", ".vs",
+		"libs", "lib", "third_party", "3rdparty", "external", "assets",
 	}
 	segments := strings.Split(lowerPath, string(filepath.Separator))
 	for _, seg := range segments {
@@ -601,13 +607,15 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 		}
 	}
 
-	// Filter out suppressed findings
+	// Filter out suppressed findings and track counts
 	if s.config.Suppressions != nil {
 		filtered := []Finding{}
 		for _, f := range findings {
-			if !s.config.Suppressions.IsSuppressed(f.File, f.Line, f.RuleID) {
-				filtered = append(filtered, f)
+			if s.config.Suppressions.IsSuppressed(f.File, f.Line, f.RuleID) {
+				s.suppressedCounts[f.RuleID]++
+				continue
 			}
+			filtered = append(filtered, f)
 		}
 		findings = filtered
 	}
