@@ -1,0 +1,29 @@
+id: raven-ast-js-open-redirect-001
+name: Open Redirect via res.redirect
+severity: high
+category: redirect
+confidence: high
+cwe: CWE-601
+languages: [javascript, typescript]
+message: |
+  Redirecting to user-controlled URL (req.query/body/params) can lead to phishing.
+  Validate the URL against an allowlist before redirecting.
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (member_expression
+          property: (property_identifier) @meth (#eq? @meth "redirect"))
+        arguments: (arguments
+          [(member_expression
+             object: (identifier) @req (#eq? @req "req")
+             property: (property_identifier) @prop (#match? @prop "^(query|body|params)$"))
+           (member_expression
+             object: (member_expression
+               object: (identifier) @req (#eq? @req "req")
+               property: (property_identifier) @prop (#match? @prop "^(query|body|params)$"))
+             property: (property_identifier))]))
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

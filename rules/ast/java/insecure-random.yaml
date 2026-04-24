@@ -1,0 +1,19 @@
+id: raven-ast-java-insecure-random-001
+name: Insecure Random Generator
+severity: medium
+category: crypto
+confidence: high
+cwe: CWE-338
+languages: [java]
+message: |
+  java.util.Random is not cryptographically secure. Use java.security.SecureRandom
+  for tokens, session IDs, or any security-sensitive random values.
+patterns:
+  - type: ast-query
+    query: |
+      (object_creation_expression
+        type: (type_identifier) @type (#eq? @type "Random"))
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

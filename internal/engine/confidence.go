@@ -13,7 +13,7 @@ func ScoreConfidence(finding Finding, content []byte, patternType string) float6
 	switch patternType {
 	case "taint":
 		score += 0.45
-	case "ast-query":
+	case "ast-query", "ast":
 		score += 0.3
 	case "regex":
 		score += 0.1

@@ -1,0 +1,33 @@
+id: raven-ast-js-proto-001
+name: Prototype Pollution via __proto__
+severity: critical
+category: injection
+confidence: high
+cwe: CWE-1321
+languages: [javascript, typescript]
+message: |
+  Assigning to __proto__ or merging objects with user input can lead to prototype pollution.
+  Use Object.create(null) or validate object keys against an allowlist.
+patterns:
+  - type: ast-query
+    query: |
+      (assignment_expression
+        left: (member_expression
+          property: (property_identifier) @prop (#eq? @prop "__proto__"))
+        right: (_) @vuln)
+    where:
+      - not-constant: true
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (member_expression
+          object: (identifier) @obj (#eq? @obj "Object")
+          property: (property_identifier) @meth (#eq? @meth "assign"))
+        arguments: (arguments
+          [(member_expression
+             object: (identifier) @req (#match? @req "^(req|request|body|params|query)$"))
+           (identifier) @req (#match? @req "^(req|request|body|params|query)$")]))
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1321.html

@@ -1,0 +1,25 @@
+id: raven-ast-js-json-parse-001
+name: Insecure JSON Deserialization
+severity: medium
+category: deserialization
+confidence: high
+cwe: CWE-502
+languages: [javascript, typescript]
+message: |
+  Parsing user-controlled JSON without schema validation can lead to prototype pollution
+  or unexpected object shapes. Validate input before parsing or use Object.create(null).
+patterns:
+  - type: ast-query
+    query: |
+      (call_expression
+        function: (member_expression
+          object: (identifier) @json (#eq? @json "JSON")
+          property: (property_identifier) @parse (#eq? @parse "parse"))
+        arguments: (arguments
+          [(member_expression
+             object: (identifier) @req (#match? @req "^(req|request|body|params|query)$"))
+           (identifier) @req (#match? @req "^(req|request|body|params|query)$")]))
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

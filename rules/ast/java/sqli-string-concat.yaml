@@ -1,0 +1,22 @@
+id: raven-ast-java-sqli-concat-001
+name: SQL Injection via String Concatenation
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages: [java]
+message: |
+  SQL query built with string concatenation and passed to executeQuery/executeUpdate.
+  Use parameterized queries (PreparedStatement) to prevent SQL injection.
+patterns:
+  - type: ast-query
+    query: |
+      (method_invocation
+        name: (identifier) @meth (#match? @meth "^(executeQuery|executeUpdate|execute)$")
+        arguments: (argument_list
+          (binary_expression
+            operator: "+") @vuln))
+    where:
+      - not-test-file: true
+references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html

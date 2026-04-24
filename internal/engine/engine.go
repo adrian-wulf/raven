@@ -401,12 +401,12 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 	for _, rule := range langRules {
 		for _, pattern := range rule.Patterns {
 			// Skip AST-only patterns in regex phase
-			if pattern.Type == "ast-query" || pattern.Type == "taint" {
+			if pattern.Type == "ast-query" || pattern.Type == "ast" || pattern.Type == "taint" {
 				continue
 			}
 
 			// Skip regex scanning for test files unless rule explicitly allows tests
-			if isTestFile && pattern.Type != "ast-query" {
+			if isTestFile && pattern.Type != "ast-query" && pattern.Type != "ast" {
 				var allowsTests bool
 				for _, w := range pattern.Where {
 					if !w.NotTestFile {
@@ -493,7 +493,7 @@ func (s *Scanner) scanContent(path string, content []byte, rules []Rule) ([]Find
 				}
 
 				for _, pattern := range rule.Patterns {
-					if pattern.Type != "ast-query" {
+					if pattern.Type != "ast-query" && pattern.Type != "ast" {
 						continue
 					}
 
