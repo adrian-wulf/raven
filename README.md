@@ -48,6 +48,69 @@ docker run --rm -v $(pwd):/code raven scan /code
 
 ---
 
+## Post-Installation: Copy the Rules
+
+**Raven requires rule files to function.** The binary does not yet embed rules internally (this is on the roadmap). After installing the binary, you must copy the rule definitions to a location Raven can find:
+
+### Option A: User rules (recommended for single-user installs)
+
+```bash
+# Create the rules directory
+mkdir -p ~/.config/raven/rules
+
+# Copy rules from the cloned repository
+cp -r /path/to/raven/rules/* ~/.config/raven/rules/
+
+# Verify rules are loaded
+raven rules list
+```
+
+### Option B: System-wide rules (for shared machines / CI)
+
+```bash
+sudo mkdir -p /usr/local/share/raven/rules
+sudo cp -r /path/to/raven/rules/* /usr/local/share/raven/rules/
+```
+
+### Option C: Side-by-side with binary (for portable installs)
+
+```bash
+# If your binary is at /usr/local/bin/raven, place rules next to it:
+mkdir -p /usr/local/rules
+cp -r /path/to/raven/rules/* /usr/local/rules/
+```
+
+### Where Raven looks for rules
+
+Raven searches these locations in order (first match wins):
+
+1. `./rules` — local directory (for development inside the repo)
+2. `/usr/share/raven/rules` — system package manager location
+3. `/usr/local/share/raven/rules` — Homebrew / manual system install
+4. `<binary>/../share/raven/rules` — FHS layout relative to the binary
+5. `<binary>/../rules` — side-by-side with the binary
+6. `~/.config/raven/rules` — per-user config directory
+
+If none of these directories exist or are empty, Raven will report:
+```
+Warning: No rules found
+```
+and scans will produce no findings.
+
+### Updating rules
+
+Rules are updated regularly. To get the latest rules:
+
+```bash
+cd /path/to/raven
+
+git pull origin main
+rm -rf ~/.config/raven/rules/*
+cp -r rules/* ~/.config/raven/rules/
+```
+
+---
+
 ## What AI wrote in your code
 
 You built an app with Cursor/Claude/Copilot. It works. You ship to production.
@@ -575,6 +638,71 @@ patterns:
 references:
   - https://cwe.mitre.org/data/definitions/89.html
   - https://owasp.org/www-community/attacks/SQL_Injection.html
+```
+
+---
+
+## Troubleshooting
+
+### "Warning: No rules found"
+
+This is the most common issue. It means Raven cannot find the rule files. The binary does not embed rules — you must copy them manually after installation.
+
+**Fix:**
+```bash
+# Clone the repo (or use your existing clone)
+git clone https://github.com/raven-security/raven.git
+cd raven
+
+# Copy rules to user config directory
+mkdir -p ~/.config/raven/rules
+cp -r rules/* ~/.config/raven/rules/
+
+# Verify
+raven rules list
+```
+
+If you installed via `go install`, the binary is in `~/go/bin/raven` (or `$GOBIN/raven`). The rules are NOT installed automatically — you must copy them from the cloned repository.
+
+### "0 findings" on a project I know has bugs
+
+1. Check that rules are loaded: `raven rules list | wc -l` should show 1,900+
+2. Check that your language is supported: `raven rules --lang <your-lang>`
+3. Try with `--no-cache` to rule out stale cache issues
+4. Check that the file extensions match the language (e.g. `.py` for Python, `.js` for JavaScript)
+5. Run with `--verbose` to see which files are being scanned
+
+### Scan is slow
+
+1. Use `--staged` for pre-commit checks (scans only git staged files)
+2. Use `--confidence high` to skip low-confidence rules
+3. Exclude large directories: `--exclude vendor,node_modules,dist,build`
+4. Use `--format summary` for a quick overview without per-file details
+
+### Too many false positives
+
+1. Use `--confidence high` or `--min-sev medium` to filter
+2. Add `#raven-ignore` comments with justification
+3. Check the quality score: `raven rules --score` and focus on rules scoring 75+
+4. Use `--baseline` to ignore existing issues and focus on new ones
+
+### `go install` vs release binary
+
+| Method | Binary location | Rules included? | Best for |
+|--------|----------------|-----------------|----------|
+| `go install` | `~/go/bin/raven` | **No** — copy manually | Developers who want latest |
+| Release binary | `/usr/local/bin/raven` | **No** — copy manually | Production/CI installs |
+| Clone + `go run` | temp | Yes (reads `./rules`) | Development/contributing |
+| Docker | container | Yes (built into image) | CI/CD pipelines |
+
+### Rules validation fails
+
+```bash
+# Validate rules in the current directory
+raven rules validate ./rules
+
+# Or validate user-installed rules
+raven rules validate ~/.config/raven/rules
 ```
 
 ---

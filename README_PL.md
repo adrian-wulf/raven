@@ -48,6 +48,69 @@ docker run --rm -v $(pwd):/code raven scan /code
 
 ---
 
+## Po instalacji: Skopiuj reguły
+
+**Raven wymaga plikow z regulami do dzialania.** Binarka nie zawiera jeszcze wbudowanych regul (to jest w planach). Po zainstalowaniu binarki musisz recznie skopiowac definicje regul w miejsce, ktore Raven moze znalezc:
+
+### Opcja A: Reguly uzytkownika (zalecane dla pojedynczych uzytkownikow)
+
+```bash
+# Utworz katalog z regulami
+mkdir -p ~/.config/raven/rules
+
+# Skopiuj reguly ze sklonowanego repozytorium
+cp -r /sciezka/do/raven/rules/* ~/.config/raven/rules/
+
+# Sprawdz czy reguly sa zaladowane
+raven rules list
+```
+
+### Opcja B: Reguly systemowe (dla wspoldzielonych maszyn / CI)
+
+```bash
+sudo mkdir -p /usr/local/share/raven/rules
+sudo cp -r /sciezka/do/raven/rules/* /usr/local/share/raven/rules/
+```
+
+### Opcja C: Obok binarki (dla instalacji przenosnych)
+
+```bash
+# Jesli Twoja binarka jest w /usr/local/bin/raven, umiesc reguly obok niej:
+mkdir -p /usr/local/rules
+cp -r /sciezka/do/raven/rules/* /usr/local/rules/
+```
+
+### Gdzie Raven szuka regul
+
+Raven przeszukuje te lokalizacje w kolejnosci (pierwsza pasujaca wygrywa):
+
+1. `./rules` — lokalny katalog (dla rozwoju wewnatrz repo)
+2. `/usr/share/raven/rules` — lokalizacja menedzera pakietow systemowych
+3. `/usr/local/share/raven/rules` — Homebrew / reczna instalacja systemowa
+4. `<binarka>/../share/raven/rules` — uklad FHS wzgledem binarki
+5. `<binarka>/../rules` — obok binarki
+6. `~/.config/raven/rules` — katalog konfiguracyjny uzytkownika
+
+Jesli zadna z tych lokalizacji nie istnieje lub jest pusta, Raven wyswietli:
+```
+Warning: No rules found
+```
+i skany nie znajda zadnych problemow.
+
+### Aktualizacja regul
+
+Reguly sa regularnie aktualizowane. Aby pobrac najnowsze:
+
+```bash
+cd /sciezka/do/raven
+
+git pull origin main
+rm -rf ~/.config/raven/rules/*
+cp -r rules/* ~/.config/raven/rules/
+```
+
+---
+
 ## Problem
 
 Napisales aplikacje z pomoca Cursor/Claude/Copilot. Dziala. Wysylasz na produkcje.
@@ -575,6 +638,71 @@ patterns:
 references:
   - https://cwe.mitre.org/data/definitions/89.html
   - https://owasp.org/www-community/attacks/SQL_Injection.html
+```
+
+---
+
+## Rozwiazywanie Problemow
+
+### "Warning: No rules found"
+
+To najczestszy problem. Oznacza, ze Raven nie moze znalezc plikow z regulami. Binarka nie zawiera wbudowanych regul — musisz je recznie skopiowac po instalacji.
+
+**Rozwiazanie:**
+```bash
+# Sklonuj repozytorium (lub uzyj istniejacego klona)
+git clone https://github.com/raven-security/raven.git
+cd raven
+
+# Skopiuj reguly do katalogu konfiguracyjnego uzytkownika
+mkdir -p ~/.config/raven/rules
+cp -r rules/* ~/.config/raven/rules/
+
+# Sprawdz
+raven rules list
+```
+
+Jesli zainstalowales przez `go install`, binarka jest w `~/go/bin/raven` (lub `$GOBIN/raven`). Reguly NIE sa instalowane automatycznie — musisz je skopiowac ze sklonowanego repozytorium.
+
+### "0 findings" w projekcie, w ktorym wiem, ze sa bledy
+
+1. Sprawdz czy reguly sa zaladowane: `raven rules list | wc -l` powinno pokazac 1900+
+2. Sprawdz czy Twoj jezyk jest obslugiwany: `raven rules --lang <twoj-jezyk>`
+3. Sprobuj z `--no-cache`, aby wykluczyc problemy ze starym cache
+4. Sprawdz czy rozszerzenia plikow pasuja do jezyka (np. `.py` dla Pythona, `.js` dla JavaScript)
+5. Uruchom z `--verbose`, aby zobaczyc ktore pliki sa skanowane
+
+### Skan jest wolny
+
+1. Uzyj `--staged` dla sprawdzan pre-commit (skanuje tylko pliki w stagingu gita)
+2. Uzyj `--confidence high`, aby pominac reguly niskiej pewnosci
+3. Wylacz duze katalogi: `--exclude vendor,node_modules,dist,build`
+4. Uzyj `--format summary` dla szybkiego przegladu bez szczegolow per plik
+
+### Za duzo falszywych alarmow
+
+1. Uzyj `--confidence high` lub `--min-sev medium` do filtrowania
+2. Dodaj komentarze `#raven-ignore` z uzasadnieniem
+3. Sprawdz wynik jakosci: `raven rules --score` i skup sie na regulach z wynikiem 75+
+4. Uzyj `--baseline`, aby ignorowac istniejace problemy i skupic sie na nowych
+
+### `go install` vs binarka release
+
+| Metoda | Lokalizacja binarki | Reguly wbudowane? | Najlepsze dla |
+|--------|---------------------|-------------------|---------------|
+| `go install` | `~/go/bin/raven` | **Nie** — kopiuj recznie | Deweloperow chcacych najnowszej wersji |
+| Binarka release | `/usr/local/bin/raven` | **Nie** — kopiuj recznie | Instalacji produkcyjnych/CI |
+| Klon + `go run` | tymczasowa | Tak (czyta `./rules`) | Rozwoju/kontribucji |
+| Docker | kontener | Tak (wbudowane w obraz) | Potokow CI/CD |
+
+### Walidacja regul nie przechodzi
+
+```bash
+# Waliduj reguly w biezacym katalogu
+raven rules validate ./rules
+
+# Lub waliduj reguly zainstalowane uzytkownikowi
+raven rules validate ~/.config/raven/rules
 ```
 
 ---
