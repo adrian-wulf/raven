@@ -1,13 +1,15 @@
 id: js-adv-011
 name: JavaScript EventEmitter Memory Leak DoS
-severity: medium
+severity: low
 category: rce
-confidence: high
+confidence: low
 cwe: "CWE-770"
 languages: [javascript, typescript]
-message: "Unbounded EventEmitter listeners can cause memory leak DoS. Set maxListeners limit."
+message: "Unbounded EventEmitter listeners detected. Verify maxListeners is set if listeners are added dynamically."
 patterns:
   - type: regex
     pattern: "on\\s*\\(.*\\).*\\{|addListener.*\\{|emitter\\.on\\s*\\("
+    where:
+      - not-test-file: true
 references:
   - https://cwe.mitre.org/data/definitions/770.html

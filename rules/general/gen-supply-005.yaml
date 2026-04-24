@@ -1,13 +1,13 @@
 id: gen-supply-005
 name: Typosquatting Risk in Import
-severity: medium
+severity: low
 category: supplychain
-confidence: high
+confidence: medium
 cwe: "CWE-829"
 languages: [python, javascript, go]
 message: "Import name similar to popular package (potential typosquatting). Verify package name carefully."
 patterns:
   - type: regex
-    pattern: "(dateutil|request|urllib3|crypto|django-rest|flask-cors)"
+    pattern: "(dateutl|reqest|urrllib3|django-rest|flask-cors)"
 references:
   - https://cwe.mitre.org/data/definitions/829.html

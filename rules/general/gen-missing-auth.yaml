@@ -2,7 +2,7 @@ id: raven-gen-auth-002
 name: Missing Authentication Check
 description: |
   Detects admin/sensitive endpoints without visible authentication checks.
-severity: medium
+severity: low
 category: auth
 confidence: low
 cwe: CWE-287
@@ -12,3 +12,5 @@ message: |
 patterns:
   - type: regex
     pattern: "(admin|api/v1|internal|management|dashboard)"
+    where:
+      - not-test-file: true

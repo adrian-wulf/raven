@@ -2,9 +2,9 @@ id: raven-java-spring-001
 name: Spring Boot @Entity Exposure
 description: |
   Detects returning JPA @Entity directly from REST endpoints which can expose internal fields.
-severity: medium
+severity: low
 category: info-disclosure
-confidence: medium
+confidence: low
 cwe: CWE-200
 languages: [java]
 message: |
@@ -13,6 +13,6 @@ patterns:
   - type: regex
     pattern: "@(?:GetMapping|PostMapping|RequestMapping)"
     where:
-      - not-sanitized:
-          - JsonView
-          - DTO
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

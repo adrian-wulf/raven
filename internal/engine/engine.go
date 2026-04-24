@@ -119,6 +119,9 @@ func (s *Scanner) Scan() (*Result, error) {
 	// Deduplicate findings (same file + line + rule_id)
 	result.Findings = deduplicate(result.Findings)
 
+	// Apply circuit breaker to suppress noisy rules
+	result.Findings = s.applyCircuitBreaker(result.Findings)
+
 	// Apply baseline diff if configured
 	if s.config.Baseline != nil {
 		records := findingsToRecords(result.Findings)
@@ -899,6 +902,54 @@ func isInsideFunction(content string, lineNum int, funcPattern string) bool {
 		}
 	}
 	return false
+}
+
+// applyCircuitBreaker suppresses or downgrades findings from overly noisy rules.
+// Per-file limit: >30 findings from one rule → downgrade to low confidence.
+// Per-project limit: >100 findings from one rule → drop all findings from that rule.
+func (s *Scanner) applyCircuitBreaker(findings []Finding) []Finding {
+	perFile := make(map[string]map[string]int)   // file -> rule_id -> count
+	perProject := make(map[string]int)            // rule_id -> count
+
+	for _, f := range findings {
+		perProject[f.RuleID]++
+		if perFile[f.File] == nil {
+			perFile[f.File] = make(map[string]int)
+		}
+		perFile[f.File][f.RuleID]++
+	}
+
+	// Identify project-level noisy rules
+	noisyRules := make(map[string]bool)
+	for ruleID, count := range perProject {
+		if count > 100 {
+			noisyRules[ruleID] = true
+			fmt.Fprintf(os.Stderr, "⚠️  Circuit breaker: rule %s produced %d findings — treating as potential false-positive storm\n", ruleID, count)
+		}
+	}
+
+	// Identify per-file noisy rules
+	perFileNoisy := make(map[string]bool) // rule_id -> noisy
+	for _, rules := range perFile {
+		for ruleID, count := range rules {
+			if count > 30 {
+				perFileNoisy[ruleID] = true
+			}
+		}
+	}
+
+	var filtered []Finding
+	for _, f := range findings {
+		if noisyRules[f.RuleID] {
+			continue // drop project-level noisy rule entirely
+		}
+		if perFileNoisy[f.RuleID] {
+			f.Confidence = "low"
+			f.Message = "[Noisy rule — verify manually] " + f.Message
+		}
+		filtered = append(filtered, f)
+	}
+	return filtered
 }
 
 // FixApplier applies auto-fixes to files

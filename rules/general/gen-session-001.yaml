@@ -1,13 +1,15 @@
 id: gen-session-001
 name: Session Fixation Vulnerability
-severity: medium
+severity: low
 category: session
-confidence: high
+confidence: low
 cwe: "CWE-384"
 languages: [javascript, python, php, java, csharp, ruby]
-message: "Session ID not regenerated after authentication. Regenerate session ID after login to prevent session fixation."
+message: "Session handling code detected. Verify session ID is regenerated after authentication."
 patterns:
   - type: regex
     pattern: "(login|auth|signin)"
+    where:
+      - not-test-file: true
 references:
   - https://cwe.mitre.org/data/definitions/384.html

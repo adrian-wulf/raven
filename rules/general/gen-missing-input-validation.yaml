@@ -2,13 +2,15 @@ id: raven-gen-input-001
 name: Missing Input Validation
 description: |
   Detects direct use of user input without validation or sanitization.
-severity: medium
+severity: low
 category: injection
 confidence: low
 cwe: CWE-74
 languages: [javascript, typescript, python, go, php, java, csharp, rust, ruby, swift, kotlin]
 message: |
-  User input used without validation. Always validate and sanitize external input.
+  User input used without obvious validation. Always validate and sanitize external input.
 patterns:
   - type: regex
     pattern: "(req\\.|request\\.|params\\.|body\\.|query\\.)\\w+"
+    where:
+      - not-test-file: true

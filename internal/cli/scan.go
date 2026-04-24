@@ -370,6 +370,7 @@ Examples:
 	cmd.Flags().StringVar(&policyPath, "policy", "", "Path to policy YAML (.raven-policy.yaml)")
 	cmd.Flags().BoolVar(&staged, "staged", false, "Only scan git staged files (fast pre-commit scan)")
 	cmd.Flags().BoolVar(&quiet, "quiet", false, "Silent mode: only exit code, no output")
+	cmd.Flags().BoolVar(&noCache, "no-cache", false, "Disable incremental scan caching")
 
 	return cmd
 }

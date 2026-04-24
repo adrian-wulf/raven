@@ -1,13 +1,15 @@
 id: gen-nosql-003
 name: MongoDB Injection in Express Route
-severity: critical
+severity: high
 category: nosql
-confidence: high
+confidence: medium
 cwe: "CWE-943"
 languages: [javascript]
-message: "Express route passes user input directly to MongoDB query. Use parameterized queries or validate input."
+message: "User input may flow into a MongoDB query. Verify that req.query/body/params is sanitized before use in find/update/delete."
 patterns:
   - type: regex
     pattern: "(req\\.query|req\\.body|req\\.params)"
+    where:
+      - not-test-file: true
 references:
   - https://cwe.mitre.org/data/definitions/943.html

@@ -1,13 +1,15 @@
 id: gen-auth-001
 name: Sensitive Endpoint Without Authentication
-severity: high
+severity: low
 category: auth
-confidence: high
+confidence: low
 cwe: "CWE-306"
 languages: [javascript, python, go, java, php, csharp, ruby]
-message: "Sensitive endpoint without authentication. Add authentication middleware or decorator."
+message: "Possible sensitive endpoint without authentication. Verify auth middleware or guards are in place."
 patterns:
   - type: regex
     pattern: "(admin|api|manage|config|internal|dashboard|settings|user|account)"
+    where:
+      - not-test-file: true
 references:
   - https://cwe.mitre.org/data/definitions/306.html
