@@ -121,7 +121,14 @@ precision than the regex equivalents they complement:
 Key takeaway: AST rules have **near-zero false-positive rate** because they
 match structural patterns rather than substrings.
 
-## 6. Faza 1 Results (v2.5.1 Hotfix)
+## 7. Faza 3 Results (v2.7 Auto-FP + Vendor Exclusion)
+
+- **Vendor exclusion** removed 7 false positives from `ace.js` (WebGoat)
+  and similar bundled libraries.
+- **Auto-FP report** successfully flags `gen-auth-001` after 4 suppressions
+  in a demo file, proving the feedback loop works.
+
+## 8. Faza 1 Results (v2.5.1 Hotfix)
 
 After applying the Phase-1 fixes (circuit breaker + rule tightening):
 

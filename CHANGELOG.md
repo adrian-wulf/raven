@@ -2,6 +2,17 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v2.7.0] - 2026-04-24
+
+### Added
+- Auto-FP detection: tracks suppressed findings per rule and warns when a rule
+  is suppressed ≥3 times (suggests tightening or lowering confidence).
+- Expanded auto-exclude list: `libs`, `lib`, `third_party`, `3rdparty`,
+  `external`, `assets` (avoids scanning bundled/vendor code).
+
+### Changed
+- `Result` struct now includes `suppressed_counts` for post-scan analysis.
+
 ## [v2.6.0] - 2026-04-24
 
 ### Added
