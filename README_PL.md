@@ -11,6 +11,43 @@
 
 ---
 
+## Instalacja
+
+### Opcja 1: go install (zalecana)
+
+```bash
+go install github.com/raven-security/raven/cmd/raven@latest
+```
+
+Wymaga Go 1.25+.
+
+### Opcja 2: Pobierz binarke
+
+```bash
+# Linux/macOS
+curl -sL https://github.com/adrian-wulf/raven/releases/latest/download/raven-linux-amd64.tar.gz | tar xz
+sudo mv raven /usr/local/bin/
+
+# Lub pobierz najnowszy release z:
+# https://github.com/adrian-wulf/raven/releases
+```
+
+### Opcja 3: Homebrew
+
+```bash
+brew tap adrian-wulf/raven https://github.com/adrian-wulf/raven
+brew install raven
+```
+
+### Opcja 4: Docker
+
+```bash
+docker build -t raven https://github.com/adrian-wulf/raven.git#main
+docker run --rm -v $(pwd):/code raven scan /code
+```
+
+---
+
 ## Problem
 
 Napisales aplikacje z pomoca Cursor/Claude/Copilot. Dziala. Wysylasz na produkcje.

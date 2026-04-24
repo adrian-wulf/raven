@@ -11,6 +11,43 @@
 
 ---
 
+## Installation
+
+### Option 1: Go install (recommended)
+
+```bash
+go install github.com/raven-security/raven/cmd/raven@latest
+```
+
+Requires Go 1.25+.
+
+### Option 2: Download binary
+
+```bash
+# Linux/macOS
+curl -sL https://github.com/adrian-wulf/raven/releases/latest/download/raven-linux-amd64.tar.gz | tar xz
+sudo mv raven /usr/local/bin/
+
+# Or grab the latest release from:
+# https://github.com/adrian-wulf/raven/releases
+```
+
+### Option 3: Homebrew
+
+```bash
+brew tap adrian-wulf/raven https://github.com/adrian-wulf/raven
+brew install raven
+```
+
+### Option 4: Docker
+
+```bash
+docker build -t raven https://github.com/adrian-wulf/raven.git#main
+docker run --rm -v $(pwd):/code raven scan /code
+```
+
+---
+
 ## What AI wrote in your code
 
 You built an app with Cursor/Claude/Copilot. It works. You ship to production.
