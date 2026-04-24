@@ -16,12 +16,27 @@ type RulesLoader struct {
 }
 
 func NewRulesLoader() *RulesLoader {
-	return &RulesLoader{
-		Dirs: []string{
-			"rules",
-			"/usr/share/raven/rules",
-		},
+	dirs := []string{
+		"rules",                         // local development
+		"/usr/share/raven/rules",        // system install
+		"/usr/local/share/raven/rules",  // Homebrew / manual install
 	}
+
+	// Add directory relative to the executable (for go install / binary releases)
+	if exe, err := os.Executable(); err == nil {
+		exeDir := filepath.Dir(exe)
+		// Try ../share/raven/rules (FHS layout)
+		dirs = append(dirs, filepath.Join(exeDir, "..", "share", "raven", "rules"))
+		// Try ../rules (side-by-side with binary)
+		dirs = append(dirs, filepath.Join(exeDir, "..", "rules"))
+	}
+
+	// Add user config directory
+	if home, err := os.UserHomeDir(); err == nil {
+		dirs = append(dirs, filepath.Join(home, ".config", "raven", "rules"))
+	}
+
+	return &RulesLoader{Dirs: dirs}
 }
 
 func (rl *RulesLoader) Load() ([]Rule, error) {

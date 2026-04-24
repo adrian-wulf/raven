@@ -140,7 +140,16 @@ Examples:
 			if len(args) > 0 {
 				paths = args
 			} else {
-				paths = []string{"rules", "/usr/share/raven/rules"}
+				// Use same discovery paths as the rule loader
+				loader := engine.NewRulesLoader()
+				for _, d := range loader.Dirs {
+					if _, err := os.Stat(d); err == nil {
+						paths = append(paths, d)
+					}
+				}
+				if len(paths) == 0 {
+					return fmt.Errorf("no rules directory found. Run `raven init` or specify a path: raven rules validate ./rules")
+				}
 			}
 
 			var total, valid, invalid int
