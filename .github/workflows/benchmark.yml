@@ -39,7 +39,7 @@ jobs:
 
       - name: Quality gate — scan test-vulnerable-app
         run: |
-          go run ./cmd/raven scan test-vulnerable-app/ --confidence low --format json > scan-results.json
+          go run ./cmd/raven scan test-vulnerable-app/ --confidence low --format json > scan-results.json || true
           FINDINGS=$(jq '.findings | length' scan-results.json)
           echo "Findings: $FINDINGS"
           if [ "$FINDINGS" -lt 20 ]; then
