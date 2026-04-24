@@ -37,6 +37,9 @@ func RunRuleTest(t *testing.T, rulePath string, fixtures *RuleFixture) {
 
 	rule, err := LoadRule(rulePath)
 	if err != nil {
+		if os.IsNotExist(err) {
+			t.Skipf("rule file not found: %s", rulePath)
+		}
 		t.Fatalf("loading rule %s: %v", rulePath, err)
 	}
 

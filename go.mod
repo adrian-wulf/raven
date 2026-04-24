@@ -4,6 +4,7 @@ go 1.23.0
 
 require (
 	github.com/charmbracelet/lipgloss v1.1.0
+	github.com/dlclark/regexp2 v1.12.0
 	github.com/muesli/termenv v0.16.0
 	github.com/pelletier/go-toml/v2 v2.2.4
 	github.com/smacker/go-tree-sitter v0.0.0-20240827094217-dd81d9e9be82
@@ -18,7 +19,6 @@ require (
 	github.com/charmbracelet/x/ansi v0.8.0 // indirect
 	github.com/charmbracelet/x/cellbuf v0.0.13-0.20250311204145-2c3ea96c31dd // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
-	github.com/dlclark/regexp2 v1.12.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

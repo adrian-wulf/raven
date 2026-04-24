@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/raven-security/raven/internal/utils"
 	"gopkg.in/yaml.v3"
@@ -37,6 +38,10 @@ func (rl *RulesLoader) Load() ([]Rule, error) {
 				return nil
 			}
 			if info.IsDir() {
+				// Skip hidden directories (e.g. .disabled-broken, .git)
+				if strings.HasPrefix(info.Name(), ".") {
+					return filepath.SkipDir
+				}
 				return nil
 			}
 			if filepath.Ext(path) != ".yaml" && filepath.Ext(path) != ".yml" {

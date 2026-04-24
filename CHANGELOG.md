@@ -2,6 +2,18 @@
 
 All notable changes to Raven will be documented in this file.
 
+## [v3.3.0] - 2026-04-24
+
+### Added
+- `--output` / `-o` flag for `raven scan` — write reports to file instead of stdout.
+- `Formatter.Writer io.Writer` — all output formats (pretty, json, sarif, html, summary)
+  now write to a configurable writer (defaults to `os.Stdout`).
+
+### Fixed
+- Rules loader now skips hidden directories (`.disabled-broken`, `.git`, etc.)
+  preventing disabled/broken rules from being loaded.
+- Broken rule `gen-rp-001` (overly broad negative lookahead) moved to `.disabled-broken/`.
+
 ## [v3.2.0] - 2026-04-24
 
 ### Added

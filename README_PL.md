@@ -1,4 +1,4 @@
-# Raven v2.5
+# Raven v3.3
 
 > **AI-native skaner bezpieczenstwa. Zbudowany dla vibe coderow. Zaprojektowany na zero false positives.**
 >
