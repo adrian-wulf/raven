@@ -1,0 +1,22 @@
+id: ruby-ssrf-002
+name: open-uri User URL
+description: |
+  Detects ssrf issues in RUBY code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [ruby]
+message: |
+  open-uri with user URLs enables SSRF and file reads.
+patterns:
+  - type: regex
+    pattern: '(?i)require\s+[''"]open-uri[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)open\s*\(\s*.*params.*\)(?!\.read)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

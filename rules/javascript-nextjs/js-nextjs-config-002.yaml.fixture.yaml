@@ -1,0 +1,15 @@
+rule_id: js-nextjs-config-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-config-002
+
+    axios.get(userUrl);
+
+    '
+  safe: '// Safe - js-nextjs-config-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

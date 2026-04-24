@@ -1,0 +1,27 @@
+id: java-spring-sqli-001
+name: Spring @RequestParam SQL Trust
+description: |
+  Detects sql-injection issues in JAVA code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [java]
+frameworks: [spring]
+message: |
+  Never trust @RequestParam values in SQL queries. Always use parameterized queries.
+patterns:
+  - type: regex
+    pattern: '(?i)@RequestParam.*String\s+\w+.*executeQuery'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@RequestParam.*SELECT|INSERT|UPDATE|DELETE'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)request\.getParameter\(.*\).*createNativeQuery'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

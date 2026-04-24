@@ -1,0 +1,22 @@
+id: go-crypto-005
+name: Hardcoded AES/DES Key
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: critical
+category: weak-cryptography
+confidence: high
+cwe: CWE-798
+languages: [go]
+message: |
+  Never hardcode encryption keys. Use environment variables or a secrets management service.
+patterns:
+  - type: regex
+    pattern: '(?i)aes\.NewCipher\s*\(\s*\[\]byte\s*\(\s*[`"][^`"]{8,}[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)des\.NewCipher\s*\(\s*\[\]byte\s*\(\s*[`"][^`"]{8,}[`"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

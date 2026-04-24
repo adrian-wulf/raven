@@ -1,0 +1,13 @@
+id: gen-mobile-005
+name: Clipboard Sensitive Data Exposure
+severity: high
+category: mobile
+confidence: high
+cwe: "CWE-200"
+languages: [java, kotlin, swift, dart]
+message: "Sensitive data copied to clipboard. Clipboard is accessible to all apps. Avoid copying passwords, tokens, PII."
+patterns:
+  - type: regex
+    pattern: "(clipboard|pasteboard|UIPasteboard|ClipboardData)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

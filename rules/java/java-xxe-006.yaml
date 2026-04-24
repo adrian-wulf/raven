@@ -1,0 +1,26 @@
+id: java-xxe-006
+name: TransformerFactory XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+message: |
+  TransformerFactory can be exploited via XXE if external stylesheets are allowed.
+patterns:
+  - type: regex
+    pattern: '(?i)TransformerFactory\.newInstance'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)transformer\.transform\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)StreamSource\s*\(\s*new\s+FileReader'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

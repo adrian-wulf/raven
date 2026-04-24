@@ -1,0 +1,17 @@
+id: py-fastapi-cors-001
+name: allow_origins wildcard
+severity: medium
+category: cors
+confidence: high
+cwe: CWE-942
+languages:
+- python
+message: allow_origins=['*'] allows any origin to access the API. Restrict to trusted origins.
+patterns:
+- type: regex
+  pattern: allow_origins\s*=\s*\[\s*[\"\']\*[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/942.html
+frameworks:
+- fastapi

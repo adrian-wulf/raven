@@ -1,0 +1,22 @@
+id: cpp-mem-001
+name: new without delete
+description: |
+  Detects resource-leak issues in CPP code.
+severity: medium
+category: resource-leak
+confidence: medium
+cwe: CWE-401
+languages: [cpp]
+message: |
+  Raw new without delete causes memory leaks. Use smart pointers.
+patterns:
+  - type: regex
+    pattern: '(?i)\w+\s*=\s*new\s+(?!\s*\[).*(?!delete)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+char\[.*\].*(?!delete\[\])'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/401.html

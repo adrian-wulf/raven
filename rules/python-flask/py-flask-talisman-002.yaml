@@ -1,0 +1,17 @@
+id: py-flask-talisman-002
+name: Missing content security policy
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-693
+languages:
+- python
+message: No Content-Security-Policy header allows script injection. Add CSP.
+patterns:
+- type: regex
+  pattern: '@app\.(route|get|post)\s*\('
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- flask

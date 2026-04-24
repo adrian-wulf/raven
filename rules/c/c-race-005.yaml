@@ -1,0 +1,26 @@
+id: c-race-005
+name: Thread Unsafe Function
+description: |
+  Detects race-condition issues in C code.
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages: [c]
+message: |
+  strtok, getpwuid, etc. are not thread-safe. Use strtok_r equivalents.
+patterns:
+  - type: regex
+    pattern: '(?i)strtok\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)getpwuid\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)readdir\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

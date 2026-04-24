@@ -1,0 +1,27 @@
+id: ruby-rails-sqli-001
+name: Rails ActiveRecord String Query
+description: |
+  Detects sql-injection issues in RUBY code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [ruby]
+frameworks: [rails]
+message: |
+  ActiveRecord with string queries allows SQL injection. Use hash conditions.
+patterns:
+  - type: regex
+    pattern: '(?i)where\s*\(\s*[''"].*SELECT'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)where\s*\(\s*[''"].*\#\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)where\s*\(\s*[''"].*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

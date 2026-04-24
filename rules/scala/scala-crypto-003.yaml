@@ -1,0 +1,15 @@
+id: scala-crypto-003
+name: Hardcoded salt
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-760
+languages:
+- scala
+message: Hardcoded salt in password hashing reduces security. Use random salt per user.
+patterns:
+- type: regex
+  pattern: salt\s*=\s*[\"\'][^\"\']{4,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/760.html

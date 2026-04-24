@@ -1,0 +1,17 @@
+rule_id: bash-find-001
+language: bash
+examples:
+  unsafe: '# Unsafe - bash-find-001
+
+    os.system(f"ls {directory}")
+
+    '
+  safe: '# Safe - bash-find-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

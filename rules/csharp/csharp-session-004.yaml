@@ -1,0 +1,23 @@
+id: csharp-session-004
+name: Sliding Expiration Enabled
+description: |
+  Detects session-fixation issues in CSHARP code.
+severity: medium
+category: session-fixation
+confidence: medium
+cwe: CWE-613
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Sliding expiration extends session indefinitely if actively used.
+patterns:
+  - type: regex
+    pattern: '(?i)SlidingExpiration\s*=\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)CookieAuthenticationOptions.*SlidingExpiration.*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/613.html

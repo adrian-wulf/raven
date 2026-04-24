@@ -1,0 +1,26 @@
+id: ruby-regex-002
+name: Regex Backtracking Pattern
+description: |
+  Detects regex-dos issues in RUBY code.
+severity: medium
+category: regex-dos
+confidence: medium
+cwe: CWE-400
+languages: [ruby]
+message: |
+  Nested quantifiers can cause exponential backtracking.
+patterns:
+  - type: regex
+    pattern: '(?i)\(\.\*\)\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\(\.\+\)\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[\w\W\]\+\+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/400.html

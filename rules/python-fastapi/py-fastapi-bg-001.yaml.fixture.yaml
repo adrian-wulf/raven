@@ -1,0 +1,17 @@
+rule_id: py-fastapi-bg-001
+language: python
+examples:
+  unsafe: '# Unsafe - py-fastapi-bg-001
+
+    eval(user_code)
+
+    '
+  safe: '# Safe - py-fastapi-bg-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

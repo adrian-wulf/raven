@@ -1,0 +1,15 @@
+id: dart-http-001
+name: HTTP without TLS
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- dart
+message: HTTP connection without TLS encrypts data in plaintext. Use HTTPS.
+patterns:
+- type: regex
+  pattern: http://(?!.*localhost)(?!.*127\.0\.0\.1)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

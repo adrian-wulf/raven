@@ -1,0 +1,22 @@
+id: go-log-003
+name: log.Printf with User Input
+description: |
+  Detects log-injection issues in GO code.
+severity: medium
+category: log-injection
+confidence: medium
+cwe: CWE-117
+languages: [go]
+message: |
+  User input in log messages can forge log entries. Strip newlines and control chars.
+patterns:
+  - type: regex
+    pattern: '(?i)log\.Printf\s*\(\s*[`"][^`"]*%s[^`"]*[`"]\s*,\s*.*(r\.|req|request|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)log\.Println\s*\(\s*.*(r\.|req|request|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/117.html

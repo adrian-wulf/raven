@@ -1,0 +1,17 @@
+id: py-fastapi-graphql-001
+name: GraphQL without query depth limit
+severity: medium
+category: dos
+confidence: medium
+cwe: CWE-400
+languages:
+- python
+message: GraphQL without query depth limit enables nested query DoS. Set max depth.
+patterns:
+- type: regex
+  pattern: GraphQL\s*\(\s*app\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html
+frameworks:
+- fastapi

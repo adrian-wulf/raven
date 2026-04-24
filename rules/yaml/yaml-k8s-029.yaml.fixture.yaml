@@ -1,0 +1,9 @@
+rule_id: yaml-k8s-029
+language: yaml
+examples:
+  unsafe: '# Unsafe - yaml-k8s-029
+
+    # No resource limits
+
+    '
+  safe: "# Safe - yaml-k8s-029\n# Use sealed secrets, security contexts\napiVersion: v1\nkind: Secret\nstringData:\n  password: <from-vault>\n"

@@ -1,0 +1,27 @@
+id: java-ssrf-004
+name: Spring WebClient SSRF
+description: |
+  Detects ssrf issues in JAVA code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [java]
+frameworks: [spring]
+message: |
+  WebClient with user-controlled URLs can access internal network.
+patterns:
+  - type: regex
+    pattern: '(?i)webClient\.get\(\).*uri\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)webClient\.post\(\).*uri\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)WebClient\.create\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

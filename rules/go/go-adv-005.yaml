@@ -1,0 +1,13 @@
+id: go-adv-005
+name: Go Error Information Leakage
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-200"
+languages: [go]
+message: "Internal error details exposed to client. Return generic error messages to users, log details server-side."
+patterns:
+  - type: regex
+    pattern: "err\\.Error\\(\\).*(w\\.Write|json\\.NewEncoder|fmt\\.Fprintf)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

@@ -1,0 +1,19 @@
+id: js-vue-component-001
+name: Dynamic component injection
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: Dynamic component resolution with user input can enable component injection. Use allowlist.
+patterns:
+- type: regex
+  pattern: <component\s*:\s*is\s*=\s*[\"\'][^\"\']*(?P<input>user|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- vue

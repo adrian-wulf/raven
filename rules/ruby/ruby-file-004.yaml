@@ -1,0 +1,22 @@
+id: ruby-file-004
+name: IO.read User Path
+description: |
+  Detects path-traversal issues in RUBY code.
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages: [ruby]
+message: |
+  IO.read with user paths can read arbitrary files.
+patterns:
+  - type: regex
+    pattern: '(?i)IO\.read\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)IO\.binread\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

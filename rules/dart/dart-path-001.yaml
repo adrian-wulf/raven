@@ -1,0 +1,16 @@
+id: dart-path-001
+name: File with user path
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- dart
+message: File() with user-controlled path enables directory traversal. Validate and sanitize paths.
+patterns:
+- type: regex
+  pattern: File\s*\(\s*(?P<input>user|path|input|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

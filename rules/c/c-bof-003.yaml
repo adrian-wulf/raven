@@ -1,0 +1,26 @@
+id: c-bof-003
+name: sprintf Format String Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-121
+languages: [c]
+message: |
+  sprintf can overflow buffer. Use snprintf.
+patterns:
+  - type: regex
+    pattern: '(?i)(?<!sn)printf\s*\(\s*[^,]+,\s*[''"]%s[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sprintf\s*\(\s*[^,]+,\s*[''"].*%s.*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sprintf\s*\(\s*buffer'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

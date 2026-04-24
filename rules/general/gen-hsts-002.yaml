@@ -1,0 +1,13 @@
+id: gen-hsts-002
+name: HSTS with Low max-age
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-319"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "HSTS max-age is too low. Use at least 31536000 seconds (1 year)."
+patterns:
+  - type: regex
+    pattern: "Strict-Transport-Security.*max-age=\\s*(\\d{1,4}|[1-9]\\d{0,4})"
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

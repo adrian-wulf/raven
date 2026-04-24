@@ -1,0 +1,18 @@
+id: py-fastapi-file-002
+name: FileResponse without validation
+severity: medium
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages:
+- python
+message: FileResponse with user path can enable directory traversal. Validate file paths.
+patterns:
+- type: regex
+  pattern: FileResponse\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html
+frameworks:
+- fastapi

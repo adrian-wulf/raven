@@ -1,0 +1,27 @@
+id: java-el-002
+name: Spring Expression Language Injection
+description: |
+  Detects expression-injection issues in JAVA code.
+severity: critical
+category: expression-injection
+confidence: high
+cwe: CWE-917
+languages: [java]
+frameworks: [spring]
+message: |
+  SpEL with user input enables arbitrary code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)expressionParser\.parseExpression\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+SpelExpressionParser.*parseExpression\s*\(.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)templateParserContext.*parseExpression'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

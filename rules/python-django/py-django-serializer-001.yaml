@@ -1,0 +1,17 @@
+id: py-django-serializer-001
+name: Serializer bypass
+severity: medium
+category: serialization
+confidence: medium
+cwe: CWE-502
+languages:
+- python
+message: Django serializer without proper validation may allow data injection. Validate all fields.
+patterns:
+- type: regex
+  pattern: class\s+\w+Serializer\s*\(\s*serializers\.Serializer\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html
+frameworks:
+- django

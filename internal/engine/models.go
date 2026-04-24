@@ -14,6 +14,19 @@ const (
 	Info     Severity = "info"
 )
 
+// SeverityCategory is a string-based category type used for baseline comparisons.
+type SeverityCategory string
+
+// ScanSummary holds aggregate counts for a scan.
+type ScanSummary struct {
+	Total    int `json:"total"`
+	Critical int `json:"critical"`
+	High     int `json:"high"`
+	Medium   int `json:"medium"`
+	Low      int `json:"low"`
+	Info     int `json:"info"`
+}
+
 type Rule struct {
 	ID          string    `yaml:"id"`
 	Name        string    `yaml:"name"`
@@ -68,8 +81,9 @@ type Finding struct {
 	Fix          *Fix              `json:"fix,omitempty"`
 	FixAvailable bool              `json:"fix_available"`
 	References   []string          `json:"references,omitempty"`
-	Confidence   string            `json:"confidence"`
-	Metavars     map[string]string `json:"metavars,omitempty"`
+	Confidence     string            `json:"confidence"`
+	ConfidenceScore float64          `json:"confidence_score,omitempty"`
+	Metavars       map[string]string `json:"metavars,omitempty"`
 }
 
 type Result struct {

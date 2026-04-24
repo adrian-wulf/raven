@@ -1,0 +1,15 @@
+rule_id: js-nextjs-env-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-env-001
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-nextjs-env-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

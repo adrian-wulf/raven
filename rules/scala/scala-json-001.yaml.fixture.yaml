@@ -1,0 +1,15 @@
+rule_id: scala-json-001
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-json-001
+
+    new ObjectInputStream(stream).readObject()
+
+    '
+  safe: '// Safe - scala-json-001
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

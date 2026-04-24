@@ -1,0 +1,13 @@
+id: gen-api-001
+name: API Key in Query Parameter
+severity: critical
+category: api
+confidence: high
+cwe: "CWE-598"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "API key transmitted in query parameter. Query params are logged in server logs and browser history. Use Authorization header."
+patterns:
+  - type: regex
+    pattern: '(api[_-]?key|apikey|token)=\\s*[\\''"a-zA-Z0-9]{16,}'
+references:
+  - https://cwe.mitre.org/data/definitions/598.html

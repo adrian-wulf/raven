@@ -1,0 +1,22 @@
+id: cpp-bof-002
+name: std::copy without Bounds
+description: |
+  Detects buffer-overflow issues in CPP code.
+severity: high
+category: buffer-overflow
+confidence: medium
+cwe: CWE-121
+languages: [cpp]
+message: |
+  std::copy without bounds checking can overflow destination.
+patterns:
+  - type: regex
+    pattern: '(?i)std::copy\s*\(.*,\s*.*,\s*.*\)(?!.*size)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::copy_n\s*\(.*,\s*.*,\s*.*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

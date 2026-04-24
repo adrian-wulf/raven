@@ -1,0 +1,23 @@
+id: kotlin-android-020
+name: Android Debug Mode Enabled
+description: |
+  Detects information-disclosure issues in KOTLIN code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-489
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Debug mode in production exposes sensitive information.
+patterns:
+  - type: regex
+    pattern: '(?i)android:debuggable=[''"]true[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)BuildConfig\.DEBUG.*(?!.*false)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/489.html

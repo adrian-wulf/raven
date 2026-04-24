@@ -1,0 +1,18 @@
+id: js-angular-i18n-001
+name: i18n without sanitization
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Internationalized content without sanitization can contain XSS. Sanitize translations.
+patterns:
+- type: regex
+  pattern: \$localize\s*`[^`]*\$\{
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

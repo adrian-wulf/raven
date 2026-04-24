@@ -1,0 +1,23 @@
+id: swift-ios-038
+name: Push Notification Spoofing
+description: |
+  Detects input-validation issues in SWIFT code.
+severity: high
+category: input-validation
+confidence: high
+cwe: CWE-346
+languages: [swift]
+frameworks: [ios]
+message: |
+  Push notifications with user content can be spoofed.
+patterns:
+  - type: regex
+    pattern: '(?i)UNUserNotificationCenter.*willPresent.*(?!.*validate)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)didReceiveRemoteNotification.*(?!.*verify)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/346.html

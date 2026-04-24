@@ -1,0 +1,15 @@
+id: sol-nft-001
+name: ERC721 mint without validation
+severity: high
+category: access-control
+confidence: high
+cwe: CWE-284
+languages:
+- solidity
+message: ERC721 mint function without access control allows anyone to mint. Add onlyOwner.
+patterns:
+- type: regex
+  pattern: function\s+mint\s*\([^)]*\)[^{]*\{[^}]*_safeMint
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

@@ -1,0 +1,15 @@
+id: sol-gas-001
+name: External call in loop
+severity: high
+category: gas
+confidence: high
+cwe: CWE-400
+languages:
+- solidity
+message: External calls inside loops can consume all gas. Pull over push pattern.
+patterns:
+- type: regex
+  pattern: for\s*\([^)]*\)\s*\{[^}]*\.transfer|for\s*\([^)]*\)\s*\{[^}]*\.call
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

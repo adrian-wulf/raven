@@ -17,9 +17,9 @@ patterns:
   - type: regex
     pattern: 'new\s+Function\s*\(\s*[^)]*(req\.|request\.|params\.|body\.|query\.|user|input|data)'
   - type: regex
-    pattern: 'setTimeout\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
+    pattern: 'setTimeout\s*\(\s*[`"''''"][^`"''''`]*\$\{[^}]+\}'
   - type: regex
-    pattern: 'setInterval\s*\(\s*[`"''"][^`"''`]*\$\{[^}]+\}'
+    pattern: 'setInterval\s*\(\s*[`"''''"][^`"''''`]*\$\{[^}]+\}'
 fix:
   description: Replace eval with JSON.parse for data parsing
   pattern: "eval\\s*\\("

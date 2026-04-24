@@ -1,0 +1,16 @@
+id: bash-subst-001
+name: Untrusted command substitution
+severity: high
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: Command substitution with untrusted variable is dangerous. Validate inputs.
+patterns:
+- type: regex
+  pattern: \$\(\s*\$\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

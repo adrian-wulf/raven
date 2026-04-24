@@ -1,0 +1,17 @@
+id: py-flask-sse-001
+name: Server-Sent Events without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: SSE endpoint without authentication exposes real-time data. Add auth check.
+patterns:
+- type: regex
+  pattern: def\s+\w+.*sse|Response\s*\(\s*\w+.*mimetype\s*=\s*[\"\']text/event-stream
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- flask

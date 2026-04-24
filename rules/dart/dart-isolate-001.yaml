@@ -1,0 +1,15 @@
+id: dart-isolate-001
+name: Isolate without error listener
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- dart
+message: Spawned isolate without error handling can crash silently. Add error listener.
+patterns:
+- type: regex
+  pattern: Isolate\.spawn\s*\([^)]+\)(?!.*onError)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html

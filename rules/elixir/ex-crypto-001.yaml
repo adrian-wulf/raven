@@ -1,0 +1,15 @@
+id: ex-crypto-001
+name: Weak random
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-338
+languages:
+- elixir
+message: :rand.uniform is not cryptographically secure. Use :crypto.strong_rand_bytes.
+patterns:
+- type: regex
+  pattern: :rand\.uniform\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/338.html

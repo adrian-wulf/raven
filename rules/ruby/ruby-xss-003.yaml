@@ -1,0 +1,27 @@
+id: ruby-xss-003
+name: Rails content_tag XSS
+description: |
+  Detects xss issues in RUBY code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [ruby]
+frameworks: [rails]
+message: |
+  content_tag with user data and escape=false enables XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)content_tag\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)content_tag.*escape:\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tag\.\w+.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

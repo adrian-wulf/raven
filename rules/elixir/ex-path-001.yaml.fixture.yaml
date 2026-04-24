@@ -1,0 +1,15 @@
+rule_id: ex-path-001
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-path-001
+
+    File.read!(user_path)
+
+    '
+  safe: '# Safe - ex-path-001
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

@@ -1,0 +1,15 @@
+rule_id: js-nextjs-env-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-env-002
+
+    if (env.production) { enableProdMode(); }
+
+    '
+  safe: '// Safe - js-nextjs-env-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

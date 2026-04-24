@@ -1,0 +1,15 @@
+id: sol-timestamp-002
+name: now deprecated
+severity: low
+category: blockchain
+confidence: low
+cwe: CWE-477
+languages:
+- solidity
+message: now is deprecated in Solidity. Use block.timestamp explicitly.
+patterns:
+- type: regex
+  pattern: \bnow\b
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/477.html

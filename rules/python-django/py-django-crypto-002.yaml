@@ -1,0 +1,17 @@
+id: py-django-crypto-002
+name: SHA1 as password hasher
+severity: medium
+category: crypto
+confidence: high
+cwe: CWE-328
+languages:
+- python
+message: SHA1 as password hasher is insecure. Use PBKDF2, Argon2, or bcrypt.
+patterns:
+- type: regex
+  pattern: PASSWORD_HASHERS\s*=.*[\"\']django\.contrib\.auth\.hashers\.SHA1PasswordHasher
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/328.html
+frameworks:
+- django

@@ -1,0 +1,18 @@
+id: py-django-xss-001
+name: mark_safe with user input
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: mark_safe() with user input disables HTML escaping and enables XSS. Use escape() first.
+patterns:
+- type: regex
+  pattern: mark_safe\s*\(\s*(?P<input>request\.|user_input|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- django

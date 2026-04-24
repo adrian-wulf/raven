@@ -1,0 +1,27 @@
+id: kotlin-android-004
+name: Android Intent Injection
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-940
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Intents from untrusted sources can carry malicious payloads.
+patterns:
+  - type: regex
+    pattern: '(?i)intent\.getStringExtra\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)intent\.getParcelableExtra'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)startActivity\s*\(\s*.*intent'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/940.html

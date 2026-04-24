@@ -1,0 +1,13 @@
+id: gen-api-003
+name: GraphQL Introspection Enabled
+severity: high
+category: api
+confidence: high
+cwe: "CWE-200"
+languages: [javascript, python, java, csharp]
+message: "GraphQL introspection enabled in production. Disable introspection to prevent schema leakage."
+patterns:
+  - type: regex
+    pattern: "introspection\\s*:\\s*true|ALLOW_INTROSPECTION\\s*=\\s*True"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

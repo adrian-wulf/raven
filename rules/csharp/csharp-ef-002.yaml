@@ -1,0 +1,27 @@
+id: csharp-ef-002
+name: EF ExecuteSqlRaw SQL Injection
+description: |
+  Detects sql-injection issues in CSHARP code.
+severity: critical
+category: sql-injection
+confidence: critical
+cwe: CWE-89
+languages: [csharp]
+frameworks: [aspnet, ef]
+message: |
+  ExecuteSqlRaw with user input allows SQL injection. Use ExecuteSqlInterpolated.
+patterns:
+  - type: regex
+    pattern: '(?i)ExecuteSqlRaw\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ExecuteSqlRaw\s*\(\s*.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ExecuteSqlRawAsync\s*\(\s*.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

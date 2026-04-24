@@ -1,0 +1,27 @@
+id: java-android-007
+name: Android SQLite Injection
+description: |
+  Detects sql-injection issues in JAVA code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [java]
+frameworks: [android]
+message: |
+  Raw SQL queries with user input in SQLiteDatabase are vulnerable to injection.
+patterns:
+  - type: regex
+    pattern: '(?i)sqliteDatabase\.rawQuery\s*\(.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sqliteDatabase\.execSQL\s*\(.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SQLiteDatabase.*rawQuery.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

@@ -1,0 +1,26 @@
+id: php-upload-001
+name: File Upload without Validation
+description: |
+  Detects file-upload issues in PHP code.
+severity: critical
+category: file-upload
+confidence: critical
+cwe: CWE-434
+languages: [php]
+message: |
+  File uploads without type validation can lead to RCE.
+patterns:
+  - type: regex
+    pattern: '(?i)move_uploaded_file\s*\(\s*\$_(FILES)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)move_uploaded_file\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$_(FILES)\[''.*''\]\[''tmp_name''\].*move_uploaded_file(?!.*ext)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/434.html

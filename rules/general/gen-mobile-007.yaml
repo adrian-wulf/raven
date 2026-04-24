@@ -1,0 +1,13 @@
+id: gen-mobile-007
+name: Insecure Network Configuration
+severity: high
+category: mobile
+confidence: high
+cwe: "CWE-319"
+languages: [java, kotlin, swift, dart]
+message: "Application allows cleartext HTTP traffic. Enforce HTTPS with certificate pinning for sensitive apps."
+patterns:
+  - type: regex
+    pattern: "usesCleartextTraffic\\s*=\\s*\\s*true|NSAllowsArbitraryLoads\\s*=\\s*YES|cleartextTrafficPermitted\\s*=\\s*true"
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

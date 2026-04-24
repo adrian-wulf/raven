@@ -1,0 +1,19 @@
+id: js-angular-xss-001
+name: bypassSecurityTrustHtml
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: bypassSecurityTrustHtml() disables Angular's XSS protection. Sanitize HTML before using.
+patterns:
+- type: regex
+  pattern: bypassSecurityTrustHtml\s*\(\s*(?P<input>this\.|user|req\.|props\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

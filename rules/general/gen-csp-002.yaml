@@ -1,0 +1,13 @@
+id: gen-csp-002
+name: CSP with unsafe-inline
+severity: high
+category: headers
+confidence: high
+cwe: "CWE-693"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Content Security Policy allows unsafe-inline scripts. Remove unsafe-inline and use nonces or hashes."
+patterns:
+  - type: regex
+    pattern: "Content-Security-Policy.*unsafe-inline"
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

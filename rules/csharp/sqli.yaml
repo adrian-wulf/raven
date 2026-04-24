@@ -12,11 +12,11 @@ message: |
   Never concatenate user input into SQL strings.
 patterns:
   - type: regex
-    pattern: '(?i)(Execute|ExecuteNonQuery|ExecuteReader)\s*\(\s*\$["''][^"'']*\{'
+    pattern: '(?i)(Execute|ExecuteNonQuery|ExecuteReader)\s*\(\s*\$["''''][^"'''']*\{'
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(?i)string\.Format\s*\(\s*["''][^"'']*(SELECT|INSERT|UPDATE|DELETE)'
+    pattern: '(?i)string\.Format\s*\(\s*["''''][^"'''']*(SELECT|INSERT|UPDATE|DELETE)'
     where:
       - not-test-file: true
   - type: regex

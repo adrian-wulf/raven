@@ -1,0 +1,16 @@
+id: lua-ssrf-001
+name: socket.http.request with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- lua
+message: socket.http.request with user URL enables SSRF. Validate URLs.
+patterns:
+- type: regex
+  pattern: socket\.http\.request\s*\(\s*(?P<input>user|input|url)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

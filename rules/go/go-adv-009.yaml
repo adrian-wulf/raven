@@ -1,0 +1,13 @@
+id: go-adv-009
+name: Go Path Traversal via http.ServeFile
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-22"
+languages: [go]
+message: "http.ServeFile with user input enables path traversal. Validate and sanitize the file path."
+patterns:
+  - type: regex
+    pattern: "http\\.ServeFile\\s*\\(.*(req\\.|user|input|path|file)"
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

@@ -1,0 +1,23 @@
+id: ruby-deser-006
+name: MessagePack.unpack User Input
+description: |
+  Detects insecure-deserialization issues in RUBY code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [ruby]
+frameworks: [msgpack]
+message: |
+  MessagePack.unpack can instantiate arbitrary objects with allow_unknown.
+patterns:
+  - type: regex
+    pattern: '(?i)MessagePack\.unpack\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)MessagePack\.load\s*\(\s*.*allow_unknown'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

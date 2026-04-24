@@ -1,0 +1,23 @@
+id: csharp-session-003
+name: Cookie without Secure
+description: |
+  Detects insecure-cookie issues in CSHARP code.
+severity: high
+category: insecure-cookie
+confidence: high
+cwe: CWE-614
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Cookies without Secure flag sent over HTTP can be intercepted.
+patterns:
+  - type: regex
+    pattern: '(?i)CookieOptions.*Secure\s*=\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)AppendCookie.*(?!Secure)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

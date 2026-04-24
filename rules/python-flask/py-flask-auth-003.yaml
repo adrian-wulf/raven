@@ -1,0 +1,17 @@
+id: py-flask-auth-003
+name: Basic auth in code
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-256
+languages:
+- python
+message: Hardcoded basic auth credentials in source code can be exposed. Use environment variables.
+patterns:
+- type: regex
+  pattern: HTTPBasicAuth\s*\(\s*[\"\']\w+[\"\']\s*,\s*[\"\'][^\"\']+[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/256.html
+frameworks:
+- flask

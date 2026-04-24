@@ -1,0 +1,19 @@
+id: js-angular-xss-006
+name: ng-bind-html without sanitization
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: ng-bind-html without sanitization can execute malicious HTML. Use ng-bind or sanitize first.
+patterns:
+- type: regex
+  pattern: ng-bind-html\s*=\s*[\"\'][^\"\']*(?P<input>\{\{|\$\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,19 @@
+id: js-nextjs-redirect-001
+name: Redirect injection
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages:
+- javascript
+- typescript
+message: NextResponse.redirect with user-controlled URL enables open redirect. Validate URLs.
+patterns:
+- type: regex
+  pattern: NextResponse\.redirect\s*\(\s*(?!.*validate)(?!.*allowlist)(?P<input>url|req\.|request\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/601.html
+frameworks:
+- nextjs

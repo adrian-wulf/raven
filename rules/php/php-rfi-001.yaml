@@ -1,0 +1,26 @@
+id: php-rfi-001
+name: include Remote URL RFI
+description: |
+  Detects file-inclusion issues in PHP code.
+severity: critical
+category: file-inclusion
+confidence: critical
+cwe: CWE-98
+languages: [php]
+message: |
+  Including remote URLs allows Remote File Inclusion and code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)include\s*\(.*[''"]http://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)include\s*\(.*[''"]https://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)require\s*\(.*[''"]ftp://'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/98.html

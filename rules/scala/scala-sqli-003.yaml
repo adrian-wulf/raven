@@ -1,0 +1,16 @@
+id: scala-sqli-003
+name: JDBC injection
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- scala
+message: JDBC createStatement with string concatenation enables SQL injection. Use PreparedStatement.
+patterns:
+- type: regex
+  pattern: createStatement\s*\(\s*\)\.execute\s*\(\s*(?P<input>s?f?".*\$\{|user|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

@@ -1,0 +1,15 @@
+id: yaml-k8s-025
+name: SecurityContext at pod level only
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-657
+languages:
+- yaml
+message: SecurityContext only at pod level may miss container-level protection. Add per-container.
+patterns:
+- type: regex
+  pattern: securityContext:\s*\n.*containers:\s*\n.*image:(?!.*securityContext)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/657.html

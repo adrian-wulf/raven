@@ -1,0 +1,15 @@
+id: docker-latest-001
+name: FROM image:latest
+severity: medium
+category: supply-chain
+confidence: medium
+cwe: CWE-829
+languages:
+- dockerfile
+message: Using :latest tag can introduce unexpected changes. Pin to specific version.
+patterns:
+- type: regex
+  pattern: FROM\s+\w+:(latest|LATEST)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

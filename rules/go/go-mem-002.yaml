@@ -1,0 +1,26 @@
+id: go-mem-002
+name: unsafe.Pointer Cast Bypass
+description: |
+  Detects memory-safety issues in GO code.
+severity: high
+category: memory-safety
+confidence: medium
+cwe: CWE-758
+languages: [go]
+message: |
+  unsafe.Pointer bypasses Go's type safety. Only use when absolutely necessary with extreme caution.
+patterns:
+  - type: regex
+    pattern: '(?i)unsafe\.Pointer\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\*\(\*.*\)\s*\(unsafe'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)uintptr\s*\(.*unsafe'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/758.html

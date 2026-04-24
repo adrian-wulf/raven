@@ -1,0 +1,15 @@
+id: yaml-k8s-032
+name: PodDisruptionBudget without minAvailable
+severity: low
+category: config
+confidence: low
+cwe: CWE-400
+languages:
+- yaml
+message: PDB without minAvailable can allow all pods to be disrupted. Set minAvailable.
+patterns:
+- type: regex
+  pattern: kind:\s*PodDisruptionBudget\s*\n.*spec:(?!.*minAvailable)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

@@ -1,0 +1,15 @@
+id: ex-http-001
+name: HTTPoison without SSL
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- elixir
+message: HTTPoison request without SSL verification is insecure. Enable SSL verification.
+patterns:
+- type: regex
+  pattern: HTTPoison\.(get|post|request)\s*\(\s*[\"\']http://
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

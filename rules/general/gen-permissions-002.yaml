@@ -1,0 +1,13 @@
+id: gen-permissions-002
+name: World-Writable Directory Created
+severity: medium
+category: config
+confidence: high
+cwe: "CWE-276"
+languages: [go, python, ruby, bash]
+message: "Directory created with world-writable permissions. Use 0750 or more restrictive."
+patterns:
+  - type: regex
+    pattern: "os\\.Mkdir.*0?777|mkdir.*-m\\s*777|chmod.*777"
+references:
+  - https://cwe.mitre.org/data/definitions/276.html

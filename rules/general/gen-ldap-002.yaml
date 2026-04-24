@@ -1,0 +1,13 @@
+id: gen-ldap-002
+name: LDAP DN Injection
+severity: critical
+category: ldapi
+confidence: high
+cwe: "CWE-90"
+languages: [java, python, csharp, php]
+message: "User input used in LDAP distinguished name. Escape DN components properly to prevent injection."
+patterns:
+  - type: regex
+    pattern: "(DirContext|InitialDirContext|LdapTemplate)"
+references:
+  - https://cwe.mitre.org/data/definitions/90.html

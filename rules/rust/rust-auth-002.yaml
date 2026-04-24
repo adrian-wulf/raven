@@ -1,0 +1,22 @@
+id: rust-auth-002
+name: JWT without Expiration
+description: |
+  Detects weak-cryptography issues in RUST code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-613
+languages: [rust]
+message: |
+  JWTs without expiration can be replayed indefinitely.
+patterns:
+  - type: regex
+    pattern: '(?i)jsonwebtoken::encode\s*\(.*(?!exp)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)encode\s*\(.*Claims.*(?!exp)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/613.html

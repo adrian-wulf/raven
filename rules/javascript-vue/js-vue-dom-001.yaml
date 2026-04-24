@@ -1,0 +1,19 @@
+id: js-vue-dom-001
+name: $el innerHTML
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Setting innerHTML on $el directly bypasses Vue's XSS protections. Use Vue templates.
+patterns:
+- type: regex
+  pattern: this\.\$el\.innerHTML\s*=\s*(?P<input>this\.|user|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

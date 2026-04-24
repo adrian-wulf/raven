@@ -1,0 +1,15 @@
+id: lua-sqli-002
+name: Raw SQL query
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- lua
+message: Raw SQL query with user input enables SQL injection. Use prepared statements.
+patterns:
+- type: regex
+  pattern: conn\:execute\s*\(\s*string\.format
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html

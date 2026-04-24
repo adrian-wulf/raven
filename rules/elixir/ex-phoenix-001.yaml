@@ -1,0 +1,15 @@
+id: ex-phoenix-001
+name: LiveView mount without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- elixir
+message: Phoenix LiveView mount without auth check may expose data. Add auth.
+patterns:
+- type: regex
+  pattern: def\s+mount\s*\(\s*_params\s*,\s*_session\s*,\s*socket\s*\)(?!.*auth)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

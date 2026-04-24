@@ -1,0 +1,23 @@
+id: csharp-aspnet-004
+name: ASP.NET Section Injection
+description: |
+  Detects xss issues in CSHARP code.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  @section with user content can inject scripts into layouts.
+patterns:
+  - type: regex
+    pattern: '(?i)@section\s+\w+\s*\{.*Model'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@section\s+\w+\s*\{.*Request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

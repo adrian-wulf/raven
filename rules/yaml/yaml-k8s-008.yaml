@@ -1,0 +1,15 @@
+id: yaml-k8s-008
+name: Capabilities add ALL
+severity: critical
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: Adding ALL capabilities removes container isolation. Add only required capabilities.
+patterns:
+- type: regex
+  pattern: add:\s*\n\s+-\s*ALL
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

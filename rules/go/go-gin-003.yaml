@@ -1,0 +1,23 @@
+id: go-gin-003
+name: Gin Trusted Proxies Misconfiguration
+description: |
+  Detects insecure-configuration issues in GO code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-291
+languages: [go]
+frameworks: [gin]
+message: |
+  Configure TrustedProxies properly. Empty trust allows IP spoofing.
+patterns:
+  - type: regex
+    pattern: '(?i)TrustedProxies.*nil'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)TrustedProxies.*0\.0\.0\.0/0'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/291.html

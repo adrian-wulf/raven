@@ -1,0 +1,27 @@
+id: rust-xss-001
+name: Tera Template User Content
+description: |
+  Detects xss issues in RUST code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [rust]
+frameworks: [tera]
+message: |
+  Tera templates rendering user content without escaping enable XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)tera::Tera.*render\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tera::Context.*insert\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Tera::render\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

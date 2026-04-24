@@ -1,0 +1,15 @@
+id: yaml-k8s-012
+name: readOnlyRootFilesystem false
+severity: medium
+category: privilege
+confidence: medium
+cwe: CWE-250
+languages:
+- yaml
+message: Writable root filesystem allows container modification. Enable read-only.
+patterns:
+- type: regex
+  pattern: readOnlyRootFilesystem:\s*false
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

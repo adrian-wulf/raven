@@ -1,0 +1,16 @@
+id: sol-delegatecall-001
+name: delegatecall injection
+severity: critical
+category: injection
+confidence: high
+cwe: CWE-829
+languages:
+- solidity
+message: delegatecall to user-controlled address enables code injection. Validate target addresses.
+patterns:
+- type: regex
+  pattern: \.delegatecall\s*\(\s*(?P<input>abi\.encodeWithSelector|_data|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/829.html

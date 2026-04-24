@@ -1,0 +1,27 @@
+id: rust-rocket-001
+name: Rocket Route Param Injection
+description: |
+  Detects injection issues in RUST code.
+severity: high
+category: injection
+confidence: high
+cwe: CWE-74
+languages: [rust]
+frameworks: [rocket]
+message: |
+  Rocket route parameters should be validated before use.
+patterns:
+  - type: regex
+    pattern: '(?i)#\[get\s*\(.*[''"]<.*>[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fn\s+\w+\s*\(.*param'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Rocket.*route.*param'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/74.html

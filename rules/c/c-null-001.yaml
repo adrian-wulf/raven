@@ -1,0 +1,13 @@
+id: c-null-001
+name: Potential NULL Pointer Dereference
+severity: medium
+category: nullpointer
+confidence: high
+cwe: "CWE-476"
+languages: [c, cpp]
+message: "Pointer dereferenced without NULL check. Add null check before dereferencing."
+patterns:
+  - type: regex
+    pattern: "(malloc|calloc|realloc|fopen|strtok)\\s*\\([^)]*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/476.html

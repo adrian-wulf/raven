@@ -1,0 +1,26 @@
+id: java-misc-011
+name: Java TrustManager All Trusting
+description: |
+  Detects weak-cryptography issues in JAVA code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-295
+languages: [java]
+message: |
+  TrustManager that accepts all certificates disables TLS validation.
+patterns:
+  - type: regex
+    pattern: '(?i)X509TrustManager.*getAcceptedIssuers\s*\(\)\s*\{\s*return\s+new'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)checkClientTrusted\s*\(\).*\{\s*\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)checkServerTrusted\s*\(\).*//.*no.*check'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

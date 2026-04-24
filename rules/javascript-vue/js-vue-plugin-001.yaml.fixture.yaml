@@ -1,0 +1,15 @@
+rule_id: js-vue-plugin-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-plugin-001
+
+    eval(userCode);
+
+    '
+  safe: '// Safe - js-vue-plugin-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

@@ -1,0 +1,15 @@
+id: yaml-k8s-016
+name: Container as root without readOnlyRootFilesystem
+severity: high
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: Container running as root without read-only root FS can modify system. Enable both.
+patterns:
+- type: regex
+  pattern: runAsUser:\s*0.*\n.*readOnlyRootFilesystem:\s*false
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

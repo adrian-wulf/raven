@@ -1,0 +1,16 @@
+id: ex-eval-003
+name: Code.load_file
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- elixir
+message: Code.load_file with user path can execute arbitrary code. Validate file paths.
+patterns:
+- type: regex
+  pattern: Code\.load_file\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

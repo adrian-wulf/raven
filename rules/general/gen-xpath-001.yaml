@@ -1,0 +1,13 @@
+id: gen-xpath-001
+name: XPath Expression Injection
+severity: critical
+category: xpathi
+confidence: high
+cwe: "CWE-91"
+languages: [java, python, csharp, php, javascript]
+message: "User input concatenated into XPath expression. Use parameterized XPath queries or validate input."
+patterns:
+  - type: regex
+    pattern: "(compile\\s*\\(|evaluate\\s*\\(|selectSingleNode\\s*\\().*(\\+|req\\.|userInput)"
+references:
+  - https://cwe.mitre.org/data/definitions/91.html

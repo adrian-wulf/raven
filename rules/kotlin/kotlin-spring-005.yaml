@@ -1,0 +1,27 @@
+id: kotlin-spring-005
+name: Spring JdbcTemplate Injection
+description: |
+  Detects sql-injection issues in KOTLIN code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [kotlin]
+frameworks: [spring]
+message: |
+  JdbcTemplate with string concatenation allows SQL injection.
+patterns:
+  - type: regex
+    pattern: '(?i)jdbcTemplate\.query\s*\(\s*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)jdbcTemplate\.execute\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)namedParameterJdbcTemplate.*[''"].*\+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

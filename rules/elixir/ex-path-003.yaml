@@ -1,0 +1,16 @@
+id: ex-path-003
+name: File.rm!
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- elixir
+message: File.rm! with user path enables arbitrary file deletion. Validate and restrict paths.
+patterns:
+- type: regex
+  pattern: File\.rm!\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

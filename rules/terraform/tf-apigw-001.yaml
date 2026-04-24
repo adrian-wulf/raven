@@ -1,0 +1,16 @@
+id: tf-apigw-001
+name: API Gateway without auth
+severity: high
+category: api
+confidence: high
+cwe: CWE-306
+languages:
+- terraform
+- hcl
+message: API Gateway method without authorization is public. Add auth method.
+patterns:
+- type: regex
+  pattern: authorization\s*=\s*[\"\']NONE[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

@@ -1,0 +1,23 @@
+id: java-spring-actuator-003
+name: Spring Boot Actuator JMX Exposure
+description: |
+  Detects information-disclosure issues in JAVA code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-200
+languages: [java]
+frameworks: [spring]
+message: |
+  JMX actuator exposure can leak sensitive data over JMX.
+patterns:
+  - type: regex
+    pattern: '(?i)spring\.jmx\.enabled.*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)management\.endpoints\.jmx\.exposure.*include.*\*'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

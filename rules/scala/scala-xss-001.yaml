@@ -1,0 +1,16 @@
+id: scala-xss-001
+name: Twirl @Html
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- scala
+message: Twirl @Html bypasses HTML escaping and can enable XSS. Sanitize content before use.
+patterns:
+- type: regex
+  pattern: '@Html\s*\(\s*(?P<input>user|input|param|model)'
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

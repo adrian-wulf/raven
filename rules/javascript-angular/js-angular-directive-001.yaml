@@ -1,0 +1,18 @@
+id: js-angular-directive-001
+name: Directive user input binding
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Directive binding user input to DOM properties without sanitization can enable XSS. Sanitize.
+patterns:
+- type: regex
+  pattern: '@HostBinding\s*\(\s*[\"\'''']innerHTML'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

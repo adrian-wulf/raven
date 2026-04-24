@@ -1,0 +1,15 @@
+id: scala-play-004
+name: Action without BodyParser
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- scala
+message: Action without explicit BodyParser may accept unexpected content types. Specify BodyParser.
+patterns:
+- type: regex
+  pattern: Action\s*\{\s*implicit\s+request\s*=>
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

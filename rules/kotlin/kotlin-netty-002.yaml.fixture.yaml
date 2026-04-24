@@ -1,0 +1,8 @@
+# kotlin-netty-002 - Netty Pipeline without Validator
+// Severity: medium
+
+// BAD: No validation
+fun search(@RequestParam q: String) = service.search(q)
+
+// GOOD: Validate
+fun search(@RequestParam @Size(max=100) q: String) = service.search(q)

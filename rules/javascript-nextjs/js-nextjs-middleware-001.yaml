@@ -1,0 +1,18 @@
+id: js-nextjs-middleware-001
+name: Middleware bypass
+severity: high
+category: auth
+confidence: high
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: Next.js middleware with weak checks can be bypassed. Implement strong authentication.
+patterns:
+- type: regex
+  pattern: export\s+function\s+middleware\s*\(\s*request\s*:\s*NextRequest\s*\)(?![\s\S]{0,300}return\s+NextResponse\.redirect)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- nextjs

@@ -1,0 +1,17 @@
+id: py-django-config-002
+name: Hardcoded SECRET_KEY
+severity: critical
+category: config
+confidence: high
+cwe: CWE-798
+languages:
+- python
+message: Hardcoded SECRET_KEY is a security risk. Use environment variables or secret management.
+patterns:
+- type: regex
+  pattern: SECRET_KEY\s*=\s*[\"\'][^\"\']{10,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html
+frameworks:
+- django

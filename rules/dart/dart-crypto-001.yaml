@@ -1,0 +1,15 @@
+id: dart-crypto-001
+name: Random for crypto
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-338
+languages:
+- dart
+message: Random() is not cryptographically secure. Use Random.secure() or dart:math Random.secure.
+patterns:
+- type: regex
+  pattern: Random\s*\(\s*\)(?!.*secure)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/338.html

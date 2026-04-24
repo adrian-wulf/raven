@@ -1,0 +1,17 @@
+id: py-flask-jwt-002
+name: JWT secret weak
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-798
+languages:
+- python
+message: JWT secret that is short or hardcoded can be cracked. Use strong secret from env.
+patterns:
+- type: regex
+  pattern: JWT_SECRET_KEY\s*=\s*[\"\'][^\"\']{0,20}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html
+frameworks:
+- flask

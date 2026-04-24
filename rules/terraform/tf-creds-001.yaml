@@ -1,0 +1,16 @@
+id: tf-creds-001
+name: Hardcoded access_key
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- terraform
+- hcl
+message: Hardcoded AWS access_key in Terraform is a security risk. Use environment variables or IAM roles.
+patterns:
+- type: regex
+  pattern: access_key\s*=\s*[\"\'][^\"\']{10,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

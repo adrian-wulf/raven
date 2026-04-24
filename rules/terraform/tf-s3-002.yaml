@@ -1,0 +1,16 @@
+id: tf-s3-002
+name: S3 logging disabled
+severity: medium
+category: logging
+confidence: medium
+cwe: CWE-778
+languages:
+- terraform
+- hcl
+message: S3 without access logging can't audit access. Enable logging.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_s3_bucket[\"\'][^}]*\}(?!.*log_bucket)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

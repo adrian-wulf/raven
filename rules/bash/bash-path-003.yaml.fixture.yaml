@@ -1,0 +1,17 @@
+rule_id: bash-path-003
+language: bash
+examples:
+  unsafe: '# Unsafe - bash-path-003
+
+    eval(user_code)
+
+    '
+  safe: '# Safe - bash-path-003
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

@@ -1,0 +1,15 @@
+id: lua-kong-001
+name: Kong plugin without schema validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- lua
+message: Kong custom plugin without schema validation accepts invalid config. Add schema.
+patterns:
+- type: regex
+  pattern: BasePlugin:extend\s*\(\s*[\"\']\w+[\"\']\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

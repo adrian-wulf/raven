@@ -1,0 +1,15 @@
+id: dart-storage-001
+name: SharedPreferences secret
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-312
+languages:
+- dart
+message: Storing secrets in SharedPreferences stores in plaintext. Use FlutterSecureStorage.
+patterns:
+- type: regex
+  pattern: SharedPreferences\.(get|set)(String|Bool|Int|Double)\s*\(\s*[\"\'].*(password|secret|token|key)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/312.html

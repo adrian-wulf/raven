@@ -1,0 +1,13 @@
+id: cpp-oobw-001
+name: std::copy Without Bounds Check
+severity: critical
+category: bufferoverflow
+confidence: high
+cwe: "CWE-787"
+languages: [cpp]
+message: "std::copy without ensuring destination has enough capacity. Check sizes before copying."
+patterns:
+  - type: regex
+    pattern: "std::copy\\s*\\(.*begin\\(\\).*,\\s*.*end\\(\\).*,"
+references:
+  - https://cwe.mitre.org/data/definitions/787.html

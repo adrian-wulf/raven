@@ -1,0 +1,15 @@
+id: ex-task-001
+name: Task.async without timeout
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- elixir
+message: Task.async without timeout can cause permanent blocking. Set timeout.
+patterns:
+- type: regex
+  pattern: Task\.(async|await)\s*\(\s*\w+\s*\)(?!.*timeout)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

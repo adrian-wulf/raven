@@ -1,0 +1,22 @@
+id: c-race-004
+name: Shared Memory Race
+description: |
+  Detects race-condition issues in C code.
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages: [c]
+message: |
+  Shared memory access without synchronization causes data races.
+patterns:
+  - type: regex
+    pattern: '(?i)shmget.*shmat.*//.*no.*lock'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)shared.*memory.*(?!mutex)(?!sem)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

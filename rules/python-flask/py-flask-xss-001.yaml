@@ -1,0 +1,18 @@
+id: py-flask-xss-001
+name: Return HTML with user input
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: Returning HTML with user input enables XSS. Use templates with auto-escaping.
+patterns:
+- type: regex
+  pattern: return\s+[f\"\'].*<\w+>.*\{.*(?P<input>request\.|user_)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- flask

@@ -4,12 +4,14 @@ package taint
 type SourcePattern struct {
 	Name    string `yaml:"name"`
 	Pattern string `yaml:"pattern"` // Tree-sitter query or simple matcher
+	Type    string `yaml:"type,omitempty"`
 }
 
 // SinkPattern defines a taint sink
 type SinkPattern struct {
-	Name    string `yaml:"name"`
-	Pattern string `yaml:"pattern"`
+	Name     string `yaml:"name"`
+	Pattern  string `yaml:"pattern"`
+	Severity string `yaml:"severity,omitempty"`
 }
 
 // Rule defines a taint analysis rule
@@ -349,4 +351,12 @@ var DefaultConfigs = map[string]LanguageConfig{
 			"strlcpy",
 		},
 	},
+}
+
+// RegisterLanguageConfig registers a language config for taint analysis
+func RegisterLanguageConfig(lang string, config LanguageConfig) {
+	if DefaultConfigs == nil {
+		DefaultConfigs = make(map[string]LanguageConfig)
+	}
+	DefaultConfigs[lang] = config
 }

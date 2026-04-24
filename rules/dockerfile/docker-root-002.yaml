@@ -1,0 +1,15 @@
+id: docker-root-002
+name: Missing USER instruction
+severity: high
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- dockerfile
+message: Dockerfile without USER instruction runs as root. Add a non-root USER.
+patterns:
+- type: regex
+  pattern: ^((?!USER\s).)*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

@@ -1,0 +1,15 @@
+id: dart-storage-002
+name: FlutterSecureStorage misuse
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-312
+languages:
+- dart
+message: FlutterSecureStorage without proper options may not encrypt on all platforms. Review options.
+patterns:
+- type: regex
+  pattern: FlutterSecureStorage\s*\(\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/312.html

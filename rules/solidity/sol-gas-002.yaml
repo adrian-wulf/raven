@@ -1,0 +1,15 @@
+id: sol-gas-002
+name: Unbounded array
+severity: high
+category: gas
+confidence: high
+cwe: CWE-400
+languages:
+- solidity
+message: Iterating over unbounded array can consume all gas. Limit array size.
+patterns:
+- type: regex
+  pattern: for\s*\(\s*uint\d*\s+\w+\s*=\s*0\s*;\s*\w+\s*<\s*\w+\.length
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

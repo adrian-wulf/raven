@@ -1,0 +1,15 @@
+id: sol-reentrancy-001
+name: Call before state change
+severity: critical
+category: reentrancy
+confidence: high
+cwe: CWE-841
+languages:
+- solidity
+message: External call before state update enables reentrancy attacks. Update state before external calls.
+patterns:
+- type: regex
+  pattern: '\(\s*bool\s+\w+\s*,\s*\)\s*=\s*(?!.*balance\s*=).*call\s*\{[^}]*value\s*:'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/841.html

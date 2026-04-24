@@ -1,0 +1,22 @@
+id: c-bof-010
+name: alloca Variable Size
+description: |
+  Detects buffer-overflow issues in C code.
+severity: high
+category: buffer-overflow
+confidence: medium
+cwe: CWE-131
+languages: [c]
+message: |
+  alloca with variable size can cause stack overflow. Use fixed-size buffers or heap.
+patterns:
+  - type: regex
+    pattern: '(?i)alloca\s*\(\s*[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)alloca\s*\(\s*.*size'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/131.html

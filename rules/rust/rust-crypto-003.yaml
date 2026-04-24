@@ -1,0 +1,27 @@
+id: rust-crypto-003
+name: rustls Dangerous Configuration
+description: |
+  Detects weak-cryptography issues in RUST code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-295
+languages: [rust]
+frameworks: [rustls]
+message: |
+  rustls dangerous() configuration bypasses security checks.
+patterns:
+  - type: regex
+    pattern: '(?i)DangerousClientConfig'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)dangerous\s*\(\).*set_certificate_verifier'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)dangerous.*set_certificate_verifier.*return.*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

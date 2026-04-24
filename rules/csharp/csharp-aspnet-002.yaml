@@ -1,0 +1,27 @@
+id: csharp-aspnet-002
+name: ASP.NET Razor Html.Raw XSS
+description: |
+  Detects xss issues in CSHARP code.
+severity: critical
+category: xss
+confidence: critical
+cwe: CWE-79
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  @Html.Raw outputs unescaped HTML. Never use with user input.
+patterns:
+  - type: regex
+    pattern: '(?i)@Html\.Raw\s*\(\s*.*Model'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Html\.Raw\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Html\.Raw\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

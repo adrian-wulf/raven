@@ -1,0 +1,27 @@
+id: rust-sqli-004
+name: rusqlite raw query
+description: |
+  Detects sql-injection issues in RUST code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [rust]
+frameworks: [rusqlite]
+message: |
+  rusqlite with formatted query strings is vulnerable.
+patterns:
+  - type: regex
+    pattern: '(?i)conn\.execute\s*\(.*format!'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)conn\.query_row\s*\(.*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rusqlite.*execute\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

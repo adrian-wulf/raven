@@ -1,0 +1,23 @@
+id: php-laravel-debug-001
+name: Laravel Debug Mode Enabled
+description: |
+  Detects information-disclosure issues in PHP code.
+severity: critical
+category: information-disclosure
+confidence: critical
+cwe: CWE-200
+languages: [php]
+frameworks: [laravel]
+message: |
+  APP_DEBUG=true exposes sensitive data including env vars and stack traces.
+patterns:
+  - type: regex
+    pattern: '(?i)APP_DEBUG\s*=\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)debug\s*=>\s*true.*env'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

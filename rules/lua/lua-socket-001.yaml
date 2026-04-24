@@ -1,0 +1,15 @@
+id: lua-socket-001
+name: TCPSocket without SSL
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- lua
+message: TCP socket connection without SSL/TLS is insecure. Use SSL wrapper.
+patterns:
+- type: regex
+  pattern: socket\.tcp\s*\(\s*\)(?!.*ssl)(?!.*tls)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

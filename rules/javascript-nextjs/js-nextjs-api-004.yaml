@@ -1,0 +1,18 @@
+id: js-nextjs-api-004
+name: API route without input validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: API route handler without input validation allows injection. Validate req.body.
+patterns:
+- type: regex
+  pattern: handler\s*\(\s*req\s*:\s*NextApiRequest\s*\)\s*\{[^}]*req\.body(?!.*validate)(?!.*schema)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- nextjs

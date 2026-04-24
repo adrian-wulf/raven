@@ -1,0 +1,23 @@
+id: java-spring-scheduled-002
+name: Spring @Scheduled Without Catch
+description: |
+  Detects error-handling issues in JAVA code.
+severity: medium
+category: error-handling
+confidence: medium
+cwe: CWE-391
+languages: [java]
+frameworks: [spring]
+message: |
+  Scheduled tasks must handle exceptions to prevent silent failures.
+patterns:
+  - type: regex
+    pattern: '(?i)@Scheduled.*public\s+void\s+\w+\s*\(\)\s*\{[^}]*//.*no.*catch'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Scheduled.*public\s+void\s+\w+\s*\(\)\s*\{[^}]*(?<!catch)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/391.html

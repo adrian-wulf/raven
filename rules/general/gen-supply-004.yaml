@@ -1,0 +1,13 @@
+id: gen-supply-004
+name: Package Download Without Verification
+severity: high
+category: supplychain
+confidence: high
+cwe: "CWE-494"
+languages: [bash, dockerfile]
+message: "Downloading and executing code without checksum verification. Verify checksums before execution."
+patterns:
+  - type: regex
+    pattern: "(curl|wget).*(?:\\|\\s*(sh|bash|python|ruby|node))|curl.*-fsSL"
+references:
+  - https://cwe.mitre.org/data/definitions/494.html

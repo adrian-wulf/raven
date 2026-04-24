@@ -1,0 +1,18 @@
+id: js-nextjs-xss-001
+name: dangerouslySetInnerHTML in Next.js
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: dangerouslySetInnerHTML bypasses React's XSS protection. Sanitize content before use.
+patterns:
+- type: regex
+  pattern: 'dangerouslySetInnerHTML\s*=\s*\{\s*\{\s*__html\s*:'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- nextjs

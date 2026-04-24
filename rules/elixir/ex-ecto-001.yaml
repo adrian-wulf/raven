@@ -1,0 +1,15 @@
+id: ex-ecto-001
+name: Ecto preload without limit
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-770
+languages:
+- elixir
+message: Ecto preload without limit can load too many associations. Add limit.
+patterns:
+- type: regex
+  pattern: Repo\.preload\s*\(\s*\w+\s*,\s*:\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html

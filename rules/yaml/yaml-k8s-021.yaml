@@ -1,0 +1,15 @@
+id: yaml-k8s-021
+name: Secret with weak base64
+severity: medium
+category: secrets
+confidence: medium
+cwe: CWE-311
+languages:
+- yaml
+message: Secret value that looks like weak/base64-encoded password. Use strong secrets.
+patterns:
+- type: regex
+  pattern: data:\s*\n\s+password:\s*[a-zA-Z0-9]{8,16}\s*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

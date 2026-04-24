@@ -1,0 +1,17 @@
+id: py-fastapi-middleware-001
+name: Middleware bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- python
+message: Custom middleware without auth checks can be bypassed. Implement proper authentication.
+patterns:
+- type: regex
+  pattern: class\s+\w+Middleware\s*\(\s*BaseHTTPMiddleware\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- fastapi

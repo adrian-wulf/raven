@@ -17,7 +17,7 @@ patterns:
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(exec|system|shell_exec|passthru)\s*\(\s*["''].*\$[^)]+\)'
+    pattern: '(exec|system|shell_exec|passthru)\s*\(\s*["''''].*\$[^)]+\)'
     where:
       - not-test-file: true
   - type: regex

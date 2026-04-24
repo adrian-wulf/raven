@@ -1,0 +1,15 @@
+id: sol-reentrancy-002
+name: External call in transfer
+severity: critical
+category: reentrancy
+confidence: high
+cwe: CWE-841
+languages:
+- solidity
+message: External call inside transfer function without reentrancy guard. Use Checks-Effects-Interactions.
+patterns:
+- type: regex
+  pattern: function\s+transfer\s*\([^)]*\)\s*(?!.*nonReentrant)[^{]*\{[^}]*\.call
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/841.html

@@ -1,0 +1,23 @@
+id: csharp-mass-002
+name: FromForm without Validation
+description: |
+  Detects mass-assignment issues in CSHARP code.
+severity: medium
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  [FromForm] without explicit property binding allows mass assignment.
+patterns:
+  - type: regex
+    pattern: '(?i)\[FromForm\].*(?!\[Bind)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[FromForm\].*(?!.*validate)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

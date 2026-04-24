@@ -1,0 +1,18 @@
+id: c-fmt-003
+name: snprintf Format String
+description: |
+  Detects format-string issues in C code.
+severity: medium
+category: format-string
+confidence: medium
+cwe: CWE-134
+languages: [c]
+message: |
+  Even snprintf with user format strings can leak information.
+patterns:
+  - type: regex
+    pattern: '(?i)snprintf\s*\(\s*[^,]+,\s*[^,]+,\s*[^''"]+\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

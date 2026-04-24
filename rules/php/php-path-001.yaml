@@ -1,0 +1,22 @@
+id: php-path-001
+name: realpath without Validation
+description: |
+  Detects path-traversal issues in PHP code.
+severity: medium
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages: [php]
+message: |
+  realpath alone doesn't prevent traversal. Validate the resolved path.
+patterns:
+  - type: regex
+    pattern: '(?i)realpath\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)realpath\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

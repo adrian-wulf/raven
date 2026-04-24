@@ -1,0 +1,15 @@
+rule_id: sol-random-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-random-001
+
+    uint random = uint(blockhash(block.number - 1));
+
+    '
+  safe: '// Safe - sol-random-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

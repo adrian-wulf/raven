@@ -1,0 +1,17 @@
+id: py-django-query-001
+name: QuerySet extra method
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: QuerySet.extra() with raw SQL enables SQL injection. Use ORM methods instead.
+patterns:
+- type: regex
+  pattern: \.extra\s*\(\s*select\s*=\s*\{
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

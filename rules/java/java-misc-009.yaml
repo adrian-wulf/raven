@@ -1,0 +1,26 @@
+id: java-misc-009
+name: ClassLoader User Defined URLs
+description: |
+  Detects code-injection issues in JAVA code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-94
+languages: [java]
+message: |
+  Loading classes from user-controlled URLs can execute arbitrary code.
+patterns:
+  - type: regex
+    pattern: '(?i)URLClassLoader\s*\(\s*new\s+URL\s*\[\].*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ClassLoader.*defineClass.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Instrumentation.*retransformClasses'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

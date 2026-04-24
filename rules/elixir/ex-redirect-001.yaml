@@ -1,0 +1,16 @@
+id: ex-redirect-001
+name: redirect without validation
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages:
+- elixir
+message: Phoenix redirect with user-controlled URL enables open redirect. Validate URLs.
+patterns:
+- type: regex
+  pattern: redirect\s*\(\s*conn\s*,\s*(external\s*:\s*)?(?P<input>params|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/601.html

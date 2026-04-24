@@ -1,0 +1,22 @@
+id: java-xxe-004
+name: DocumentBuilderFactory Without Hardening
+description: |
+  Detects xxe issues in JAVA code.
+severity: high
+category: xxe
+confidence: medium
+cwe: CWE-611
+languages: [java]
+message: |
+  DocumentBuilderFactory must be explicitly hardened against XXE.
+patterns:
+  - type: regex
+    pattern: '(?i)DocumentBuilderFactory.*newInstance\s*\(\)(?!.*setFeature)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)newDocumentBuilder\s*\(\).*parse\s*\(.*(?!.*setFeature)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

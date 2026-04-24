@@ -1,0 +1,15 @@
+id: sol-overflow-002
+name: uint overflow
+severity: high
+category: arithmetic
+confidence: high
+cwe: CWE-190
+languages:
+- solidity
+message: Integer overflow in Solidity can lead to unexpected behavior. Use SafeMath for <0.8.
+patterns:
+- type: regex
+  pattern: uint\d*\s+\w+\s*=\s*\w+\s*\+\s*\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/190.html

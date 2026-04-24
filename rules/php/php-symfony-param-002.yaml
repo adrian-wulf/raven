@@ -1,0 +1,23 @@
+id: php-symfony-param-002
+name: Symfony Request getUser without Check
+description: |
+  Detects broken-authentication issues in PHP code.
+severity: medium
+category: broken-authentication
+confidence: medium
+cwe: CWE-287
+languages: [php]
+frameworks: [symfony]
+message: |
+  Always check if user is authenticated before accessing getUser().
+patterns:
+  - type: regex
+    pattern: '(?i)\$this->getUser\s*\(\)(?!.*isGranted)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$request->getUser\s*\(\)(?!.*check)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/287.html

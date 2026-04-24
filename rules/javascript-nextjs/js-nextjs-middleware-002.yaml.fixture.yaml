@@ -1,0 +1,15 @@
+rule_id: js-nextjs-middleware-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-middleware-002
+
+    router.push(''/admin'');
+
+    '
+  safe: '// Safe - js-nextjs-middleware-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

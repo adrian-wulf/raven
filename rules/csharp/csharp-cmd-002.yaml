@@ -1,0 +1,22 @@
+id: csharp-cmd-002
+name: ProcessStartInfo Injection
+description: |
+  Detects command-injection issues in CSHARP code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [csharp]
+message: |
+  ProcessStartInfo with user-controlled arguments can inject commands.
+patterns:
+  - type: regex
+    pattern: '(?i)ProcessStartInfo.*Arguments.*=.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ProcessStartInfo.*FileName.*=.*Request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

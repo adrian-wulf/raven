@@ -1,0 +1,13 @@
+id: gen-authz-002
+name: Broken Access Control via ID Parameter
+severity: critical
+category: authz
+confidence: high
+cwe: "CWE-863"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Resource accessed by ID without ownership verification. Verify the authenticated user owns the requested resource."
+patterns:
+  - type: regex
+    pattern: "(findById|findOne|get|find)\\s*\\(\\s*req\\.(params|query|body)\\.\\w+\\s*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/863.html

@@ -1,0 +1,17 @@
+id: py-flask-cors-001
+name: CORS origins wildcard
+severity: medium
+category: cors
+confidence: high
+cwe: CWE-942
+languages:
+- python
+message: CORS with origins='*' allows any website to access your API. Restrict to trusted origins.
+patterns:
+- type: regex
+  pattern: CORS\s*\(\s*.*origins\s*=\s*[\"\']\*
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/942.html
+frameworks:
+- flask

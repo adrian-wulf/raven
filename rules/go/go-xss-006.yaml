@@ -1,0 +1,22 @@
+id: go-xss-006
+name: XSS in Custom HTTP Handler
+description: |
+  Detects xss issues in GO code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [go]
+message: |
+  Always escape user input when writing HTML responses. Use html/template.
+patterns:
+  - type: regex
+    pattern: '(?i)w\.Header\(\)\.Set\s*\(\s*[`"]Content-Type[`"]\s*,\s*[`"]text/html'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)io\.WriteString\s*\(\s*w\s*,\s*[`"]<.*>.*%s'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

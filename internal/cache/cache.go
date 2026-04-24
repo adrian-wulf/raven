@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"sync"
 )
 
 // Entry stores cached findings for a single file.
@@ -19,7 +18,6 @@ type Entry struct {
 type Cache struct {
 	entries map[string]Entry
 	path    string // path to cache file on disk
-	mu      sync.RWMutex
 }
 
 // New creates an in-memory cache.
@@ -66,9 +64,7 @@ func (c *Cache) SetPath(path string) {
 
 // IsFresh reports whether the file's current hash matches the cache.
 func (c *Cache) IsFresh(file string) bool {
-	c.mu.RLock()
 	entry, ok := c.entries[file]
-	c.mu.RUnlock()
 	if !ok {
 		return false
 	}
@@ -84,8 +80,6 @@ func (c *Cache) Get(file string) json.RawMessage {
 	if !c.IsFresh(file) {
 		return nil
 	}
-	c.mu.RLock()
-	defer c.mu.RUnlock()
 	return c.entries[file].Findings
 }
 
@@ -95,9 +89,7 @@ func (c *Cache) Store(file string, findingsJSON json.RawMessage) error {
 	if err != nil {
 		return err
 	}
-	c.mu.Lock()
 	c.entries[file] = Entry{Hash: hash, Findings: findingsJSON}
-	c.mu.Unlock()
 	return nil
 }
 

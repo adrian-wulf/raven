@@ -1,0 +1,15 @@
+id: scala-slick-001
+name: Slick without connection pool limit
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-770
+languages:
+- scala
+message: Slick database config without maxConnections can exhaust pool. Set limit.
+patterns:
+- type: regex
+  pattern: db\.default\.url
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html

@@ -1,0 +1,15 @@
+rule_id: ex-ssti-002
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-ssti-002
+
+    EEx.eval_string(user_template)
+
+    '
+  safe: '# Safe - ex-ssti-002
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

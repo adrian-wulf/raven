@@ -1,0 +1,26 @@
+id: c-bof-012
+name: Stack Buffer Overflow Pattern
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-121
+languages: [c]
+message: |
+  Fixed-size stack buffers with unbounded writes can overflow.
+patterns:
+  - type: regex
+    pattern: '(?i)char\s+\w+\[\d+\].*strcpy'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)char\s+\w+\[\d+\].*gets'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)char\s+\w+\[\d+\].*sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

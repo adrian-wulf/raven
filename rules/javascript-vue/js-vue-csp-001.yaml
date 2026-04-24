@@ -1,0 +1,17 @@
+id: js-vue-csp-001
+name: Missing CSP meta tag
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-693
+languages:
+- html
+message: Missing Content-Security-Policy meta tag allows script injection. Add CSP.
+patterns:
+- type: regex
+  pattern: <meta[^>]*http-equiv\s*=\s*[\"\']Content-Security-Policy
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- vue

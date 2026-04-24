@@ -1,0 +1,23 @@
+id: php-wp-006
+name: WordPress WP_Query SQLi
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+frameworks: [wordpress]
+message: |
+  WP_Query with user-controlled query vars can inject SQL.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+WP_Query\s*\(\s*array\s*\(.*[''"]category__in[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)WP_Query\s*\(.*[''"]post__in[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

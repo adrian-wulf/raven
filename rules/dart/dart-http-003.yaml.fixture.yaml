@@ -1,0 +1,15 @@
+rule_id: dart-http-003
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-http-003
+
+    var rng = Random();
+
+    '
+  safe: '// Safe - dart-http-003
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

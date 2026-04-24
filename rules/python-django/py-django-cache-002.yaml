@@ -1,0 +1,17 @@
+id: py-django-cache-002
+name: Sensitive data in cache
+severity: high
+category: cache
+confidence: high
+cwe: CWE-311
+languages:
+- python
+message: Storing sensitive data (passwords, tokens) in cache without encryption can lead to data exposure.
+patterns:
+- type: regex
+  pattern: cache\.set\s*\(\s*[\"\'].*(password|token|secret|key)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html
+frameworks:
+- django

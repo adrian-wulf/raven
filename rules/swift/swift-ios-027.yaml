@@ -1,0 +1,23 @@
+id: swift-ios-027
+name: NSKeyedUnarchiver Secure Coding Disabled
+description: |
+  Detects insecure-deserialization issues in SWIFT code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [swift]
+frameworks: [ios]
+message: |
+  requiresSecureCoding=false allows arbitrary object deserialization.
+patterns:
+  - type: regex
+    pattern: '(?i)requiresSecureCoding\s*=\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)setRequiresSecureCoding\s*\(\s*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

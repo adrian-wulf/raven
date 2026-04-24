@@ -1,0 +1,17 @@
+id: py-flask-auth-001
+name: Missing login_required
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Route without @login_required may allow unauthorized access. Add authentication decorator.
+patterns:
+- type: regex
+  pattern: '@app\.(route|get|post|put|delete)\s*\([^)]+\)\s*\n\s*def\s+\w+\s*\('
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- flask

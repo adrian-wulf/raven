@@ -1,0 +1,18 @@
+id: py-flask-sqli-001
+name: sqlite3 with user input
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: sqlite3 execute with string formatting enables SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: sqlite3\.(execute|executemany)\s*\(\s*(f[\"\']|.*%\s*\w+|.*\.format\()
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- flask

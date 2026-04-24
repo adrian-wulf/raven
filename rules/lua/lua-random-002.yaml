@@ -1,0 +1,15 @@
+id: lua-random-002
+name: Weak PRNG
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-338
+languages:
+- lua
+message: Weak PRNG seeding enables predictable random numbers. Use strong random sources.
+patterns:
+- type: regex
+  pattern: math\.randomseed\s*\(\s*os\.time\s*\(\s*\)\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/338.html

@@ -1,0 +1,15 @@
+id: scala-play-001
+name: Action injection
+severity: high
+category: injection
+confidence: high
+cwe: CWE-20
+languages:
+- scala
+message: Play Action with user input without validation can allow injection. Validate inputs.
+patterns:
+- type: regex
+  pattern: Action\s*\{\s*implicit\s+request\s*=>.*(?P<input>request\.body|request\.queryString)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

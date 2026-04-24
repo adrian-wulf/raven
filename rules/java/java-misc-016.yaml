@@ -1,0 +1,27 @@
+id: java-misc-016
+name: WebSocket Message Trust
+description: |
+  Detects insecure-communication issues in JAVA code.
+severity: medium
+category: insecure-communication
+confidence: medium
+cwe: CWE-319
+languages: [java]
+frameworks: [spring]
+message: |
+  WebSocket messages should be validated as they bypass some HTTP security controls.
+patterns:
+  - type: regex
+    pattern: '(?i)@MessageMapping.*(?!@PreAuthorize)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@SendTo.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SimpMessagingTemplate.*convertAndSend.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

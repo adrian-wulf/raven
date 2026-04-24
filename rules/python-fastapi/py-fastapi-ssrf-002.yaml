@@ -1,0 +1,18 @@
+id: py-fastapi-ssrf-002
+name: httpx AsyncClient SSRF
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- python
+message: httpx.AsyncClient with user URL enables SSRF. Validate URLs before fetching.
+patterns:
+- type: regex
+  pattern: AsyncClient\s*\(\s*\)\.(get|post)\s*\(\s*(?P<input>request\.|user_)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- fastapi

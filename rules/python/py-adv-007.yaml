@@ -1,0 +1,13 @@
+id: py-adv-007
+name: Python exec on Untrusted Input
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [python]
+message: "exec() with untrusted input allows arbitrary code execution. Never execute user-provided code."
+patterns:
+  - type: regex
+    pattern: "exec\\s*\\(.*(req\\.|request|user|input|params|body|open\\s*\\()"
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

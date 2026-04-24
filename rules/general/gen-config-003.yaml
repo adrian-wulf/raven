@@ -1,0 +1,13 @@
+id: gen-config-003
+name: Certificate Validation Disabled
+severity: critical
+category: config
+confidence: high
+cwe: "CWE-295"
+languages: [python, javascript, java, csharp, ruby]
+message: "SSL/TLS certificate validation disabled. Never disable certificate validation in production code."
+patterns:
+  - type: regex
+    pattern: "(verify_ssl|verifySSL|rejectUnauthorized|checkServerIdentity|CERT_NONE|verify=False)\\s*[=:]\\s*(false|False|0|None|CERT_NONE)"
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

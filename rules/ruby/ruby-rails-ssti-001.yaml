@@ -1,0 +1,27 @@
+id: ruby-rails-ssti-001
+name: Rails ERB Template SSTI
+description: |
+  Detects ssti issues in RUBY code.
+severity: critical
+category: ssti
+confidence: critical
+cwe: CWE-1336
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Rendering ERB templates from user input enables Server-Side Template Injection.
+patterns:
+  - type: regex
+    pattern: '(?i)render\s+inline:\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)render\s+template:\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ERB.new\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

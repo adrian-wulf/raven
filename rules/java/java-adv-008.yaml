@@ -1,0 +1,13 @@
+id: java-adv-008
+name: Java Mass Assignment Spring
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-915"
+languages: [java]
+message: "Spring model attribute without @Valid or allowlist enables mass assignment. Use DTO pattern."
+patterns:
+  - type: regex
+    pattern: "@ModelAttribute.*(?!@Valid)|@RequestBody.*(?!@Valid)"
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

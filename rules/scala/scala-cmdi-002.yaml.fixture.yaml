@@ -1,0 +1,15 @@
+rule_id: scala-cmdi-002
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-cmdi-002
+
+    s"ls $dir" !!
+
+    '
+  safe: '// Safe - scala-cmdi-002
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

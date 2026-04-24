@@ -1,0 +1,16 @@
+id: tf-vpc-002
+name: VPC flow logs disabled
+severity: medium
+category: logging
+confidence: medium
+cwe: CWE-778
+languages:
+- terraform
+- hcl
+message: VPC without flow logs can't monitor network traffic. Enable flow logs.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_vpc[\"\'][^}]*\}(?!.*flow_log)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

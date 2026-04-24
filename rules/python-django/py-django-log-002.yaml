@@ -1,0 +1,17 @@
+id: py-django-log-002
+name: Sensitive data in logs
+severity: high
+category: log-forging
+confidence: high
+cwe: CWE-532
+languages:
+- python
+message: Logging sensitive data like passwords or tokens can expose secrets. Never log sensitive data.
+patterns:
+- type: regex
+  pattern: logger\.(info|debug)\s*\(\s*[\"\'].*(password|secret|token|key|ssn)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/532.html
+frameworks:
+- django

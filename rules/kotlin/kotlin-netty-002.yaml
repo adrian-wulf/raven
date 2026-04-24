@@ -1,0 +1,23 @@
+id: kotlin-netty-002
+name: Netty Pipeline without Validator
+description: |
+  Detects input-validation issues in KOTLIN code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [kotlin]
+frameworks: [netty]
+message: |
+  Netty pipeline should validate incoming messages.
+patterns:
+  - type: regex
+    pattern: '(?i)channelRead0\s*\(\s*.*msg(?!.*validate)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ChannelInboundHandler.*channelRead(?!.*check)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

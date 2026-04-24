@@ -13,14 +13,14 @@ message: |
   Use parameterized queries: cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
 patterns:
   - type: regex
-    pattern: '(?i)(cursor\.|db\.|conn\.|connection\.)?(execute|executemany)\s*\(\s*f["''"][^"''"]*\{[^}]+\}'
+    pattern: '(?i)(cursor\.|db\.|conn\.|connection\.)?(execute|executemany)\s*\(\s*f["''''"][^"''''"]*\{[^}]+\}'
   - type: regex
-    pattern: '(?i)(cursor\.|db\.|conn\.)?(execute|executemany)\s*\(\s*["''"].*\.format\('
+    pattern: '(?i)(cursor\.|db\.|conn\.)?(execute|executemany)\s*\(\s*["''''"].*\.format\('
   - type: regex
     pattern: '(?i)(SELECT|INSERT|UPDATE|DELETE)\s+.*%\s*\([^)]+\)s'
   - type: regex
-    pattern: '(?i)query\s*=\s*["''"].*\+\s*(request|req|params|body|form|args)'
+    pattern: '(?i)query\s*=\s*["''''"].*\+\s*(request|req|params|body|form|args)'
   - type: regex
-    pattern: '(?i)query\s*=\s*f["''"][^"''"]*\{[^}]+\}'
+    pattern: '(?i)query\s*=\s*f["''''"][^"''''"]*\{[^}]+\}'
 references:
   - https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders

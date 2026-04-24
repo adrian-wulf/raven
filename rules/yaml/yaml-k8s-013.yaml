@@ -1,0 +1,15 @@
+id: yaml-k8s-013
+name: imagePullPolicy Never
+severity: medium
+category: supply-chain
+confidence: medium
+cwe: CWE-1104
+languages:
+- yaml
+message: imagePullPolicy:Never uses potentially stale local images. Use IfNotPresent or Always.
+patterns:
+- type: regex
+  pattern: imagePullPolicy:\s*Never
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1104.html

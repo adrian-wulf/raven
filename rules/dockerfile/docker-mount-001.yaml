@@ -1,0 +1,15 @@
+id: docker-mount-001
+name: Sensitive mount
+severity: high
+category: config
+confidence: high
+cwe: CWE-200
+languages:
+- dockerfile
+message: Mounting sensitive host directories can leak secrets. Avoid mounting /etc, /root.
+patterns:
+- type: regex
+  pattern: '-v\s+/etc\s*:\|-v\s+/root\s*:'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/200.html

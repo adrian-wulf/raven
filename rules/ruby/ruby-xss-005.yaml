@@ -1,0 +1,27 @@
+id: ruby-xss-005
+name: Rails sanitize Bypass
+description: |
+  Detects xss issues in RUBY code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [ruby]
+frameworks: [rails]
+message: |
+  sanitize can be bypassed with malformed HTML. Use stricter sanitizers.
+patterns:
+  - type: regex
+    pattern: '(?i)sanitize\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)strip_tags\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sanitize.*only:'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

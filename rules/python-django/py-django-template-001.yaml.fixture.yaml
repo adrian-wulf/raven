@@ -1,0 +1,17 @@
+rule_id: py-django-template-001
+language: python
+examples:
+  unsafe: '# Unsafe - py-django-template-001
+
+    render_to_string(f"hello_{template_name}.html")
+
+    '
+  safe: '# Safe - py-django-template-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

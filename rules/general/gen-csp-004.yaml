@@ -1,0 +1,13 @@
+id: gen-csp-004
+name: CSP with wildcard source
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-693"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "CSP directive uses wildcard (*) source. Use specific origins instead of wildcards."
+patterns:
+  - type: regex
+    pattern: "Content-Security-Policy.*\\*\\s*(;|$)"
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

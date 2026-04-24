@@ -1,0 +1,22 @@
+id: go-race-006
+name: atomic.Value with Mixed Types
+description: |
+  Detects concurrency issues in GO code.
+severity: high
+category: concurrency
+confidence: medium
+cwe: CWE-362
+languages: [go]
+message: |
+  atomic.Value panics if types don't match. Use consistent types only.
+patterns:
+  - type: regex
+    pattern: '(?i)atomic\.Value.*Store\s*\(\s*\w+\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)atomic\.Value.*Load\s*\(\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

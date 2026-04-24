@@ -1,0 +1,15 @@
+id: sol-access-002
+name: Missing role-based access
+severity: medium
+category: access-control
+confidence: medium
+cwe: CWE-284
+languages:
+- solidity
+message: Admin functions without role-based access control. Use AccessControl.
+patterns:
+- type: regex
+  pattern: function\s+(admin|set|update|configure)\w*\s*\([^)]*\)\s*(?!.*onlyRole)(?!.*hasRole)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

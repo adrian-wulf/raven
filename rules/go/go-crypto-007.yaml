@@ -1,0 +1,22 @@
+id: go-crypto-007
+name: MD5 Hash for Password or Integrity
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-328
+languages: [go]
+message: |
+  MD5 is cryptographically broken. Use bcrypt, scrypt, or Argon2 for passwords, SHA-256 for integrity.
+patterns:
+  - type: regex
+    pattern: '(?i)md5\.Sum\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)md5\.New\s*\(\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/328.html

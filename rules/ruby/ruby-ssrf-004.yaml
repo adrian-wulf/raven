@@ -1,0 +1,23 @@
+id: ruby-ssrf-004
+name: HTTParty.get User URL
+description: |
+  Detects ssrf issues in RUBY code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [ruby]
+frameworks: [httparty]
+message: |
+  HTTParty with user URLs enables SSRF.
+patterns:
+  - type: regex
+    pattern: '(?i)HTTParty\.get\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)HTTParty\.post\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

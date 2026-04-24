@@ -1,0 +1,15 @@
+id: docker-latest-002
+name: FROM without tag
+severity: medium
+category: supply-chain
+confidence: medium
+cwe: CWE-829
+languages:
+- dockerfile
+message: FROM without explicit tag defaults to latest. Specify a pinned version.
+patterns:
+- type: regex
+  pattern: FROM\s+\w+(?!\s*:\w+)(?!\s*@\w+)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

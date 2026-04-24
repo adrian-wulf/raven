@@ -16,7 +16,7 @@ patterns:
   - type: regex
     pattern: 'subprocess\.(call|run|Popen)\s*\([^)]*shell\s*=\s*True[^)]*(request|req|params|body|form|args)'
   - type: regex
-    pattern: 'subprocess\.(call|run|Popen)\s*\(\s*["''"][^"''"]*%\s*'
+    pattern: 'subprocess\.(call|run|Popen)\s*\(\s*["''''"][^"''''"]*%\s*'
   - type: regex
     pattern: 'eval\s*\(\s*[^)]*(request|req|params|body|form|args|user|input|data)'
 references:

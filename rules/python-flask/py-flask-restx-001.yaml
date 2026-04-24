@@ -1,0 +1,17 @@
+id: py-flask-restx-001
+name: RESTX without validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: Flask-RESTX route without @api.expect allows invalid input. Add validation.
+patterns:
+- type: regex
+  pattern: '@api\.route\s*\([^)]+\)(?!.*@api\.expect)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- flask

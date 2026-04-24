@@ -1,0 +1,15 @@
+id: scala-play-005
+name: Play WS without request timeout
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- scala
+message: Play WS client without timeout can hang indefinitely. Set request timeout.
+patterns:
+- type: regex
+  pattern: ws\.url\s*\([^)]+\)(?!.*withRequestTimeout)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

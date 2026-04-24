@@ -1,0 +1,22 @@
+id: go-race-004
+name: Goroutine Shared State without Channel
+description: |
+  Detects race-condition issues in GO code.
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages: [go]
+message: |
+  Sharing memory by communicating is preferred. Use channels to share state between goroutines.
+patterns:
+  - type: regex
+    pattern: '(?i)go\s+func\s*\(\)\s*\{[^}]*\w+\+\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)go\s+func\s*\(\)\s*\{[^}]*\*\w+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

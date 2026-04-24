@@ -1,0 +1,22 @@
+id: c-bof-004
+name: gets Buffer Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: critical
+cwe: CWE-242
+languages: [c]
+message: |
+  gets() is inherently unsafe and removed in C11. Use fgets() instead.
+patterns:
+  - type: regex
+    pattern: '(?i)gets\s*\(\s*[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)gets\s*\(\s*buffer'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/242.html

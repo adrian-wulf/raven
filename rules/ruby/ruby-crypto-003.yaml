@@ -1,0 +1,26 @@
+id: ruby-crypto-003
+name: OpenSSL::Cipher Weak Algorithm
+description: |
+  Detects weak-cryptography issues in RUBY code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-327
+languages: [ruby]
+message: |
+  DES and RC4 are insecure. Use AES-256-GCM.
+patterns:
+  - type: regex
+    pattern: '(?i)OpenSSL::Cipher.*DES'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)OpenSSL::Cipher.*RC4'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Cipher::DES'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

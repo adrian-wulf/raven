@@ -1,0 +1,15 @@
+id: scala-template-001
+name: Twirl template without CSRF
+severity: medium
+category: csrf
+confidence: medium
+cwe: CWE-352
+languages:
+- scala
+message: Form in Twirl template without CSRF token is vulnerable. Add @CSRF.formField.
+patterns:
+- type: regex
+  pattern: <form[^>]*>\s*(?!.*@CSRF\.formField)(?!.*csrfToken)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html

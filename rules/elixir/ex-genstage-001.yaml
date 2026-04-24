@@ -1,0 +1,15 @@
+id: ex-genstage-001
+name: GenStage without back-pressure
+severity: medium
+category: dos
+confidence: medium
+cwe: CWE-400
+languages:
+- elixir
+message: GenStage without max_demand can overwhelm consumers. Set demand.
+patterns:
+- type: regex
+  pattern: subscribe_to:\s*\[\s*\w+\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

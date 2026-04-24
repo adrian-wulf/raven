@@ -1,0 +1,27 @@
+id: java-ssrf-005
+name: Apache HttpClient SSRF
+description: |
+  Detects ssrf issues in JAVA code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [java]
+frameworks: [apache]
+message: |
+  Apache HttpClient requests to user-controlled URLs enable SSRF.
+patterns:
+  - type: regex
+    pattern: '(?i)HttpClientBuilder.*build'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)httpClient\.execute\s*\(.*new\s+HttpGet\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)CloseableHttpClient.*execute'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

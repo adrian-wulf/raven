@@ -1,0 +1,18 @@
+id: py-django-xss-002
+name: safe filter in template
+severity: high
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- html
+message: The |safe filter in Django templates disables auto-escaping and can lead to XSS. Do not use with user data.
+patterns:
+- type: regex
+  pattern: \{\{\s*(?P<var>[\w\.]+)\s*\|\s*safe\s*\}\}
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- django

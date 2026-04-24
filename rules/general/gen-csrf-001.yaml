@@ -1,0 +1,13 @@
+id: gen-csrf-001
+name: Missing CSRF Token Validation
+severity: high
+category: csrf
+confidence: high
+cwe: "CWE-352"
+languages: [javascript, python, php, java, csharp, ruby]
+message: "State-changing request without CSRF token. Implement CSRF token validation for all state-changing operations."
+patterns:
+  - type: regex
+    pattern: "(POST|PUT|DELETE|PATCH)\\s*.*//s.*(?!csrf|CSRF|_token)"
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

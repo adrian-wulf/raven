@@ -1,0 +1,15 @@
+id: sol-gas-003
+name: Unbounded string in event
+severity: low
+category: gas
+confidence: low
+cwe: CWE-400
+languages:
+- solidity
+message: String parameter in event without length limit can consume excess gas. Limit length.
+patterns:
+- type: regex
+  pattern: event\s+\w+\s*\([^)]*string\s+\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

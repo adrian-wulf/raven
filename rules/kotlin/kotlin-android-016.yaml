@@ -1,0 +1,27 @@
+id: kotlin-android-016
+name: Android DexClassLoader Dynamic
+description: |
+  Detects code-injection issues in KOTLIN code.
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages: [kotlin]
+frameworks: [android]
+message: |
+  DexClassLoader loading external code can execute malicious payloads.
+patterns:
+  - type: regex
+    pattern: '(?i)DexClassLoader'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PathClassLoader.*external'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)loadClass\s*\(\s*.*dex'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

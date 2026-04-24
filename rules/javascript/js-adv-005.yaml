@@ -1,0 +1,13 @@
+id: js-adv-005
+name: JavaScript Template Injection EJS
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-1336"
+languages: [javascript, typescript]
+message: "EJS template rendered with user input allows Server-Side Template Injection. Do not pass user input as template."
+patterns:
+  - type: regex
+    pattern: "ejs\\.render\\s*\\(.*(req\\.|body|params|query)|new\\s+EJS\\.Template"
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

@@ -1,0 +1,26 @@
+id: java-misc-001
+name: Java Reflection Invoke User Class
+description: |
+  Detects insecure-reflection issues in JAVA code.
+severity: high
+category: insecure-reflection
+confidence: high
+cwe: CWE-470
+languages: [java]
+message: |
+  Reflection with user-controlled class names can instantiate arbitrary classes.
+patterns:
+  - type: regex
+    pattern: '(?i)Class\.forName\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Class\.forName\s*\(.*getParameter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)method\.invoke\s*\(.*Class\.forName'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/470.html

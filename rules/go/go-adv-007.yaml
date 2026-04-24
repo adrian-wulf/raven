@@ -1,0 +1,13 @@
+id: go-adv-007
+name: Go Integer Overflow in Allocation
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-190"
+languages: [go]
+message: "Integer overflow before memory allocation can cause unexpected behavior. Check for overflow before allocation."
+patterns:
+  - type: regex
+    pattern: "make\\s*\\(\\s*\\[\\].*\\*\\s*|len\\s*\\(.*\\)\\s*\\*\\s*unsafe\\.sizeof"
+references:
+  - https://cwe.mitre.org/data/definitions/190.html

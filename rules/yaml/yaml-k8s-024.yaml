@@ -1,0 +1,15 @@
+id: yaml-k8s-024
+name: ClusterRole with wildcard resources
+severity: critical
+category: auth
+confidence: critical
+cwe: CWE-250
+languages:
+- yaml
+message: ClusterRole with * resources grants access to all resources. Restrict resources.
+patterns:
+- type: regex
+  pattern: resources:\s*\[\s*[\"\']\*[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

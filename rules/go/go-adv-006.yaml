@@ -1,0 +1,13 @@
+id: go-adv-006
+name: Go Race Condition on Map Access
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-362"
+languages: [go]
+message: "Concurrent map read/write without synchronization. Use sync.RWMutex or sync.Map."
+patterns:
+  - type: regex
+    pattern: "go\\s+func.*\\{.*map\\[|goroutine.*map\\["
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

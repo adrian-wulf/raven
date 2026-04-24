@@ -1,0 +1,26 @@
+id: go-crypto-006
+name: Insecure TLS Config InsecureSkipVerify
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: critical
+category: weak-cryptography
+confidence: high
+cwe: CWE-295
+languages: [go]
+message: |
+  Never set InsecureSkipVerify to true in production. Always verify TLS certificates.
+patterns:
+  - type: regex
+    pattern: '(?i)InsecureSkipVerify\s*:\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tls\.Config\{[^}]*InsecureSkipVerify'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tls\.Config\{[^}]*MinVersion\s*:\s*tls\.VersionSSL'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

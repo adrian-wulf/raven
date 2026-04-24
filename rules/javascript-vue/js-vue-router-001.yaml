@@ -1,0 +1,18 @@
+id: js-vue-router-001
+name: router.push without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: router.push() without auth check may allow unauthorized navigation. Add navigation guards.
+patterns:
+- type: regex
+  pattern: this\.\$router\.push\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- vue

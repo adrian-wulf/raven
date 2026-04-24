@@ -1,0 +1,15 @@
+id: yaml-k8s-001
+name: Secret in plaintext
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-312
+languages:
+- yaml
+message: Kubernetes Secret with plaintext data exposes sensitive values. Use sealed-secrets or vault.
+patterns:
+- type: regex
+  pattern: kind:\s*Secret\s*\n.*data:\s*\n\s+\w+:\s*[^\s]+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/312.html

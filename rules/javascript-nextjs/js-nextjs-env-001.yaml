@@ -1,0 +1,18 @@
+id: js-nextjs-env-001
+name: NEXT_PUBLIC secret exposure
+severity: high
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- javascript
+- typescript
+message: NEXT_PUBLIC_ prefix exposes env var to client. Don't prefix secrets with NEXT_PUBLIC_.
+patterns:
+- type: regex
+  pattern: NEXT_PUBLIC_\w+\s*=\s*[\"\'][^\"\']{8,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html
+frameworks:
+- nextjs

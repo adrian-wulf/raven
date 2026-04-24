@@ -1,0 +1,13 @@
+id: gen-clickjacking-001
+name: Missing X-Frame-Options Header
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-1021"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Page can be embedded in iframe (clickjacking). Set X-Frame-Options: DENY or CSP frame-ancestors."
+patterns:
+  - type: regex
+    pattern: "(res\\.set|response\\.set|w\\.Header\\(\\)).*(?!X-Frame-Options|frame-ancestors)"
+references:
+  - https://cwe.mitre.org/data/definitions/1021.html

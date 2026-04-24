@@ -1,0 +1,15 @@
+id: ex-dos-003
+name: GenServer timeout
+severity: medium
+category: dos
+confidence: medium
+cwe: CWE-400
+languages:
+- elixir
+message: GenServer.call without timeout can cause permanent blocking. Set timeout.
+patterns:
+- type: regex
+  pattern: GenServer\.call\s*\(\s*\w+\s*,\s*\w+\s*\)(?!.*timeout)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

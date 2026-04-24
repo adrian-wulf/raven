@@ -1,0 +1,13 @@
+id: go-adv-003
+name: Go SQL Injection via fmt.Sprintf
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-89"
+languages: [go]
+message: "SQL query built with fmt.Sprintf allows injection. Use parameterized queries with placeholders."
+patterns:
+  - type: regex
+    pattern: 'fmt\\.Sprintf\\s*\\(.*[\\''"].*SELECT|fmt\\.Sprintf\\s*\\(.*[\\''"].*INSERT|fmt\\.Sprintf\\s*\\(.*[\\''"].*UPDATE|fmt\\.Sprintf\\s*\\(.*[\\''"].*DELETE'
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

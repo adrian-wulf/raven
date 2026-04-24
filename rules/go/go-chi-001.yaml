@@ -1,0 +1,23 @@
+id: go-chi-001
+name: Chi Router URL Parameter Injection
+description: |
+  Detects injection issues in GO code.
+severity: high
+category: injection
+confidence: medium
+cwe: CWE-74
+languages: [go]
+frameworks: [chi]
+message: |
+  Validate chi URL parameters before use in sensitive operations.
+patterns:
+  - type: regex
+    pattern: '(?i)chi\.URLParam\s*\(\s*r\s*,'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)r\.URL\.Query\(\)\.Get'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/74.html

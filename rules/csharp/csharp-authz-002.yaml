@@ -1,0 +1,23 @@
+id: csharp-authz-002
+name: Authorize without Roles
+description: |
+  Detects broken-authorization issues in CSHARP code.
+severity: medium
+category: broken-authorization
+confidence: medium
+cwe: CWE-306
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  [Authorize] without specific roles may allow overly broad access.
+patterns:
+  - type: regex
+    pattern: '(?i)\[Authorize\].*(?!Roles)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[Authorize\].*(?!Policy)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

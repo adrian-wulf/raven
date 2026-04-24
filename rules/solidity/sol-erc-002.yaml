@@ -1,0 +1,15 @@
+id: sol-erc-002
+name: ERC721 unsafe mint
+severity: high
+category: reentrancy
+confidence: high
+cwe: CWE-841
+languages:
+- solidity
+message: _mint instead of _safeMint for ERC721 can lock tokens. Use _safeMint.
+patterns:
+- type: regex
+  pattern: _mint\s*\(\s*\w+\s*,\s*\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/841.html

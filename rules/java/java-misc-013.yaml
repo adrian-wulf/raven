@@ -1,0 +1,26 @@
+id: java-misc-013
+name: JavaBean Property Injection
+description: |
+  Detects mass-assignment issues in JAVA code.
+severity: medium
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [java]
+message: |
+  JavaBean introspection with user input can set arbitrary properties.
+patterns:
+  - type: regex
+    pattern: '(?i)Introspector\.getBeanInfo'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PropertyDescriptor.*writeMethod'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)BeanUtils\.setProperty\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

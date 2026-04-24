@@ -1,0 +1,23 @@
+id: go-sqli-004
+name: sqlx SQL Injection
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+frameworks: [sqlx]
+message: |
+  Avoid using sqlx.NamedQuery or sqlx.Select with string concatenation. Use bound parameters.
+patterns:
+  - type: regex
+    pattern: '(?i)sqlx\.NamedQuery\s*\(\s*[^,]*[`"][^`"]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sqlx\.Select\s*\([^)]*fmt\.Sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

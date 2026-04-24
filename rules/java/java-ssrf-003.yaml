@@ -1,0 +1,27 @@
+id: java-ssrf-003
+name: Spring RestTemplate SSRF
+description: |
+  Detects ssrf issues in JAVA code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [java]
+frameworks: [spring]
+message: |
+  RestTemplate with user-controlled URLs enables SSRF attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)restTemplate\.getForObject\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)restTemplate\.exchange\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)restTemplate\.postForObject\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

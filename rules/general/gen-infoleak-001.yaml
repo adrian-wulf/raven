@@ -1,0 +1,13 @@
+id: gen-infoleak-001
+name: Sensitive Information in Error Message
+severity: medium
+category: infoleak
+confidence: high
+cwe: "CWE-200"
+languages: [go, python, javascript, java, php, csharp, ruby]
+message: "Error message may leak sensitive information (paths, internals). Return generic errors to users."
+patterns:
+  - type: regex
+    pattern: "(err\\.Error\\(\\)|error|Exception|StackTrace)\\s*\\+.*(write|send|return|response|json|w\\.Write)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

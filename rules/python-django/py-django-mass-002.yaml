@@ -1,0 +1,18 @@
+id: py-django-mass-002
+name: setattr loop on model
+severity: medium
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages:
+- python
+message: Using setattr in a loop with user data can enable mass assignment. Validate allowed fields.
+patterns:
+- type: regex
+  pattern: setattr\s*\(\s*self\s*,\s*\w+\s*,\s*(?P<input>request\.|data\[)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/915.html
+frameworks:
+- django

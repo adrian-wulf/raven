@@ -1,0 +1,16 @@
+id: lua-openresty-002
+name: ngx.redirect without validation
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages:
+- lua
+message: ngx.redirect with user-controlled URL enables open redirect. Validate URLs.
+patterns:
+- type: regex
+  pattern: ngx\.redirect\s*\(\s*(?P<input>user|arg_|var\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/601.html

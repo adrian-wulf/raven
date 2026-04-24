@@ -1,0 +1,17 @@
+id: py-fastapi-openapi-001
+name: docs_url without auth
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-200
+languages:
+- python
+message: OpenAPI docs accessible without authentication can leak API schema. Disable docs or protect them.
+patterns:
+- type: regex
+  pattern: FastAPI\s*\(\s*.*docs_url\s*=\s*[\"\'][^\"\']+[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/200.html
+frameworks:
+- fastapi

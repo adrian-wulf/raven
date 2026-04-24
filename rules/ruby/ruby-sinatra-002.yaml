@@ -1,0 +1,27 @@
+id: ruby-sinatra-002
+name: Sinatra Template Injection
+description: |
+  Detects ssti issues in RUBY code.
+severity: high
+category: ssti
+confidence: high
+cwe: CWE-1336
+languages: [ruby]
+frameworks: [sinatra]
+message: |
+  Sinatra template rendering user input enables SSTI.
+patterns:
+  - type: regex
+    pattern: '(?i)erb\s+.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)haml\s+.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)slim\s+.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

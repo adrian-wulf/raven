@@ -1,0 +1,16 @@
+id: dart-cmdi-002
+name: Process.start
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- dart
+message: Process.start with user input enables command injection. Validate all arguments.
+patterns:
+- type: regex
+  pattern: Process\.start\s*\(\s*[\"\'][^\"\']*\$\{?\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

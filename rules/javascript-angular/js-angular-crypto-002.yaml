@@ -1,0 +1,18 @@
+id: js-angular-crypto-002
+name: CryptoJS without IV
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-329
+languages:
+- javascript
+- typescript
+message: AES encryption without IV produces deterministic ciphertext. Use random IV.
+patterns:
+- type: regex
+  pattern: CryptoJS\.AES\.encrypt\s*\(\s*[^,]+,\s*[^,]+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/329.html
+frameworks:
+- angular

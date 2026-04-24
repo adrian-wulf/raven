@@ -1,0 +1,13 @@
+id: js-adv-001
+name: JavaScript Prototype Pollution via Merge
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-1321"
+languages: [javascript, typescript]
+message: "Object merge/assign with user input can pollute Object.prototype. Use Object.create(null) or validate keys against allowlist."
+patterns:
+  - type: regex
+    pattern: "Object\\.assign\\s*\\(.*(req\\.|body|params|query)|_.merge|_.extend|merge.*objects"
+references:
+  - https://cwe.mitre.org/data/definitions/1321.html

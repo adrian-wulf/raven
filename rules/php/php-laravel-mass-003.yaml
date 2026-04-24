@@ -1,0 +1,27 @@
+id: php-laravel-mass-003
+name: Laravel Request all Mass Assignment
+description: |
+  Detects mass-assignment issues in PHP code.
+severity: medium
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [php]
+frameworks: [laravel]
+message: |
+  $request->all() without validation can allow mass assignment.
+patterns:
+  - type: regex
+    pattern: '(?i)\$request->all\(\).*->create\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$request->all\(\).*->update\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$request->all\(\).*->fill\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

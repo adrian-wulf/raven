@@ -1,0 +1,22 @@
+id: c-mem-001
+name: malloc without Free
+description: |
+  Detects resource-leak issues in C code.
+severity: medium
+category: resource-leak
+confidence: medium
+cwe: CWE-401
+languages: [c]
+message: |
+  Memory allocated with malloc must be freed to prevent leaks.
+patterns:
+  - type: regex
+    pattern: '(?i)\w+\s*=\s*malloc\s*\(.*\)(?!.*free\s*\(.*\w+.*\))'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)malloc\s*\(.*\).*return(?!.*free)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/401.html

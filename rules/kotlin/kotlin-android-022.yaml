@@ -1,0 +1,27 @@
+id: kotlin-android-022
+name: Android SSL Pinning Bypass
+description: |
+  Detects weak-cryptography issues in KOTLIN code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-295
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Bypassing SSL pinning enables man-in-the-middle attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)TrustManager.*checkServerTrusted.*return'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)HostnameVerifier.*verify.*return\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)setDefaultHostnameVerifier'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

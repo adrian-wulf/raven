@@ -1,0 +1,23 @@
+id: go-fiber-001
+name: Fiber Context BodyParser without Validation
+description: |
+  Detects mass-assignment issues in GO code.
+severity: high
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [go]
+frameworks: [fiber]
+message: |
+  Validate all inputs after parsing in Fiber. Use struct tags for validation.
+patterns:
+  - type: regex
+    pattern: '(?i)c\.BodyParser\s*\(&'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)c\.QueryParser\s*\(&'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

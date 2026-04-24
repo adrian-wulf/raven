@@ -1,0 +1,17 @@
+id: py-fastapi-depends-005
+name: Optional auth dependency
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Optional authentication dependency may allow unauthorized access. Make auth required.
+patterns:
+- type: regex
+  pattern: user\s*:\s*Optional\[\w+\]\s*=\s*Depends
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

@@ -1,0 +1,16 @@
+id: ex-dos-001
+name: String.duplicate unlimited
+severity: medium
+category: dos
+confidence: medium
+cwe: CWE-400
+languages:
+- elixir
+message: String.duplicate with user count can cause memory exhaustion. Limit count.
+patterns:
+- type: regex
+  pattern: String\.duplicate\s*\(\s*\w+\s*,\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/400.html

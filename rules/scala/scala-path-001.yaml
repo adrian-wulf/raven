@@ -1,0 +1,16 @@
+id: scala-path-001
+name: new File(userPath)
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- scala
+message: new File() with user path enables directory traversal. Validate and sanitize paths.
+patterns:
+- type: regex
+  pattern: new\s+File\s*\(\s*(?P<input>user|input|request|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

@@ -1,0 +1,17 @@
+rule_id: bash-cmdi-002
+language: bash
+examples:
+  unsafe: '# Unsafe - bash-cmdi-002
+
+    os.system(f"ls {directory}")
+
+    '
+  safe: '# Safe - bash-cmdi-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

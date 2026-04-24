@@ -1,0 +1,27 @@
+id: go-sqli-005
+name: pgx PostgreSQL Driver SQL Injection
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+frameworks: [pgx]
+message: |
+  Avoid using pgx Conn.Query/Exec with string formatting. Use parameterized queries.
+patterns:
+  - type: regex
+    pattern: '(?i)conn\.Query\s*\(\s*ctx,\s*[`"][^`"]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)pool\.Exec\s*\(\s*ctx,\s*fmt\.Sprintf'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)pgx\.Connect.*\.Query\s*\([^)]*\+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

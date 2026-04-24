@@ -1,0 +1,13 @@
+rule_id: py-fastapi- pydantic-001
+language: python
+examples:
+  unsafe: "# Unsafe - py-fastapi- pydantic-001\ndef process(data):\n    return data['value']\n"
+  safe: '# Safe - py-fastapi- pydantic-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

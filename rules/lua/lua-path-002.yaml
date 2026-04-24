@@ -1,0 +1,16 @@
+id: lua-path-002
+name: io.lines with user path
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- lua
+message: io.lines with user path enables directory traversal. Validate file paths.
+patterns:
+- type: regex
+  pattern: io\.lines\s*\(\s*(?P<input>user|input|arg|path)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

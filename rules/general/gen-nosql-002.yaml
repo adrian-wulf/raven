@@ -1,0 +1,13 @@
+id: gen-nosql-002
+name: MongoDB NoSQL Injection via Operator
+severity: critical
+category: nosql
+confidence: high
+cwe: "CWE-943"
+languages: [javascript, python]
+message: "MongoDB query vulnerable to NoSQL injection. Validate query parameters before building queries."
+patterns:
+  - type: regex
+    pattern: "(find\\s*\\(|findOne\\s*\\(|updateOne\\s*\\().*\\{.*\\$"
+references:
+  - https://cwe.mitre.org/data/definitions/943.html

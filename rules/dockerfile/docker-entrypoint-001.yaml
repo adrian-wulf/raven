@@ -1,0 +1,15 @@
+id: docker-entrypoint-001
+name: ENTRYPOINT without exec
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- dockerfile
+message: ENTRYPOINT without exec form doesn't forward signals properly. Use exec form.
+patterns:
+- type: regex
+  pattern: ENTRYPOINT\s+\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

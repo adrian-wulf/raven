@@ -1,0 +1,16 @@
+id: bash-temp-001
+name: Temp file race condition
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-377
+languages:
+- bash
+- shell
+message: Using predictable temp file names can allow symlink attacks. Use mktemp.
+patterns:
+- type: regex
+  pattern: '>\s*/tmp/\w+'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/377.html

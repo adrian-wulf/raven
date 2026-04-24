@@ -1,0 +1,15 @@
+id: docker-copy-002
+name: ADD from remote URL
+severity: high
+category: supply-chain
+confidence: high
+cwe: CWE-829
+languages:
+- dockerfile
+message: ADD with remote URL downloads untrusted content. Use curl with checksum verification.
+patterns:
+- type: regex
+  pattern: ADD\s+https?://
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

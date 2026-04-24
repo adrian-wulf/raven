@@ -1,0 +1,15 @@
+id: dart-network-001
+name: Plain HTTP connection
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- dart
+message: Using plain HTTP without encryption allows eavesdropping. Always use HTTPS.
+patterns:
+- type: regex
+  pattern: http://[\w\.-]+(?!.*https)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

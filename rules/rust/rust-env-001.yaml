@@ -1,0 +1,27 @@
+id: rust-env-001
+name: dotenv Secret Exposure
+description: |
+  Detects hardcoded-secrets issues in RUST code.
+severity: medium
+category: hardcoded-secrets
+confidence: medium
+cwe: CWE-798
+languages: [rust]
+frameworks: [dotenv]
+message: |
+  Secrets loaded via dotenv should not be logged.
+patterns:
+  - type: regex
+    pattern: '(?i)dotenv::dotenv'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::env::var.*SECRET'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::env::var.*PASSWORD'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

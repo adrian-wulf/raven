@@ -1,0 +1,13 @@
+id: go-adv-008
+name: Go SSRF via HTTP Client
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-918"
+languages: [go]
+message: "HTTP request URL from user input enables SSRF. Validate URLs against allowlist and block private IPs."
+patterns:
+  - type: regex
+    pattern: "http\\.Get\\s*\\(.*(req\\.|user|input|url|params)"
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

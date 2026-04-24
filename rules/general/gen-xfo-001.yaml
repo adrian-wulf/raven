@@ -1,0 +1,13 @@
+id: gen-xfo-001
+name: X-Frame-Options Allow-From Deprecated
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-1021"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "X-Frame-Options: ALLOW-FROM is deprecated and not supported by most browsers. Use CSP frame-ancestors."
+patterns:
+  - type: regex
+    pattern: "X-Frame-Options.*ALLOW-FROM"
+references:
+  - https://cwe.mitre.org/data/definitions/1021.html

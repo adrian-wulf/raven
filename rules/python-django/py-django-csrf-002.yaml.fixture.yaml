@@ -1,0 +1,13 @@
+rule_id: py-django-csrf-002
+language: html
+examples:
+  unsafe: "# Unsafe - py-django-csrf-002\n@csrf_exempt\ndef my_view(request):\n    pass\n"
+  safe: '# Safe - py-django-csrf-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

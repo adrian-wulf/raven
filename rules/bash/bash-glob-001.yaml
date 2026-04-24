@@ -1,0 +1,16 @@
+id: bash-glob-001
+name: Unquoted glob
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: Unquoted variable with glob can expand unexpectedly. Quote variables.
+patterns:
+- type: regex
+  pattern: \$\w+(?!\")[^\s]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

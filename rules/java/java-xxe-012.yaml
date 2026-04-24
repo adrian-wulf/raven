@@ -1,0 +1,26 @@
+id: java-xxe-012
+name: JDOM2 SAXBuilder XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+message: |
+  JDOM2 SAXBuilder can be exploited via XXE if not configured securely.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+SAXBuilder'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SAXBuilder.*build\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)saxBuilder\.setFeature.*external-general-entities.*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

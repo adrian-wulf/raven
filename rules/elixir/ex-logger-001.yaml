@@ -1,0 +1,16 @@
+id: ex-logger-001
+name: Logger without metadata filter
+severity: medium
+category: log-forging
+confidence: medium
+cwe: CWE-532
+languages:
+- elixir
+message: Logger without metadata filter can leak PII. Filter sensitive fields.
+patterns:
+- type: regex
+  pattern: Logger\.(info|debug)\s*\(\s*[\"\'][^\"\']*[\"\']\s*,\s*(?P<input>params|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/532.html

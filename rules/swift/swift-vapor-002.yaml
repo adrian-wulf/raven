@@ -1,0 +1,23 @@
+id: swift-vapor-002
+name: Vapor Leaf Template Injection
+description: |
+  Detects ssti issues in SWIFT code.
+severity: high
+category: ssti
+confidence: high
+cwe: CWE-1336
+languages: [swift]
+frameworks: [vapor]
+message: |
+  Leaf templates with user content can inject code.
+patterns:
+  - type: regex
+    pattern: '(?i)req\.view\.render\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)LeafRenderer.*render\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

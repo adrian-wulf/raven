@@ -1,0 +1,22 @@
+id: java-deser-010
+name: ObjectInputStream.resolveClass Override
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [java]
+message: |
+  Overriding resolveClass without validation allows arbitrary class loading.
+patterns:
+  - type: regex
+    pattern: '(?i)protected\s+Class\s+resolveClass\s*\(\s*ObjectStreamClass'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ObjectInputStream\s*\{[^}]*resolveClass'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

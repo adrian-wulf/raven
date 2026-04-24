@@ -1,0 +1,15 @@
+rule_id: dart-storage-002
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-storage-002
+
+    var rng = Random();
+
+    '
+  safe: '// Safe - dart-storage-002
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

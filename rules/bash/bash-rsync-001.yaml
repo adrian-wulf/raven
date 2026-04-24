@@ -1,0 +1,16 @@
+id: bash-rsync-001
+name: rsync without checksum
+severity: low
+category: integrity
+confidence: low
+cwe: CWE-354
+languages:
+- bash
+- shell
+message: rsync without checksum can't verify file integrity. Use -c flag.
+patterns:
+- type: regex
+  pattern: rsync\s+(?!.*\-c\b)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/354.html

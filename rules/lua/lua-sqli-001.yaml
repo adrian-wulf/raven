@@ -1,0 +1,16 @@
+id: lua-sqli-001
+name: luasql without parameterization
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- lua
+message: luasql execute with string concatenation enables SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: env\:execute\s*\(\s*[\"\'][^\"\']*\.\.\s*\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

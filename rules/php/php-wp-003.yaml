@@ -1,0 +1,27 @@
+id: php-wp-003
+name: WordPress Nonce Bypass
+description: |
+  Detects csrf issues in PHP code.
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages: [php]
+frameworks: [wordpress]
+message: |
+  Missing wp_nonce verification allows CSRF attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)wp_nonce_field\s*\(.*(?!.*check)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)(?!wp_verify_nonce).*\$_(POST|GET)\[.*action'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)check_ajax_referer.*(?!.*die)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

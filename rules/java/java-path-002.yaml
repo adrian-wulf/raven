@@ -1,0 +1,26 @@
+id: java-path-002
+name: Zip Slip Vulnerability
+description: |
+  Detects path-traversal issues in JAVA code.
+severity: critical
+category: path-traversal
+confidence: critical
+cwe: CWE-22
+languages: [java]
+message: |
+  Zip entries with path traversal in names can write outside target directory.
+patterns:
+  - type: regex
+    pattern: '(?i)zipEntry\.getName\s*\(\).*new\s+File'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+File\s*\(\s*destDir\s*,\s*zipEntry\.getName'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ZipInputStream.*getNextEntry.*FileOutputStream'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

@@ -1,0 +1,27 @@
+id: kotlin-deser-002
+name: Kotlin Jackson Deserialization RCE
+description: |
+  Detects insecure-deserialization issues in KOTLIN code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [kotlin]
+frameworks: [jackson]
+message: |
+  Jackson enableDefaultTyping allows arbitrary type instantiation.
+patterns:
+  - type: regex
+    pattern: '(?i)enableDefaultTyping'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)activateDefaultTyping'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@JsonTypeInfo.*use.*CLASS'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

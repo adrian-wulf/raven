@@ -1,0 +1,13 @@
+id: gen-config-002
+name: InsecureSkipVerify Enabled
+severity: critical
+category: config
+confidence: high
+cwe: "CWE-295"
+languages: [go]
+message: "tls.Config.InsecureSkipVerify set to true. This disables certificate validation and enables MITM attacks."
+patterns:
+  - type: regex
+    pattern: "InsecureSkipVerify\\s*:\\s*true"
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

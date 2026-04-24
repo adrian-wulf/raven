@@ -1,0 +1,13 @@
+id: py-adv-004
+name: Python assert Statement in Production
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-617"
+languages: [python]
+message: "assert statements are removed when Python runs with -O flag. Do not use assert for security checks."
+patterns:
+  - type: regex
+    pattern: "\bassert\\s+(is_authenticated|user\\.is_admin|has_permission|can_access)"
+references:
+  - https://cwe.mitre.org/data/definitions/617.html

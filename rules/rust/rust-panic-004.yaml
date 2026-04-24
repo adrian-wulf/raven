@@ -1,0 +1,22 @@
+id: rust-panic-004
+name: unreachable! Reachable Code
+description: |
+  Detects logic-error issues in RUST code.
+severity: high
+category: logic-error
+confidence: high
+cwe: CWE-248
+languages: [rust]
+message: |
+  unreachable! that is actually reachable causes panic.
+patterns:
+  - type: regex
+    pattern: '(?i)unreachable!\s*\(\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)_\s*=>\s*unreachable!'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/248.html

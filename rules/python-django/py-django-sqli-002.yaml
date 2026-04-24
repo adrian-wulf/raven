@@ -1,0 +1,18 @@
+id: py-django-sqli-002
+name: Django extra() with params
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: Django QuerySet .extra() with user-controlled params enables SQL injection. Avoid using extra().
+patterns:
+- type: regex
+  pattern: \.extra\s*\(.*(where|tables|select|order_by)\s*=\s*.*[f\"\'].*\{.*\}
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

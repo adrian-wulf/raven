@@ -1,0 +1,26 @@
+id: c-uaf-003
+name: Return Local Pointer
+description: |
+  Detects use-after-free issues in C code.
+severity: high
+category: use-after-free
+confidence: high
+cwe: CWE-562
+languages: [c]
+message: |
+  Returning pointer to local stack variable creates dangling pointer.
+patterns:
+  - type: regex
+    pattern: '(?i)return\s+&\w+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)return\s+\w+\[.*\].*//.*local'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)char\s+\w+\[.*\].*return'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/562.html

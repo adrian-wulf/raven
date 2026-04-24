@@ -1,0 +1,27 @@
+id: java-android-011
+name: Android ContentProvider SQL Injection
+description: |
+  Detects sql-injection issues in JAVA code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [java]
+frameworks: [android]
+message: |
+  ContentProvider query methods with user-controlled selection can inject SQL.
+patterns:
+  - type: regex
+    pattern: '(?i)query\s*\(\s*uri\s*,\s*projection\s*,\s*selection\s*,\s*selectionArgs'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)contentResolver\.query\s*\(.*selection.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SQLiteQueryBuilder.*appendWhere.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

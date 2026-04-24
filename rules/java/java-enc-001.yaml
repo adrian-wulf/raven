@@ -1,0 +1,26 @@
+id: java-enc-001
+name: URLDecoder without Validation
+description: |
+  Detects input-validation issues in JAVA code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [java]
+message: |
+  URL-decoded values can contain path traversal or injection payloads.
+patterns:
+  - type: regex
+    pattern: '(?i)URLDecoder\.decode\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)URLDecoder\.decode\s*\(.*getParameter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)URLDecoder\.decode\s*\(.*URL'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

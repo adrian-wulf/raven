@@ -1,0 +1,18 @@
+id: py-flask-sqli-002
+name: SQLAlchemy raw in route
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: SQLAlchemy raw SQL with user input in route enables SQL injection. Use ORM or parameterize.
+patterns:
+- type: regex
+  pattern: (session\.execute|db\.session\.execute)\s*\(\s*text\s*\(\s*(f[\"\']|request\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- flask

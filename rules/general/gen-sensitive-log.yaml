@@ -11,6 +11,4 @@ message: |
   Never log sensitive data! Logs are often shipped to SIEMs and stored indefinitely.
 patterns:
   - type: regex
-    pattern: "(?i)(log|print|console|fmt\\.Print|logger)\\s*\\(\\s*[^)]*(password|token|secret|ssn|credit|card|api_key|secret_key|private_key)"
-  - type: regex
-    pattern: "(?i)(log|print|console|fmt\\.Print|logger)\\s*\\(\\s*[^)]*['\"].*(password|token|secret)['\"]"
+    pattern: "(log|print|console|fmt\\.Print).*(password|token|secret|key|ssn|credit|card)"

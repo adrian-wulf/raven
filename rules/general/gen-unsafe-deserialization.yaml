@@ -11,10 +11,4 @@ message: |
   Deserializing untrusted data can execute arbitrary code. Use JSON with schema validation.
 patterns:
   - type: regex
-    pattern: "(?i)(unserialize|deserialize|ObjectInputStream)\\s*\\("
-  - type: regex
-    pattern: "(?i)pickle\\.(loads?|dump|load|unpickle)"
-  - type: regex
-    pattern: "(?i)yaml\\.load\\s*\\("
-  - type: regex
-    pattern: "(?i)jsonpickle\\.(decode|unpickle)"
+    pattern: "(unserialize|deserialize|pickle|yaml\\.load|ObjectInputStream)"

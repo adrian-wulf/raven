@@ -1,0 +1,17 @@
+id: py-fastapi-websocket-002
+name: WebSocket message injection
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: WebSocket message data used without validation can allow injection. Validate all received data.
+patterns:
+- type: regex
+  pattern: websocket\.receive_text\s*\(\s*\).*\n.*(?P<input>eval|exec|json\.loads|pickle)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- fastapi

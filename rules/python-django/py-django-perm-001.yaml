@@ -1,0 +1,17 @@
+id: py-django-perm-001
+name: Missing permission_required
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-285
+languages:
+- python
+message: View without @permission_required may allow unauthorized access. Add permission checks.
+patterns:
+- type: regex
+  pattern: ^@login_required\s*\n\s*def\s+\w+\s*\(\s*request\s*\)(?!.*permission_required)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/285.html
+frameworks:
+- django

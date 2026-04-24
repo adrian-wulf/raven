@@ -1,0 +1,13 @@
+id: go-adv-010
+name: Go Timing Attack in String Comparison
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-208"
+languages: [go]
+message: "String comparison used for sensitive value (token, password, HMAC). Use hmac.Equal or subtle.ConstantTimeCompare."
+patterns:
+  - type: regex
+    pattern: "token.*==|password.*==|hmac.*==|signature.*=="
+references:
+  - https://cwe.mitre.org/data/definitions/208.html

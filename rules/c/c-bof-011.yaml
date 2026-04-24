@@ -1,0 +1,22 @@
+id: c-bof-011
+name: Variable Length Array Stack Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: high
+category: buffer-overflow
+confidence: medium
+cwe: CWE-789
+languages: [c]
+message: |
+  VLAs with user-controlled size can overflow the stack.
+patterns:
+  - type: regex
+    pattern: '(?i)(int|char|wchar_t|void)\s+\w+\s*\[\s*[^)]+\]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)char\s+buf\[.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/789.html

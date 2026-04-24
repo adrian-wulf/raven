@@ -1,0 +1,23 @@
+id: ruby-sinatra-003
+name: Sinatra before Filter Bypass
+description: |
+  Detects broken-authentication issues in RUBY code.
+severity: medium
+category: broken-authentication
+confidence: medium
+cwe: CWE-287
+languages: [ruby]
+frameworks: [sinatra]
+message: |
+  Missing before filters on sensitive routes allows unauthorized access.
+patterns:
+  - type: regex
+    pattern: '(?i)before\s+do(?!.*auth)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)get\s+[''"]/admin[''"](?!.*before)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/287.html

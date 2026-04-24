@@ -1,0 +1,22 @@
+id: csharp-xpath-002
+name: SelectSingleNode Injection
+description: |
+  Detects xpath-injection issues in CSHARP code.
+severity: high
+category: xpath-injection
+confidence: high
+cwe: CWE-643
+languages: [csharp]
+message: |
+  SelectSingleNode with user input allows XPath injection.
+patterns:
+  - type: regex
+    pattern: '(?i)SelectSingleNode\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SelectNodes\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/643.html

@@ -1,0 +1,22 @@
+id: csharp-ssrf-003
+name: HttpWebRequest without Validation
+description: |
+  Detects ssrf issues in CSHARP code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [csharp]
+message: |
+  HttpWebRequest to user URLs can access internal network.
+patterns:
+  - type: regex
+    pattern: '(?i)HttpWebRequest.*Create\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)HttpWebRequest.*Create\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

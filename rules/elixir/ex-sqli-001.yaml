@@ -1,0 +1,15 @@
+id: ex-sqli-001
+name: Ecto raw SQL
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- elixir
+message: Ecto query with raw SQL fragment and user input enables SQL injection. Use query composition.
+patterns:
+- type: regex
+  pattern: Ecto\.Query\.from\s*\(\s*\w+\s*,\s*[^)]*fragment
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html

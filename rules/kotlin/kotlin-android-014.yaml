@@ -1,0 +1,23 @@
+id: kotlin-android-014
+name: Android ContentProvider SQLi
+description: |
+  Detects sql-injection issues in KOTLIN code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [kotlin]
+frameworks: [android]
+message: |
+  ContentProvider query methods with user input can inject SQL.
+patterns:
+  - type: regex
+    pattern: '(?i)query\s*\(\s*uri.*selection.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)contentResolver\.query\s*\(.*selection.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

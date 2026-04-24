@@ -1,0 +1,15 @@
+rule_id: scala-akka-002
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-akka-002
+
+    new ObjectInputStream(stream).readObject()
+
+    '
+  safe: '// Safe - scala-akka-002
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

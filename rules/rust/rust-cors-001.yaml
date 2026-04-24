@@ -1,0 +1,27 @@
+id: rust-cors-001
+name: tower-http CORS Allow All
+description: |
+  Detects cors-misconfiguration issues in RUST code.
+severity: medium
+category: cors-misconfiguration
+confidence: medium
+cwe: CWE-942
+languages: [rust]
+frameworks: [tower]
+message: |
+  Allowing all origins with CORS exposes data to malicious sites.
+patterns:
+  - type: regex
+    pattern: '(?i)CorsLayer::new\s*\(\).*allow_origin'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)AllowOrigin::any'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)allow_origin\s*\(Any\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/942.html

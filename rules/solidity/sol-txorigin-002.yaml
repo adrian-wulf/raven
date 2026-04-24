@@ -1,0 +1,15 @@
+id: sol-txorigin-002
+name: tx.origin check
+severity: critical
+category: auth
+confidence: high
+cwe: CWE-288
+languages:
+- solidity
+message: Using tx.origin for access control is unsafe. Use msg.sender instead.
+patterns:
+- type: regex
+  pattern: require\s*\(\s*tx\.origin
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/288.html

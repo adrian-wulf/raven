@@ -1,0 +1,16 @@
+id: tf-cloudfront-001
+name: CloudFront without WAF
+severity: high
+category: network
+confidence: high
+cwe: CWE-693
+languages:
+- terraform
+- hcl
+message: CloudFront distribution without WAF is exposed to web attacks. Attach WAF.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_cloudfront_distribution[\"\'][^}]*\}(?!.*web_acl_id)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

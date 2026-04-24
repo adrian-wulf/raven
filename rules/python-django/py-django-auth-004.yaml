@@ -1,0 +1,17 @@
+id: py-django-auth-004
+name: AuthenticationForm without rate limit
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-307
+languages:
+- python
+message: Login without rate limiting allows brute force attacks. Add rate limiting.
+patterns:
+- type: regex
+  pattern: AuthenticationForm\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/307.html
+frameworks:
+- django

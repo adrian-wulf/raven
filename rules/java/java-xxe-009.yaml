@@ -1,0 +1,26 @@
+id: java-xxe-009
+name: XPathExpression XXE via Document
+description: |
+  Detects xxe issues in JAVA code.
+severity: high
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+message: |
+  XPath queries on documents from untrusted XML sources can trigger XXE.
+patterns:
+  - type: regex
+    pattern: '(?i)XPathFactory\.newInstance'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xpath\.compile\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xpathExpression\.evaluate\s*\(.*Document'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

@@ -1,0 +1,15 @@
+rule_id: js-nextjs-redirect-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-redirect-001
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-nextjs-redirect-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

@@ -1,0 +1,23 @@
+id: swift-ios-041
+name: Certificate Validation Disabled
+description: |
+  Detects weak-cryptography issues in SWIFT code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-295
+languages: [swift]
+frameworks: [ios]
+message: |
+  Disabling certificate validation allows any TLS connection.
+patterns:
+  - type: regex
+    pattern: '(?i)setAllowsAnyHTTPSCertificate.*YES'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)NSURLRequest.*allowsAnyHTTPSCertificate'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

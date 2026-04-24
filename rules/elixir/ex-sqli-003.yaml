@@ -1,0 +1,16 @@
+id: ex-sqli-003
+name: Repo.query without parameterization
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- elixir
+message: Repo.query with string interpolation enables SQL injection. Use query parameters.
+patterns:
+- type: regex
+  pattern: Repo\.query\s*\(\s*[\"\'][^\"\']*\#\{\s*(?P<input>params|input|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

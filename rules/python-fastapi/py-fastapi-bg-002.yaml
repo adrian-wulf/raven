@@ -1,0 +1,17 @@
+id: py-fastapi-bg-002
+name: BackgroundTasks without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Background task scheduled without authentication check. Verify auth before scheduling tasks.
+patterns:
+- type: regex
+  pattern: background_tasks\.add_task\s*\(\s*\w+\s*\)(?!.*Depends)(?!.*auth)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

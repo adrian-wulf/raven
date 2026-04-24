@@ -1,0 +1,18 @@
+id: js-angular-form-001
+name: Reactive form without validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: Reactive form without validators can accept invalid/malicious input. Add validators.
+patterns:
+- type: regex
+  pattern: FormControl\s*\(\s*[\"\'][^\"\']*[\"\']\s*\)(?!.*Validators)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- angular

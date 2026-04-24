@@ -1,0 +1,15 @@
+id: scala-play-002
+name: Filter bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- scala
+message: Play filter that always passes allows bypass. Implement proper checks.
+patterns:
+- type: regex
+  pattern: extends\s+EssentialFilter.*next\s*\(\s*\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html

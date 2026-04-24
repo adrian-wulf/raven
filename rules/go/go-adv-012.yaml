@@ -1,0 +1,13 @@
+id: go-adv-012
+name: Go Defer in Loop Resource Leak
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-772"
+languages: [go]
+message: "defer inside loop may cause resource leak. Defer is LIFO and executes at function return, not loop iteration end."
+patterns:
+  - type: regex
+    pattern: "for.*\\{.*defer"
+references:
+  - https://cwe.mitre.org/data/definitions/772.html

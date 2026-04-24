@@ -1,0 +1,22 @@
+id: c-int-006
+name: Implicit Integer Conversion
+description: |
+  Detects integer-overflow issues in C code.
+severity: medium
+category: integer-overflow
+confidence: medium
+cwe: CWE-192
+languages: [c]
+message: |
+  Implicit conversions between integer types can truncate values.
+patterns:
+  - type: regex
+    pattern: '(?i)(short|char)\s+\w+\s*=\s*\w+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)int\s+\w+\s*=\s*(size_t|unsigned long)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/192.html

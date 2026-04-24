@@ -1,112 +1,109 @@
 # Raven Roadmap
 
-## v0.9.0 — Baseline & Diff Scanning
-Baseline scanning for CI/CD. Scan against previous results, report only new issues.
-- `--baseline <file>` flag
-- `--update-baseline` flag to save current results as baseline
-- JSON baseline format: `{rule_id, file, line, column, snippet_hash}`
-- `Result.NewFindings`, `Result.BaselineFindings`, `Result.IgnoredFindings`
+## ✅ COMPLETED — v0.9.0 through v0.19.0+
 
-## v0.10.0 — Ignore Comments & Inline Suppressions
-Inline suppressions for false positives.
-- `// raven-ignore: R001` — suppress specific rule
-- `// raven-ignore-next-line` — suppress next line
-- `--no-ignore-comments` flag
-- Store suppression reasons in SARIF
+Features that have been implemented and are available in Raven v2.5:
 
-## v0.11.0 — Secrets Deep Scanning
-Entropy-based and git-history secret detection.
-- High-entropy string detection
-- `--history` flag: scan git commits for leaked secrets
-- Custom secret patterns via `.raven.yaml`
-- Integration with GitLeaks-style patterns
+- ✅ **Baseline & Diff Scanning** — `--baseline`, `--save-baseline`, `--compare` flags. Shows NEW, FIXED, UNCHANGED findings.
+- ✅ **Ignore Comments & Inline Suppressions** — `#raven-ignore` annotations with required justification. Single-line and block formats.
+- ✅ **Secrets Deep Scanning** — 100+ secret patterns + entropy-based detection + context-aware filtering. Git history scanning.
+- ✅ **Cross-File Taint Analysis** — JS/TS require/import, Python import, Go import resolution. Call graph construction.
+- ✅ **Incremental & Cached Scanning** — `.raven-cache/` directory. File-hash based re-scans.
+- ✅ **Custom Rule DSL v2** — Semgrep-style operators: `pattern-either`, `pattern-not`, `pattern-inside`, `metavariable-regex`.
+- ✅ **SBOM Generation** — CycloneDX/SPDX export. Manifest and lock file scanning.
+- ✅ **Language Expansion** — Java (145+ rules), C# (83+ rules), Ruby (68+ rules), Kotlin (57+), Swift (59+). Plus 10 new languages.
+- ✅ **DAST Lite (Config/Infra Scanning)** — Dockerfile (37 rules), Terraform (37), Kubernetes YAML (32), Bash (32).
+- ✅ **Policy Engine & Compliance** — `.raven-policy.yaml` with severity gates, compliance mappings, path exclusions.
+- ✅ **IDE Integrations v2** — VS Code extension (full), Zed (LSP config), Neovim/Vim (LSP + keymaps), Emacs (lsp-mode).
+- ✅ **IDE Inline Quick-Fixes** — LSP CodeActions: "Fix with Raven", "Learn more", "Ignore with #raven-ignore".
+- ✅ **Reporting & Dashboards** — HTML report, SARIF v2.1.0, GitLab SAST JSON, trend support.
+- ✅ **Git Integration** — `--since` flag, PR annotations, pre-commit hook template.
+- ✅ **AI-Powered Fix Generation** — 25 vulnerability-specific prompt types, 10 LLM providers, diff/patch generation, fix validation.
+- ✅ **Exploitability Scoring** — CVSS 3.1-like scoring per finding (Attack Vector, Complexity, Privileges, Scope).
+- ✅ **7-Layer False Positive Reduction** — Confidence scoring, AI FP filter, dead code detection, input validation awareness, path sensitivity, multi-pattern correlation, annotations.
 
-## v0.12.0 — Cross-File Taint Analysis
-Track data flow across file/module boundaries.
-- JS/TS: require/import resolution
-- Python: import resolution
-- Go: import resolution
-- Call graph construction
+---
 
-## v0.13.0 — Incremental & Cached Scanning
-File-hash based cache for fast re-scans.
-- `.raven-cache/` directory
-- Only re-scan changed files
-- Watch mode uses cache for instant feedback
-- 10x faster re-scans
+## 🚧 IN PROGRESS / PLANNED
 
-## v0.14.0 — Custom Rule DSL v2
-More powerful rule composition.
-- Composite rules: AND, OR, NOT between patterns
-- Contextual rules: "if framework X and pattern Y"
-- Rule templates / parameterized rules
-- Rule validation command: `raven validate-rules`
+### v0.25.0 — Pre-commit Hook & Git Hooks
+Official pre-commit hook with zero-config setup:
+- `raven install-hook` — installs pre-commit and pre-push hooks
+- `.pre-commit-config.yaml` — official pre-commit.com integration
+- Zero-config: auto-detects project type
+- `--staged-only` for instant pre-commit scanning
+- `--fail-on-new-secrets` blocks commits with leaked secrets
+- `raven uninstall-hook` — removes hooks
 
-## v0.15.0 — SBOM Generation
-Software Bill of Materials export.
-- `--sbom` flag generates CycloneDX/SPDX
-- Scans manifests and lock files
-- Includes transitive dependencies
-- VEX (Vulnerability Exploitability eXchange) support
+### v0.26.0 — JetBrains Plugin (Lightweight)
+JetBrains IDE integration via LSP4IJ (not a full plugin):
+- `editor/jetbrains/` — configuration for IntelliJ, PyCharm, GoLand, WebStorm, Rider
+- External annotator integration
+- Inlay hints for security findings
+- Quick fixes via intention actions
+- Tool window with finding list
 
-## v0.16.0 — Language Expansion (Java, C#, Ruby)
-New language parsers and rules.
-- Java: SQLi, XSS, deserialization, XXE
-- C#: SQLi, XSS, XXE, insecure crypto
-- Ruby: SQLi, XSS, RCE, mass assignment
-- 15+ rules per language
+### v0.27.0 — Docker & Container Support
+- `Dockerfile` — official Raven Docker image
+- `docker-compose.yml` — for CI/CD pipelines
+- Scan inside containers without local install
+- Multi-arch builds (amd64, arm64)
+- GitHub Container Registry publishing
 
-## v0.17.0 — DAST Lite (Config/Infra Scanning)
-Static analysis of infrastructure-as-code.
-- Dockerfile best practices
-- Terraform/CloudFormation scanning
-- Kubernetes manifest scanning
-- 20+ infrastructure rules
+### v0.28.0 — Package Managers
+- **Homebrew**: `brew install raven-security/raven`
+- **npm**: `npm install -g @raven-security/raven`
+- **pip**: `pip install raven-scanner`
+- **Go**: `go install github.com/raven-security/raven@latest`
+- **Snap**: `snap install raven`
+- **Chocolatey** (Windows): `choco install raven`
 
-## v0.18.0 — Policy Engine & Compliance
-Organization-wide security policies.
-- `.raven-policy.yaml` — define policies
-- Severity gates: "no critical in production"
-- Compliance mappings: OWASP ASVS, PCI-DSS
-- Policy violations in SARIF
+### v0.29.0 — Advanced AI Features
+- **AI Rule Generation** — `raven rule-gen --from "detect unsafe eval in Python"`
+- **AI Severity Adjustment** — LLM reviews findings and adjusts severity based on context
+- **AI Patch Review** — LLM validates generated patches for correctness and security
+- **Explain Finding** — `raven explain <rule-id>` — LLM explains why this is a vulnerability
 
-## v0.19.0 — IDE Integrations v2
-More editor support.
-- Zed extension
-- Vim/Neovim plugin (LSP)
-- JetBrains plugin
-- Inline quick-fixes via LSP CodeAction
+### v0.30.0 — Enterprise & Team Features
+- **Centralized Config** — `--config-url` for team-wide policy
+- **Shared Baselines** — team baselines stored in repo or remote
+- **Notifications** — Slack/Discord/Microsoft Teams webhooks
+- **Metrics Export** — Prometheus metrics for monitoring
+- **Audit Logging** — who scanned what, when, and what was found
+- **SSO Integration** — SAML/OIDC for web dashboard (if built)
 
-## v0.20.0 — Reporting & Dashboards
-Rich report generation.
-- HTML report (`--format html`)
-- Trend graphs over time
-- Per-rule statistics
-- PDF export
+### v0.31.0 — Extended Language Support
+- **R** — data science security
+- **Julia** — scientific computing
+- **Haskell** — functional programming
+- **Clojure** — JVM ecosystem
+- **OCaml** — systems programming
+- **Groovy** — Jenkins/Gradle scripts
+- **PowerShell** — Windows administration
+- **TypeScript strict** — advanced TS patterns
 
-## v0.21.0 — Git Integration
-Deeper git integration.
-- Pre-push hook
-- PR annotations (GitHub, GitLab)
-- Blame integration: who introduced each finding
-- `--since` flag: scan commits since date
+### v0.32.0 — Deeper Framework Integration
+- **React Server Components** — RSC-specific rules
+- **Next.js App Router** — app/ directory security
+- **Remix** — loader/action injection
+- **tRPC** — procedure injection
+- **Prisma** — raw query detection
+- **Drizzle** — ORM security
+- **Supabase** — RLS policy checks
+- **Firebase** — security rules scanning
 
-## v0.22.0 — AI-Powered Rule Generation
-Generate rules from natural language.
-- `raven rule-gen --from <description>`
-- LLM generates regex/AST patterns
-- Rule validation and testing
-- Community rule sharing
+---
 
-## v0.23.0 — Fuzzing Integration
-Automatic fuzz input generation.
-- `raven fuzz` for detected sinks
-- Integration with go-fuzz / libfuzzer
-- Crash detection and reporting
+## 🎯 LONG-TERM VISION
 
-## v0.24.0 — Enterprise Features
-Team and org features.
-- Centralized config via URL (`--config-url`)
-- Team policies and shared baselines
-- Slack/Discord/webhook notifications
-- Prometheus metrics export
+### v1.0.0 — The Complete Security Platform
+- **SAST + SCA + IaC + Secrets** in one tool
+- **Unified dashboard** with trends and metrics
+- **CI/CD native** — first-class GitHub Actions, GitLab CI, CircleCI, Jenkins support
+- **Community rule marketplace** — share and discover rules
+- **IDE everywhere** — every major IDE supported
+- **Zero-config by default** — works out of the box for any project
+
+---
+
+*Last updated: 2026-04-24*

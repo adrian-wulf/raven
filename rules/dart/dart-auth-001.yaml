@@ -1,0 +1,15 @@
+id: dart-auth-001
+name: Missing auth check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- dart
+message: API call or resource access without authentication check. Add auth verification.
+patterns:
+- type: regex
+  pattern: http\.(get|post)\s*\([^)]*\)(?!.*auth)(?!.*token)(?!.*header)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

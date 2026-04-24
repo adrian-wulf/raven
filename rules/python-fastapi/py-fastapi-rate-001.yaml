@@ -1,0 +1,17 @@
+id: py-fastapi-rate-001
+name: Missing rate limiting
+severity: medium
+category: config
+confidence: low
+cwe: CWE-770
+languages:
+- python
+message: No rate limiting on endpoints can allow DoS or brute force attacks. Add rate limiting.
+patterns:
+- type: regex
+  pattern: '@app\.(get|post|put|delete|patch)\s*\('
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html
+frameworks:
+- fastapi

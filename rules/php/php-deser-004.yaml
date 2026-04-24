@@ -1,0 +1,22 @@
+id: php-deser-004
+name: igbinary_unserialize User Input
+description: |
+  Detects insecure-deserialization issues in PHP code.
+severity: critical
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [php]
+message: |
+  igbinary_unserialize on user input has same risks as unserialize.
+patterns:
+  - type: regex
+    pattern: '(?i)igbinary_unserialize\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)igbinary_unserialize\s*\(\s*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

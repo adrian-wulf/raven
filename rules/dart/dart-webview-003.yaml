@@ -1,0 +1,15 @@
+id: dart-webview-003
+name: setJavaScriptEnabled
+severity: medium
+category: webview
+confidence: medium
+cwe: CWE-79
+languages:
+- dart
+message: Enabling JavaScript in WebView without restrictions can enable XSS. Disable if not needed.
+patterns:
+- type: regex
+  pattern: setJavaScriptEnabled\s*\(\s*true\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html

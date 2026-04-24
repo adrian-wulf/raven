@@ -1,0 +1,17 @@
+id: py-fastapi-auth-003
+name: Endpoint without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Endpoint without any auth dependency may allow unauthorized access. Add auth.
+patterns:
+- type: regex
+  pattern: '@app\.(get|post|put|delete|patch)\s*\(\s*[\"\''''][^\"\'''']+[\"\'''']\s*\)\s*\n\s*async\s+def\s+\w+\s*\([^)]*\)(?!.*Depends)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

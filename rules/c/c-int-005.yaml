@@ -1,0 +1,26 @@
+id: c-int-005
+name: Array Index Integer Overflow
+description: |
+  Detects integer-overflow issues in C code.
+severity: high
+category: integer-overflow
+confidence: high
+cwe: CWE-129
+languages: [c]
+message: |
+  User-controlled array index without validation can access out-of-bounds.
+patterns:
+  - type: regex
+    pattern: '(?i)\[\s*.*atoi\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[\s*.*(int|unsigned)\s*.*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)buf\[.*\$.*\]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/129.html

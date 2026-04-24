@@ -1,0 +1,22 @@
+id: php-cmd-007
+name: proc_open User Input Command Injection
+description: |
+  Detects command-injection issues in PHP code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [php]
+message: |
+  proc_open() with user input allows arbitrary process execution.
+patterns:
+  - type: regex
+    pattern: '(?i)proc_open\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)proc_open\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

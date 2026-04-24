@@ -1,0 +1,31 @@
+id: java-deser-005
+name: Fastjson parseObject RCE
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [java]
+frameworks: [fastjson]
+message: |
+  Fastjson before 1.2.83 has known RCE vulnerabilities. Upgrade and disable AutoType.
+patterns:
+  - type: regex
+    pattern: '(?i)JSON\.parseObject\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)JSON\.parse\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ParserConfig.*setAutoTypeSupport\s*\(\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@type.*java\.lang\.Class'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

@@ -1,0 +1,23 @@
+id: csharp-aspnet-010
+name: ASP.NET Filter Bypass
+description: |
+  Detects broken-authentication issues in CSHARP code.
+severity: high
+category: broken-authentication
+confidence: high
+cwe: CWE-306
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Action filters must be applied to all sensitive actions.
+patterns:
+  - type: regex
+    pattern: '(?i)public\s+class\s+\w+Controller.*(?!\[ServiceFilter)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[TypeFilter\(typeof\(\w+Auth'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

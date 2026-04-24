@@ -1,0 +1,15 @@
+rule_id: js-vue-auth-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-auth-002
+
+    const token = Math.random();
+
+    '
+  safe: '// Safe - js-vue-auth-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

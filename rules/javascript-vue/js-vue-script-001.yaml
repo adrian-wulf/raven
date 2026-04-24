@@ -1,0 +1,18 @@
+id: js-vue-script-001
+name: Dynamic script tag
+severity: critical
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Dynamically creating script elements can enable XSS. Use Vue's component system instead.
+patterns:
+- type: regex
+  pattern: document\.createElement\s*\(\s*[\"\']script[\"\']\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

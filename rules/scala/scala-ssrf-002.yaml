@@ -1,0 +1,16 @@
+id: scala-ssrf-002
+name: play-ws SSRF
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- scala
+message: Play WS client with user URL enables SSRF. Validate URLs before fetching.
+patterns:
+- type: regex
+  pattern: wsClient\.url\s*\(\s*(?P<input>user|input|request)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

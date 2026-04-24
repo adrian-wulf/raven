@@ -1,0 +1,17 @@
+id: py-flask-talisman-001
+name: Talisman missing
+severity: low
+category: config
+confidence: low
+cwe: CWE-693
+languages:
+- python
+message: Flask without Talisman security headers extension. Consider adding security headers.
+patterns:
+- type: regex
+  pattern: from\s+flask\s+import\s+Flask(?!.*Talisman)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- flask

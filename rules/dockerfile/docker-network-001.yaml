@@ -1,0 +1,15 @@
+id: docker-network-001
+name: Expose too many ports
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-200
+languages:
+- dockerfile
+message: Exposing many ports increases attack surface. Expose only required ports.
+patterns:
+- type: regex
+  pattern: (EXPOSE\s+\d+.*\n){3,}
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/200.html

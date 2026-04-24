@@ -1,0 +1,13 @@
+id: gen-mobile-004
+name: Hardcoded Encryption Key in Mobile App
+severity: critical
+category: mobile
+confidence: high
+cwe: "CWE-798"
+languages: [java, kotlin, swift, dart]
+message: "Encryption key hardcoded in mobile app. Keys in code can be extracted by reverse engineering. Use KeyStore/Keychain."
+patterns:
+  - type: regex
+    pattern: '(AES|DES|secretKey|privateKey|apiKey)\\s*[=:]\\s*[\\''"][a-zA-Z0-9+/=]{16,}[\\''"]'
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

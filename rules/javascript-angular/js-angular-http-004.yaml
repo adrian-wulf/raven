@@ -1,0 +1,18 @@
+id: js-angular-http-004
+name: HTTP with credentials include
+severity: medium
+category: cors
+confidence: medium
+cwe: CWE-359
+languages:
+- javascript
+- typescript
+message: HTTP with credentials:include sends cookies cross-origin. Verify trusted domains.
+patterns:
+- type: regex
+  pattern: withCredentials:\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/359.html
+frameworks:
+- angular

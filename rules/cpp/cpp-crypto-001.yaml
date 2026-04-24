@@ -1,0 +1,26 @@
+id: cpp-crypto-001
+name: std::rand for Security
+description: |
+  Detects weak-cryptography issues in CPP code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-338
+languages: [cpp]
+message: |
+  std::rand is predictable. Use std::random_device for crypto.
+patterns:
+  - type: regex
+    pattern: '(?i)std::rand\s*\(\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\s*\(\).*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\s*\(\).*token'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

@@ -1,0 +1,22 @@
+id: php-type-002
+name: MD5 Hash Loose Comparison
+description: |
+  Detects type-juggling issues in PHP code.
+severity: high
+category: type-juggling
+confidence: high
+cwe: CWE-843
+languages: [php]
+message: |
+  MD5 hash comparison with == is vulnerable to magic hash collisions.
+patterns:
+  - type: regex
+    pattern: '(?i)md5\s*\(.*\)\s*==\s*[''"]0+e'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sha1\s*\(.*\)\s*==\s*[''"]0+e'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/843.html

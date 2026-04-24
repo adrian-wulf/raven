@@ -1,0 +1,23 @@
+id: java-spring-actuator-002
+name: Spring Boot Actuator Without Security
+description: |
+  Detects information-disclosure issues in JAVA code.
+severity: critical
+category: information-disclosure
+confidence: critical
+cwe: CWE-200
+languages: [java]
+frameworks: [spring]
+message: |
+  Actuator endpoints must be protected by Spring Security.
+patterns:
+  - type: regex
+    pattern: '(?i)management\.security\.enabled.*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)management\.endpoints\.web\.exposure.*include.*env.*heapdump.*httptrace'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

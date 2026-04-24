@@ -1,0 +1,26 @@
+id: go-mem-004
+name: Buffer Overflow via Slice Manipulation
+description: |
+  Detects buffer-overflow issues in GO code.
+severity: high
+category: buffer-overflow
+confidence: medium
+cwe: CWE-121
+languages: [go]
+message: |
+  Slice bounds must be validated. Out-of-bounds access causes runtime panics or memory corruption.
+patterns:
+  - type: regex
+    pattern: '(?i)make\s*\(\s*\[\]byte\s*,\s*.*\)\s*//.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)copy\s*\(.*,\s*.*\)(?!.*len\()'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)append\s*\(.*,\s*.*\).*panic'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

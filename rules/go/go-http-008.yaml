@@ -1,0 +1,22 @@
+id: go-http-008
+name: HTTP Redirect without Validation
+description: |
+  Detects open-redirect issues in GO code.
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages: [go]
+message: |
+  Validate redirect URLs. Open redirects can be used in phishing attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.Redirect\s*\(\s*w\s*,\s*r\s*,\s*.*(r\.|req|param|input|user|url)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)http\.Redirect\s*\(\s*.*\+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

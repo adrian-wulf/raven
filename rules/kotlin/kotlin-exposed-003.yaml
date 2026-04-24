@@ -1,0 +1,23 @@
+id: kotlin-exposed-003
+name: Exposed Custom Operator Injection
+description: |
+  Detects sql-injection issues in KOTLIN code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [kotlin]
+frameworks: [exposed]
+message: |
+  Custom operators in Exposed can bypass parameterization.
+patterns:
+  - type: regex
+    pattern: '(?i)CustomOperator\s*\(\s*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)wrapAsExpression\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

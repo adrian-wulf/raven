@@ -1,0 +1,15 @@
+id: scala-deser-003
+name: play-json type confusion
+severity: medium
+category: deserialization
+confidence: medium
+cwe: CWE-502
+languages:
+- scala
+message: play-json as[] without type validation can cause type confusion. Validate types.
+patterns:
+- type: regex
+  pattern: \.as\s*\[\s*\w+\s*\](?!.*validate)(?!.*validate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html

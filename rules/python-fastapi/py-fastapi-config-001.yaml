@@ -1,0 +1,17 @@
+id: py-fastapi-config-001
+name: FastAPI debug=True
+severity: medium
+category: config
+confidence: high
+cwe: CWE-489
+languages:
+- python
+message: FastAPI debug mode in production exposes sensitive information. Disable debug in production.
+patterns:
+- type: regex
+  pattern: debug\s*=\s*True
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- fastapi

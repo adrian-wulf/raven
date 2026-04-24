@@ -1,0 +1,17 @@
+id: py-django-cors-001
+name: django-cors-headers wildcard
+severity: medium
+category: cors
+confidence: high
+cwe: CWE-942
+languages:
+- python
+message: CORS_ALLOW_ALL_ORIGINS=True allows any origin. Restrict allowed origins.
+patterns:
+- type: regex
+  pattern: CORS_ALLOW_ALL_ORIGINS\s*=\s*True
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/942.html
+frameworks:
+- django

@@ -1,0 +1,18 @@
+id: py-flask-xss-002
+name: make_response with user HTML
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: make_response() with user-controlled HTML enables XSS. Escape or sanitize HTML content.
+patterns:
+- type: regex
+  pattern: make_response\s*\(\s*(f[\"\']|.*\+\s*(?P<input>request\.|user_))
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- flask

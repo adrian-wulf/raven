@@ -1,0 +1,27 @@
+id: php-wp-004
+name: WordPress Plugin File Inclusion
+description: |
+  Detects file-inclusion issues in PHP code.
+severity: critical
+category: file-inclusion
+confidence: critical
+cwe: CWE-98
+languages: [php]
+frameworks: [wordpress]
+message: |
+  Including plugin files from user input can lead to RCE.
+patterns:
+  - type: regex
+    pattern: '(?i)include\s*\(.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)require\s*\(.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)require_once\s*\(.*[''"]plugins.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/98.html

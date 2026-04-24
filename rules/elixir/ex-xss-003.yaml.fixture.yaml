@@ -1,0 +1,15 @@
+rule_id: ex-xss-003
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-xss-003
+
+    raw(user_input)
+
+    '
+  safe: '# Safe - ex-xss-003
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

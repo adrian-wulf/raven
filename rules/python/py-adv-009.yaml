@@ -1,0 +1,13 @@
+id: py-adv-009
+name: Python tarfile Path Traversal
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-22"
+languages: [python]
+message: "Extracting tarfile without path validation enables path traversal. Validate all member paths before extraction."
+patterns:
+  - type: regex
+    pattern: "tarfile\\.open.*extractall|extract.*tarfile|TarFile.*extract"
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

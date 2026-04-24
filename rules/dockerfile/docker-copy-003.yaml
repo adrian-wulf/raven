@@ -1,0 +1,15 @@
+id: docker-copy-003
+name: COPY with wrong ownership
+severity: medium
+category: permissions
+confidence: medium
+cwe: CWE-732
+languages:
+- dockerfile
+message: COPY without --chown creates root-owned files. Specify non-root owner.
+patterns:
+- type: regex
+  pattern: COPY\s+(?!.*--chown)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/732.html

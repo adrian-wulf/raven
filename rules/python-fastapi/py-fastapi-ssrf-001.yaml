@@ -1,0 +1,18 @@
+id: py-fastapi-ssrf-001
+name: HTTPX client with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- python
+message: httpx.Client with user-controlled URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: httpx\.(get|post|put|delete|request)\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- fastapi

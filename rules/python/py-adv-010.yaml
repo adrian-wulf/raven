@@ -1,0 +1,13 @@
+id: py-adv-010
+name: Python zipfile Path Traversal
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-22"
+languages: [python]
+message: "Extracting zipfile without path validation enables path traversal. Check for .. in member names."
+patterns:
+  - type: regex
+    pattern: "ZipFile.*extractall|extract.*zipfile|zipfile\\.extract"
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

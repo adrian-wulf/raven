@@ -1,0 +1,26 @@
+id: c-bof-008
+name: scanf Family Buffer Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-121
+languages: [c]
+message: |
+  scanf with %s without width limit overflows buffer. Specify width.
+patterns:
+  - type: regex
+    pattern: '(?i)scanf\s*\(\s*[''"]%s[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)scanf\s*\(\s*[''"][^''"]*%[^0-9]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)scanf\s*\(\s*[''"].*%s.*[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

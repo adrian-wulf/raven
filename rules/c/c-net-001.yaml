@@ -1,0 +1,22 @@
+id: c-net-001
+name: recv without Bounds Check
+description: |
+  Detects buffer-overflow issues in C code.
+severity: high
+category: buffer-overflow
+confidence: high
+cwe: CWE-121
+languages: [c]
+message: |
+  recv/recvfrom without size validation overflows buffer.
+patterns:
+  - type: regex
+    pattern: '(?i)recv\s*\(\s*[^,]+,\s*[^,]+,\s*[^)]+\)(?!.*sizeof)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)recvfrom\s*\(.*buf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

@@ -1,0 +1,22 @@
+id: go-valid-002
+name: strconv.Atoi without Error Check
+description: |
+  Detects error-handling issues in GO code.
+severity: medium
+category: error-handling
+confidence: medium
+cwe: CWE-391
+languages: [go]
+message: |
+  Always check errors from strconv.Atoi. Unchecked errors lead to zero-value confusion.
+patterns:
+  - type: regex
+    pattern: '(?i)strconv\.Atoi\s*\([^)]*\)(?!.*err)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)strconv\.ParseInt\s*\([^)]*\)(?!.*err)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/391.html

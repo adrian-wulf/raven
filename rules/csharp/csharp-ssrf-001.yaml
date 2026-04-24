@@ -1,0 +1,26 @@
+id: csharp-ssrf-001
+name: HttpClient User URL
+description: |
+  Detects ssrf issues in CSHARP code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [csharp]
+message: |
+  HttpClient with user URLs can access internal services.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+HttpClient.*GetAsync\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)HttpClient.*PostAsync\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SendAsync\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

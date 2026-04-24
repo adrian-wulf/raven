@@ -1,0 +1,16 @@
+id: bash-export-001
+name: Secret in environment export
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- bash
+- shell
+message: Exporting secrets to environment makes them visible to all processes. Use file-based secrets.
+patterns:
+- type: regex
+  pattern: export\s+(SECRET|PASSWORD|TOKEN|KEY)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

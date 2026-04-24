@@ -1,0 +1,23 @@
+id: swift-ios-037
+name: Background Mode Abuse
+description: |
+  Detects information-disclosure issues in SWIFT code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-200
+languages: [swift]
+frameworks: [ios]
+message: |
+  Unnecessary background modes expose data to processing.
+patterns:
+  - type: regex
+    pattern: '(?i)UIBackgroundModes.*fetch'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)UIBackgroundModes.*location(?!.*need)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

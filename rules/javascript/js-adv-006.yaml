@@ -1,0 +1,13 @@
+id: js-adv-006
+name: JavaScript Template Injection Handlebars
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-1336"
+languages: [javascript, typescript]
+message: "Handlebars compile with user input allows SSTI. Do not compile user-provided templates server-side."
+patterns:
+  - type: regex
+    pattern: "Handlebars\\.compile\\s*\\(.*(req\\.|body|params|query)"
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

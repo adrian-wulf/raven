@@ -1,0 +1,16 @@
+id: scala-cmdi-001
+name: scala.sys.process
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- scala
+message: scala.sys.process with string interpolation enables command injection. Use argument lists.
+patterns:
+- type: regex
+  pattern: sys\.process\.(Process|!)\s*\(\s*s?"[^"]*\$\{
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

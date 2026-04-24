@@ -1,0 +1,23 @@
+id: csharp-vs-002
+name: ViewState Encryption Disabled
+description: |
+  Detects information-disclosure issues in CSHARP code.
+severity: critical
+category: information-disclosure
+confidence: critical
+cwe: CWE-312
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  ViewStateEncryptionMode.Never stores sensitive data in plaintext.
+patterns:
+  - type: regex
+    pattern: '(?i)ViewStateEncryptionMode\s*\.\s*Never'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)viewStateEncryptionMode.*never'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/312.html

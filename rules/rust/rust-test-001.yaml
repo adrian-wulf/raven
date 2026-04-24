@@ -1,0 +1,26 @@
+id: rust-test-001
+name: Test-only Code in Production
+description: |
+  Detects insecure-configuration issues in RUST code.
+severity: low
+category: insecure-configuration
+confidence: low
+cwe: CWE-489
+languages: [rust]
+message: |
+  Test code and fixtures should not be included in production builds.
+patterns:
+  - type: regex
+    pattern: '(?i)#\[cfg\s*\(\s*test\s*\)\].*pub'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mod\s+test.*pub'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)test::.*extern'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/489.html

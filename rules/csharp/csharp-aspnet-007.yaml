@@ -1,0 +1,23 @@
+id: csharp-aspnet-007
+name: ASP.NET Antiforgery Token Missing
+description: |
+  Detects csrf issues in CSHARP code.
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  POST endpoints must validate antiforgery tokens.
+patterns:
+  - type: regex
+    pattern: '(?i)\[HttpPost\].*(?!ValidateAntiForgeryToken)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[HttpPost\].*(?!\[AutoValidateAntiforgeryToken)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

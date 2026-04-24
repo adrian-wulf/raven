@@ -1,0 +1,13 @@
+id: gen-infoleak-002
+name: Stack Trace Exposed in Response
+severity: high
+category: infoleak
+confidence: high
+cwe: "CWE-200"
+languages: [python, javascript, java, csharp, ruby]
+message: "Full stack trace exposed to client. Return sanitized error messages in production."
+patterns:
+  - type: regex
+    pattern: "res\\.send\\s*\\(\\s*(err\\.stack|traceback|stacktrace|stack_trace)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

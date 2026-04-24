@@ -1,0 +1,19 @@
+rule_id: sol-reentrancy-002
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-reentrancy-002
+
+    (bool success,) = msg.sender.call{value: amount}("");
+
+    require(success, "Transfer failed");
+
+    balances[msg.sender] -= amount;
+
+    '
+  safe: '// Safe - sol-reentrancy-002
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

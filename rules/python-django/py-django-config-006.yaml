@@ -1,0 +1,17 @@
+id: py-django-config-006
+name: CSRF_COOKIE_SECURE disabled
+severity: high
+category: config
+confidence: high
+cwe: CWE-614
+languages:
+- python
+message: CSRF_COOKIE_SECURE = False allows CSRF cookies over HTTP. Enable it in production.
+patterns:
+- type: regex
+  pattern: CSRF_COOKIE_SECURE\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/614.html
+frameworks:
+- django

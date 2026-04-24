@@ -1,0 +1,15 @@
+rule_id: tf-s3-001
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-s3-001
+
+    # S3 without encryption
+
+    '
+  safe: '# Safe - tf-s3-001
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

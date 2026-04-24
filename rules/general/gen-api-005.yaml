@@ -1,0 +1,13 @@
+id: gen-api-005
+name: Webhook Without Signature Verification
+severity: high
+category: api
+confidence: high
+cwe: "CWE-345"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Webhook handler does not verify request signature. Verify HMAC signature to ensure request authenticity."
+patterns:
+  - type: regex
+    pattern: "(webhook|stripe|github|slack).*handler|req\\.body"
+references:
+  - https://cwe.mitre.org/data/definitions/345.html

@@ -1,0 +1,23 @@
+id: php-laravel-sqli-003
+name: Laravel Query Builder Raw Where
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+frameworks: [laravel]
+message: |
+  Raw where clauses with user input allow SQL injection. Use parameterized queries.
+patterns:
+  - type: regex
+    pattern: '(?i)whereRaw\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)orWhereRaw\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

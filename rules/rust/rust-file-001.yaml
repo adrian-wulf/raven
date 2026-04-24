@@ -1,0 +1,22 @@
+id: rust-file-001
+name: File Upload without Validation
+description: |
+  Detects file-upload issues in RUST code.
+severity: high
+category: file-upload
+confidence: high
+cwe: CWE-434
+languages: [rust]
+message: |
+  Uploaded files must be validated for type and size.
+patterns:
+  - type: regex
+    pattern: '(?i)Multipart.*file.*save(?!.*ext)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tempfile::NamedTempFile.*user.*path'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/434.html

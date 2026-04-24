@@ -1,0 +1,15 @@
+id: docker-multi-001
+name: Build cache poisoning
+severity: medium
+category: supply-chain
+confidence: medium
+cwe: CWE-829
+languages:
+- dockerfile
+message: Build without --no-cache can use stale/poisoned cache. Verify cache contents.
+patterns:
+- type: regex
+  pattern: RUN\s+apt-get\s+(update|install)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

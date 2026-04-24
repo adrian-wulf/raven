@@ -1,0 +1,30 @@
+id: php-deser-003
+name: phar Deserialization via File Operations
+description: |
+  Detects insecure-deserialization issues in PHP code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [php]
+message: |
+  File operations on phar:// URLs trigger deserialization. Block phar:// in user input.
+patterns:
+  - type: regex
+    pattern: '(?i)file_exists\s*\(.*[''"]phar://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)file_get_contents\s*\(.*[''"]phar://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fopen\s*\(.*[''"]phar://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)include\s*\(.*[''"]phar://'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

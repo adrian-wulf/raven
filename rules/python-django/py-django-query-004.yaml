@@ -1,0 +1,17 @@
+id: py-django-query-004
+name: Union with user input
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: QuerySet.union with raw SQL can inject SQL. Avoid user input in union queries.
+patterns:
+- type: regex
+  pattern: \.union\s*\(\s*\w+\.objects\.raw
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

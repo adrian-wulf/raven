@@ -1,0 +1,27 @@
+id: java-deser-002
+name: XStream fromXML Deserialization
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: critical
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [java]
+frameworks: [xstream]
+message: |
+  XStream fromXML can execute arbitrary code. Use allowlists for types.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+XStream\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xStream\.fromXML\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)XStream.*fromXML\s*\(.*(?<!allowTypes)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

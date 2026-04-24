@@ -1,0 +1,15 @@
+id: sol-random-002
+name: Predictable random
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-338
+languages:
+- solidity
+message: Using block data for randomness is predictable. Use verifiable random function (VRF).
+patterns:
+- type: regex
+  pattern: keccak256\s*\(\s*abi\.encodePacked\s*\(\s*block\.(timestamp|number|difficulty)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/338.html

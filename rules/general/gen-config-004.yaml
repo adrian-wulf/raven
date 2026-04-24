@@ -1,0 +1,13 @@
+id: gen-config-004
+name: CORS Allow-Origin Wildcard with Credentials
+severity: critical
+category: config
+confidence: high
+cwe: "CWE-346"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "CORS allows wildcard origin with credentials allowed. This is a critical vulnerability enabling credential theft."
+patterns:
+  - type: regex
+    pattern: "(Access-Control-Allow-Origin.*\\*|origin.*\\*).*credentials.*true|credentials.*true.*origin.*\\*"
+references:
+  - https://cwe.mitre.org/data/definitions/346.html

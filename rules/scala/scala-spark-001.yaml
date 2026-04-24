@@ -1,0 +1,16 @@
+id: scala-spark-001
+name: Spark UDF without validation
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- scala
+message: Spark UDF with user input without validation can inject code. Validate.
+patterns:
+- type: regex
+  pattern: udf\s*\(\s*(?P<input>\w+\s*=>)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html

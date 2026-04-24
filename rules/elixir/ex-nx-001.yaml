@@ -1,0 +1,15 @@
+id: ex-nx-001
+name: Nx serving without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- elixir
+message: ML serving endpoint without auth allows unauthorized inference. Add auth.
+patterns:
+- type: regex
+  pattern: Bumblebee|Nx\.Serving
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

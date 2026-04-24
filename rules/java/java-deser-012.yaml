@@ -1,0 +1,26 @@
+id: java-deser-012
+name: Hessian Deserialization
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: critical
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [java]
+message: |
+  Hessian deserialization can execute arbitrary code with crafted input.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+HessianInput'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)hessianInput\.readObject\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Hessian2Input.*readObject'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

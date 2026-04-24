@@ -1,0 +1,16 @@
+id: lua-ngx-002
+name: ngx.var without validation
+severity: high
+category: injection
+confidence: high
+cwe: CWE-20
+languages:
+- lua
+message: ngx.var with user input without validation can allow header injection. Validate.
+patterns:
+- type: regex
+  pattern: ngx\.var\.[\w_]+\s*=\s*(?P<input>args|uri|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html

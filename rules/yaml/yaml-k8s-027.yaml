@@ -1,0 +1,15 @@
+id: yaml-k8s-027
+name: Deployment without revisionHistoryLimit
+severity: low
+category: config
+confidence: low
+cwe: CWE-693
+languages:
+- yaml
+message: Deployment without revisionHistoryLimit keeps all revisions. Set limit.
+patterns:
+- type: regex
+  pattern: kind:\s*Deployment\s*\n.*spec:(?!.*revisionHistoryLimit)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

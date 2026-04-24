@@ -1,0 +1,22 @@
+id: cpp-stl-003
+name: Vector Reserve vs Resize Confusion
+description: |
+  Detects buffer-overflow issues in CPP code.
+severity: medium
+category: buffer-overflow
+confidence: medium
+cwe: CWE-121
+languages: [cpp]
+message: |
+  reserve() doesn't change size. Accessing beyond size() is UB.
+patterns:
+  - type: regex
+    pattern: '(?i)reserve\s*\(.*\).*push_back'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)reserve\s*\(.*\).*\[.*\]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

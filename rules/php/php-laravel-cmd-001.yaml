@@ -1,0 +1,23 @@
+id: php-laravel-cmd-001
+name: Laravel Artisan Command Injection
+description: |
+  Detects command-injection issues in PHP code.
+severity: critical
+category: command-injection
+confidence: critical
+cwe: CWE-78
+languages: [php]
+frameworks: [laravel]
+message: |
+  Artisan commands executing user input can lead to command injection.
+patterns:
+  - type: regex
+    pattern: '(?i)Artisan::call\s*\(.*[''"][^''"]+[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$this->call\s*\(.*[''"][^''"]+[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

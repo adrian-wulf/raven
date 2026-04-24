@@ -1,0 +1,5 @@
+rule_id: yaml-k8s-031
+language: yaml
+examples:
+  unsafe: "# Unsafe - yaml-k8s-031\napiVersion: v1\nkind: Secret\ndata:\n  password: c2VjcmV0MTIz\n"
+  safe: "# Safe - yaml-k8s-031\n# Use sealed secrets, security contexts\napiVersion: v1\nkind: Secret\nstringData:\n  password: <from-vault>\n"

@@ -1,0 +1,27 @@
+id: rust-concurrency-003
+name: MutexGuard across await
+description: |
+  Detects deadlock issues in RUST code.
+severity: high
+category: deadlock
+confidence: high
+cwe: CWE-833
+languages: [rust]
+frameworks: [async]
+message: |
+  Holding MutexGuard across await points can cause deadlocks.
+patterns:
+  - type: regex
+    pattern: '(?i)lock\s*\(\).*await'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)MutexGuard.*await'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)let\s+\w+\s*=\s*.*lock\s*\(\).*;.*await'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/833.html

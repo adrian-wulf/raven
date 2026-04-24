@@ -1,0 +1,13 @@
+id: gen-jwt-001
+name: JWT None Algorithm Accepted
+severity: critical
+category: auth
+confidence: high
+cwe: "CWE-327"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: 'JWT verification accepts "none" algorithm. This allows attackers to forge tokens. Reject "none" algorithm.'
+patterns:
+  - type: regex
+    pattern: '(none|None|NONE)\s*[=:]\s*True|algorithms\s*[=:]\s*\[.*none|verify\s*\(.*none'
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

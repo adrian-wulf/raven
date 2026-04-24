@@ -1,0 +1,22 @@
+id: c-misc-001
+name: setenv User Controlled
+description: |
+  Detects command-injection issues in C code.
+severity: high
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [c]
+message: |
+  setenv with user input can modify program environment.
+patterns:
+  - type: regex
+    pattern: '(?i)setenv\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)putenv\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

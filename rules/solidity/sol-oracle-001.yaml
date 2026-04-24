@@ -1,0 +1,15 @@
+id: sol-oracle-001
+name: Oracle manipulation
+severity: high
+category: oracle
+confidence: high
+cwe: CWE-829
+languages:
+- solidity
+message: Single oracle price feed can be manipulated. Use multiple oracle sources.
+patterns:
+- type: regex
+  pattern: ( AggregatorV3Interface|Chainlink).latestRoundData
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

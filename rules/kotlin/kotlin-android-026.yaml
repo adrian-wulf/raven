@@ -1,0 +1,27 @@
+id: kotlin-android-026
+name: Android Clipboard Leak
+description: |
+  Detects information-disclosure issues in KOTLIN code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-200
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Sensitive data in clipboard can be accessed by other apps.
+patterns:
+  - type: regex
+    pattern: '(?i)clipboard\.setPrimaryClip.*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ClipboardManager.*setText.*secret'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)clipboard.*Copy.*sensitive'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

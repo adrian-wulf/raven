@@ -1,0 +1,15 @@
+rule_id: tf-tls-001
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-tls-001
+
+    secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+    '
+  safe: '# Safe - tf-tls-001
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

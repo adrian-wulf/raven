@@ -1,0 +1,23 @@
+id: kotlin-android-023
+name: Android Biometric Weak
+description: |
+  Detects weak-cryptography issues in KOTLIN code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-306
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Weak biometric authentication can be bypassed.
+patterns:
+  - type: regex
+    pattern: '(?i)setAllowedAuthenticators\s*\(\s*BIOMETRIC_WEAK'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)BIOMETRIC_WEAK(?!.*STRONG)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

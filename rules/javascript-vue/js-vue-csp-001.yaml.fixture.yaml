@@ -1,0 +1,17 @@
+rule_id: js-vue-csp-001
+language: html
+examples:
+  unsafe: '# Unsafe - js-vue-csp-001
+
+    DEBUG = True
+
+    '
+  safe: '# Safe - js-vue-csp-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

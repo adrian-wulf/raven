@@ -1,0 +1,22 @@
+id: cpp-smart-001
+name: Smart Pointer get() Dangling
+description: |
+  Detects use-after-free issues in CPP code.
+severity: high
+category: use-after-free
+confidence: high
+cwe: CWE-416
+languages: [cpp]
+message: |
+  ptr.get() outlives the smart pointer becomes dangling.
+patterns:
+  - type: regex
+    pattern: '(?i)\.get\s*\(\).*return'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.get\s*\(\).*\w+\*'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

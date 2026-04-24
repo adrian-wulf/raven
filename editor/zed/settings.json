@@ -1,0 +1,75 @@
+{
+  "languages": {
+    "JavaScript": {
+      "language_servers": ["raven-lsp", "typescript-language-server"]
+    },
+    "TypeScript": {
+      "language_servers": ["raven-lsp", "typescript-language-server"]
+    },
+    "Python": {
+      "language_servers": ["raven-lsp", "pyright"]
+    },
+    "Go": {
+      "language_servers": ["raven-lsp", "gopls"]
+    },
+    "Java": {
+      "language_servers": ["raven-lsp", "jdtls"]
+    },
+    "PHP": {
+      "language_servers": ["raven-lsp", "intelephense"]
+    },
+    "C": {
+      "language_servers": ["raven-lsp", "clangd"]
+    },
+    "Rust": {
+      "language_servers": ["raven-lsp", "rust-analyzer"]
+    },
+    "Ruby": {
+      "language_servers": ["raven-lsp", "solargraph"]
+    },
+    "Kotlin": {
+      "language_servers": ["raven-lsp", "kotlin-language-server"]
+    },
+    "Swift": {
+      "language_servers": ["raven-lsp", "sourcekit-lsp"]
+    },
+    "Dart": {
+      "language_servers": ["raven-lsp", "dart"]
+    },
+    "Elixir": {
+      "language_servers": ["raven-lsp", "elixir-ls"]
+    },
+    "Scala": {
+      "language_servers": ["raven-lsp", "metals"]
+    },
+    "Lua": {
+      "language_servers": ["raven-lsp", "lua-language-server"]
+    },
+    "Solidity": {
+      "language_servers": ["raven-lsp", "solidity-ls"]
+    },
+    "Shell Script": {
+      "language_servers": ["raven-lsp"]
+    },
+    "Dockerfile": {
+      "language_servers": ["raven-lsp"]
+    },
+    "Terraform": {
+      "language_servers": ["raven-lsp", "terraform-ls"]
+    },
+    "YAML": {
+      "language_servers": ["raven-lsp", "yaml-language-server"]
+    },
+    "JSON": {
+      "language_servers": ["raven-lsp", "json-language-server"]
+    }
+  },
+  "lsp": {
+    "raven-lsp": {
+      "binary": {
+        "path": "raven",
+        "arguments": ["lsp"]
+      }
+    }
+  }
+}

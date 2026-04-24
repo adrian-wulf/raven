@@ -1,0 +1,23 @@
+id: rust-rocket-002
+name: Rocket Request Guard Bypass
+description: |
+  Detects broken-authentication issues in RUST code.
+severity: medium
+category: broken-authentication
+confidence: medium
+cwe: CWE-287
+languages: [rust]
+frameworks: [rocket]
+message: |
+  Request guards must be properly implemented to prevent bypass.
+patterns:
+  - type: regex
+    pattern: '(?i)impl<''a>\s+FromRequest.*for'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)FromRequest.*outcome.*Forward'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/287.html

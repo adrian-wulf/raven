@@ -1,0 +1,18 @@
+id: go-goroutine-006
+name: context.WithCancel without defer cancel
+description: |
+  Detects resource-leak issues in GO code.
+severity: medium
+category: resource-leak
+confidence: medium
+cwe: CWE-772
+languages: [go]
+message: |
+  Always defer cancel() for WithCancel contexts to prevent goroutine leaks.
+patterns:
+  - type: regex
+    pattern: '(?i)ctx\s*,\s*cancel\s*:=\s*context\.WithCancel\s*\(\)(?!.*defer\s+cancel)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/772.html

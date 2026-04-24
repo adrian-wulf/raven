@@ -1,0 +1,13 @@
+id: java-null-001
+name: Potential NullPointerException
+severity: medium
+category: nullpointer
+confidence: high
+cwe: "CWE-476"
+languages: [java, kotlin]
+message: "Potential null pointer dereference. Add null check or use Optional."
+patterns:
+  - type: regex
+    pattern: "\\.\\w+\\s*\\(\\)|\\.\\w+\\."
+references:
+  - https://cwe.mitre.org/data/definitions/476.html

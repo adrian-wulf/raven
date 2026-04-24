@@ -1,0 +1,26 @@
+id: go-sqli-006
+name: Go database/sql String Concatenation
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+message: |
+  Never concatenate user input into SQL queries. Always use parameterized queries with ? placeholders.
+patterns:
+  - type: regex
+    pattern: '(?i)(db|tx|stmt)\.(Query|Exec|QueryRow|Prepare)\s*\(\s*[`"][^`"]*\+\s*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)query\s*:=\s*[`"][^`"]*\+\s*.*(param|input|user|request)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)(db|tx)\.(Query|Exec|QueryRow)\s*\(\s*fmt\.Sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

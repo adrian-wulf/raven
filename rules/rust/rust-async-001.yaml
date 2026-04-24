@@ -1,0 +1,23 @@
+id: rust-async-001
+name: spawn without JoinHandle
+description: |
+  Detects resource-leak issues in RUST code.
+severity: medium
+category: resource-leak
+confidence: medium
+cwe: CWE-772
+languages: [rust]
+frameworks: [async]
+message: |
+  spawn without awaiting or storing JoinHandle leaks tasks.
+patterns:
+  - type: regex
+    pattern: '(?i)tokio::spawn\s*\(.*\)(?!\.await)(?!.*JoinHandle)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)spawn\s*\(async.*\)(?!.*await)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/772.html

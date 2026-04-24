@@ -1,0 +1,26 @@
+id: ruby-crypto-004
+name: SecureRandom Predictable Seed
+description: |
+  Detects weak-cryptography issues in RUBY code.
+severity: medium
+category: weak-cryptography
+confidence: medium
+cwe: CWE-338
+languages: [ruby]
+message: |
+  Seeding SecureRandom with predictable values defeats its purpose.
+patterns:
+  - type: regex
+    pattern: '(?i)SecureRandom\.seed'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)srand\s*\(\s*Time'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Random\.new\s*\(\s*\d+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

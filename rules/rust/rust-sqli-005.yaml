@@ -1,0 +1,27 @@
+id: rust-sqli-005
+name: mysql rust formatted query
+description: |
+  Detects sql-injection issues in RUST code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [rust]
+frameworks: [mysql]
+message: |
+  mysql crate with formatted queries allows SQL injection.
+patterns:
+  - type: regex
+    pattern: '(?i)conn\.query\s*\(.*format!'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)conn\.exec\s*\(.*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mysql::.*query\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

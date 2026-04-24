@@ -1,0 +1,18 @@
+id: js-angular-auth-002
+name: Token in localStorage
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-522
+languages:
+- javascript
+- typescript
+message: Storing auth tokens in localStorage makes them vulnerable to XSS theft. Use httpOnly cookies.
+patterns:
+- type: regex
+  pattern: localStorage\.(setItem|getItem)\s*\(\s*[\"\']token[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/522.html
+frameworks:
+- angular

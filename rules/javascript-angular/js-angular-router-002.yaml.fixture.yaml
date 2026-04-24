@@ -1,0 +1,15 @@
+rule_id: js-angular-router-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-router-002
+
+    router.push(''/admin'');
+
+    '
+  safe: '// Safe - js-angular-router-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

@@ -1,0 +1,15 @@
+id: docker-build-001
+name: Build argument for secret
+severity: high
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- dockerfile
+message: Using ARG for secrets exposes them in image history. Use secrets mount.
+patterns:
+- type: regex
+  pattern: ARG\s+(SECRET|TOKEN|PASSWORD|KEY)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

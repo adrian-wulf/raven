@@ -1,0 +1,13 @@
+id: gen-api-002
+name: Rate Limiting Missing
+severity: medium
+category: api
+confidence: high
+cwe: "CWE-770"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "API endpoint without rate limiting. Implement rate limiting to prevent brute force and DoS attacks."
+patterns:
+  - type: regex
+    pattern: '(router\\.|app\\.)\\s*(get|post|put|delete)\\s*\\(\\s*[\\''"]'
+references:
+  - https://cwe.mitre.org/data/definitions/770.html

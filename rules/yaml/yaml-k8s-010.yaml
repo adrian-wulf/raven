@@ -1,0 +1,15 @@
+id: yaml-k8s-010
+name: Missing resource limits
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-770
+languages:
+- yaml
+message: Container without resource limits can consume all node resources. Set limits.
+patterns:
+- type: regex
+  pattern: containers:\s*\n.*image:\s*\S+\s*\n(?!.*resources)(?!.*limits)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html

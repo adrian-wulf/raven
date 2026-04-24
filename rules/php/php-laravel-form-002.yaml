@@ -1,0 +1,23 @@
+id: php-laravel-form-002
+name: Laravel Validation Rule Bypass
+description: |
+  Detects input-validation issues in PHP code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [php]
+frameworks: [laravel]
+message: |
+  sometimes and nullable on sensitive fields can bypass validation.
+patterns:
+  - type: regex
+    pattern: '(?i)is_admin\s*=>\s*[''"]sometimes[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)role\s*=>\s*[''"]nullable[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

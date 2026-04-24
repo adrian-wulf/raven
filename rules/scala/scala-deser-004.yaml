@@ -1,0 +1,15 @@
+id: scala-deser-004
+name: Scala pickling
+severity: medium
+category: deserialization
+confidence: medium
+cwe: CWE-502
+languages:
+- scala
+message: Scala pickling with untrusted data can enable code execution. Validate pickled data.
+patterns:
+- type: regex
+  pattern: JSONPickle\.unpickle|Unpickle\[\w+\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html

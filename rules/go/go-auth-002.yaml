@@ -1,0 +1,22 @@
+id: go-auth-002
+name: Basic Auth with Hardcoded Credentials
+description: |
+  Detects broken-authentication issues in GO code.
+severity: critical
+category: broken-authentication
+confidence: critical
+cwe: CWE-798
+languages: [go]
+message: |
+  Never hardcode Basic Auth credentials. Use environment variables or an identity provider.
+patterns:
+  - type: regex
+    pattern: '(?i)basic\s+auth.*:`[^`{8,}]:[^`{8,}\]`'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)req\.Header\.Set\s*\(\s*[`"]Authorization[`"]\s*,\s*[`"]Basic\s+[A-Za-z0-9+/=]{10,}'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

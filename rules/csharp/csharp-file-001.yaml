@@ -1,0 +1,23 @@
+id: csharp-file-001
+name: IFormFile without Extension Validation
+description: |
+  Detects file-upload issues in CSHARP code.
+severity: high
+category: file-upload
+confidence: high
+cwe: CWE-434
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  File uploads without extension validation can lead to RCE.
+patterns:
+  - type: regex
+    pattern: '(?i)IFormFile.*SaveAs(?!.*ext)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)IFormFile.*WriteAsync(?!.*validate)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/434.html

@@ -1,0 +1,23 @@
+id: rust-deser-003
+name: bincode Untrusted Deserialization
+description: |
+  Detects insecure-deserialization issues in RUST code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [rust]
+frameworks: [bincode]
+message: |
+  bincode deserialize on untrusted data can cause memory issues.
+patterns:
+  - type: regex
+    pattern: '(?i)bincode::deserialize\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)bincode::deserialize_from\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

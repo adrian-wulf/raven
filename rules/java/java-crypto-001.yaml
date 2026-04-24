@@ -1,0 +1,26 @@
+id: java-crypto-001
+name: MD5 MessageDigest for Password
+description: |
+  Detects weak-cryptography issues in JAVA code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-328
+languages: [java]
+message: |
+  MD5 is cryptographically broken. Use PBKDF2, bcrypt, or Argon2 for password hashing.
+patterns:
+  - type: regex
+    pattern: '(?i)MessageDigest\.getInstance\s*\(\s*[`"]MD5[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DigestUtils\.md5'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)md5\(.*password'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/328.html

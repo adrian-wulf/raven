@@ -1,0 +1,27 @@
+id: java-xxe-008
+name: Unmarshaller XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+frameworks: [jaxb]
+message: |
+  JAXB Unmarshaller can process DTDs and external entities. Disable them.
+patterns:
+  - type: regex
+    pattern: '(?i)JAXBContext\.newInstance'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)unmarshaller\.unmarshal\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Unmarshaller.*unmarshal\s*\(.*StreamSource'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

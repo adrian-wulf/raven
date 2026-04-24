@@ -1,0 +1,23 @@
+id: java-xss-006
+name: Java Server Pages JSTL Without Escape
+description: |
+  Detects xss issues in JAVA code.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [java]
+frameworks: [jsp]
+message: |
+  JSTL without <c:out> default escape can output raw HTML.
+patterns:
+  - type: regex
+    pattern: '(?i)<c:set.*value\s*=\s*[`"].*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$\{param\.[^}]+\}(?!.*c:out)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

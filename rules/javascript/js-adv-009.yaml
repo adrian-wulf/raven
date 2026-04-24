@@ -1,0 +1,13 @@
+id: js-adv-009
+name: JavaScript SQL Injection Sequelize
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-89"
+languages: [javascript, typescript]
+message: "Sequelize query with string concatenation allows SQL injection. Use parameterized queries or ORM methods."
+patterns:
+  - type: regex
+    pattern: 'sequelize\.query\s*\(.*[''"].*[\+\$].*\{|queryInterface.*query\s*\('
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

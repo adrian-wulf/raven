@@ -1,0 +1,16 @@
+id: tf-storage-003
+name: EBS without encryption
+severity: high
+category: storage
+confidence: high
+cwe: CWE-311
+languages:
+- terraform
+- hcl
+message: EBS volume without encryption exposes data at rest. Enable encryption.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_ebs_volume[\"\'][^}]*\}(?!.*encrypted)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

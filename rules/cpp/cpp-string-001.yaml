@@ -1,0 +1,22 @@
+id: cpp-string-001
+name: std::string operator[] No Bounds
+description: |
+  Detects buffer-overflow issues in CPP code.
+severity: medium
+category: buffer-overflow
+confidence: medium
+cwe: CWE-121
+languages: [cpp]
+message: |
+  operator[] on string does not bounds-check. Use at() for safety.
+patterns:
+  - type: regex
+    pattern: '(?i)std::string.*\[.*\](?!\s*=)(?!.*at\s*\()'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\w+\[.*\w+.*\](?!.*at\s*\()'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/121.html

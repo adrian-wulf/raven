@@ -1,0 +1,18 @@
+id: py-flask-cmd-001
+name: os.system in route
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- python
+message: os.system() in a route with user input enables command injection. Use subprocess with args list.
+patterns:
+- type: regex
+  pattern: os\.system\s*\(\s*(?P<input>request\.|f[\"\']|\w+\s*\+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html
+frameworks:
+- flask

@@ -1,0 +1,15 @@
+id: scala-concurrent-001
+name: Future without timeout
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- scala
+message: Future without Await.timeout can hang indefinitely. Set timeout.
+patterns:
+- type: regex
+  pattern: Await\.result\s*\(\s*\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

@@ -1,0 +1,26 @@
+id: go-deser-004
+name: xml.Unmarshal XXE Vulnerability
+description: |
+  Detects xxe issues in GO code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [go]
+message: |
+  xml.Unmarshal may process external entities. Use decoder with Strict mode or disable entities.
+patterns:
+  - type: regex
+    pattern: '(?i)xml\.Unmarshal\s*\(.*&.*struct'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xml\.NewDecoder\s*\(.*\)\.Decode'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)encoding/xml\.Unmarshal'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

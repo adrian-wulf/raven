@@ -1,0 +1,26 @@
+id: rust-panic-003
+name: expect on IO Operations
+description: |
+  Detects denial-of-service issues in RUST code.
+severity: medium
+category: denial-of-service
+confidence: medium
+cwe: CWE-391
+languages: [rust]
+message: |
+  expect on IO can panic. Use proper error handling.
+patterns:
+  - type: regex
+    pattern: '(?i)\.expect\s*\(\s*[''"].*file'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.expect\s*\(\s*[''"].*read'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.expect\s*\(\s*[''"].*write'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/391.html

@@ -1,0 +1,17 @@
+id: py-fastapi-response-001
+name: Response without status code
+severity: low
+category: config
+confidence: low
+cwe: CWE-703
+languages:
+- python
+message: Response without explicit status code may return wrong status. Set status_code.
+patterns:
+- type: regex
+  pattern: '@app\.(get|post)\s*\([^)]*\)\s*\n\s*async\s+def\s+\w+.*\n.*return\s*\{'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/703.html
+frameworks:
+- fastapi

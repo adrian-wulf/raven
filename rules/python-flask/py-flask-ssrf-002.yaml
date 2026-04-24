@@ -1,0 +1,18 @@
+id: py-flask-ssrf-002
+name: urllib with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- python
+message: urllib with user-controlled URL enables SSRF. Validate URLs before fetching.
+patterns:
+- type: regex
+  pattern: (urllib\.request\.urlopen|urllib2\.urlopen)\s*\(\s*(?P<input>request\.|user_)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- flask

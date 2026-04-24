@@ -1,0 +1,27 @@
+id: php-symfony-doctrine-003
+name: Symfony Doctrine QueryBuilder Raw
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+frameworks: [symfony, doctrine]
+message: |
+  QueryBuilder with raw SQL parts can inject malicious queries.
+patterns:
+  - type: regex
+    pattern: '(?i)QueryBuilder.*where\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)andWhere\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)orWhere\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

@@ -1,0 +1,15 @@
+id: docker-label-001
+name: Sensitive data in label
+severity: medium
+category: secrets
+confidence: medium
+cwe: CWE-798
+languages:
+- dockerfile
+message: Secrets in LABEL are visible in image metadata. Remove sensitive labels.
+patterns:
+- type: regex
+  pattern: LABEL\s+\w*\s*(password|secret|key|token)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

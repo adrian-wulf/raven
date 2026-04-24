@@ -1,0 +1,16 @@
+id: bash-perm-001
+name: chmod 777
+severity: high
+category: permissions
+confidence: high
+cwe: CWE-732
+languages:
+- bash
+- shell
+message: chmod 777 grants full access to everyone. Use least privilege principle.
+patterns:
+- type: regex
+  pattern: chmod\s+.*777
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/732.html

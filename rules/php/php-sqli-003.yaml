@@ -1,0 +1,22 @@
+id: php-sqli-003
+name: PDO Statement execute without Bind
+description: |
+  Detects sql-injection issues in PHP code.
+severity: high
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  PDO execute without bound parameters passes raw values.
+patterns:
+  - type: regex
+    pattern: '(?i)execute\s*\(\s*\[.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$stmt->execute\s*\(\s*\[.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

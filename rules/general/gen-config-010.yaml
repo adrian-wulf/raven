@@ -1,0 +1,13 @@
+id: gen-config-010
+name: AWS Credentials in Code
+severity: critical
+category: config
+confidence: high
+cwe: "CWE-798"
+languages: [javascript, python, go, java, csharp, ruby]
+message: "AWS credentials hardcoded in source. Use IAM roles or AWS Secrets Manager. Never commit credentials."
+patterns:
+  - type: regex
+    pattern: "(AKIA[0-9A-Z]{16}|[0-9a-zA-Z/+]{40}.*[Ss]ecret)"
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

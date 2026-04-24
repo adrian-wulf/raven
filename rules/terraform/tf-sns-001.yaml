@@ -1,0 +1,16 @@
+id: tf-sns-001
+name: SNS without encryption
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-311
+languages:
+- terraform
+- hcl
+message: SNS topic without SSE exposes notification content. Enable encryption.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_sns_topic[\"\'][^}]*\}(?!.*kms_master_key_id)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

@@ -1,0 +1,18 @@
+id: js-angular-auth-003
+name: Missing token expiration check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-613
+languages:
+- javascript
+- typescript
+message: Not checking token expiration can allow use of expired tokens. Validate exp claim.
+patterns:
+- type: regex
+  pattern: jwt\.decode\s*\(\s*\w+\s*\)(?!.*exp)(?!.*verify)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/613.html
+frameworks:
+- angular

@@ -1,0 +1,22 @@
+id: php-crypto-004
+name: openssl_encrypt ECB Mode
+description: |
+  Detects weak-cryptography issues in PHP code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-327
+languages: [php]
+message: |
+  ECB mode is insecure. Use GCM or CBC with HMAC.
+patterns:
+  - type: regex
+    pattern: '(?i)openssl_encrypt\s*\(.*[''"]AES-.*-ECB[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)openssl_encrypt\s*\(.*[''"]DES-.*-ECB[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

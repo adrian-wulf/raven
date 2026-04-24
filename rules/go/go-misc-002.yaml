@@ -1,0 +1,18 @@
+id: go-misc-002
+name: os.Getenv for Sensitive Config
+description: |
+  Detects insecure-configuration issues in GO code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-15
+languages: [go]
+message: |
+  os.Getenv returns empty string for missing vars. Validate required environment variables.
+patterns:
+  - type: regex
+    pattern: '(?i)os\.Getenv\s*\(\s*[`"](DB_|DATABASE|REDIS|API_KEY|SECRET|TOKEN|PASSWORD)[`"]\s*\)(?!.*==.*[`"][`"])'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/15.html

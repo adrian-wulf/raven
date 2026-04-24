@@ -1,0 +1,18 @@
+id: js-angular-service-001
+name: Service without HTTP interceptor
+severity: low
+category: config
+confidence: low
+cwe: CWE-693
+languages:
+- javascript
+- typescript
+message: HTTP service without interceptors may miss security headers. Add HTTP interceptors.
+patterns:
+- type: regex
+  pattern: '@Injectable\s*\(\s*\)\s*\n\s*export\s+class\s+\w+Service\s*\{(?![\s\S]{0,500}intercept)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- angular

@@ -1,0 +1,23 @@
+id: csharp-vs-001
+name: ViewState MAC Disabled
+description: |
+  Detects insecure-deserialization issues in CSHARP code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  EnableViewStateMac=false allows ViewState tampering.
+patterns:
+  - type: regex
+    pattern: '(?i)EnableViewStateMac\s*=\s*[''"]false[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)enableViewStateMac.*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

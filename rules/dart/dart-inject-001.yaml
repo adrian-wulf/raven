@@ -1,0 +1,16 @@
+id: dart-inject-001
+name: SQL injection in query
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- dart
+message: String interpolation in SQL query enables injection. Use query parameters.
+patterns:
+- type: regex
+  pattern: query\s*\(\s*[\"\'][^\"\']*\$\{?\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

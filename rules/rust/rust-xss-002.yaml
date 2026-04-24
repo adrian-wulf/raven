@@ -1,0 +1,23 @@
+id: rust-xss-002
+name: Askama Template Raw
+description: |
+  Detects xss issues in RUST code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [rust]
+frameworks: [askama]
+message: |
+  Askama templates with unescaped user content enable XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)askama::Template.*render\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Template::render\s*\(.*[''"]<.*>'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

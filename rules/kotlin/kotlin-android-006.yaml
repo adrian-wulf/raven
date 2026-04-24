@@ -1,0 +1,27 @@
+id: kotlin-android-006
+name: Android Intent Scheme URL
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: critical
+category: intent-injection
+confidence: critical
+cwe: CWE-940
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Intent scheme URLs can launch arbitrary components.
+patterns:
+  - type: regex
+    pattern: '(?i)Intent\.parseUri\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)intent://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)scheme.*intent'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/940.html

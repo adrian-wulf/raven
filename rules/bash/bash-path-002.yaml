@@ -1,0 +1,17 @@
+id: bash-path-002
+name: cat user file
+severity: medium
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages:
+- bash
+- shell
+message: cat on user-controlled file path can read arbitrary files. Validate path.
+patterns:
+- type: regex
+  pattern: cat\s+\$?(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

@@ -1,0 +1,16 @@
+id: bash-ssh-001
+name: SSH without StrictHostKeyChecking
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-295
+languages:
+- bash
+- shell
+message: SSH without StrictHostKeyChecking is vulnerable to MITM. Enable checking.
+patterns:
+- type: regex
+  pattern: -o\s+StrictHostKeyChecking=no
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/295.html

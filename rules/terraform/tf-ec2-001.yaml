@@ -1,0 +1,17 @@
+id: tf-ec2-001
+name: EC2 user data secrets
+severity: critical
+category: secrets
+confidence: critical
+cwe: CWE-798
+languages:
+- terraform
+- hcl
+message: Secrets in EC2 user data are visible in metadata. Use IAM roles or Secrets Manager.
+patterns:
+- type: regex
+  pattern: user_data\s*=\s*(?P<input>base64encode|templatefile)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/798.html

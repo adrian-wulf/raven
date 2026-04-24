@@ -1,0 +1,15 @@
+rule_id: js-nextjs-dynamic-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-dynamic-001
+
+    if (env.production) { enableProdMode(); }
+
+    '
+  safe: '// Safe - js-nextjs-dynamic-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

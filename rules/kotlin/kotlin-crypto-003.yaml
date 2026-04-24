@@ -1,0 +1,22 @@
+id: kotlin-crypto-003
+name: SecureRandom without Seed Validation
+description: |
+  Detects weak-cryptography issues in KOTLIN code.
+severity: medium
+category: weak-cryptography
+confidence: medium
+cwe: CWE-338
+languages: [kotlin]
+message: |
+  SecureRandom with predictable seed is not secure.
+patterns:
+  - type: regex
+    pattern: '(?i)SecureRandom\s*\(\s*System\.currentTimeMillis'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SecureRandom\.setSeed\s*\(\s*System'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

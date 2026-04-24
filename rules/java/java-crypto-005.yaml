@@ -1,0 +1,26 @@
+id: java-crypto-005
+name: SecureRandom Seed Predictability
+description: |
+  Detects weak-cryptography issues in JAVA code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-338
+languages: [java]
+message: |
+  Seeding SecureRandom with predictable values defeats its purpose.
+patterns:
+  - type: regex
+    pattern: '(?i)SecureRandom.*setSeed\s*\(\s*System\.currentTimeMillis'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SecureRandom.*setSeed\s*\(\s*new\s+Date\(\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+SecureRandom\s*\(\s*System\.currentTimeMillis'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

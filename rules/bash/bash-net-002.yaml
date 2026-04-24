@@ -1,0 +1,16 @@
+id: bash-net-002
+name: FTP without encryption
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- bash
+- shell
+message: FTP without encryption sends credentials in plaintext. Use SFTP.
+patterns:
+- type: regex
+  pattern: \bftp\b(?!.*sftp)(?!.*ssl)(?!.*tls)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

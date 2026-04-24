@@ -1,0 +1,13 @@
+id: py-adv-008
+name: Python Compile with Untrusted Source
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [python]
+message: "compile() with untrusted source code allows arbitrary code execution. Validate all source code before compilation."
+patterns:
+  - type: regex
+    pattern: "compile\\s*\\(.*(req\\.|request|user|input|open\\s*\\()"
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

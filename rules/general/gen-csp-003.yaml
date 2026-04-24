@@ -1,0 +1,13 @@
+id: gen-csp-003
+name: CSP with unsafe-eval
+severity: high
+category: headers
+confidence: high
+cwe: "CWE-693"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Content Security Policy allows unsafe-eval. This enables XSS via eval(). Remove unsafe-eval."
+patterns:
+  - type: regex
+    pattern: "Content-Security-Policy.*unsafe-eval"
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

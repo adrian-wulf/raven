@@ -1,0 +1,15 @@
+id: yaml-k8s-004
+name: Privileged container
+severity: critical
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: privileged:true grants full host access. Use capabilities or securityContext instead.
+patterns:
+- type: regex
+  pattern: privileged:\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

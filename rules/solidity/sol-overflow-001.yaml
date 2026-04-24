@@ -1,0 +1,15 @@
+id: sol-overflow-001
+name: Unchecked arithmetic
+severity: critical
+category: arithmetic
+confidence: high
+cwe: CWE-682
+languages:
+- solidity
+message: Unchecked arithmetic operations can overflow/underflow. Use SafeMath or Solidity >=0.8.
+patterns:
+- type: regex
+  pattern: unchecked\s*\{[^}]*[\+\-\*\/]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/682.html

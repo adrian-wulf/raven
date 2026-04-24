@@ -1,0 +1,26 @@
+id: c-cmd-003
+name: execl Family User Input
+description: |
+  Detects command-injection issues in C code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [c]
+message: |
+  execl family with user-controlled arguments can inject commands.
+patterns:
+  - type: regex
+    pattern: '(?i)execl\s*\(\s*[''"]/bin/sh[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)execvp\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)execve\s*\(\s*.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

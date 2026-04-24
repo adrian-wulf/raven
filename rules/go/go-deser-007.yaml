@@ -1,0 +1,22 @@
+id: go-deser-007
+name: YAML Parsing with User Input
+description: |
+  Detects insecure-deserialization issues in GO code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [go]
+message: |
+  YAML parsing of user input can lead to deserialization attacks. Use strict parsing.
+patterns:
+  - type: regex
+    pattern: '(?i)yaml\.Unmarshal\s*\(.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)gopkg\.in/yaml.*Unmarshal.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

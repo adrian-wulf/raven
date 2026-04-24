@@ -1,0 +1,15 @@
+rule_id: dart-cmdi-002
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-cmdi-002
+
+    Process.run("ls $path", []);
+
+    '
+  safe: '// Safe - dart-cmdi-002
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

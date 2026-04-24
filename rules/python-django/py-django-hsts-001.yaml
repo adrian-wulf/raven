@@ -1,0 +1,17 @@
+id: py-django-hsts-001
+name: SECURE_HSTS_SECONDS missing
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-319
+languages:
+- python
+message: Missing HSTS header allows SSL stripping. Set SECURE_HSTS_SECONDS.
+patterns:
+- type: regex
+  pattern: SECURE_HSTS_SECONDS\s*=\s*0
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html
+frameworks:
+- django

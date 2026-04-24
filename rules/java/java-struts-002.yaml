@@ -1,0 +1,23 @@
+id: java-struts-002
+name: ServletRequest Parameter without Validation
+description: |
+  Detects input-validation issues in JAVA code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [java]
+frameworks: [servlet]
+message: |
+  ServletRequest parameters must be validated before use.
+patterns:
+  - type: regex
+    pattern: '(?i)request\.getParameter\s*\(\s*[`"]\w+[`"]\s*\)(?!.*if\s*\().*(?<!validate)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)request\.getParameterValues\s*\(.*(?!.*validate)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

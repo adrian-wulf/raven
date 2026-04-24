@@ -1,0 +1,15 @@
+id: docker-stage-001
+name: Multi-stage with secret in layer
+severity: high
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- dockerfile
+message: Secret copied in early stage is still in build history. Use --mount=type=secret.
+patterns:
+- type: regex
+  pattern: COPY\s+.*\.(env|key|pem|p12)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

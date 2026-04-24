@@ -1,0 +1,15 @@
+rule_id: js-nextjs-cache-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-cache-001
+
+    if (env.production) { enableProdMode(); }
+
+    '
+  safe: '// Safe - js-nextjs-cache-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

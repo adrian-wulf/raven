@@ -1,0 +1,17 @@
+id: py-django-signal-001
+name: Signal without auth check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Django signal handlers without authentication checks may process unauthorized data. Add auth checks.
+patterns:
+- type: regex
+  pattern: '@receiver\s*\(\s*(post_save|pre_save)\s*\)\s*\n\s*def\s+\w+\s*\(\s*sender\s*,\s*\w+\s*,\s*\*\*kwargs\s*\)\s*:'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- django

@@ -1,0 +1,13 @@
+id: gen-xcto-001
+name: Missing X-Content-Type-Options Header
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-693"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "X-Content-Type-Options header not set. Add X-Content-Type-Options: nosniff to prevent MIME sniffing."
+patterns:
+  - type: regex
+    pattern: "(res\\.set|response\\.set|w\\.Header\\(\\)).*(?!X-Content-Type-Options)"
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

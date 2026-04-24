@@ -1,0 +1,22 @@
+id: csharp-xxe-001
+name: XmlReaderSettings DtdProcess Parse
+description: |
+  Detects xxe issues in CSHARP code.
+severity: critical
+category: xxe
+confidence: critical
+cwe: CWE-611
+languages: [csharp]
+message: |
+  DtdProcessing.Parse enables XXE. Use DtdProcessing.Prohibit or Ignore.
+patterns:
+  - type: regex
+    pattern: '(?i)XmlReaderSettings.*DtdProcessing\s*\.\s*Parse'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DtdProcessing\s*=\s*DtdProcessing\.Parse'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

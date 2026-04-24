@@ -1,0 +1,13 @@
+id: py-adv-012
+name: Python ctypes FFI with Untrusted Input
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [python]
+message: "ctypes FFI with user-controlled input can load arbitrary shared libraries. Validate library names and function names."
+patterns:
+  - type: regex
+    pattern: "ctypes\\.(CDLL|cdll|windll|oledll)\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

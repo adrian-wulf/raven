@@ -1,0 +1,17 @@
+id: py-flask-cors-002
+name: CORS resources all
+severity: medium
+category: cors
+confidence: high
+cwe: CWE-942
+languages:
+- python
+message: CORS resources='*' exposes all routes. Restrict CORS to specific resources.
+patterns:
+- type: regex
+  pattern: CORS\s*\(\s*.*resources\s*=\s*\{\s*[rR]?[\"\']\/[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/942.html
+frameworks:
+- flask

@@ -1,0 +1,15 @@
+id: ex-broadway-001
+name: Broadway without batch size limit
+severity: low
+category: config
+confidence: low
+cwe: CWE-770
+languages:
+- elixir
+message: Broadway without batch_size limit can cause memory issues. Set batch_size.
+patterns:
+- type: regex
+  pattern: Broadway\.start_link\s*\([^)]*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html

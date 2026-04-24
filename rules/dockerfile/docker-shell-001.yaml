@@ -1,0 +1,15 @@
+id: docker-shell-001
+name: SHELL instruction override
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-78
+languages:
+- dockerfile
+message: Overriding SHELL to a less secure shell can enable injection. Use default shell.
+patterns:
+- type: regex
+  pattern: SHELL\s+\[
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

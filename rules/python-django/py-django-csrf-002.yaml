@@ -1,0 +1,17 @@
+id: py-django-csrf-002
+name: Missing csrf_token in form
+severity: medium
+category: csrf
+confidence: medium
+cwe: CWE-352
+languages:
+- html
+message: Missing {% csrf_token %} inside a form template allows CSRF attacks. Always include csrf_token.
+patterns:
+- type: regex
+  pattern: <form[^>]*>\s*(?!.*\{%\s*csrf_token\s*%\})
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html
+frameworks:
+- django

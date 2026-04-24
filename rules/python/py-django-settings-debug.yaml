@@ -7,7 +7,6 @@ category: misconfiguration
 confidence: high
 cwe: CWE-16
 languages: [python]
-frameworks: [django]
 message: |
   DEBUG = True in production exposes stack traces and settings. Set DEBUG = False.
 patterns:

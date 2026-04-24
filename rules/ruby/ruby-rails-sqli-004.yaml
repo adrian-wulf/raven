@@ -1,0 +1,23 @@
+id: ruby-rails-sqli-004
+name: Rails conditions String
+description: |
+  Detects sql-injection issues in RUBY code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [ruby]
+frameworks: [rails]
+message: |
+  find with conditions as string allows SQL injection.
+patterns:
+  - type: regex
+    pattern: '(?i):conditions\s*=>\s*\[\s*[''"].*\#\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i):conditions\s*=>\s*[''"].*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

@@ -1,0 +1,16 @@
+id: ex-cmdi-001
+name: System.cmd with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- elixir
+message: System.cmd with user input enables command injection. Use argument lists.
+patterns:
+- type: regex
+  pattern: System\.cmd\s*\(\s*[\"\'][^\"\']*[\"\']\s*,\s*\[\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

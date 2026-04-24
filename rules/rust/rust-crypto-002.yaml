@@ -1,0 +1,22 @@
+id: rust-crypto-002
+name: Hardcoded Key in Rust
+description: |
+  Detects hardcoded-secrets issues in RUST code.
+severity: critical
+category: hardcoded-secrets
+confidence: critical
+cwe: CWE-798
+languages: [rust]
+message: |
+  Hardcoded keys in source code can be extracted from binaries.
+patterns:
+  - type: regex
+    pattern: '(?i)const\s+\w*KEY\w*\s*:\s*\&\[u8\].*='
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)const\s+\w*SECRET\w*\s*:\s*\&str\s*=\s*[''"][^''"]{8,}[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

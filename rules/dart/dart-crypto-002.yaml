@@ -1,0 +1,15 @@
+id: dart-crypto-002
+name: pointycastle ECB mode
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-327
+languages:
+- dart
+message: ECB mode is insecure and leaks patterns. Use CBC, GCM, or another secure mode.
+patterns:
+- type: regex
+  pattern: BlockCipher\s*\(\s*[\"\']AES[/_]ECB
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/327.html

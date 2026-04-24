@@ -1,0 +1,17 @@
+id: py-fastapi-depends-004
+name: Depends without caching
+severity: low
+category: config
+confidence: low
+cwe: CWE-400
+languages:
+- python
+message: Dependency without use_cache=True may cause redundant computation. Cache when possible.
+patterns:
+- type: regex
+  pattern: Depends\s*\(\s*\w+\s*\)(?!.*use_cache)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html
+frameworks:
+- fastapi

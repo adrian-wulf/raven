@@ -1,0 +1,18 @@
+id: js-nextjs-xss-002
+name: next/script with user src
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: next/script with user-controlled src can load malicious scripts. Validate script sources.
+patterns:
+- type: regex
+  pattern: <Script\s+src\s*=\s*\{(?!.*https)(?!.*localhost)\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- nextjs

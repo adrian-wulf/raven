@@ -1,0 +1,27 @@
+id: java-xss-004
+name: Servlet Response.getWriter XSS
+description: |
+  Detects xss issues in JAVA code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [java]
+frameworks: [servlet]
+message: |
+  Writing user input directly to response enables reflected XSS. Encode output.
+patterns:
+  - type: regex
+    pattern: '(?i)response\.getWriter\(\)\.print\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)response\.getWriter\(\)\.write\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)out\.print\s*\(.*request\.getParameter'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

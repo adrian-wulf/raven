@@ -1,0 +1,23 @@
+id: swift-vapor-004
+name: Vapor Middleware Bypass
+description: |
+  Detects broken-authentication issues in SWIFT code.
+severity: medium
+category: broken-authentication
+confidence: medium
+cwe: CWE-287
+languages: [swift]
+frameworks: [vapor]
+message: |
+  Middleware must protect all sensitive routes.
+patterns:
+  - type: regex
+    pattern: '(?i)app\.group\s*\(\s*[''"].*[''"]\s*\)(?!.*middleware)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)routes\.grouped\s*\(\s*\)(?!.*protected)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/287.html

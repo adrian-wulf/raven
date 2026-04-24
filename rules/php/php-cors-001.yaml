@@ -1,0 +1,22 @@
+id: php-cors-001
+name: Header Access-Control-Allow-Origin Wildcard
+description: |
+  Detects cors-misconfiguration issues in PHP code.
+severity: medium
+category: cors-misconfiguration
+confidence: medium
+cwe: CWE-942
+languages: [php]
+message: |
+  Allowing all origins with CORS can expose sensitive data.
+patterns:
+  - type: regex
+    pattern: '(?i)header\s*\(.*[''"]Access-Control-Allow-Origin:\s*\*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)header\s*\(.*[''"]Access-Control-Allow-Origin:.*\$_(GET|POST|REQUEST)[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/942.html

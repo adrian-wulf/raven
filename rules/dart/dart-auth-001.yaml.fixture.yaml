@@ -1,0 +1,15 @@
+rule_id: dart-auth-001
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-auth-001
+
+    http.get(url) // no auth header
+
+    '
+  safe: '// Safe - dart-auth-001
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

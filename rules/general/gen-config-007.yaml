@@ -1,0 +1,13 @@
+id: gen-config-007
+name: Database Connection Without SSL
+severity: medium
+category: config
+confidence: high
+cwe: "CWE-319"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Database connection string without SSL/TLS. Encrypt database connections to prevent eavesdropping."
+patterns:
+  - type: regex
+    pattern: "(postgres|mysql|mongodb)://[^?]*(?!ssl|tls|encrypt)"
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

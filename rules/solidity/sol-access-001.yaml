@@ -1,0 +1,15 @@
+id: sol-access-001
+name: Missing onlyOwner
+severity: high
+category: access-control
+confidence: high
+cwe: CWE-284
+languages:
+- solidity
+message: Function without access control modifier may be called by anyone. Add onlyOwner or similar.
+patterns:
+- type: regex
+  pattern: function\s+\w+\s*\([^)]*\)\s*(?!.*onlyOwner)(?!.*onlyRole)(?!.*modifier)[^{]*\{[^}]*(transfer|withdraw|mint|burn|selfdestruct)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

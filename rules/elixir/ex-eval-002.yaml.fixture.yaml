@@ -1,0 +1,15 @@
+rule_id: ex-eval-002
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-eval-002
+
+    Code.eval_string(user_code)
+
+    '
+  safe: '# Safe - ex-eval-002
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

@@ -1,0 +1,22 @@
+id: php-eval-004
+name: preg_replace e Modifier RCE
+description: |
+  Detects code-injection issues in PHP code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-94
+languages: [php]
+message: |
+  preg_replace with /e modifier evaluates replacement as PHP code.
+patterns:
+  - type: regex
+    pattern: '(?i)preg_replace\s*\(.*[''"]/.*e.*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)preg_replace\s*\(.*[''"].*\$_.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

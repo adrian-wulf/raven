@@ -1,0 +1,27 @@
+id: ruby-rails-ssti-002
+name: Rails render template user
+description: |
+  Detects ssti issues in RUBY code.
+severity: critical
+category: ssti
+confidence: critical
+cwe: CWE-1336
+languages: [ruby]
+frameworks: [rails]
+message: |
+  render with user-controlled template enables SSTI.
+patterns:
+  - type: regex
+    pattern: '(?i)render\s+[''"].*\#\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)render\s+file:\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)render\s+body:\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

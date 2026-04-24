@@ -1,0 +1,26 @@
+id: php-session-001
+name: Session Fixation
+description: |
+  Detects session-fixation issues in PHP code.
+severity: high
+category: session-fixation
+confidence: high
+cwe: CWE-384
+languages: [php]
+message: |
+  Not regenerating session ID after authentication allows session fixation.
+patterns:
+  - type: regex
+    pattern: '(?i)session_start\s*\(\)(?!.*session_regenerate_id)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)session_start.*//.*no.*regenerate'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)login.*session_start(?!.*session_regenerate_id)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/384.html

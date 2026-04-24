@@ -1,0 +1,27 @@
+id: swift-ios-025
+name: GRDB Raw SQL
+description: |
+  Detects sql-injection issues in SWIFT code.
+severity: high
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [swift]
+frameworks: [ios]
+message: |
+  GRDB raw SQL with user input allows SQL injection.
+patterns:
+  - type: regex
+    pattern: '(?i)db\.execute\s*\(\s*sql:\s*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SQLRequest\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)GRDB.*raw.*[''"].*WHERE.*\(\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

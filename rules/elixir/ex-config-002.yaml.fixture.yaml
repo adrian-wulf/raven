@@ -1,0 +1,15 @@
+rule_id: ex-config-002
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-config-002
+
+    secret_key_base: "hardcoded_secret"
+
+    '
+  safe: '# Safe - ex-config-002
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

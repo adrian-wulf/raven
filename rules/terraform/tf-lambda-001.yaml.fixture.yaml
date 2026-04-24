@@ -1,0 +1,15 @@
+rule_id: tf-lambda-001
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-lambda-001
+
+    secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+    '
+  safe: '# Safe - tf-lambda-001
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

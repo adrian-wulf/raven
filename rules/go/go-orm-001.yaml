@@ -1,0 +1,27 @@
+id: go-orm-001
+name: GORM Mass Assignment via Bind
+description: |
+  Detects mass-assignment issues in GO code.
+severity: high
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [go]
+frameworks: [gorm]
+message: |
+  Use select/omit with GORM to prevent mass assignment of sensitive fields.
+patterns:
+  - type: regex
+    pattern: '(?i)db\.Create\s*\(&.*\)(?!.*Select)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)db\.Updates\s*\(&.*\)(?!.*Omit)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)db\.Save\s*\(&.*\)(?!.*Select)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

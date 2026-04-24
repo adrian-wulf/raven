@@ -1,0 +1,17 @@
+id: py-django-mass-001
+name: kwargs in Model.__init__
+severity: medium
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages:
+- python
+message: Using **kwargs in Model.__init__ can enable mass assignment. Explicitly define allowed fields.
+patterns:
+- type: regex
+  pattern: def\s+__init__\s*\(\s*self\s*,\s*\*\*kwargs\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/915.html
+frameworks:
+- django

@@ -1,0 +1,17 @@
+id: py-fastapi-exception-001
+name: Exception info leak
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-209
+languages:
+- python
+message: Returning exception details to the client can leak sensitive information. Use generic error messages.
+patterns:
+- type: regex
+  pattern: return\s*\{\s*[\"\']detail[\"\']\s*:\s*str\s*\(\s*(?P<exc>\w+)\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/209.html
+frameworks:
+- fastapi

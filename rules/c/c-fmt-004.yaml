@@ -1,0 +1,22 @@
+id: c-fmt-004
+name: fprintf User Format String
+description: |
+  Detects format-string issues in C code.
+severity: high
+category: format-string
+confidence: high
+cwe: CWE-134
+languages: [c]
+message: |
+  fprintf with user-controlled format string enables file-based attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)fprintf\s*\(\s*[^,]+,\s*[^''"]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fprintf\s*\(\s*stderr,\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

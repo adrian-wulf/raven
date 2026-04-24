@@ -1,0 +1,23 @@
+id: swift-ios-036
+name: File Protection Missing
+description: |
+  Detects insecure-permissions issues in SWIFT code.
+severity: high
+category: insecure-permissions
+confidence: high
+cwe: CWE-276
+languages: [swift]
+frameworks: [ios]
+message: |
+  Files without protection can be accessed on jailbroken devices.
+patterns:
+  - type: regex
+    pattern: '(?i)FileManager\.default.*createFile(?!.*protection)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)write\s*\(\s*to:\s*.*URL(?!.*completeFileProtection)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/276.html

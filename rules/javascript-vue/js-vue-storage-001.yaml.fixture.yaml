@@ -1,0 +1,15 @@
+rule_id: js-vue-storage-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-storage-001
+
+    const token = Math.random();
+
+    '
+  safe: '// Safe - js-vue-storage-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

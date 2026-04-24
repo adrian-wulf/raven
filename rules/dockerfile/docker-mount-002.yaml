@@ -1,0 +1,15 @@
+id: docker-mount-002
+name: docker.sock mount
+severity: critical
+category: privilege
+confidence: critical
+cwe: CWE-250
+languages:
+- dockerfile
+message: Mounting docker.sock grants container full Docker access. Avoid or restrict heavily.
+patterns:
+- type: regex
+  pattern: /var/run/docker\.sock
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

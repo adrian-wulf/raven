@@ -1,0 +1,18 @@
+id: js-nextjs-api-001
+name: API route without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: API route without authentication check may allow unauthorized access. Add auth middleware.
+patterns:
+- type: regex
+  pattern: export\s+default\s+function\s+handler\s*\(\s*req\s*:\s*NextApiRequest\s*,\s*res\s*:\s*NextApiResponse\s*\)(?!.*auth)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- nextjs

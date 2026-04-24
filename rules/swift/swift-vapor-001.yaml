@@ -1,0 +1,23 @@
+id: swift-vapor-001
+name: Vapor Route Param Injection
+description: |
+  Detects injection issues in SWIFT code.
+severity: high
+category: injection
+confidence: high
+cwe: CWE-74
+languages: [swift]
+frameworks: [vapor]
+message: |
+  Vapor route parameters should be validated.
+patterns:
+  - type: regex
+    pattern: '(?i)req\.parameters\.get\s*\(\s*[''"].*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)routes\.get\s*\(\s*[''"].*:.*[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/74.html

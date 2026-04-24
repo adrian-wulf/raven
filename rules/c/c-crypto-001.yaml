@@ -1,0 +1,30 @@
+id: c-crypto-001
+name: rand for Cryptographic Use
+description: |
+  Detects weak-cryptography issues in C code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-338
+languages: [c]
+message: |
+  rand() is predictable. Use crypto-secure RNG for security operations.
+patterns:
+  - type: regex
+    pattern: '(?i)rand\s*\(\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\s*\(\s*\).*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\s*\(\s*\).*token'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\s*\(\s*\).*key'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

@@ -1,0 +1,22 @@
+id: c-bof-001
+name: strcpy Buffer Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-120
+languages: [c]
+message: |
+  strcpy does not check bounds. Use strncpy or strcpy_s.
+patterns:
+  - type: regex
+    pattern: '(?i)strcpy\s*\(\s*[^,]+,\s*[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)strcpy\s*\(\s*dest,\s*src\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/120.html

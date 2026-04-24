@@ -1,0 +1,15 @@
+id: ex-oban-001
+name: Oban job without unique constraint
+severity: low
+category: config
+confidence: low
+cwe: CWE-362
+languages:
+- elixir
+message: Oban job without unique:true can duplicate. Add uniqueness.
+patterns:
+- type: regex
+  pattern: use\s+Oban\.Worker(?!.*unique)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/362.html

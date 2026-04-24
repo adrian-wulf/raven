@@ -1,0 +1,11 @@
+rule_id: sol-nft-001
+language: solidity
+examples:
+  unsafe: "// Unsafe - sol-nft-001\nfunction withdraw() public {\n    msg.sender.call{value: balance}(\"\");\n}\n"
+  safe: '// Safe - sol-nft-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

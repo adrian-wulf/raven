@@ -1,0 +1,16 @@
+id: dart-sqli-001
+name: sqflite rawQuery
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- dart
+message: sqflite rawQuery with user input enables SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: rawQuery\s*\(\s*[\"\'][^\"\']*\$\w+|rawQuery\s*\(\s*[rR]?[\"\'][^\"\']*%s
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

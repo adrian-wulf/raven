@@ -1,0 +1,18 @@
+id: js-nextjs-auth-002
+name: Session without verification
+severity: high
+category: auth
+confidence: high
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: Using session data without verification can allow impersonation. Always verify session tokens.
+patterns:
+- type: regex
+  pattern: getSession\s*\(\s*req\s*\)(?!.*verify)(?!.*validate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- nextjs

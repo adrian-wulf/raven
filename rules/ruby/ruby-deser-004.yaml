@@ -1,0 +1,22 @@
+id: ruby-deser-004
+name: JSON.parse without Options
+description: |
+  Detects insecure-deserialization issues in RUBY code.
+severity: medium
+category: insecure-deserialization
+confidence: medium
+cwe: CWE-502
+languages: [ruby]
+message: |
+  JSON.parse without create_additions:false can instantiate objects.
+patterns:
+  - type: regex
+    pattern: '(?i)JSON\.parse\s*\(\s*.*params(?!.*create_additions)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)JSON\.parse\s*\(\s*.*request(?!.*max_nesting)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

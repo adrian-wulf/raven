@@ -1,0 +1,15 @@
+rule_id: js-vue-nuxt-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-nuxt-001
+
+    router.push(''/admin'');
+
+    '
+  safe: '// Safe - js-vue-nuxt-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

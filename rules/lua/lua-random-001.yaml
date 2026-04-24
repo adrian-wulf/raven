@@ -1,0 +1,15 @@
+id: lua-random-001
+name: math.random for crypto
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-338
+languages:
+- lua
+message: math.random is not cryptographically secure. Use a proper CSPRNG.
+patterns:
+- type: regex
+  pattern: math\.random\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/338.html

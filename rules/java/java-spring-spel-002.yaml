@@ -1,0 +1,27 @@
+id: java-spring-spel-002
+name: Spring Expression Language RCE
+description: |
+  Detects expression-injection issues in JAVA code.
+severity: critical
+category: expression-injection
+confidence: high
+cwe: CWE-917
+languages: [java]
+frameworks: [spring]
+message: |
+  SpEL with StandardEvaluationContext enables full code execution. Use SimpleEvaluationContext.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+StandardEvaluationContext'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)StandardEvaluationContext.*setRootObject'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)expression\.getValue\s*\(.*StandardEvaluationContext'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

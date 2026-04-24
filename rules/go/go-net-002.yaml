@@ -1,0 +1,22 @@
+id: go-net-002
+name: net.Dial without Timeout
+description: |
+  Detects insecure-configuration issues in GO code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-1088
+languages: [go]
+message: |
+  Network connections without timeouts can hang indefinitely. Use DialTimeout.
+patterns:
+  - type: regex
+    pattern: '(?i)net\.Dial\s*\(\s*[`"]tcp'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)net\.DialTCP\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1088.html

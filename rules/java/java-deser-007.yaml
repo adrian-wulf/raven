@@ -1,0 +1,27 @@
+id: java-deser-007
+name: SnakeYAML load Deserialization
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: critical
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [java]
+frameworks: [snakeyaml]
+message: |
+  SnakeYAML load can instantiate arbitrary classes. Use safe Load or type tags.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+Yaml\s*\(\).*load\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Yaml.*loadAs\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Yaml.*loadAll\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

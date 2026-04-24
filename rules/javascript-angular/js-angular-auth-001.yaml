@@ -1,0 +1,18 @@
+id: js-angular-auth-001
+name: Auth guard bypass
+severity: high
+category: auth
+confidence: high
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: Auth guard with weak or missing checks can be bypassed. Implement strong verification.
+patterns:
+- type: regex
+  pattern: class\s+\w+Guard\s+implements\s+CanActivate(?![\s\S]{0,200}return\s+false)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- angular

@@ -1,0 +1,17 @@
+id: py-flask-upload-001
+name: Upload without size limit
+severity: medium
+category: file-upload
+confidence: medium
+cwe: CWE-400
+languages:
+- python
+message: File upload without size limit allows DoS via large files. Set MAX_CONTENT_LENGTH.
+patterns:
+- type: regex
+  pattern: request\.files\.(get|\[)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html
+frameworks:
+- flask

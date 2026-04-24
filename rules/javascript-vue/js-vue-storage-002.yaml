@@ -1,0 +1,18 @@
+id: js-vue-storage-002
+name: Vuex store sensitive data
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-522
+languages:
+- javascript
+- typescript
+message: Storing sensitive data in Vuex store makes it accessible to all components. Minimize stored secrets.
+patterns:
+- type: regex
+  pattern: state\s*:\s*\(\s*\)\s*=>\s*\(\s*\{\s*\w+\s*:\s*[\"\'].*(password|secret|token)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/522.html
+frameworks:
+- vue

@@ -1,0 +1,26 @@
+id: php-xss-004
+name: var_dump User Data
+description: |
+  Detects xss issues in PHP code.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [php]
+message: |
+  var_dump outputs raw data without escaping. Avoid in production.
+patterns:
+  - type: regex
+    pattern: '(?i)var_dump\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)var_dump\s*\(\s*\$.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)var_export\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

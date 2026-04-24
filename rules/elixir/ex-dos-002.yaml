@@ -1,0 +1,15 @@
+id: ex-dos-002
+name: Unbounded recursion
+severity: medium
+category: dos
+confidence: medium
+cwe: CWE-674
+languages:
+- elixir
+message: Unbounded recursion without depth limit can cause stack exhaustion. Add depth limit.
+patterns:
+- type: regex
+  pattern: defp?\s+\w+\s*\([^)]*\)\s*do\s*\n.*\w+\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/674.html

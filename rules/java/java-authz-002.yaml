@@ -1,0 +1,27 @@
+id: java-authz-002
+name: Spring @RolesAllowed Missing
+description: |
+  Detects broken-authorization issues in JAVA code.
+severity: medium
+category: broken-authorization
+confidence: medium
+cwe: CWE-276
+languages: [java]
+frameworks: [spring]
+message: |
+  Methods handling sensitive operations should have explicit role checks.
+patterns:
+  - type: regex
+    pattern: '(?i)@RequestMapping.*(?!@RolesAllowed)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@GetMapping.*(?!@PreAuthorize)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@PostMapping.*(?!@Secured)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/276.html

@@ -1,0 +1,17 @@
+id: py-fastapi-request-003
+name: Query param injection
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: Query parameter without validation can allow injection. Use typed parameters with validation.
+patterns:
+- type: regex
+  pattern: \w+\s*:\s*(?P<type>str|int)\s*=\s*Query\s*\(\s*\w*\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- fastapi

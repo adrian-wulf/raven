@@ -1,0 +1,15 @@
+id: dart-https-001
+name: Dio without certificate validation
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-295
+languages:
+- dart
+message: Dio without certificate validation is vulnerable to MITM. Enable certificate pinning.
+patterns:
+- type: regex
+  pattern: dio\s*=\s*Dio\s*\(\s*\)(?!.*validateStatus)(?!.*certificate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/295.html

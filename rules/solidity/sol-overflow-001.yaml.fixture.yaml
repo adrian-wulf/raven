@@ -1,0 +1,15 @@
+rule_id: sol-overflow-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-overflow-001
+
+    uint result = a - b;
+
+    '
+  safe: '// Safe - sol-overflow-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

@@ -1,0 +1,15 @@
+id: sol-storage-001
+name: Uninitialized storage
+severity: high
+category: storage
+confidence: high
+cwe: CWE-457
+languages:
+- solidity
+message: Uninitialized storage pointer can corrupt storage. Always initialize storage variables.
+patterns:
+- type: regex
+  pattern: \w+\s+storage\s+\w+\s*;\s*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/457.html

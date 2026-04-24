@@ -1,0 +1,27 @@
+id: kotlin-spring-003
+name: Spring SpEL Injection
+description: |
+  Detects expression-injection issues in KOTLIN code.
+severity: critical
+category: expression-injection
+confidence: critical
+cwe: CWE-917
+languages: [kotlin]
+frameworks: [spring]
+message: |
+  SpEL expressions from user input can execute arbitrary code.
+patterns:
+  - type: regex
+    pattern: '(?i)parseExpression\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SpelExpressionParser.*parseExpression\s*\(\s*.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)EvaluationContext.*setVariable.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

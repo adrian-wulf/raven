@@ -1,0 +1,18 @@
+id: py-django-query-002
+name: QuerySet raw method
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: QuerySet.raw() executes raw SQL which can lead to SQL injection if user input is used. Parameterize.
+patterns:
+- type: regex
+  pattern: ModelName\.objects\.raw\s*\(\s*(?P<input>request\.|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

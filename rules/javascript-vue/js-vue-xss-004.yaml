@@ -1,0 +1,19 @@
+id: js-vue-xss-004
+name: Double mustache with user input
+severity: medium
+category: xss
+confidence: low
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: '{{ }} auto-escapes content but can be bypassed. Ensure v-pre is not used around user content.'
+patterns:
+- type: regex
+  pattern: \{\{\s*(?P<input>rawHtml|vHtml|userInput)\s*\}\}
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

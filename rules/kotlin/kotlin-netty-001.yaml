@@ -1,0 +1,23 @@
+id: kotlin-netty-001
+name: Netty without SSL
+description: |
+  Detects insecure-configuration issues in KOTLIN code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-319
+languages: [kotlin]
+frameworks: [netty]
+message: |
+  Netty server without SSL exposes data in transit.
+patterns:
+  - type: regex
+    pattern: '(?i)ServerBootstrap.*childHandler(?!.*ssl)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Netty.*bootstrap(?!.*SslContext)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

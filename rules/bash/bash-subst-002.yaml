@@ -1,0 +1,16 @@
+id: bash-subst-002
+name: curl pipe bash
+severity: critical
+category: cmdi
+confidence: critical
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: curl | bash pattern executes remote code without verification. Download, verify, then execute.
+patterns:
+- type: regex
+  pattern: curl\s+.*\|\s*(bash|sh|zsh)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

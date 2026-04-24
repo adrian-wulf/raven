@@ -1,0 +1,22 @@
+id: php-cmd-002
+name: exec User Input Command Injection
+description: |
+  Detects command-injection issues in PHP code.
+severity: critical
+category: command-injection
+confidence: critical
+cwe: CWE-78
+languages: [php]
+message: |
+  exec() with user input allows command injection. Use escapeshellarg().
+patterns:
+  - type: regex
+    pattern: '(?i)exec\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)exec\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

@@ -1,0 +1,18 @@
+id: py-django-log-001
+name: Log injection
+severity: medium
+category: log-forging
+confidence: medium
+cwe: CWE-117
+languages:
+- python
+message: User input in log messages can lead to log injection. Sanitize newlines and special chars.
+patterns:
+- type: regex
+  pattern: (logger|logging)\.(info|warning|error|debug)\s*\(\s*(f[\"\']|.*\+\s*(?P<input>request\.|user_))
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/117.html
+frameworks:
+- django

@@ -1,0 +1,16 @@
+id: tf-creds-002
+name: Hardcoded secret_key
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- terraform
+- hcl
+message: Hardcoded AWS secret_key can compromise cloud infrastructure. Use IAM roles or vault.
+patterns:
+- type: regex
+  pattern: secret_key\s*=\s*[\"\'][^\"\']{20,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

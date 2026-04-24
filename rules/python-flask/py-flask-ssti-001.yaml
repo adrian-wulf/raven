@@ -1,0 +1,18 @@
+id: py-flask-ssti-001
+name: render_template_string with user input
+severity: critical
+category: ssti
+confidence: high
+cwe: CWE-1336
+languages:
+- python
+message: render_template_string() with user input enables Server-Side Template Injection. Use render_template().
+patterns:
+- type: regex
+  pattern: render_template_string\s*\(\s*(?P<input>request\.(args|form|json|data)|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/1336.html
+frameworks:
+- flask

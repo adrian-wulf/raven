@@ -1,0 +1,15 @@
+id: lua-openresty-003
+name: Shared dict with sensitive data
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-312
+languages:
+- lua
+message: ngx.shared.DICT storing sensitive data without encryption. Encrypt or avoid.
+patterns:
+- type: regex
+  pattern: shared\[\w+\]\.set\s*\(\s*[\"\'].*(password|token|secret)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/312.html

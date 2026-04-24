@@ -1,0 +1,17 @@
+id: py-fastapi-openapi-002
+name: redoc_url public
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-200
+languages:
+- python
+message: ReDoc publicly accessible can expose API documentation. Set redoc_url=None or protect it.
+patterns:
+- type: regex
+  pattern: FastAPI\s*\(\s*.*redoc_url\s*=\s*[\"\'][^\"\']+[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/200.html
+frameworks:
+- fastapi

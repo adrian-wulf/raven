@@ -1,0 +1,15 @@
+id: yaml-k8s-002
+name: Secret as env var
+severity: high
+category: secrets
+confidence: high
+cwe: CWE-312
+languages:
+- yaml
+message: Exposing secret via environment variable can leak in logs. Use volume mounts instead.
+patterns:
+- type: regex
+  pattern: 'valueFrom:\s*\n\s+secretKeyRef:'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/312.html

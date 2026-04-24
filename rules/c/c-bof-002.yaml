@@ -1,0 +1,22 @@
+id: c-bof-002
+name: strcat Buffer Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-120
+languages: [c]
+message: |
+  strcat can overflow destination buffer. Use strncat or strcat_s.
+patterns:
+  - type: regex
+    pattern: '(?i)strcat\s*\(\s*[^,]+,\s*[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)strcat\s*\(\s*dest,\s*src\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/120.html

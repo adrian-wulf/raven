@@ -1,0 +1,17 @@
+id: py-django-deser-001
+name: pickle in sessions
+severity: critical
+category: deserialization
+confidence: high
+cwe: CWE-502
+languages:
+- python
+message: Using pickle for session serialization can lead to remote code execution. Use JSON serializer.
+patterns:
+- type: regex
+  pattern: SESSION_SERIALIZER\s*=\s*[\"\']django\.contrib\.sessions\.serializers\.PickleSerializer
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html
+frameworks:
+- django

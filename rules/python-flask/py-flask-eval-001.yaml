@@ -1,0 +1,18 @@
+id: py-flask-eval-001
+name: eval in route
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- python
+message: eval() with user input enables arbitrary code execution. Never use eval with untrusted input.
+patterns:
+- type: regex
+  pattern: eval\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- flask

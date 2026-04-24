@@ -1,0 +1,13 @@
+id: js-adv-002
+name: JavaScript vm.runInContext Code Execution
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [javascript, typescript]
+message: "vm.runInContext with user input allows arbitrary code execution. Never execute untrusted code in VM."
+patterns:
+  - type: regex
+    pattern: "vm\\.runInContext|vm\\.runInNewContext|vm\\.compileFunction|runInThisContext"
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

@@ -1,0 +1,15 @@
+id: sol-assembly-002
+name: Assembly memory manipulation
+severity: high
+category: memory
+confidence: high
+cwe: CWE-787
+languages:
+- solidity
+message: Assembly memory manipulation can cause out-of-bounds writes. Validate offsets.
+patterns:
+- type: regex
+  pattern: mstore\s*\(\s*\w+\s*,\s*\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/787.html

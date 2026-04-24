@@ -1,0 +1,18 @@
+id: go-race-005
+name: sync.WaitGroup without defer Done
+description: |
+  Detects concurrency issues in GO code.
+severity: medium
+category: concurrency
+confidence: medium
+cwe: CWE-362
+languages: [go]
+message: |
+  Always defer wg.Done() to ensure it's called even if the goroutine panics.
+patterns:
+  - type: regex
+    pattern: '(?i)wg\.Add\s*\(\s*\d+\s*\).*go\s+func.*\{[^}]*wg\.Done\s*\(\)(?!.*defer)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

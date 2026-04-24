@@ -1,0 +1,22 @@
+id: go-file-002
+name: Temp File Creation without Proper Permissions
+description: |
+  Detects insecure-permissions issues in GO code.
+severity: medium
+category: insecure-permissions
+confidence: medium
+cwe: CWE-378
+languages: [go]
+message: |
+  Temp files should have restrictive permissions (0600). Default permissions may be too permissive.
+patterns:
+  - type: regex
+    pattern: '(?i)os\.CreateTemp\s*\(\s*[^,]*,\s*[^,]*\s*\)(?!.*0\d\d\d)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ioutil\.TempFile\s*\(\s*[^,]*,\s*[^,]*\s*\)(?!.*0\d\d\d)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/378.html

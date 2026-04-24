@@ -1,0 +1,18 @@
+id: js-vue-router-003
+name: Router wildcard without guard
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: Wildcard route without auth guard may expose unknown pages. Add guard.
+patterns:
+- type: regex
+  pattern: path\s*:\s*[\"\']\*[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- vue

@@ -1,0 +1,22 @@
+id: csharp-crypto-001
+name: MD5.Create Hash
+description: |
+  Detects weak-cryptography issues in CSHARP code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-328
+languages: [csharp]
+message: |
+  MD5 is cryptographically broken. Use SHA-256 or bcrypt.
+patterns:
+  - type: regex
+    pattern: '(?i)MD5\.Create'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)MD5CryptoServiceProvider'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/328.html

@@ -1,0 +1,23 @@
+id: csharp-vs-003
+name: ViewStateMode Enabled
+description: |
+  Detects information-disclosure issues in CSHARP code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-200
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  ViewState can grow large and leak data in page source.
+patterns:
+  - type: regex
+    pattern: '(?i)ViewStateMode\s*=\s*[''"]Enabled[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)EnableViewState\s*=\s*[''"]true[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

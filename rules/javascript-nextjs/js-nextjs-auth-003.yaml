@@ -1,0 +1,18 @@
+id: js-nextjs-auth-003
+name: Middleware without matcher
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-693
+languages:
+- javascript
+- typescript
+message: Middleware without matcher config runs on all routes. Add specific matcher.
+patterns:
+- type: regex
+  pattern: export\s+const\s+config\s*=\s*\{(?!.*matcher)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- nextjs

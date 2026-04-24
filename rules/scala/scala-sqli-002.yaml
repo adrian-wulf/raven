@@ -1,0 +1,16 @@
+id: scala-sqli-002
+name: Anorm SQL
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- scala
+message: Anorm SQL with string interpolation enables SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: SQL\s*\(\s*[sS]?"[^"]*\$\{\s*(?P<input>user|input|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

@@ -1,0 +1,22 @@
+id: php-sqli-008
+name: sqlsrv_query SQL Server Injection
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  sqlsrv_query with user input allows SQL injection. Use parameterized queries.
+patterns:
+  - type: regex
+    pattern: '(?i)sqlsrv_query\s*\(.*[''"].*WHERE.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sqlsrv_prepare\s*\(.*[''"].*\$_(GET|POST|REQUEST)(?!.*array)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

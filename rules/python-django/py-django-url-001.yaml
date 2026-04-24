@@ -1,0 +1,18 @@
+id: py-django-url-001
+name: re_path with user input
+severity: high
+category: injection
+confidence: high
+cwe: CWE-20
+languages:
+- python
+message: Using re_path with user input in URL patterns can lead to ReDoS. Avoid user input in regex.
+patterns:
+- type: regex
+  pattern: re_path\s*\(\s*(f[\"\']|.*\+\s*(?P<input>\w+))
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

@@ -1,0 +1,13 @@
+id: gen-csp-001
+name: Missing Content-Security-Policy Header
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-693"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Content Security Policy not set. Add CSP header to mitigate XSS and data injection attacks."
+patterns:
+  - type: regex
+    pattern: "(res\\.set|response\\.set|w\\.Header\\(\\)).*(?!Content-Security-Policy)"
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

@@ -1,0 +1,13 @@
+id: gen-config-008
+name: Redis Connection Without Authentication
+severity: high
+category: config
+confidence: high
+cwe: "CWE-306"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Redis connection without password authentication. Enable AUTH and use strong passwords."
+patterns:
+  - type: regex
+    pattern: "redis://(?!.*@)[^:]+:[0-9]+"
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

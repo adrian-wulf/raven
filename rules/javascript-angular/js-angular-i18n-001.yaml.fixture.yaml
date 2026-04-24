@@ -1,0 +1,15 @@
+rule_id: js-angular-i18n-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-i18n-001
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-angular-i18n-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

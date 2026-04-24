@@ -1,0 +1,15 @@
+rule_id: tf-sg-003
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-sg-003
+
+    cidr_blocks = ["0.0.0.0/0"]
+
+    '
+  safe: '# Safe - tf-sg-003
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

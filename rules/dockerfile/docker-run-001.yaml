@@ -1,0 +1,15 @@
+id: docker-run-001
+name: curl pipe bash
+severity: critical
+category: cmdi
+confidence: critical
+cwe: CWE-78
+languages:
+- dockerfile
+message: curl | bash in RUN executes remote code without verification. Download and verify first.
+patterns:
+- type: regex
+  pattern: RUN\s+.*curl\s+.*\|\s*(bash|sh)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

@@ -1,0 +1,15 @@
+id: lua-ssl-001
+name: ssl_certificate without verify
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-295
+languages:
+- lua
+message: SSL without peer verification is vulnerable to MITM. Enable verification.
+patterns:
+- type: regex
+  pattern: ssl\.verify_peer\s*=\s*false
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/295.html

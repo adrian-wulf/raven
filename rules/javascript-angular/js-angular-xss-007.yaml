@@ -1,0 +1,19 @@
+id: js-angular-xss-007
+name: '[innerHtml] with user data'
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: '[innerHtml] property binding with user data enables XSS. Sanitize content before binding.'
+patterns:
+- type: regex
+  pattern: \[innerHtml\]\s*=\s*[\"\'][^\"\']*\{\{\s*(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,18 @@
+id: py-flask-log-001
+name: Log injection
+severity: medium
+category: log-forging
+confidence: medium
+cwe: CWE-117
+languages:
+- python
+message: User input in log messages can inject false log entries. Sanitize input before logging.
+patterns:
+- type: regex
+  pattern: app\.logger\.(info|debug|warning|error)\s*\(\s*(f[\"\']|.*\+\s*request\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/117.html
+frameworks:
+- flask

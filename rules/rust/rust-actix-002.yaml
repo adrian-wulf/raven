@@ -1,0 +1,23 @@
+id: rust-actix-002
+name: Actix Middleware Bypass
+description: |
+  Detects broken-authentication issues in RUST code.
+severity: medium
+category: broken-authentication
+confidence: medium
+cwe: CWE-287
+languages: [rust]
+frameworks: [actix]
+message: |
+  Middleware must be registered to protect all relevant routes.
+patterns:
+  - type: regex
+    pattern: '(?i)App::new\s*\(\).*wrap\s*\(\)(?!.*auth)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)App::new.*route(?!.*wrap)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/287.html

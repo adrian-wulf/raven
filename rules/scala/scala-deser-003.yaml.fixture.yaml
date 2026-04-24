@@ -1,0 +1,15 @@
+rule_id: scala-deser-003
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-deser-003
+
+    new ObjectInputStream(stream).readObject()
+
+    '
+  safe: '// Safe - scala-deser-003
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

@@ -1,0 +1,23 @@
+id: swift-ios-020
+name: URLSession Delegate without Auth Challenge
+description: |
+  Detects weak-cryptography issues in SWIFT code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-295
+languages: [swift]
+frameworks: [ios]
+message: |
+  URLSession without implementing auth challenge allows invalid certs.
+patterns:
+  - type: regex
+    pattern: '(?i)URLSession.*didReceive\s+challenge(?!.*evaluate)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)URLSession.*delegate(?!.*authenticationChallenge)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

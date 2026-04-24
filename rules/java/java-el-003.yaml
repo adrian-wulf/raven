@@ -1,0 +1,27 @@
+id: java-el-003
+name: JSF Value Expression Injection
+description: |
+  Detects expression-injection issues in JAVA code.
+severity: high
+category: expression-injection
+confidence: high
+cwe: CWE-917
+languages: [java]
+frameworks: [jsf]
+message: |
+  JSF ValueExpressions with user input can modify bean properties.
+patterns:
+  - type: regex
+    pattern: '(?i)FacesContext.*getApplication.*createValueExpression'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ValueExpression.*getValue.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)MethodExpression.*invoke.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

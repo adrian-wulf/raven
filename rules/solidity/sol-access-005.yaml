@@ -1,0 +1,15 @@
+id: sol-access-005
+name: Ownable without renounceOwnership event
+severity: low
+category: logging
+confidence: low
+cwe: CWE-778
+languages:
+- solidity
+message: renounceOwnership without event makes ownership changes untraceable. Emit event.
+patterns:
+- type: regex
+  pattern: function\s+renounceOwnership\s*\([^)]*\)[^{]*\{[^}]*_transferOwnership\s*\(\s*address\s*\(\s*0\s*\)\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

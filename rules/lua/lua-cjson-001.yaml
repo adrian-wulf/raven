@@ -1,0 +1,16 @@
+id: lua-cjson-001
+name: cjson.decode without pcall
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- lua
+message: cjson.decode without pcall can crash on invalid JSON. Wrap in pcall.
+patterns:
+- type: regex
+  pattern: cjson\.decode\s*\(\s*(?P<input>ngx\.var|body|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/391.html

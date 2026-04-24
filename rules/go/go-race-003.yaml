@@ -1,0 +1,26 @@
+id: go-race-003
+name: Map Access Without Mutex
+description: |
+  Detects race-condition issues in GO code.
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages: [go]
+message: |
+  Concurrent map access without synchronization causes data races. Use sync.Map or mutex.
+patterns:
+  - type: regex
+    pattern: '(?i)var\s+\w+\s+map\['
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\w+\[.*\]\s*=\s*.*//.*no.*mutex'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)go\s+func\s*\(\)\s*\{[^}]*map\[.*\]\s*='
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

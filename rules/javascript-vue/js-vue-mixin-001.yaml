@@ -1,0 +1,18 @@
+id: js-vue-mixin-001
+name: Mixin without auth check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: Global mixin without authentication check may expose functionality. Add auth checks.
+patterns:
+- type: regex
+  pattern: Vue\.mixin\s*\(\s*\{(?![\s\S]{0,200}auth)(?![\s\S]{0,200}authenticate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- vue

@@ -1,0 +1,13 @@
+id: go-adv-011
+name: Go Weak Random Number Generation
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-338"
+languages: [go]
+message: "math/rand used for security-sensitive randomness. Use crypto/rand for all security purposes."
+patterns:
+  - type: regex
+    pattern: "math/rand\\.Intn|math/rand\\.Seed|rand\\.Intn|rand\\.Seed.*time"
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

@@ -1,0 +1,22 @@
+id: c-cmd-002
+name: popen User Input
+description: |
+  Detects command-injection issues in C code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [c]
+message: |
+  popen() with user input allows command injection.
+patterns:
+  - type: regex
+    pattern: '(?i)popen\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)popen\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

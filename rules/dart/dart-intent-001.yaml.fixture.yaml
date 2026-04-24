@@ -1,0 +1,15 @@
+rule_id: dart-intent-001
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-intent-001
+
+    db.rawQuery("SELECT * FROM users WHERE id = $userId");
+
+    '
+  safe: '// Safe - dart-intent-001
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

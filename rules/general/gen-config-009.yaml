@@ -1,0 +1,13 @@
+id: gen-config-009
+name: Database Password in Connection String
+severity: critical
+category: config
+confidence: high
+cwe: "CWE-798"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Database password in connection string. Use secret manager or environment variables for credentials."
+patterns:
+  - type: regex
+    pattern: "(postgres|mysql|mongodb|redis)://[^:]+:[^@]+@"
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

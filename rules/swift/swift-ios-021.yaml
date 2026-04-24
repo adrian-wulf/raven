@@ -1,0 +1,23 @@
+id: swift-ios-021
+name: Background Fetch Leak
+description: |
+  Detects information-disclosure issues in SWIFT code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-200
+languages: [swift]
+frameworks: [ios]
+message: |
+  Background fetch can expose data through notifications.
+patterns:
+  - type: regex
+    pattern: '(?i)application\s*\(\s*.*performFetchWithCompletionHandler'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)BGAppRefreshTask.*fetch(?!.*encrypt)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

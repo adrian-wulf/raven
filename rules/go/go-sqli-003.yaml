@@ -1,0 +1,23 @@
+id: go-sqli-003
+name: Bun ORM Raw SQL Injection
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+frameworks: [bun]
+message: |
+  Avoid using NewRaw/Query with string concatenation in Bun. Use parameterized queries.
+patterns:
+  - type: regex
+    pattern: '(?i)bun\.NewRaw\s*\(\s*[`"][^`"]*(SELECT|INSERT|UPDATE|DELETE)[^`"]*[`"]\s*[^,)]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)db\.NewRaw\s*\([^)]*fmt\.Sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

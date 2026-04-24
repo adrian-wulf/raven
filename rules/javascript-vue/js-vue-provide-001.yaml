@@ -1,0 +1,19 @@
+id: js-vue-provide-001
+name: Provide/Inject without validation
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: provide/inject with user data without validation can allow injection. Validate.
+patterns:
+- type: regex
+  pattern: provide\s*\(\s*[\"\']\w+[\"\']\s*,\s*(?P<input>user|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- vue

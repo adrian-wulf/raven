@@ -1,0 +1,26 @@
+id: c-int-003
+name: size_t Overflow
+description: |
+  Detects integer-overflow issues in C code.
+severity: high
+category: integer-overflow
+confidence: high
+cwe: CWE-190
+languages: [c]
+message: |
+  size_t operations can overflow, leading to undersized allocations.
+patterns:
+  - type: regex
+    pattern: '(?i)size_t\s+\w+\s*=\s*.*\*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)malloc\s*\(\s*.*\*\s*.*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)calloc\s*\(\s*.*,\s*.*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/190.html

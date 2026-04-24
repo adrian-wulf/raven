@@ -1,0 +1,17 @@
+id: py-flask-headers-001
+name: Missing security headers
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-693
+languages:
+- python
+message: Flask response without security headers is missing protection. Add CSP, HSTS, X-Frame-Options.
+patterns:
+- type: regex
+  pattern: '@app\.(route|get|post)\s*\([^)]+\)\s*\n\s*def\s+\w+.*\n.*return\s+[\"\'''']'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- flask

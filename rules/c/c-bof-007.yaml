@@ -1,0 +1,18 @@
+id: c-bof-007
+name: strncat Size Miscalculation
+description: |
+  Detects buffer-overflow issues in C code.
+severity: high
+category: buffer-overflow
+confidence: medium
+cwe: CWE-193
+languages: [c]
+message: |
+  strncat size should be remaining space, not total buffer size.
+patterns:
+  - type: regex
+    pattern: '(?i)strncat\s*\(\s*[^,]+,\s*[^,]+,\s*sizeof'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/193.html

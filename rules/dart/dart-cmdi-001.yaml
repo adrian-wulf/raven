@@ -1,0 +1,16 @@
+id: dart-cmdi-001
+name: Process.run with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- dart
+message: Process.run with user input enables command injection. Use argument list instead of shell.
+patterns:
+- type: regex
+  pattern: Process\.run\s*\(\s*[\"\'][^\"\']*\$\{?\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

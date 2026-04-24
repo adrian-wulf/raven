@@ -1,0 +1,16 @@
+id: dart-input-002
+name: User input path traversal
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- dart
+message: User input used as file path can enable directory traversal. Sanitize paths.
+patterns:
+- type: regex
+  pattern: File\s*\(\s*.*controller\.text|File\s*\(\s*.*input
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

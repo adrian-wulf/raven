@@ -1,0 +1,22 @@
+id: cpp-except-002
+name: Empty Catch Block
+description: |
+  Detects error-handling issues in CPP code.
+severity: medium
+category: error-handling
+confidence: medium
+cwe: CWE-391
+languages: [cpp]
+message: |
+  Empty catch blocks swallow exceptions. Log and handle properly.
+patterns:
+  - type: regex
+    pattern: '(?i)catch\s*\(.*\)\s*\{\s*\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)catch\s*\(\.\.\.\)\s*\{\s*\}'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/391.html

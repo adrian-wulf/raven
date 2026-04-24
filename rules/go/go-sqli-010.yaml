@@ -1,0 +1,26 @@
+id: go-sqli-010
+name: database/sql Prepare with Concatenation
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+message: |
+  Prepare statements should not be built with string concatenation. Use fixed query strings.
+patterns:
+  - type: regex
+    pattern: '(?i)db\.Prepare\s*\(\s*[`"][^`"]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tx\.Prepare\s*\(\s*.*fmt\.Sprintf'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)stmt\.Exec\s*\(\s*.*fmt\.Sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

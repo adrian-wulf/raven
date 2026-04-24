@@ -1,0 +1,18 @@
+id: js-angular-pipe-001
+name: Custom pipe without sanitization
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Custom pipe that transforms user data without sanitization can enable XSS. Sanitize output.
+patterns:
+- type: regex
+  pattern: transform\s*\(\s*value\s*:\s*string\s*\)\s*:\s*string\s*\{(?!.*sanitize)(?!.*escape)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,22 @@
+id: cpp-io-002
+name: operator new Overflow
+description: |
+  Detects integer-overflow issues in CPP code.
+severity: high
+category: integer-overflow
+confidence: high
+cwe: CWE-190
+languages: [cpp]
+message: |
+  Operator new with overflowed size allocates wrong size.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+\w+\[.*\*.*\]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)operator\s+new\s*\(.*\*'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/190.html

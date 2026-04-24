@@ -1,0 +1,22 @@
+id: php-eval-002
+name: assert User Input Code Execution
+description: |
+  Detects code-injection issues in PHP code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-94
+languages: [php]
+message: |
+  assert() with user input evaluates and executes PHP code.
+patterns:
+  - type: regex
+    pattern: '(?i)assert\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)assert\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

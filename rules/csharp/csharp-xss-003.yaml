@@ -1,0 +1,23 @@
+id: csharp-xss-003
+name: Literal.Text User Data
+description: |
+  Detects xss issues in CSHARP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Setting Literal.Text with user data without encoding enables XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)Literal\.Text\s*=\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Literal\.Text\s*=\s*.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

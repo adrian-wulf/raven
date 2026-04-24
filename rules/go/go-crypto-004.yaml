@@ -1,0 +1,26 @@
+id: go-crypto-004
+name: Weak Random with math/rand for Security
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-338
+languages: [go]
+message: |
+  Use crypto/rand for security-sensitive operations. math/rand is predictable.
+patterns:
+  - type: regex
+    pattern: '(?i)math/rand\.Intn\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)math/rand\.Seed\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\.NewSource\s*\(time\.Now'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

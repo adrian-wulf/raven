@@ -1,0 +1,17 @@
+id: py-django-auth-001
+name: Missing login_required decorator
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: View without @login_required may be accessible to unauthenticated users. Add authentication.
+patterns:
+- type: regex
+  pattern: ^def\s+(?P<view>\w+)\s*\(\s*request\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- django

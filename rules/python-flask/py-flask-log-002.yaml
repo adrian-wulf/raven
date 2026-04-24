@@ -1,0 +1,17 @@
+id: py-flask-log-002
+name: Sensitive data in log
+severity: high
+category: log-forging
+confidence: high
+cwe: CWE-532
+languages:
+- python
+message: Logging sensitive data like passwords can expose secrets. Never log sensitive information.
+patterns:
+- type: regex
+  pattern: logger\.(info|debug)\s*\(\s*[\"\'].*(password|secret|token|api_key|credit_card)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/532.html
+frameworks:
+- flask

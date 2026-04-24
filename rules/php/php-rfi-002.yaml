@@ -1,0 +1,22 @@
+id: php-rfi-002
+name: file_get_contents User URL RFI
+description: |
+  Detects file-inclusion issues in PHP code.
+severity: high
+category: file-inclusion
+confidence: high
+cwe: CWE-98
+languages: [php]
+message: |
+  file_get_contents with user URLs can read remote files or SSRF.
+patterns:
+  - type: regex
+    pattern: '(?i)file_get_contents\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)file_get_contents\s*\(.*[''"]http.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/98.html

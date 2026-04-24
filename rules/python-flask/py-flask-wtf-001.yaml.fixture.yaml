@@ -1,0 +1,13 @@
+rule_id: py-flask-wtf-001
+language: python
+examples:
+  unsafe: "# Unsafe - py-flask-wtf-001\n@csrf_exempt\ndef my_view(request):\n    pass\n"
+  safe: '# Safe - py-flask-wtf-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

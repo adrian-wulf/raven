@@ -1,0 +1,17 @@
+id: py-django-crypto-001
+name: MD5 in Django
+severity: medium
+category: crypto
+confidence: high
+cwe: CWE-328
+languages:
+- python
+message: MD5 is cryptographically broken. Use SHA-256 or stronger for hashing.
+patterns:
+- type: regex
+  pattern: hashlib\.md5\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/328.html
+frameworks:
+- django

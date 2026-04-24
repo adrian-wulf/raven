@@ -1,0 +1,17 @@
+id: bash-cmdi-001
+name: eval with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: eval with user input enables arbitrary command execution. Never eval untrusted input.
+patterns:
+- type: regex
+  pattern: eval\s+\$?(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

@@ -1,0 +1,27 @@
+id: csharp-mass-001
+name: Bind Include All Properties
+description: |
+  Detects mass-assignment issues in CSHARP code.
+severity: high
+category: mass-assignment
+confidence: high
+cwe: CWE-915
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  [Bind] with Include='*' allows mass assignment of all properties.
+patterns:
+  - type: regex
+    pattern: '(?i)\[Bind\s*\(\s*Include.*\*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[Bind\s*\(\s*Include.*all'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)TryUpdateModelAsync.*(?!exclude)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

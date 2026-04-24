@@ -1,0 +1,23 @@
+id: kotlin-android-019
+name: Android Backup Enabled
+description: |
+  Detects information-disclosure issues in KOTLIN code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-200
+languages: [kotlin]
+frameworks: [android]
+message: |
+  allowBackup=true can expose app data through backup mechanisms.
+patterns:
+  - type: regex
+    pattern: '(?i)android:allowBackup=[''"]true[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)allowBackup\s*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

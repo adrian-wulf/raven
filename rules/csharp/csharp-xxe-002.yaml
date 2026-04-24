@@ -1,0 +1,22 @@
+id: csharp-xxe-002
+name: XmlReaderSettings without Validation
+description: |
+  Detects xxe issues in CSHARP code.
+severity: high
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [csharp]
+message: |
+  XmlReader without explicit XXE protection is vulnerable.
+patterns:
+  - type: regex
+    pattern: '(?i)XmlReader\.Create\s*\(\s*.*Stream(?!.*DtdProcessing)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)XmlReaderSettings.*(?!DtdProcessing)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

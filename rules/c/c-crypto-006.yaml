@@ -1,0 +1,22 @@
+id: c-crypto-006
+name: Insufficient Key Length RSA
+description: |
+  Detects weak-cryptography issues in C code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-326
+languages: [c]
+message: |
+  RSA keys shorter than 2048 bits are insecure. Use 3072+ bits.
+patterns:
+  - type: regex
+    pattern: '(?i)RSA_generate_key_ex\s*\(.*,\s*(512|768|1024)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)EVP_PKEY_CTX_set_rsa_keylen\s*\(.*,\s*(512|768|1024)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/326.html

@@ -1,0 +1,18 @@
+id: py-flask-eval-002
+name: exec in route
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- python
+message: exec() with user input enables arbitrary code execution. Never use exec with untrusted input.
+patterns:
+- type: regex
+  pattern: exec\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- flask

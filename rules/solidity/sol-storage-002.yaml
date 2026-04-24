@@ -1,0 +1,15 @@
+id: sol-storage-002
+name: Storage collision
+severity: high
+category: storage
+confidence: high
+cwe: CWE-843
+languages:
+- solidity
+message: Storage variable collision in upgradeable contracts can corrupt data. Use storage gaps.
+patterns:
+- type: regex
+  pattern: uint\d+\s*\[\s*50\s*\]\s+private\s+__gap
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/843.html

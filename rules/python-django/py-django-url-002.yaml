@@ -1,0 +1,18 @@
+id: py-django-url-002
+name: URL without sanitization
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: URL routing without input sanitization may allow path traversal or injection. Sanitize inputs.
+patterns:
+- type: regex
+  pattern: path\s*\(\s*(f[\"\']|.*\+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

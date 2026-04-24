@@ -1,0 +1,16 @@
+id: dart-ssrf-001
+name: http.get with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- dart
+message: http.get with user-controlled URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: http\.(get|post|put|delete)\s*\(\s*(?P<input>user|url|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

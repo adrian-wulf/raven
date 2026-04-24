@@ -1,0 +1,22 @@
+id: cpp-except-001
+name: Exception Catch by Value
+description: |
+  Detects performance issues in CPP code.
+severity: low
+category: performance
+confidence: low
+cwe: CWE-398
+languages: [cpp]
+message: |
+  Catching exceptions by value causes slicing. Catch by const reference.
+patterns:
+  - type: regex
+    pattern: '(?i)catch\s*\(\s*\w+\s+(?!const\s*&)\w+\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)catch\s*\(\s*std::\w+\s+\w+\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/398.html

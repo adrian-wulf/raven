@@ -1,0 +1,13 @@
+rule_id: py-flask-request-002
+language: python
+examples:
+  unsafe: "# Unsafe - py-flask-request-002\ndef process(data):\n    return data['value']\n"
+  safe: '# Safe - py-flask-request-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

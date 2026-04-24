@@ -1,0 +1,22 @@
+id: go-ssrf-006
+name: Reverse Proxy SSRF
+description: |
+  Detects ssrf issues in GO code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [go]
+message: |
+  Reverse proxies can be abused for SSRF if backend URLs are user-controlled.
+patterns:
+  - type: regex
+    pattern: '(?i)httputil\.NewSingleHostReverseProxy\s*\(\s*.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)httputil\.ReverseProxy.*Director.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

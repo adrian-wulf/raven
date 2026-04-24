@@ -1,0 +1,27 @@
+id: csharp-xss-004
+name: ASPX Expression User Data
+description: |
+  Detects xss issues in CSHARP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  ASPX <%= %> expressions with user data don't auto-escape.
+patterns:
+  - type: regex
+    pattern: '<%\s*=\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '<%\s*=\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '<%\s*=\s*.*Model'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

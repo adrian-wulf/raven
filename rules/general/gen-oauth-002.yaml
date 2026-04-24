@@ -1,0 +1,13 @@
+id: gen-oauth-002
+name: OAuth Redirect URI Not Validated
+severity: critical
+category: auth
+confidence: high
+cwe: "CWE-601"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "OAuth redirect URI not validated against allowlist. This enables authorization code interception attacks."
+patterns:
+  - type: regex
+    pattern: "(redirect_uri|callback|redirect)\\s*[=:]\\s*req\\.(query|body|params)"
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

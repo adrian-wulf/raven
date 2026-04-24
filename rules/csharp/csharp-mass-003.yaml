@@ -1,0 +1,23 @@
+id: csharp-mass-003
+name: AutoMapper Unmapped Properties
+description: |
+  Detects mass-assignment issues in CSHARP code.
+severity: medium
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [csharp]
+frameworks: [automapper]
+message: |
+  AutoMapper without explicit configuration can map unexpected properties.
+patterns:
+  - type: regex
+    pattern: '(?i)Mapper\.Map<.*>\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)CreateMap<.*>\s*\(\).*(?!ForMember)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

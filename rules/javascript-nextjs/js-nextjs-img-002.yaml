@@ -1,0 +1,18 @@
+id: js-nextjs-img-002
+name: next/image without sizes
+severity: low
+category: config
+confidence: low
+cwe: CWE-602
+languages:
+- javascript
+- typescript
+message: next/image without sizes attribute causes layout shift. Add sizes.
+patterns:
+- type: regex
+  pattern: <Image[^>]*>(?!.*sizes)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/602.html
+frameworks:
+- nextjs

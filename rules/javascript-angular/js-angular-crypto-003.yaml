@@ -1,0 +1,18 @@
+id: js-angular-crypto-003
+name: MD5 hashing
+severity: medium
+category: crypto
+confidence: high
+cwe: CWE-328
+languages:
+- javascript
+- typescript
+message: MD5 is cryptographically broken. Use SHA-256 or stronger.
+patterns:
+- type: regex
+  pattern: CryptoJS\.MD5\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/328.html
+frameworks:
+- angular

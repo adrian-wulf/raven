@@ -1,0 +1,16 @@
+id: ex-eval-001
+name: Code.eval_string
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- elixir
+message: Code.eval_string with user input enables arbitrary code execution. Never eval untrusted input.
+patterns:
+- type: regex
+  pattern: Code\.eval_string\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

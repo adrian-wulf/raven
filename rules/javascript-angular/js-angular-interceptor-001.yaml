@@ -1,0 +1,18 @@
+id: js-angular-interceptor-001
+name: Interceptor without error catch
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- javascript
+- typescript
+message: HTTP interceptor without catchError can crash app. Add error handling.
+patterns:
+- type: regex
+  pattern: intercept\s*\([^)]*\)\s*:\s*Observable
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html
+frameworks:
+- angular

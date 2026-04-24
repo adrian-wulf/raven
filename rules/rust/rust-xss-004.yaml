@@ -1,0 +1,23 @@
+id: rust-xss-004
+name: maud Raw HTML Output
+description: |
+  Detects xss issues in RUST code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [rust]
+frameworks: [maud]
+message: |
+  maud PreEscaped with user content bypasses escaping.
+patterns:
+  - type: regex
+    pattern: '(?i)maud::PreEscaped\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)maud::html!.*PreEscaped.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

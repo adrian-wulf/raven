@@ -1,0 +1,23 @@
+id: go-gin-004
+name: Gin Cookie without Secure/HttpOnly
+description: |
+  Detects insecure-cookie issues in GO code.
+severity: medium
+category: insecure-cookie
+confidence: medium
+cwe: CWE-614
+languages: [go]
+frameworks: [gin]
+message: |
+  Always set Secure and HttpOnly flags on cookies in Gin.
+patterns:
+  - type: regex
+    pattern: '(?i)c\.SetCookie\s*\([^,)]*,[^,)]*,[^,)]*,[^,)]*,[^,)]*,[^,)]*,[^,)]*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)c\.SetCookie\s*\([^)]*SameSiteNone'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

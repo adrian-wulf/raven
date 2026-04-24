@@ -1,0 +1,17 @@
+id: py-flask-ssti-003
+name: autoescape=False in template
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: Setting autoescape=False disables XSS protection in Jinja2 templates. Keep autoescape enabled.
+patterns:
+- type: regex
+  pattern: autoescape\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- flask

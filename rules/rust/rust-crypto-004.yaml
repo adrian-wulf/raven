@@ -1,0 +1,23 @@
+id: rust-crypto-004
+name: ring::digest Weak Hash
+description: |
+  Detects weak-cryptography issues in RUST code.
+severity: medium
+category: weak-cryptography
+confidence: medium
+cwe: CWE-328
+languages: [rust]
+frameworks: [ring]
+message: |
+  SHA-1 is deprecated. Use SHA-256 or SHA-384 for new code.
+patterns:
+  - type: regex
+    pattern: '(?i)ring::digest::SHA1_FOR_LEGACY_USE_ONLY'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)digest::SHA256.*(?!FOR_LEGACY)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/328.html

@@ -1,0 +1,27 @@
+id: java-xxe-011
+name: Digester XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+frameworks: [apache]
+message: |
+  Apache Commons Digester processes XML without XXE protection by default.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+Digester'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)digester\.parse\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Digester.*setValidating.*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

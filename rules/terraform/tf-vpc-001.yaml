@@ -1,0 +1,16 @@
+id: tf-vpc-001
+name: Default VPC security group
+severity: high
+category: network
+confidence: high
+cwe: CWE-284
+languages:
+- terraform
+- hcl
+message: Default VPC security group allows all traffic. Create custom security groups.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_default_security_group[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

@@ -1,0 +1,15 @@
+id: docker-escape-001
+name: Docker escape via privileged
+severity: critical
+category: privilege
+confidence: critical
+cwe: CWE-250
+languages:
+- dockerfile
+message: Docker container with --privileged flag can escape to host. Use capabilities.
+patterns:
+- type: regex
+  pattern: --privileged
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

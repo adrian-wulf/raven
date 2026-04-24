@@ -1,0 +1,17 @@
+id: py-flask-session-003
+name: PERMANENT_SESSION_LIFETIME too long
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-613
+languages:
+- python
+message: Very long session lifetime increases attack window. Set reasonable expiration (e.g., 1 hour).
+patterns:
+- type: regex
+  pattern: PERMANENT_SESSION_LIFETIME\s*=\s*(timedelta\s*\(\s*(days|hours)\s*=\s*\d{2,}\)|\d{5,})
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/613.html
+frameworks:
+- flask

@@ -1,0 +1,23 @@
+id: java-struts-003
+name: HttpServletResponse Header Injection
+description: |
+  Detects http-header-injection issues in JAVA code.
+severity: high
+category: http-header-injection
+confidence: high
+cwe: CWE-644
+languages: [java]
+frameworks: [servlet]
+message: |
+  User data in response headers can inject newlines. Use setHeader with validation.
+patterns:
+  - type: regex
+    pattern: '(?i)response\.setHeader\s*\(\s*[`"][^`"]+[`"]\s*,\s*.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)response\.addHeader\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/644.html

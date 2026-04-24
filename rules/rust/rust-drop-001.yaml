@@ -1,0 +1,22 @@
+id: rust-drop-001
+name: Custom Drop with Panic
+description: |
+  Detects denial-of-service issues in RUST code.
+severity: high
+category: denial-of-service
+confidence: high
+cwe: CWE-248
+languages: [rust]
+message: |
+  Panicking in Drop implementations can abort the program.
+patterns:
+  - type: regex
+    pattern: '(?i)impl\s+Drop\s+for'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fn\s+drop\s*\(&mut\s+self\).*panic'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/248.html

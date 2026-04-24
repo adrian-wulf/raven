@@ -1,0 +1,26 @@
+id: php-lfi-003
+name: include with Path Traversal
+description: |
+  Detects file-inclusion issues in PHP code.
+severity: critical
+category: file-inclusion
+confidence: critical
+cwe: CWE-22
+languages: [php]
+message: |
+  Path traversal in include/require can read arbitrary files.
+patterns:
+  - type: regex
+    pattern: '(?i)include\s*\(.*[''"].*\\.\\..*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)require\s*\(.*[''"].*\\.\\..*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)file\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

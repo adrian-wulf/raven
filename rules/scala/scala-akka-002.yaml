@@ -1,0 +1,15 @@
+id: scala-akka-002
+name: Akka deserialization
+severity: critical
+category: deserialization
+confidence: high
+cwe: CWE-502
+languages:
+- scala
+message: Akka remoting with Java serialization can allow remote code execution. Use protobuf.
+patterns:
+- type: regex
+  pattern: akka\.actor\.allow-java-serialization\s*=\s*on
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html

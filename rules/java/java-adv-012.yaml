@@ -1,0 +1,13 @@
+id: java-adv-012
+name: Java Deserialization Apache Commons Collections
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-502"
+languages: [java]
+message: "Known dangerous deserialization gadget chain (Apache Commons Collections). Use ObjectInputFilter or avoid Java serialization."
+patterns:
+  - type: regex
+    pattern: "ObjectInputStream.*readObject|commons-collections.*3\\.2\\.1|commons-collections4.*4\\.0"
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

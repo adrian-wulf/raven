@@ -1,0 +1,17 @@
+rule_id: docker-run-001
+language: dockerfile
+examples:
+  unsafe: '# Unsafe - docker-run-001
+
+    FROM ubuntu:latest
+
+    '
+  safe: '# Safe - docker-run-001
+
+    # Use pinned versions, non-root user, secrets mount
+
+    FROM ubuntu:22.04
+
+    USER appuser
+
+    '

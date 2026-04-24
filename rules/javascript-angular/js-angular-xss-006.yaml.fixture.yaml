@@ -1,0 +1,15 @@
+rule_id: js-angular-xss-006
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-xss-006
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-angular-xss-006
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

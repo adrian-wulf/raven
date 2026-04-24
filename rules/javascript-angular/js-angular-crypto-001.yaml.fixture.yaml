@@ -1,0 +1,15 @@
+rule_id: js-angular-crypto-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-crypto-001
+
+    const token = Math.random();
+
+    '
+  safe: '// Safe - js-angular-crypto-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

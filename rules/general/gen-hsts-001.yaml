@@ -1,0 +1,13 @@
+id: gen-hsts-001
+name: Missing HSTS Header
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-319"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "HTTP Strict Transport Security not enforced. Add Strict-Transport-Security header to prevent downgrade attacks."
+patterns:
+  - type: regex
+    pattern: "(res\\.set|response\\.set|w\\.Header\\(\\)).*(?!Strict-Transport-Security)"
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

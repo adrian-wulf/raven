@@ -1,0 +1,17 @@
+id: py-fastapi-events-001
+name: Event handler without error handling
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- python
+message: Event handler without try/except can crash silently. Add error handling.
+patterns:
+- type: regex
+  pattern: '@app\.(on_event|add_event_handler)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html
+frameworks:
+- fastapi

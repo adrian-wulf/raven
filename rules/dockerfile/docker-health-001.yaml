@@ -1,0 +1,15 @@
+id: docker-health-001
+name: Missing HEALTHCHECK
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- dockerfile
+message: No HEALTHCHECK means container health is not monitored. Add HEALTHCHECK instruction.
+patterns:
+- type: regex
+  pattern: ^((?!HEALTHCHECK\s).)*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

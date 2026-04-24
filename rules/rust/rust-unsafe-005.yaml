@@ -1,0 +1,22 @@
+id: rust-unsafe-005
+name: static mut Access
+description: |
+  Detects race-condition issues in RUST code.
+severity: high
+category: race-condition
+confidence: high
+cwe: CWE-362
+languages: [rust]
+message: |
+  static mut requires unsafe and is prone to data races. Use interior mutability.
+patterns:
+  - type: regex
+    pattern: '(?i)static\s+mut'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)unsafe\s*\{.*STATIC'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

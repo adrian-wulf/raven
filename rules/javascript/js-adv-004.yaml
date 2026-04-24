@@ -1,0 +1,13 @@
+id: js-adv-004
+name: JavaScript vm2 Sandbox Escape Risk
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [javascript, typescript]
+message: "vm2 has known sandbox escape vulnerabilities. Do not use vm2 for untrusted code. Use isolated-vm or quickjs-emscripten."
+patterns:
+  - type: regex
+    pattern: 'require\\s*\\(\\s*[\\''"]vm2[\\''"]\\s*\\)|new\\s+VM|new\\s+NodeVM'
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

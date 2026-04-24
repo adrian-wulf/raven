@@ -1,0 +1,23 @@
+id: csharp-aspnet-011
+name: ASP.NET ViewComponents Injection
+description: |
+  Detects xss issues in CSHARP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  ViewComponents rendering user data must encode output.
+patterns:
+  - type: regex
+    pattern: '(?i)ViewComponent.*Invoke.*return\s+Content\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ViewComponent.*InvokeAsync.*return.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

@@ -1,0 +1,15 @@
+id: ex-phoenix-003
+name: Phoenix controller action without params validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- elixir
+message: Controller action without params validation allows injection. Use changeset.
+patterns:
+- type: regex
+  pattern: def\s+\w+\s*\(\s*conn\s*,\s*params\s*\)(?!.*changeset)(?!.*cast)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

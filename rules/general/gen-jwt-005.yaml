@@ -1,0 +1,13 @@
+id: gen-jwt-005
+name: RS256 to HS256 Algorithm Switch Attack
+severity: critical
+category: auth
+confidence: high
+cwe: "CWE-327"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "JWT allows algorithm confusion attack (RS256/HS256 switch). Explicitly specify allowed algorithms."
+patterns:
+  - type: regex
+    pattern: 'verify\\s*\\(.*[,\\s]*\\[\\s*[\\''"](HS256|RS256)[\\''"]\\s*\\]|jwt_decode.*algo'
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

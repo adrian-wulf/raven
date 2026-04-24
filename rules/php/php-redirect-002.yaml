@@ -1,0 +1,18 @@
+id: php-redirect-002
+name: header Location without Exit
+description: |
+  Detects open-redirect issues in PHP code.
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages: [php]
+message: |
+  Missing exit after header('Location') allows continued script execution.
+patterns:
+  - type: regex
+    pattern: '(?i)header\s*\(.*[''"]Location:.*[''"]\s*\)(?!.*exit)(?!.*die)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

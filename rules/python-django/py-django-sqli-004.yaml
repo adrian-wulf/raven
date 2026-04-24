@@ -1,0 +1,18 @@
+id: py-django-sqli-004
+name: cursor.execute() with string concatenation
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: Cursor execute() with string concatenation allows SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: cursor\.execute\s*\(\s*[\"\'].*\+\s*(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

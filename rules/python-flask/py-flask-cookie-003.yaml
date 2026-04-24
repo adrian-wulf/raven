@@ -1,0 +1,17 @@
+id: py-flask-cookie-003
+name: Cookie without samesite
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-1275
+languages:
+- python
+message: Cookie without samesite is vulnerable to CSRF. Set samesite='Lax' or 'Strict'.
+patterns:
+- type: regex
+  pattern: set_cookie\s*\(\s*[\"\'][^\"\']+[\"\'][^)]*\)(?!.*samesite)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1275.html
+frameworks:
+- flask

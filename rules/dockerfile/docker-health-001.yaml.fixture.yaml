@@ -1,0 +1,17 @@
+rule_id: docker-health-001
+language: dockerfile
+examples:
+  unsafe: '# Unsafe - docker-health-001
+
+    # No HEALTHCHECK
+
+    '
+  safe: '# Safe - docker-health-001
+
+    # Use pinned versions, non-root user, secrets mount
+
+    FROM ubuntu:22.04
+
+    USER appuser
+
+    '

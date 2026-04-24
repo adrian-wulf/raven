@@ -1,0 +1,23 @@
+id: java-cors-003
+name: Spring CORS Mapping All Methods
+description: |
+  Detects cors-misconfiguration issues in JAVA code.
+severity: medium
+category: cors-misconfiguration
+confidence: medium
+cwe: CWE-942
+languages: [java]
+frameworks: [spring]
+message: |
+  CORS mapping with all methods and origins is overly permissive.
+patterns:
+  - type: regex
+    pattern: '(?i)registry\.addMapping\s*\(\s*[`"]\/\*\*[`"]\s*\).*allowedMethods\s*\(\s*[`"]\*[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)allowedMethods\s*\(\s*`"GET`"\s*,\s*`"POST`"\s*,\s*`"DELETE`"\s*,\s*`"PUT`"\s*,\s*`"PATCH`"\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/942.html

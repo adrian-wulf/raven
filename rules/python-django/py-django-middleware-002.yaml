@@ -1,0 +1,17 @@
+id: py-django-middleware-002
+name: Middleware ordering issue
+severity: low
+category: config
+confidence: low
+cwe: CWE-657
+languages:
+- python
+message: Incorrect middleware ordering can cause security bypass. Authentication middleware should be early.
+patterns:
+- type: regex
+  pattern: MIDDLEWARE\s*=\s*\[\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/657.html
+frameworks:
+- django

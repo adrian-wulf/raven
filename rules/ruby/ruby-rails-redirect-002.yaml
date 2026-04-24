@@ -1,0 +1,23 @@
+id: ruby-rails-redirect-002
+name: Rails redirect_to without Only Path
+description: |
+  Detects open-redirect issues in RUBY code.
+severity: medium
+category: open-redirect
+confidence: medium
+cwe: CWE-601
+languages: [ruby]
+frameworks: [rails]
+message: |
+  redirect_to without only_path can redirect to external domains.
+patterns:
+  - type: regex
+    pattern: '(?i)redirect_to\s+.*url_for'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)redirect_to\s+.*params\[.*host'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

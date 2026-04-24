@@ -13,7 +13,7 @@ message: |
   Use parameterized queries or query builders provided by your ORM.
 patterns:
   - type: regex
-    pattern: 'format!\s*\(\s*["''][^"'']*(SELECT|INSERT|UPDATE|DELETE)'
+    pattern: 'format!\s*\(\s*["''''][^"'''']*(SELECT|INSERT|UPDATE|DELETE)'
     where:
       - not-test-file: true
   - type: regex

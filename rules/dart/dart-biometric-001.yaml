@@ -1,0 +1,15 @@
+id: dart-biometric-001
+name: Biometric auth without CryptoObject
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-306
+languages:
+- dart
+message: Biometric auth without CryptoObject can be bypassed. Use authenticated encryption.
+patterns:
+- type: regex
+  pattern: localAuth\.authenticate\s*\(\s*\)(?!.*stickyAuth)(?!.*sensitiveTransaction)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

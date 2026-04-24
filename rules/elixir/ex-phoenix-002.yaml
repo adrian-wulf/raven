@@ -1,0 +1,15 @@
+id: ex-phoenix-002
+name: Allow upload without validation
+severity: high
+category: file-upload
+confidence: high
+cwe: CWE-434
+languages:
+- elixir
+message: allow_upload without file type validation allows any upload. Validate extensions.
+patterns:
+- type: regex
+  pattern: allow_upload\s*\(\s*socket\s*,\s*:\w+\s*\)(?!.*accept)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/434.html

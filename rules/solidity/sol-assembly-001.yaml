@@ -1,0 +1,15 @@
+id: sol-assembly-001
+name: Inline assembly
+severity: medium
+category: assembly
+confidence: medium
+cwe: CWE-94
+languages:
+- solidity
+message: Inline assembly bypasses Solidity safety checks. Use with extreme caution.
+patterns:
+- type: regex
+  pattern: assembly\s*\{
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/94.html

@@ -1,0 +1,27 @@
+id: swift-ios-002
+name: WKWebView JavaScript Injection
+description: |
+  Detects xss issues in SWIFT code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [swift]
+frameworks: [ios]
+message: |
+  evaluateJavaScript with user content can inject malicious scripts.
+patterns:
+  - type: regex
+    pattern: '(?i)evaluateJavaScript\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)evaluateJavaScript\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)webView\.evaluateJavaScript\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

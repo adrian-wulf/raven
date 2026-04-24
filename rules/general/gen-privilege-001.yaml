@@ -1,0 +1,13 @@
+id: gen-privilege-001
+name: Privilege Escalation via User-Controlled Role
+severity: critical
+category: authz
+confidence: high
+cwe: "CWE-269"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "User can modify their own role/privileges. Role assignment must be server-side and admin-only."
+patterns:
+  - type: regex
+    pattern: "(role|privilege|permission|admin|isAdmin)\\s*[=:]\\s*req\\.(body|query|params)"
+references:
+  - https://cwe.mitre.org/data/definitions/269.html

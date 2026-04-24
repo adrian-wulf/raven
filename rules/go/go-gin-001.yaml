@@ -1,0 +1,27 @@
+id: go-gin-001
+name: Gin Parameter SQL Injection
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+frameworks: [gin]
+message: |
+  Use parameterized queries with Gin context parameters. Never concatenate into SQL.
+patterns:
+  - type: regex
+    pattern: '(?i)c\.Query\s*\([^)]*\).*SELECT|INSERT|UPDATE|DELETE'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)c\.Param\s*\([^)]*\).*SELECT|INSERT|UPDATE|DELETE'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)c\.PostForm\s*\([^)]*\).*query'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

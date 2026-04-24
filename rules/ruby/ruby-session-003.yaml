@@ -1,0 +1,23 @@
+id: ruby-session-003
+name: Rails Cookie Serializer JSON
+description: |
+  Detects insecure-deserialization issues in RUBY code.
+severity: medium
+category: insecure-deserialization
+confidence: medium
+cwe: CWE-502
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Cookie serializer :json can be vulnerable to timing attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)cookie_serializer\s*:\s*:json'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)cookies_serializer.*json(?!.*marshal)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

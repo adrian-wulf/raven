@@ -1,0 +1,17 @@
+id: py-fastapi-bg-001
+name: background_tasks.add_task with eval
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- python
+message: Adding eval as a background task enables arbitrary code execution. Never schedule untrusted code.
+patterns:
+- type: regex
+  pattern: background_tasks\.add_task\s*\(\s*eval|BackgroundTasks.*add_task\s*\(\s*eval
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- fastapi

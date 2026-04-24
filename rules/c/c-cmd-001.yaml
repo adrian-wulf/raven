@@ -1,0 +1,26 @@
+id: c-cmd-001
+name: system User Input
+description: |
+  Detects command-injection issues in C code.
+severity: critical
+category: command-injection
+confidence: critical
+cwe: CWE-78
+languages: [c]
+message: |
+  system() with user input allows command injection. Use execve with explicit args.
+patterns:
+  - type: regex
+    pattern: '(?i)system\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)system\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)system\s*\(.*sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

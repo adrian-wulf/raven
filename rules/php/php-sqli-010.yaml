@@ -1,0 +1,22 @@
+id: php-sqli-010
+name: PHP mysql_query Deprecated Injection
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  Deprecated mysql_* functions are vulnerable to SQL injection and removed in PHP 7.
+patterns:
+  - type: regex
+    pattern: '(?i)mysql_query\s*\(.*[''"].*WHERE.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mysql_query\s*\(.*[''"].*SELECT.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

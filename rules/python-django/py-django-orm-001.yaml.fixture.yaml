@@ -1,0 +1,17 @@
+rule_id: py-django-orm-001
+language: python
+examples:
+  unsafe: '# Unsafe - py-django-orm-001
+
+    obj = get_object_or_404(User, pk=user_id)
+
+    '
+  safe: '# Safe - py-django-orm-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

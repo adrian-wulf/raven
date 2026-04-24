@@ -1,0 +1,17 @@
+id: bash-path-001
+name: cd user path
+severity: medium
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages:
+- bash
+- shell
+message: cd to user-controlled path can traverse directories. Validate path.
+patterns:
+- type: regex
+  pattern: cd\s+\$?(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

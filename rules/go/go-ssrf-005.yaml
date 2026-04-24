@@ -1,0 +1,22 @@
+id: go-ssrf-005
+name: net/http Client to Internal IP
+description: |
+  Detects ssrf issues in GO code.
+severity: high
+category: ssrf
+confidence: medium
+cwe: CWE-918
+languages: [go]
+message: |
+  SSRF to internal IPs can expose internal services. Block private IP ranges.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.Get\s*\(\s*[`"]http://(127\.0\.0\.1|localhost|10\.|172\.1[6-9]|172\.2[0-9]|172\.3[01]|192\.168\.)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)http\.Post\s*\(\s*[`"]http://(127\.0\.0\.1|localhost)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

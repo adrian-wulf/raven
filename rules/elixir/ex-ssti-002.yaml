@@ -1,0 +1,16 @@
+id: ex-ssti-002
+name: EEx.eval_file
+severity: critical
+category: ssti
+confidence: high
+cwe: CWE-1336
+languages:
+- elixir
+message: EEx.eval_file with user-controlled file path enables SSTI and LFI. Validate file paths.
+patterns:
+- type: regex
+  pattern: EEx\.eval_file\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/1336.html

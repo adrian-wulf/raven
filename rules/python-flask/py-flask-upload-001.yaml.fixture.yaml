@@ -1,0 +1,13 @@
+rule_id: py-flask-upload-001
+language: python
+examples:
+  unsafe: "# Unsafe - py-flask-upload-001\ndef handle_upload(request):\n    file = request.FILES['file']\n    open(file.name, 'wb').write(file.read())\n"
+  safe: '# Safe - py-flask-upload-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

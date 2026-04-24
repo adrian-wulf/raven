@@ -1,0 +1,22 @@
+id: go-goroutine-004
+name: Channel Deadlock Risk
+description: |
+  Detects deadlock issues in GO code.
+severity: high
+category: deadlock
+confidence: medium
+cwe: CWE-833
+languages: [go]
+message: |
+  Unidirectional channel misuse can cause deadlocks. Ensure proper buffer sizes and timeouts.
+patterns:
+  - type: regex
+    pattern: '(?i)<-chan\s+\w+\s*\)(?!.*select)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)chan\s*<-\s*\w+\s*\)(?!.*default)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/833.html

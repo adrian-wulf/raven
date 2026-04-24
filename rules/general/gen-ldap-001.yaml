@@ -1,0 +1,13 @@
+id: gen-ldap-001
+name: LDAP Filter Injection
+severity: critical
+category: ldapi
+confidence: high
+cwe: "CWE-90"
+languages: [java, python, csharp, php, javascript]
+message: 'User input used in LDAP search filter. Special characters (*, (, ), \\, NUL) must be escaped.'
+patterns:
+  - type: regex
+    pattern: '(search\\s*\\(|searchFilter|filter\\s*[=:]).*(\\+|req\\.|userInput)'
+references:
+  - https://cwe.mitre.org/data/definitions/90.html

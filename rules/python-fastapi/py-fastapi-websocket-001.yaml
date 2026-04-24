@@ -1,0 +1,17 @@
+id: py-fastapi-websocket-001
+name: WebSocket without auth
+severity: high
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: WebSocket endpoint without authentication can allow unauthorized access. Add auth checks.
+patterns:
+- type: regex
+  pattern: '@app\.websocket\s*\(\s*[\"\''''][^\"\'''']+[\"\'''']\s*\)\s*\n\s*async\s+def\s+\w+\s*\(\s*websocket\s*\)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

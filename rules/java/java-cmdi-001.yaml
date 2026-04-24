@@ -1,0 +1,26 @@
+id: java-cmdi-001
+name: Runtime.exec User Input
+description: |
+  Detects command-injection issues in JAVA code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [java]
+message: |
+  Runtime.exec with user input allows arbitrary command execution. Use ProcessBuilder with explicit args.
+patterns:
+  - type: regex
+    pattern: '(?i)Runtime\.getRuntime\(\)\.exec\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Runtime\.exec\s*\(\s*[`"][^`"]*\+.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ProcessBuilder.*command\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

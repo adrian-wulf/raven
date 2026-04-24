@@ -1,0 +1,17 @@
+id: py-fastapi-soap-001
+name: SOAP without WS-Security
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-319
+languages:
+- python
+message: SOAP endpoint without WS-Security exposes XML payloads. Enable security.
+patterns:
+- type: regex
+  pattern: SOAPHandler|spyne\.Application
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html
+frameworks:
+- fastapi

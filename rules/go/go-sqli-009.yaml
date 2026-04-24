@@ -1,0 +1,26 @@
+id: go-sqli-009
+name: Go SQL Query Builder Bypass
+description: |
+  Detects sql-injection issues in GO code.
+severity: high
+category: sql-injection
+confidence: medium
+cwe: CWE-89
+languages: [go]
+message: |
+  Even with query builders, avoid string interpolation for column names or table names.
+patterns:
+  - type: regex
+    pattern: '(?i) squirrel\.Expr\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)goqu\.Literal\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)bun\.Safe\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

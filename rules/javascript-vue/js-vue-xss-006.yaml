@@ -1,0 +1,19 @@
+id: js-vue-xss-006
+name: v-bind:src with user URL
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: v-bind:src with user URL can load malicious content. Validate and sanitize URLs.
+patterns:
+- type: regex
+  pattern: :src\s*=\s*[\"\'][^\"\']*(?P<input>user|data|props)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

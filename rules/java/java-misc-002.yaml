@@ -1,0 +1,26 @@
+id: java-misc-002
+name: ScriptEngineManager User Script
+description: |
+  Detects code-injection issues in JAVA code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-94
+languages: [java]
+message: |
+  ScriptEngine executing user scripts enables arbitrary code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)ScriptEngineManager.*getEngineByName'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)engine\.eval\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)CompiledScript.*eval.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

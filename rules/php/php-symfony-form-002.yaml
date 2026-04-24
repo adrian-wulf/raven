@@ -1,0 +1,23 @@
+id: php-symfony-form-002
+name: Symfony Form Type Guessing Without Validation
+description: |
+  Detects input-validation issues in PHP code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [php]
+frameworks: [symfony]
+message: |
+  Relying on Symfony form type guessing without explicit validation is risky.
+patterns:
+  - type: regex
+    pattern: '(?i)->add\s*\(.*[''"][^''"]+[''"]\s*\)(?!.*Type)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)buildForm\s*\(.*FormBuilder'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

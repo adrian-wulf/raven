@@ -1,0 +1,18 @@
+id: py-django-sqli-005
+name: cursor.execute() with format string
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: Cursor execute() with format string enables SQL injection. Use parameterized queries with %s placeholders.
+patterns:
+- type: regex
+  pattern: cursor\.execute\s*\(\s*(f[\"\']|\".*\"\.format\(|%\s*\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

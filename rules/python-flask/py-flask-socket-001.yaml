@@ -1,0 +1,17 @@
+id: py-flask-socket-001
+name: Socket.IO without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Flask-SocketIO event without auth allows unauthorized real-time access. Add auth.
+patterns:
+- type: regex
+  pattern: '@socketio\.on\s*\([^)]+\)(?!.*auth)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- flask

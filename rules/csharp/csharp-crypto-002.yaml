@@ -1,0 +1,22 @@
+id: csharp-crypto-002
+name: DES.Create Encryption
+description: |
+  Detects weak-cryptography issues in CSHARP code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-327
+languages: [csharp]
+message: |
+  DES is insecure with 56-bit key. Use AES.
+patterns:
+  - type: regex
+    pattern: '(?i)DES\.Create'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DESCryptoServiceProvider'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

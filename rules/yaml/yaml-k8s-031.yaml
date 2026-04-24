@@ -1,0 +1,15 @@
+id: yaml-k8s-031
+name: PersistentVolume without encryption
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-311
+languages:
+- yaml
+message: PersistentVolume without encryption exposes data at rest. Enable encryption.
+patterns:
+- type: regex
+  pattern: kind:\s*PersistentVolume\s*\n.*spec:(?!.*encrypted)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

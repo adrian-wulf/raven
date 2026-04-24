@@ -1,0 +1,19 @@
+id: js-angular-xss-003
+name: bypassSecurityTrustStyle
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: bypassSecurityTrustStyle() can enable CSS-based attacks. Validate style input.
+patterns:
+- type: regex
+  pattern: bypassSecurityTrustStyle\s*\(\s*(?P<input>this\.|user|req\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

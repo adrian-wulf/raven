@@ -1,0 +1,22 @@
+id: php-sqli-007
+name: sqlite3_exec Injection
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  sqlite3_exec with user input allows SQL injection.
+patterns:
+  - type: regex
+    pattern: '(?i)sqlite3_exec\s*\(.*[''"].*WHERE.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$db->exec\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

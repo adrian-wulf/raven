@@ -1,0 +1,26 @@
+id: rust-log-001
+name: log::info! User Data
+description: |
+  Detects log-injection issues in RUST code.
+severity: medium
+category: log-injection
+confidence: medium
+cwe: CWE-117
+languages: [rust]
+message: |
+  User data in log macros can forge log entries.
+patterns:
+  - type: regex
+    pattern: '(?i)log::info!\s*\(.*\{\}.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)log::warn!\s*\(.*\{\}.*input'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)log::error!\s*\(.*\{\}.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/117.html

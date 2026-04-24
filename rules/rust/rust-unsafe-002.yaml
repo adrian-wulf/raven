@@ -1,0 +1,26 @@
+id: rust-unsafe-002
+name: transmute Type Conversion
+description: |
+  Detects type-confusion issues in RUST code.
+severity: high
+category: type-confusion
+confidence: high
+cwe: CWE-843
+languages: [rust]
+message: |
+  mem::transmute bypasses type safety. Use safe conversions.
+patterns:
+  - type: regex
+    pattern: '(?i)mem::transmute::<'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::mem::transmute'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)transmute::<.*>'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/843.html

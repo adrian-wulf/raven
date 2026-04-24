@@ -1,0 +1,23 @@
+id: ruby-session-001
+name: Rails Session Fixation
+description: |
+  Detects session-fixation issues in RUBY code.
+severity: high
+category: session-fixation
+confidence: high
+cwe: CWE-384
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Not resetting session on login allows session fixation.
+patterns:
+  - type: regex
+    pattern: '(?i)session\[.*user.*\].*=.*(?!.*reset_session)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sign_in.*(?!.*reset_session)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/384.html

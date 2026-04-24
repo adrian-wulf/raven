@@ -1,0 +1,17 @@
+id: py-django-auth-003
+name: Empty AUTH_PASSWORD_VALIDATORS
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-521
+languages:
+- python
+message: Empty AUTH_PASSWORD_VALIDATORS list means no password validation. Configure validators.
+patterns:
+- type: regex
+  pattern: AUTH_PASSWORD_VALIDATORS\s*=\s*\[\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/521.html
+frameworks:
+- django

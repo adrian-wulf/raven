@@ -1,0 +1,18 @@
+id: py-fastapi-xss-001
+name: HTMLResponse with user input
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: HTMLResponse with user input enables XSS. Use JSONResponse or escape HTML.
+patterns:
+- type: regex
+  pattern: HTMLResponse\s*\(\s*content\s*=\s*(f[\"\']|.*\+\s*(?P<input>request\.|user_))
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- fastapi

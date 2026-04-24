@@ -1,0 +1,15 @@
+id: sol-access-003
+name: Function without visibility
+severity: medium
+category: access-control
+confidence: medium
+cwe: CWE-284
+languages:
+- solidity
+message: Function without explicit visibility defaults to public. Always specify visibility.
+patterns:
+- type: regex
+  pattern: function\s+\w+\s*\([^)]*\)\s+(?!public|private|internal|external)\w*\s*\{
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

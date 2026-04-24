@@ -1,0 +1,27 @@
+id: php-symfony-ssti-002
+name: Symfony Twig Raw Filter XSS
+description: |
+  Detects xss issues in PHP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [php]
+frameworks: [symfony]
+message: |
+  Twig raw filter disables auto-escaping. Never use with user input.
+patterns:
+  - type: regex
+    pattern: '(?i)\|\s*raw\s*\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)raw\s*\|.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\|raw\s*\|.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

@@ -1,0 +1,18 @@
+id: js-vue-config-001
+name: devtools in production
+severity: low
+category: config
+confidence: low
+cwe: CWE-489
+languages:
+- javascript
+- typescript
+message: Vue devtools enabled in production can leak component state. Disable in production.
+patterns:
+- type: regex
+  pattern: Vue\.config\.devtools\s*=\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- vue

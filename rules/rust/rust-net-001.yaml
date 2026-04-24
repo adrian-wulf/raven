@@ -1,0 +1,22 @@
+id: rust-net-001
+name: TCP Listener without Timeout
+description: |
+  Detects insecure-configuration issues in RUST code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-1088
+languages: [rust]
+message: |
+  TCP connections without timeouts can be exhausted.
+patterns:
+  - type: regex
+    pattern: '(?i)TcpListener::bind'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)accept\s*\(\)(?!.*timeout)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1088.html

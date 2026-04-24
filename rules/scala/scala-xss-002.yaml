@@ -1,0 +1,16 @@
+id: scala-xss-002
+name: Raw HTML in template
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- scala
+message: Raw HTML output in template without escaping can enable XSS. Use Play's safe HTML.
+patterns:
+- type: regex
+  pattern: Html\s*\(\s*(?P<input>user|input|param|raw)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

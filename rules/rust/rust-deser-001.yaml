@@ -1,0 +1,27 @@
+id: rust-deser-001
+name: serde deserialize_any Type Confusion
+description: |
+  Detects insecure-deserialization issues in RUST code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [rust]
+frameworks: [serde]
+message: |
+  deserialize_any can lead to type confusion attacks. Use concrete types.
+patterns:
+  - type: regex
+    pattern: '(?i)#\[serde\s*\(\s*deserialize_with'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)deserialize_any'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Visitor.*visit_str.*expecting'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

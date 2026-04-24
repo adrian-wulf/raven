@@ -1,0 +1,23 @@
+id: kotlin-spring-004
+name: Spring @Value Injection
+description: |
+  Detects expression-injection issues in KOTLIN code.
+severity: high
+category: expression-injection
+confidence: high
+cwe: CWE-917
+languages: [kotlin]
+frameworks: [spring]
+message: |
+  @Value with user expressions can execute code.
+patterns:
+  - type: regex
+    pattern: '(?i)@Value\s*\(\s*[''"]\$\{.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Value\s*\(\s*[''"]\$\{.*param'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

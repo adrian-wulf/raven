@@ -1,0 +1,26 @@
+id: java-ldap-001
+name: InitialDirContext LDAP Injection
+description: |
+  Detects ldap-injection issues in JAVA code.
+severity: critical
+category: ldap-injection
+confidence: high
+cwe: CWE-90
+languages: [java]
+message: |
+  LDAP queries with user input can modify directory queries. Escape inputs.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+InitialDirContext'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)context\.search\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)search\s*\(\s*.*\+.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/90.html

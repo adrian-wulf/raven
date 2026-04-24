@@ -1,0 +1,23 @@
+id: java-spring-sec-002
+name: Spring Security Frame Options Disabled
+description: |
+  Detects clickjacking issues in JAVA code.
+severity: medium
+category: clickjacking
+confidence: medium
+cwe: CWE-1021
+languages: [java]
+frameworks: [spring]
+message: |
+  Disabling X-Frame-Options allows clickjacking attacks via iframes.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.headers\s*\(\)\s*\.frameOptions\s*\(\)\s*\.disable'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)frameOptions\s*\(\)\s*\.sameOrigin\s*\(\).*disable'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1021.html

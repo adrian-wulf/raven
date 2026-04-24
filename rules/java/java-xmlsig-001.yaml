@@ -1,0 +1,26 @@
+id: java-xmlsig-001
+name: XML Signature Wrapping
+description: |
+  Detects xml-signature-wrapping issues in JAVA code.
+severity: critical
+category: xml-signature-wrapping
+confidence: critical
+cwe: CWE-345
+languages: [java]
+message: |
+  XML Signature Wrapping attacks can bypass signature validation.
+patterns:
+  - type: regex
+    pattern: '(?i)DOMValidateContext'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)XMLSignatureFactory.*unmarshal'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)signature\.validate\s*\(\)(?!.*IdCheck)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/345.html

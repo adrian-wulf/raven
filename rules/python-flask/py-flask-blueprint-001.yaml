@@ -1,0 +1,17 @@
+id: py-flask-blueprint-001
+name: Blueprint before_request bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- python
+message: Blueprint before_request without proper auth can be bypassed. Implement proper checks.
+patterns:
+- type: regex
+  pattern: '@\w+\.before_request\s*\n\s*def\s+\w+\s*\([^)]*\)\s*:\s*(?!.*auth)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- flask

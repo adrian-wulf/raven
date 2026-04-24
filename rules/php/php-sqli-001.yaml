@@ -1,0 +1,26 @@
+id: php-sqli-001
+name: PDO query String Concat
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  PDO::query with string concatenation is vulnerable to SQL injection. Use prepared statements.
+patterns:
+  - type: regex
+    pattern: '(?i)\$pdo->query\s*\(.*[''"].*SELECT.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$pdo->query\s*\(.*[''"].*WHERE.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PDO.*query\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

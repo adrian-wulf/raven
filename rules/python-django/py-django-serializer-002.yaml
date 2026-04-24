@@ -1,0 +1,17 @@
+id: py-django-serializer-002
+name: Serializer without validate method
+severity: medium
+category: serialization
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: Serializer without a validate() method may not properly validate input. Add validation.
+patterns:
+- type: regex
+  pattern: class\s+\w+Serializer\s*\(.*\):\s*(?!.*def\s+validate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

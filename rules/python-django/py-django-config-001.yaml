@@ -1,0 +1,17 @@
+id: py-django-config-001
+name: DEBUG set to True
+severity: medium
+category: config
+confidence: high
+cwe: CWE-489
+languages:
+- python
+message: DEBUG = True in production exposes sensitive information. Set DEBUG = False in production.
+patterns:
+- type: regex
+  pattern: DEBUG\s*=\s*True
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- django

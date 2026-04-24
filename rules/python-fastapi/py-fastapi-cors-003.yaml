@@ -1,0 +1,17 @@
+id: py-fastapi-cors-003
+name: allow_headers wildcard
+severity: medium
+category: cors
+confidence: medium
+cwe: CWE-942
+languages:
+- python
+message: allow_headers=['*'] allows any header. Restrict to required headers.
+patterns:
+- type: regex
+  pattern: allow_headers\s*=\s*\[\s*[\"\']\*[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/942.html
+frameworks:
+- fastapi

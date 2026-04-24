@@ -1,0 +1,15 @@
+rule_id: js-angular-csrf-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-csrf-001
+
+    http.post(url, data, { withCredentials: true });
+
+    '
+  safe: '// Safe - js-angular-csrf-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

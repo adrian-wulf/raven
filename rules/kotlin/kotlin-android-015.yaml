@@ -1,0 +1,27 @@
+id: kotlin-android-015
+name: Android Fragment Injection
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-470
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Instantiating fragments from user intent can load arbitrary fragments.
+patterns:
+  - type: regex
+    pattern: '(?i)Fragment\.instantiate'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Class\.forName.*Fragment'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)setClassLoader.*Fragment'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/470.html

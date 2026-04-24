@@ -1,0 +1,17 @@
+id: py-fastapi-cors-002
+name: allow_methods wildcard
+severity: medium
+category: cors
+confidence: medium
+cwe: CWE-942
+languages:
+- python
+message: allow_methods=['*'] allows all HTTP methods. Restrict to needed methods.
+patterns:
+- type: regex
+  pattern: allow_methods\s*=\s*\[\s*[\"\']\*[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/942.html
+frameworks:
+- fastapi

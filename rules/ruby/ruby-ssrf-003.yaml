@@ -1,0 +1,23 @@
+id: ruby-ssrf-003
+name: RestClient.get User URL
+description: |
+  Detects ssrf issues in RUBY code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [ruby]
+frameworks: [rest-client]
+message: |
+  RestClient with user URLs can access internal network.
+patterns:
+  - type: regex
+    pattern: '(?i)RestClient\.get\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)RestClient\.post\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

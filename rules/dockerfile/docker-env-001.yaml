@@ -1,0 +1,15 @@
+id: docker-env-001
+name: ENV PATH modification
+severity: medium
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages:
+- dockerfile
+message: Modifying PATH env can lead to hijacking. Verify path entries.
+patterns:
+- type: regex
+  pattern: ENV\s+PATH\s*=\s*/
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/22.html

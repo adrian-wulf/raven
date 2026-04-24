@@ -1,0 +1,13 @@
+id: java-adv-009
+name: Java LDAP Injection Spring
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-90"
+languages: [java]
+message: "Spring LDAP query with user input allows LDAP injection. Use LdapQueryBuilder for parameterized queries."
+patterns:
+  - type: regex
+    pattern: "LdapTemplate.*search\\s*\\(.*\\\\+|filter\\s*\\(.*\\\\+.*getParameter"
+references:
+  - https://cwe.mitre.org/data/definitions/90.html

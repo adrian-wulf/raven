@@ -1,0 +1,13 @@
+id: gen-authz-001
+name: Missing Authorization Check
+severity: high
+category: authz
+confidence: high
+cwe: "CWE-862"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Endpoint or function lacks authorization check. Verify user permissions before processing sensitive operations."
+patterns:
+  - type: regex
+    pattern: '(router\\.|app\\.)\\s*(get|post|put|delete|patch)\\s*\\(\\s*[\\''"]'
+references:
+  - https://cwe.mitre.org/data/definitions/862.html

@@ -1,0 +1,27 @@
+id: kotlin-android-027
+name: Android FileProvider Path Traversal
+description: |
+  Detects path-traversal issues in KOTLIN code.
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages: [kotlin]
+frameworks: [android]
+message: |
+  FileProvider with overly broad paths exposes files.
+patterns:
+  - type: regex
+    pattern: '(?i)FileProvider.*path=[''"].*\\.*[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)<paths>.*root-path'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)external-path.*path=[''"]\.[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

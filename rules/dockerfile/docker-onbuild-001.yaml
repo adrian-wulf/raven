@@ -1,0 +1,15 @@
+id: docker-onbuild-001
+name: ONBUILD instruction
+severity: low
+category: supply-chain
+confidence: low
+cwe: CWE-829
+languages:
+- dockerfile
+message: ONBUILD can execute unexpectedly in child images. Review ONBUILD triggers.
+patterns:
+- type: regex
+  pattern: ONBUILD\s+\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

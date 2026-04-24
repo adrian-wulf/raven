@@ -1,0 +1,15 @@
+rule_id: sol-erc-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-erc-001
+
+    approval[msg.sender][spender] = value; // no zero check
+
+    '
+  safe: '// Safe - sol-erc-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

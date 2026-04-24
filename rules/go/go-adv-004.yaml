@@ -1,0 +1,13 @@
+id: go-adv-004
+name: Go Template Injection text/template
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-1336"
+languages: [go]
+message: "text/template with user input allows SSTI. Use html/template for HTML and never execute user templates."
+patterns:
+  - type: regex
+    pattern: "text/template.*Parse.*(req\\.|user|input|body)"
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

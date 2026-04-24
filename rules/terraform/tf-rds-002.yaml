@@ -1,0 +1,16 @@
+id: tf-rds-002
+name: RDS without encryption
+severity: high
+category: database
+confidence: high
+cwe: CWE-311
+languages:
+- terraform
+- hcl
+message: RDS without storage encryption exposes data at rest. Enable encryption.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_db_instance[\"\'][^}]*\}(?!.*storage_encrypted)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

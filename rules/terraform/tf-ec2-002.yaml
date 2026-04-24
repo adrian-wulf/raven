@@ -1,0 +1,16 @@
+id: tf-ec2-002
+name: EC2 without monitoring
+severity: medium
+category: logging
+confidence: medium
+cwe: CWE-778
+languages:
+- terraform
+- hcl
+message: EC2 without detailed monitoring limits observability. Enable monitoring.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_instance[\"\'][^}]*\}(?!.*monitoring)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

@@ -1,0 +1,22 @@
+id: java-xpath-002
+name: javax.xml.xpath Query Injection
+description: |
+  Detects xpath-injection issues in JAVA code.
+severity: high
+category: xpath-injection
+confidence: high
+cwe: CWE-643
+languages: [java]
+message: |
+  javax.xml.xpath with concatenated queries is vulnerable to injection.
+patterns:
+  - type: regex
+    pattern: '(?i)xpath\.compile\s*\(\s*[`"][^`"]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xpath\.evaluate\s*\(\s*[`"][^`"]*\+.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/643.html

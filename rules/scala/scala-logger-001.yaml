@@ -1,0 +1,16 @@
+id: scala-logger-001
+name: Logger with user input
+severity: medium
+category: log-forging
+confidence: medium
+cwe: CWE-117
+languages:
+- scala
+message: Logger with user input can inject false log entries. Sanitize input.
+patterns:
+- type: regex
+  pattern: Logger\.(info|debug|warn)\s*\(\s*s?"[^"]*\$\{\s*(?P<input>user|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/117.html

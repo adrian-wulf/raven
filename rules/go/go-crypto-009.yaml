@@ -1,0 +1,22 @@
+id: go-crypto-009
+name: ECB Mode AES Encryption
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: critical
+category: weak-cryptography
+confidence: high
+cwe: CWE-327
+languages: [go]
+message: |
+  AES-ECB is insecure as it does not provide semantic security. Use AES-GCM.
+patterns:
+  - type: regex
+    pattern: '(?i)aes\.NewCipher.*ECB'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)crypto/cipher.*NewECB'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

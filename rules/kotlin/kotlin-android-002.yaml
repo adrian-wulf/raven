@@ -1,0 +1,27 @@
+id: kotlin-android-002
+name: Android WebView addJavascriptInterface
+description: |
+  Detects insecure-deserialization issues in KOTLIN code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-749
+languages: [kotlin]
+frameworks: [android]
+message: |
+  addJavascriptInterface exposes Java objects to JavaScript.
+patterns:
+  - type: regex
+    pattern: '(?i)addJavascriptInterface\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@JavascriptInterface'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)webView\.addJavascriptInterface'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/749.html

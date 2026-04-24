@@ -1,0 +1,23 @@
+id: kotlin-deser-003
+name: Kotlin Gson Type Confusion
+description: |
+  Detects insecure-deserialization issues in KOTLIN code.
+severity: medium
+category: insecure-deserialization
+confidence: medium
+cwe: CWE-502
+languages: [kotlin]
+frameworks: [gson]
+message: |
+  Gson with user input and custom Type can instantiate wrong types.
+patterns:
+  - type: regex
+    pattern: '(?i)Gson\(\)\.fromJson\s*\(.*Type'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fromJson\s*\(.*request.*TypeToken'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

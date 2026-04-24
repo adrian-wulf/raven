@@ -1,0 +1,17 @@
+id: py-flask-auth-002
+name: Route without auth check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Route without any authentication check. Add login_required or custom auth.
+patterns:
+- type: regex
+  pattern: '@.*\.route\s*\(.*\)\s*\n(?:(?!@login_required).)*\n\s*def\s+\w+\s*\('
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- flask

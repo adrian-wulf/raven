@@ -1,0 +1,13 @@
+id: py-adv-001
+name: Python pickle Remote Code Execution
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-502"
+languages: [python]
+message: "pickle.loads with untrusted data enables arbitrary code execution. Use JSON, MessagePack, or protobuf instead."
+patterns:
+  - type: regex
+    pattern: "pickle\\.loads\\s*\\(.*(?!trusted|safe|validate)"
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

@@ -1,0 +1,16 @@
+id: tf-route53-001
+name: Route53 without DNSSEC
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-345
+languages:
+- terraform
+- hcl
+message: Route53 zone without DNSSEC is vulnerable to DNS spoofing. Enable DNSSEC.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_route53_zone[\"\'][^}]*\}(?!.*dnssec)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/345.html

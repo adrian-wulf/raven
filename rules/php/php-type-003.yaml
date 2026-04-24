@@ -1,0 +1,22 @@
+id: php-type-003
+name: Hash Comparison with ==
+description: |
+  Detects type-juggling issues in PHP code.
+severity: high
+category: type-juggling
+confidence: high
+cwe: CWE-843
+languages: [php]
+message: |
+  Always compare hashes with hash_equals() to prevent timing attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)\$hash1\s*==\s*\$hash2'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$_(GET|POST|REQUEST)\s*==\s*\$hash'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/843.html

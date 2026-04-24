@@ -1,0 +1,26 @@
+id: java-jndi-001
+name: JNDI Lookup User Input
+description: |
+  Detects code-injection issues in JAVA code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-917
+languages: [java]
+message: |
+  JNDI lookups with user input can lead to remote code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+InitialContext\(\).*lookup\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ctx\.lookup\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)JNDITemplate\.lookup\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

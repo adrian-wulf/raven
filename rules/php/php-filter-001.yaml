@@ -1,0 +1,18 @@
+id: php-filter-001
+name: Filter Input without Validate
+description: |
+  Detects input-validation issues in PHP code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [php]
+message: |
+  filter_input without proper flags doesn't sanitize dangerous characters.
+patterns:
+  - type: regex
+    pattern: '(?i)filter_input\s*\(.*INPUT_(GET|POST)\s*,.*FILTER_SANITIZE_STRING(?!.*FILTER_FLAG)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

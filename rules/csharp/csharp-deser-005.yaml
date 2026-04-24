@@ -1,0 +1,23 @@
+id: csharp-deser-005
+name: Json.NET Deserialize without Validation
+description: |
+  Detects insecure-deserialization issues in CSHARP code.
+severity: medium
+category: insecure-deserialization
+confidence: medium
+cwe: CWE-502
+languages: [csharp]
+frameworks: [jsonnet]
+message: |
+  JsonConvert.DeserializeObject without type validation is risky.
+patterns:
+  - type: regex
+    pattern: '(?i)JsonConvert\.DeserializeObject\s*\(\s*.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DeserializeObject\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

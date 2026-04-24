@@ -1,0 +1,22 @@
+id: c-int-004
+name: calloc Multiplication Overflow
+description: |
+  Detects integer-overflow issues in C code.
+severity: high
+category: integer-overflow
+confidence: high
+cwe: CWE-190
+languages: [c]
+message: |
+  calloc(n, size) with overflowed product allocates wrong size.
+patterns:
+  - type: regex
+    pattern: '(?i)\w+\s*\*\s*\w+.*calloc'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)calloc\s*\(\s*.*,\s*.*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/190.html

@@ -1,0 +1,26 @@
+id: csharp-crypto-006
+name: TLS 1.0 1.1 Enabled
+description: |
+  Detects weak-cryptography issues in CSHARP code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-326
+languages: [csharp]
+message: |
+  TLS 1.0/1.1 are deprecated. Use TLS 1.2+.
+patterns:
+  - type: regex
+    pattern: '(?i)SslProtocols\.Tls(?!1\.2)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SslProtocols\.Tls11'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SslProtocols\.Tls10'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/326.html

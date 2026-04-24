@@ -13,7 +13,7 @@ message: |
   Use parameterized execution or avoid shell execution entirely.
 patterns:
   - type: regex
-    pattern: '(?P<func>exec|execSync|spawn|child_process)\s*\(\s*[`"''"`][^`"''"`]*\$\{[^}]+\}'
+    pattern: '(?P<func>exec|execSync|spawn|child_process)\s*\(\s*[`"''''"`][^`"''''"`]*\$\{[^}]+\}'
     where:
       - not-test-file: true
   - type: regex
@@ -21,7 +21,7 @@ patterns:
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(?P<func>exec|execSync|spawn)\s*\(\s*["''`"`][^"''`"`]*\+[^"''`"`]*'
+    pattern: '(?P<func>exec|execSync|spawn)\s*\(\s*["''''`"`][^"''''`"`]*\+[^"''''`"`]*'
     where:
       - not-test-file: true
 references:

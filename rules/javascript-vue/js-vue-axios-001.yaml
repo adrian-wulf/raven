@@ -1,0 +1,18 @@
+id: js-vue-axios-001
+name: Axios response without validateStatus
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: Axios without validateStatus can silently accept error responses. Add validation.
+patterns:
+- type: regex
+  pattern: axios\.(get|post)\s*\([^)]+\)(?!.*validateStatus)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- vue

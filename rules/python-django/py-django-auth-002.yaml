@@ -1,0 +1,17 @@
+id: py-django-auth-002
+name: Weak password validators
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-521
+languages:
+- python
+message: Weak or missing password validators allow weak passwords. Configure strong validators.
+patterns:
+- type: regex
+  pattern: AUTH_PASSWORD_VALIDATORS\s*=\s*\[\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/521.html
+frameworks:
+- django

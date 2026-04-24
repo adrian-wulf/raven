@@ -1,0 +1,13 @@
+id: gen-nosql-001
+name: MongoDB $where Injection
+severity: critical
+category: nosql
+confidence: high
+cwe: "CWE-943"
+languages: [javascript, python]
+message: "MongoDB query uses $where with user input. This allows JavaScript code injection in MongoDB."
+patterns:
+  - type: regex
+    pattern: "\\$where\\s*[:{]\\s*.*(req\\.|req.query|req\\.body|params)"
+references:
+  - https://cwe.mitre.org/data/definitions/943.html

@@ -1,0 +1,22 @@
+id: csharp-deser-009
+name: SoapFormatter Deserialization
+description: |
+  Detects insecure-deserialization issues in CSHARP code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [csharp]
+message: |
+  SoapFormatter is obsolete and insecure. Never deserialize untrusted data.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+SoapFormatter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SoapFormatter.*Deserialize'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

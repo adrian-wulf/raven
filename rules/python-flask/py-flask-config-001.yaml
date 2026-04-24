@@ -1,0 +1,17 @@
+id: py-flask-config-001
+name: Flask DEBUG True
+severity: medium
+category: config
+confidence: high
+cwe: CWE-489
+languages:
+- python
+message: Flask DEBUG=True in production exposes stack traces and enables code execution. Disable in production.
+patterns:
+- type: regex
+  pattern: app\.config\s*\[\s*[\"\']DEBUG[\"\']\s*\]\s*=\s*True|DEBUG\s*=\s*True
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- flask

@@ -1,0 +1,23 @@
+id: kotlin-android-012
+name: Android BroadcastReceiver Injection
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-925
+languages: [kotlin]
+frameworks: [android]
+message: |
+  BroadcastReceiver processing untrusted intents can be exploited.
+patterns:
+  - type: regex
+    pattern: '(?i)onReceive\s*\(\s*.*Intent'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)BroadcastReceiver.*onReceive.*intent'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/925.html

@@ -1,0 +1,22 @@
+id: csharp-xxe-005
+name: XPathDocument XXE
+description: |
+  Detects xxe issues in CSHARP code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [csharp]
+message: |
+  XPathDocument can process external entities. Validate input XML.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+XPathDocument'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)XPathDocument.*CreateNavigator.*Request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

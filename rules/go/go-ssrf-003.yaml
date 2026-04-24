@@ -1,0 +1,26 @@
+id: go-ssrf-003
+name: http.Get with User Controlled URL
+description: |
+  Detects ssrf issues in GO code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [go]
+message: |
+  Never make HTTP requests to user-controlled URLs. Validate and allowlist domains.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.Get\s*\(\s*.*(r\.|req|request|param|input|user|url)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)http\.Post\s*\(\s*.*(r\.|req|request|param|input|user|url)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)http\.PostForm\s*\(\s*.*(r\.|req|request|param|input|user|url)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

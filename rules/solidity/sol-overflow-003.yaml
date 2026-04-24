@@ -1,0 +1,15 @@
+id: sol-overflow-003
+name: int underflow
+severity: high
+category: arithmetic
+confidence: high
+cwe: CWE-191
+languages:
+- solidity
+message: Integer underflow can cause unexpected large values. Use SafeMath or Solidity >=0.8.
+patterns:
+- type: regex
+  pattern: uint\d*\s+\w+\s*=\s*\w+\s*\-\s*\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/191.html

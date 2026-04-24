@@ -1,0 +1,19 @@
+id: js-angular-eval-002
+name: Function constructor
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: Function constructor with user input enables code injection. Avoid dynamic function creation.
+patterns:
+- type: regex
+  pattern: new\s+Function\s*\(\s*(?P<input>this\.|user|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- angular

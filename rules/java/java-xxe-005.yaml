@@ -1,0 +1,26 @@
+id: java-xxe-005
+name: XMLReader XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+message: |
+  XMLReader must have external entities disabled to prevent XXE.
+patterns:
+  - type: regex
+    pattern: '(?i)XMLReaderFactory\.createXMLReader'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xmlReader\.parse\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xmlReader\.setFeature\s*\(\s*[`"]http://xml\.org/sax/features/external-general-entities[`"]\s*,\s*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

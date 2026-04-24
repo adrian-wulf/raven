@@ -1,0 +1,18 @@
+id: js-nextjs-headers-001
+name: Missing security headers config
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-693
+languages:
+- javascript
+- typescript
+message: next.config without security headers misses protection. Configure headers function.
+patterns:
+- type: regex
+  pattern: next\.config\.(js|ts)\s*.*\n.*headers
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- nextjs

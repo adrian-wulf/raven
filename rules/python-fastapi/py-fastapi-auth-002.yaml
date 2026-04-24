@@ -1,0 +1,17 @@
+id: py-fastapi-auth-002
+name: APIKeyHeader bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- python
+message: APIKeyHeader without verification can allow unauthorized access. Implement key validation.
+patterns:
+- type: regex
+  pattern: APIKeyHeader\s*\(\s*name\s*=\s*[\"\']\w+[\"\']\s*\)(?!.*verify)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- fastapi

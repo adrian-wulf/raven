@@ -1,0 +1,18 @@
+id: py-flask-file-003
+name: Static file path traversal
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- python
+message: Serving static files with user path can lead to directory traversal. Use send_from_directory.
+patterns:
+- type: regex
+  pattern: open\s*\(\s*(?P<input>request\.|static_dir\s*\+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html
+frameworks:
+- flask

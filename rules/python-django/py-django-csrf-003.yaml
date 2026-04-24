@@ -1,0 +1,17 @@
+id: py-django-csrf-003
+name: CSRF_TRUSTED_ORIGINS wildcard
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages:
+- python
+message: CSRF_TRUSTED_ORIGINS with wildcard allows any origin, enabling CSRF attacks. Specify trusted domains.
+patterns:
+- type: regex
+  pattern: CSRF_TRUSTED_ORIGINS\s*=\s*\[\s*[\"\']\*
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html
+frameworks:
+- django

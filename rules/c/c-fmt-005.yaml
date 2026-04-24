@@ -1,0 +1,22 @@
+id: c-fmt-005
+name: vprintf User Format String
+description: |
+  Detects format-string issues in C code.
+severity: high
+category: format-string
+confidence: high
+cwe: CWE-134
+languages: [c]
+message: |
+  vprintf family with user format strings is vulnerable.
+patterns:
+  - type: regex
+    pattern: '(?i)vprintf\s*\(\s*[^''"]+,\s*va_list'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)vfprintf\s*\(\s*[^,]+,\s*[^''"]+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

@@ -1,0 +1,16 @@
+id: scala-cmdi-002
+name: ProcessBuilder
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- scala
+message: ProcessBuilder with user input can enable command injection. Validate inputs.
+patterns:
+- type: regex
+  pattern: ProcessBuilder\s*\(\s*(?P<input>user|input|Seq\()
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

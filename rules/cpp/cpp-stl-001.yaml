@@ -1,0 +1,22 @@
+id: cpp-stl-001
+name: STL Iterator Invalidation
+description: |
+  Detects use-after-free issues in CPP code.
+severity: high
+category: use-after-free
+confidence: high
+cwe: CWE-416
+languages: [cpp]
+message: |
+  Modifying containers while iterating invalidates iterators.
+patterns:
+  - type: regex
+    pattern: '(?i)vector.*push_back.*for\s*\(.*iterator'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)map.*erase.*for\s*\(.*iterator'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

@@ -1,0 +1,13 @@
+id: java-adv-011
+name: Java Reflection with User Input
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-470"
+languages: [java]
+message: "Reflection with user-controlled class/method names allows loading arbitrary classes. Validate input against allowlist."
+patterns:
+  - type: regex
+    pattern: "Class\\.forName\\s*\\(.*(req\\.|getParameter|user)|getMethod\\s*\\(.*(req\\.|getParameter)"
+references:
+  - https://cwe.mitre.org/data/definitions/470.html

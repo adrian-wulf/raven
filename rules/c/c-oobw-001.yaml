@@ -1,0 +1,13 @@
+id: c-oobw-001
+name: Buffer Write Without Bounds Check
+severity: critical
+category: bufferoverflow
+confidence: high
+cwe: "CWE-787"
+languages: [c]
+message: "Potential out-of-bounds write. Ensure destination buffer is large enough. Use safer alternatives."
+patterns:
+  - type: regex
+    pattern: "\\*\\s*\\(\\s*\\w+\\s*\\+\\s*\\w+\\s*\\)\\s*=|memset\\s*\\(|memcpy\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/787.html

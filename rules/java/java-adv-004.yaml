@@ -1,0 +1,13 @@
+id: java-adv-004
+name: Java URLClassLoader with User Input
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [java]
+message: "URLClassLoader with user-controlled URLs can load arbitrary classes. Validate URLs against allowlist."
+patterns:
+  - type: regex
+    pattern: "new\\s+URLClassLoader|URLClassLoader\\.newInstance"
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

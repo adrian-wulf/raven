@@ -1,0 +1,17 @@
+id: py-flask-admin-001
+name: Flask-Admin without auth
+severity: high
+category: auth
+confidence: high
+cwe: CWE-306
+languages:
+- python
+message: Flask-Admin without authentication exposes admin panel. Add auth.
+patterns:
+- type: regex
+  pattern: Admin\s*\(\s*app\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- flask

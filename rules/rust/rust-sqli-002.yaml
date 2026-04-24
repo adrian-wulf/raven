@@ -1,0 +1,27 @@
+id: rust-sqli-002
+name: sqlx query! Macro Bypass
+description: |
+  Detects sql-injection issues in RUST code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [rust]
+frameworks: [sqlx]
+message: |
+  sqlx query! with dynamic strings bypasses compile-time checking.
+patterns:
+  - type: regex
+    pattern: '(?i)sqlx::query\s*\(.*format!'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sqlx::query_as\s*\(.*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)query\s*\(.*[''"].*format!'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

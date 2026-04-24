@@ -1,0 +1,17 @@
+id: py-django-orm-001
+name: get_object_or_404 info leak
+severity: low
+category: info-exposure
+confidence: low
+cwe: CWE-209
+languages:
+- python
+message: get_object_or_404 can leak object existence. Use get() with custom 404 handler.
+patterns:
+- type: regex
+  pattern: get_object_or_404\s*\(\s*\w+\s*,\s*\w+\s*=\s*request\.
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/209.html
+frameworks:
+- django

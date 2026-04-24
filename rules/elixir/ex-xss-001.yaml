@@ -1,0 +1,16 @@
+id: ex-xss-001
+name: Phoenix raw HTML
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- elixir
+message: Phoenix raw HTML output without escaping can enable XSS. Use safe HTML functions.
+patterns:
+- type: regex
+  pattern: raw\s*\(\s*(?P<input>params|assigns|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

@@ -1,0 +1,19 @@
+rule_id: py-flask-cookie-003
+language: python
+examples:
+  unsafe: '# Unsafe - py-flask-cookie-003
+
+    import hashlib
+
+    hashlib.md5(password.encode())
+
+    '
+  safe: '# Safe - py-flask-cookie-003
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

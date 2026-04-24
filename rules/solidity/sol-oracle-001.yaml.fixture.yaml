@@ -1,0 +1,15 @@
+rule_id: sol-oracle-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-oracle-001
+
+    (int price,) = priceFeed.latestRoundData();
+
+    '
+  safe: '// Safe - sol-oracle-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

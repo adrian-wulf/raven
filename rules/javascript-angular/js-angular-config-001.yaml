@@ -1,0 +1,18 @@
+id: js-angular-config-001
+name: enableProdMode missing
+severity: low
+category: config
+confidence: low
+cwe: CWE-489
+languages:
+- javascript
+- typescript
+message: Not calling enableProdMode() in production may expose debug info. Enable production mode.
+patterns:
+- type: regex
+  pattern: if\s*\(\s*environment\.production\s*\)\s*\{\s*enableProdMode\(\)\s*\}
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- angular

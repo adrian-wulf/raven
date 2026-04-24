@@ -1,0 +1,18 @@
+id: js-nextjs-storage-001
+name: localStorage in SSR
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- javascript
+- typescript
+message: Accessing localStorage during SSR causes errors and potential info leaks. Use useEffect.
+patterns:
+- type: regex
+  pattern: localStorage\.(getItem|setItem|removeItem)\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html
+frameworks:
+- nextjs

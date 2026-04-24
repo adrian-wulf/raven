@@ -1,0 +1,18 @@
+id: js-angular-http-002
+name: subscribe without error handling
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- javascript
+- typescript
+message: HTTP subscribe without error handler can mask failures. Add error callback.
+patterns:
+- type: regex
+  pattern: \.subscribe\s*\(\s*(?!.*error)(?!.*catch)\w+\s*=>
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html
+frameworks:
+- angular

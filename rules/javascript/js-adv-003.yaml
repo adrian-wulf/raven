@@ -1,0 +1,13 @@
+id: js-adv-003
+name: JavaScript child_process exec with User Input
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-78"
+languages: [javascript, typescript]
+message: "child_process.exec with user input allows command injection. Use execFile or spawn with argument array."
+patterns:
+  - type: regex
+    pattern: "exec\\s*\\(.*(req\\.|body|params|query|user)"
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

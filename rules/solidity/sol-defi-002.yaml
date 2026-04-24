@@ -1,0 +1,15 @@
+id: sol-defi-002
+name: Price oracle single source
+severity: high
+category: oracle
+confidence: high
+cwe: CWE-829
+languages:
+- solidity
+message: Using single price oracle source can be manipulated. Use multiple sources.
+patterns:
+- type: regex
+  pattern: function\s+getPrice\s*\([^)]*\)[^{]*\{[^}]*priceFeed
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

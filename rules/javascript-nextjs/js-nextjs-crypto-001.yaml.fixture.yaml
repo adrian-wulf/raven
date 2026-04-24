@@ -1,0 +1,15 @@
+rule_id: js-nextjs-crypto-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-crypto-001
+
+    const token = Math.random();
+
+    '
+  safe: '// Safe - js-nextjs-crypto-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

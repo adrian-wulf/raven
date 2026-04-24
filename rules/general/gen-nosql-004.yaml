@@ -1,0 +1,13 @@
+id: gen-nosql-004
+name: Redis Command Injection
+severity: high
+category: nosql
+confidence: high
+cwe: "CWE-943"
+languages: [python, javascript, ruby]
+message: "User input passed to Redis command. Validate and sanitize all Redis command arguments."
+patterns:
+  - type: regex
+    pattern: "(redis\\.send|redis\\.call|client\\.send_command)"
+references:
+  - https://cwe.mitre.org/data/definitions/943.html

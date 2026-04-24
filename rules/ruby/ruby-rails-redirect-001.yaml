@@ -1,0 +1,27 @@
+id: ruby-rails-redirect-001
+name: Rails redirect_to Open Redirect
+description: |
+  Detects open-redirect issues in RUBY code.
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages: [ruby]
+frameworks: [rails]
+message: |
+  redirect_to with user input enables open redirect attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)redirect_to\s+.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)redirect_to\s+.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)redirect_to\s+.*[''"]http'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

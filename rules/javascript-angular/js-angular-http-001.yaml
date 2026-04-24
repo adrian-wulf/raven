@@ -1,0 +1,18 @@
+id: js-angular-http-001
+name: HttpClient without interceptor
+severity: low
+category: config
+confidence: low
+cwe: CWE-693
+languages:
+- javascript
+- typescript
+message: HttpClient without interceptors may miss auth headers or error handling. Add interceptors.
+patterns:
+- type: regex
+  pattern: provideHttpClient\s*\(\s*\)(?!.*withInterceptors)(?!.*HTTP_INTERCEPTORS)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- angular

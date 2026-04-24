@@ -1,0 +1,18 @@
+id: js-nextjs-ssr-002
+name: getStaticProps data injection
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: getStaticProps fetching from user-controlled source can allow data injection. Validate sources.
+patterns:
+- type: regex
+  pattern: export\s+async\s+function\s+getStaticProps\s*\(\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- nextjs

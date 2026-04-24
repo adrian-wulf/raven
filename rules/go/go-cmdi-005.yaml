@@ -1,0 +1,18 @@
+id: go-cmdi-005
+name: os/exec with Shell Flag
+description: |
+  Detects command-injection issues in GO code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [go]
+message: |
+  Avoid using /bin/sh -c with user input. Pass arguments as array instead.
+patterns:
+  - type: regex
+    pattern: '(?i)exec\.Command\s*\(\s*[`"]/bin/(ba)?sh[`"],\s*[`"]-c[`"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

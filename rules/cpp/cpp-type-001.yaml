@@ -1,0 +1,22 @@
+id: cpp-type-001
+name: static_cast Downcast without Check
+description: |
+  Detects type-confusion issues in CPP code.
+severity: high
+category: type-confusion
+confidence: high
+cwe: CWE-843
+languages: [cpp]
+message: |
+  static_cast to derived type without type check is undefined behavior.
+patterns:
+  - type: regex
+    pattern: '(?i)static_cast<.*\*>\s*\(\s*.*base'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)static_cast<.*&>\s*\(\s*.*base'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/843.html

@@ -1,0 +1,13 @@
+id: gen-csrf-002
+name: Cookie Without SameSite Attribute
+severity: medium
+category: csrf
+confidence: high
+cwe: "CWE-352"
+languages: [javascript, python, java, php, csharp, ruby, go]
+message: "Cookie set without SameSite attribute. Use SameSite=Strict for sensitive cookies or SameSite=Lax as minimum."
+patterns:
+  - type: regex
+    pattern: "Set-Cookie.*(?!SameSite)"
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

@@ -1,0 +1,17 @@
+id: py-fastapi-dep-003
+name: Security dependency bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- python
+message: Security dependency that always returns True bypasses authentication. Implement proper checks.
+patterns:
+- type: regex
+  pattern: def\s+\w+\s*\(\s*\)\s*:\s*\n\s*return\s+True
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- fastapi

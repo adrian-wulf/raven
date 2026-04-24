@@ -1,0 +1,17 @@
+id: py-django-config-005
+name: SESSION_COOKIE_SECURE disabled
+severity: high
+category: config
+confidence: high
+cwe: CWE-614
+languages:
+- python
+message: SESSION_COOKIE_SECURE = False allows session cookies over HTTP. Enable it in production.
+patterns:
+- type: regex
+  pattern: SESSION_COOKIE_SECURE\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/614.html
+frameworks:
+- django

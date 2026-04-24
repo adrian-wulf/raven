@@ -1,0 +1,15 @@
+id: lua-eval-002
+name: pcall with unsafe code
+severity: medium
+category: code-injection
+confidence: medium
+cwe: CWE-94
+languages:
+- lua
+message: pcall with dynamically loaded code can mask errors but still execute unsafe code. Avoid.
+patterns:
+- type: regex
+  pattern: pcall\s*\(\s*load(?:string|file)?
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/94.html

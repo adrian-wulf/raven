@@ -1,0 +1,13 @@
+id: gen-mobile-006
+name: Debug Logging in Production
+severity: medium
+category: mobile
+confidence: high
+cwe: "CWE-200"
+languages: [java, kotlin, swift, dart, javascript]
+message: "Debug logging enabled. Remove debug logs in production to prevent information leakage."
+patterns:
+  - type: regex
+    pattern: "Log\\.d\\s*\\(|print\\s*\\(|NSLog\\s*\\(|debugPrint\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

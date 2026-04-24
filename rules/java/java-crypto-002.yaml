@@ -1,0 +1,26 @@
+id: java-crypto-002
+name: DES/ECB Cipher Instance
+description: |
+  Detects weak-cryptography issues in JAVA code.
+severity: critical
+category: weak-cryptography
+confidence: high
+cwe: CWE-327
+languages: [java]
+message: |
+  DES and ECB mode are insecure. Use AES/GCM.
+patterns:
+  - type: regex
+    pattern: '(?i)Cipher\.getInstance\s*\(\s*[`"]DES[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Cipher\.getInstance\s*\(\s*[`"][^`"]*/ECB[^`"]*[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Cipher\.getInstance\s*\(\s*[`"]DES/ECB/PKCS5Padding[`"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

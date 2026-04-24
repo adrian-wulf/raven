@@ -1,0 +1,23 @@
+id: kotlin-android-030
+name: Android Implicit Intent Send
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: medium
+category: intent-injection
+confidence: medium
+cwe: CWE-927
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Implicit intents for sending data can be intercepted.
+patterns:
+  - type: regex
+    pattern: '(?i)Intent\s*\(\s*Action\.SEND'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Intent\s*\(\s*Action\.VIEW\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/927.html

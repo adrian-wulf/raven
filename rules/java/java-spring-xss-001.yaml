@@ -1,0 +1,27 @@
+id: java-spring-xss-001
+name: Spring ResponseEntity XSS
+description: |
+  Detects xss issues in JAVA code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [java]
+frameworks: [spring]
+message: |
+  ResponseEntity with user content must set proper Content-Type and escape HTML.
+patterns:
+  - type: regex
+    pattern: '(?i)ResponseEntity\.ok\(\).*body\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+ResponseEntity\s*\(\s*.*request.*HttpStatus\.OK'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ResponseEntity\.ok\(\).*body\s*\(.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

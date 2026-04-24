@@ -1,0 +1,15 @@
+id: sol-delegatecall-002
+name: Proxy delegatecall
+severity: high
+category: injection
+confidence: high
+cwe: CWE-829
+languages:
+- solidity
+message: Proxy pattern with delegatecall can be hijacked. Implement proper access controls.
+patterns:
+- type: regex
+  pattern: assembly\s*\{[^}]*delegatecall
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

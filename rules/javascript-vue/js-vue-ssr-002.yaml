@@ -1,0 +1,18 @@
+id: js-vue-ssr-002
+name: Nuxt asyncData without error handling
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- javascript
+- typescript
+message: Nuxt asyncData without error handling can fail silently. Add try/catch.
+patterns:
+- type: regex
+  pattern: asyncData\s*\(\s*\{[^}]*\$http
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html
+frameworks:
+- vue

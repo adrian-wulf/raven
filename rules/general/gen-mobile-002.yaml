@@ -1,0 +1,13 @@
+id: gen-mobile-002
+name: WebView File Access Enabled
+severity: high
+category: mobile
+confidence: high
+cwe: "CWE-22"
+languages: [java, kotlin]
+message: "WebView allows file system access. Disable file:// protocol access unless strictly required."
+patterns:
+  - type: regex
+    pattern: "setAllowFileAccess\\s*\\(\\s*true\\s*\\)|setAllowFileAccessFromFileURLs\\s*\\(\\s*true\\s*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

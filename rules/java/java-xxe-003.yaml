@@ -1,0 +1,26 @@
+id: java-xxe-003
+name: DocumentBuilderFactory XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [java]
+message: |
+  DocumentBuilderFactory must disable external entities to prevent XXE attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)DocumentBuilderFactory\.newInstance'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DocumentBuilder.*parse\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)factory\.setFeature\s*\(\s*[`"]http://apache\.org/xml/features/disallow-doctype-decl[`"]\s*,\s*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

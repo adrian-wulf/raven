@@ -1,0 +1,16 @@
+id: bash-perm-002
+name: chown root
+severity: medium
+category: permissions
+confidence: medium
+cwe: CWE-250
+languages:
+- bash
+- shell
+message: Changing ownership to root can create security risks. Review necessity.
+patterns:
+- type: regex
+  pattern: chown\s+.*root
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

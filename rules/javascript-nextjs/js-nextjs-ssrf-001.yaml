@@ -1,0 +1,19 @@
+id: js-nextjs-ssrf-001
+name: fetch with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- javascript
+- typescript
+message: fetch() with user-controlled URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: fetch\s*\(\s*(?P<input>req\.|request\.|user|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- nextjs

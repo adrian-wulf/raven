@@ -1,0 +1,22 @@
+id: php-upload-003
+name: File Upload Path Traversal
+description: |
+  Detects path-traversal issues in PHP code.
+severity: critical
+category: path-traversal
+confidence: critical
+cwe: CWE-22
+languages: [php]
+message: |
+  Uploaded file names can contain path traversal sequences.
+patterns:
+  - type: regex
+    pattern: '(?i)\$_(FILES)\[''.*''\]\[''name''\].*[''"]\\.\\.'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)move_uploaded_file\s*\(.*[''"].*\\.\\.'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

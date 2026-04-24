@@ -1,0 +1,27 @@
+id: java-spring-sec-001
+name: Spring Security CSRF Disabled
+description: |
+  Detects csrf issues in JAVA code.
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages: [java]
+frameworks: [spring]
+message: |
+  Disabling CSRF protection allows cross-site request forgery attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.csrf\s*\(\)\s*\.disable'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)csrf\s*\(\)\s*\.disable'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@EnableWebSecurity.*csrf.*disable'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

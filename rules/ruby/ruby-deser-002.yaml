@@ -1,0 +1,22 @@
+id: ruby-deser-002
+name: YAML.load without Safe Load
+description: |
+  Detects insecure-deserialization issues in RUBY code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [ruby]
+message: |
+  YAML.load without safe_load allows arbitrary object instantiation.
+patterns:
+  - type: regex
+    pattern: '(?i)YAML\.load\s*\(\s*(?!.*safe)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)YAML\.load\s*\(\s*.*(?!safe_load)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

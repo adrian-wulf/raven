@@ -1,0 +1,13 @@
+id: gen-mobile-003
+name: Root Detection Bypass
+severity: high
+category: mobile
+confidence: high
+cwe: "CWE-250"
+languages: [java, kotlin, swift, dart]
+message: "Application does not implement root/jailbreak detection. Add root detection for security-sensitive apps."
+patterns:
+  - type: regex
+    pattern: "(root|jailbreak|isRooted|isJailbroken)"
+references:
+  - https://cwe.mitre.org/data/definitions/250.html

@@ -1,0 +1,15 @@
+id: yaml-k8s-003
+name: ConfigMap with secret
+severity: high
+category: secrets
+confidence: high
+cwe: CWE-312
+languages:
+- yaml
+message: Storing secrets in ConfigMap exposes them in plaintext. Use Secrets instead.
+patterns:
+- type: regex
+  pattern: 'kind:\s*ConfigMap\s*\n.*data:\s*\n.*(password|secret|token|key):'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/312.html

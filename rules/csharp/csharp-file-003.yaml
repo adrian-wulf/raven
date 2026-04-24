@@ -1,0 +1,23 @@
+id: csharp-file-003
+name: Extension Whitelist Bypass
+description: |
+  Detects file-upload issues in CSHARP code.
+severity: medium
+category: file-upload
+confidence: medium
+cwe: CWE-434
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Extension checks without proper validation can be bypassed.
+patterns:
+  - type: regex
+    pattern: '(?i)EndsWith\s*\(.*[''"]\.jpg[''"].*(?!.*ToLower)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Extension.*==.*[''"]\.jpg[''"].*(?!.*ToLower)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/434.html

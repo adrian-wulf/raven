@@ -1,0 +1,16 @@
+id: scala-ssrf-001
+name: WS.url with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- scala
+message: WS.url with user-controlled URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: WS\.url\s*\(\s*(?P<input>user|input|request)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

@@ -1,0 +1,17 @@
+id: py-django-cache-003
+name: Cache timeout too long
+severity: low
+category: config
+confidence: low
+cwe: CWE-613
+languages:
+- python
+message: Cache with very long timeout can serve stale sensitive data. Set reasonable TTL.
+patterns:
+- type: regex
+  pattern: cache\.set\s*\([^,]+,\s*[^,]+,\s*\d{6,}\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/613.html
+frameworks:
+- django

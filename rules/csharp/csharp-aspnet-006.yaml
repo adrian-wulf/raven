@@ -1,0 +1,23 @@
+id: csharp-aspnet-006
+name: ASP.NET Auth Cookie without Secure
+description: |
+  Detects insecure-cookie issues in CSHARP code.
+severity: high
+category: insecure-cookie
+confidence: high
+cwe: CWE-614
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Auth cookies must have Secure and HttpOnly flags.
+patterns:
+  - type: regex
+    pattern: '(?i)CookieAuthenticationOptions.*SecurePolicy.*SameAsRequest'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)CookieAuthenticationOptions.*HttpOnly.*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

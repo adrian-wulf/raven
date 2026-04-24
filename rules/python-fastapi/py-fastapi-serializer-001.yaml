@@ -1,0 +1,17 @@
+id: py-fastapi-serializer-001
+name: Custom serializer without validation
+severity: medium
+category: serialization
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: Custom serializer without input validation can allow injection. Validate all fields.
+patterns:
+- type: regex
+  pattern: class\s+\w+Serializer\s*\(\s*BaseModel\s*\)(?!.*validator)(?!.*Validator)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- fastapi

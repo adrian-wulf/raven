@@ -1,0 +1,23 @@
+id: kotlin-android-024
+name: Android Keystore Weak Algorithm
+description: |
+  Detects weak-cryptography issues in KOTLIN code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-326
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Weak algorithms in Android Keystore reduce key security.
+patterns:
+  - type: regex
+    pattern: '(?i)KeyProperties\.KEY_ALGORITHM_RSA.*512'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)KeyGenParameterSpec.*512'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/326.html

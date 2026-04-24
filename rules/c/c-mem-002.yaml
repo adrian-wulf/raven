@@ -1,0 +1,22 @@
+id: c-mem-002
+name: realloc Info Leak
+description: |
+  Detects information-disclosure issues in C code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-244
+languages: [c]
+message: |
+  realloc failure leaks old pointer. Preserve original until success.
+patterns:
+  - type: regex
+    pattern: '(?i)\w+\s*=\s*realloc\s*\(\s*\w+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)realloc\s*\(.*,\s*.*\)\s*;\s*if\s*\(\s*!'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/244.html

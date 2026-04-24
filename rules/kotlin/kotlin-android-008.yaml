@@ -1,0 +1,23 @@
+id: kotlin-android-008
+name: Android SharedPreferences without Encrypt
+description: |
+  Detects information-disclosure issues in KOTLIN code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-312
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Use EncryptedSharedPreferences for sensitive data.
+patterns:
+  - type: regex
+    pattern: '(?i)getSharedPreferences\s*\((?!.*EncryptedSharedPreferences)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SharedPreferences.*edit.*putString(?!.*Encrypted)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/312.html

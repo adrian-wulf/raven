@@ -1,0 +1,23 @@
+id: java-spring-sec-003
+name: Spring Security Content Security Policy Missing
+description: |
+  Detects insecure-configuration issues in JAVA code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-693
+languages: [java]
+frameworks: [spring]
+message: |
+  Content Security Policy header should be configured to prevent XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.headers\s*\(\)\s*\.contentSecurityPolicy'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@EnableWebSecurity.*(?!contentSecurityPolicy)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

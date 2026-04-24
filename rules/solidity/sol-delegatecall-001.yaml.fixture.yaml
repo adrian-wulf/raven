@@ -1,0 +1,15 @@
+rule_id: sol-delegatecall-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-delegatecall-001
+
+    address(delegate).delegatecall(data);
+
+    '
+  safe: '// Safe - sol-delegatecall-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

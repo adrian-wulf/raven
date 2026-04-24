@@ -1,0 +1,16 @@
+id: bash-cron-001
+name: Cron job without logging
+severity: low
+category: logging
+confidence: low
+cwe: CWE-778
+languages:
+- bash
+- shell
+message: Cron job without output logging makes debugging hard. Redirect output to log.
+patterns:
+- type: regex
+  pattern: \*\s+\*\s+\*\s+\*\s+\*
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

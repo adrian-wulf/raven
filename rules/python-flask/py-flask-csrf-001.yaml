@@ -1,0 +1,17 @@
+id: py-flask-csrf-001
+name: Flask-WTF CSRF exempt
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages:
+- python
+message: Exempting route from CSRF protection enables CSRF attacks. Remove exemption.
+patterns:
+- type: regex
+  pattern: '@csrf\.exempt'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html
+frameworks:
+- flask

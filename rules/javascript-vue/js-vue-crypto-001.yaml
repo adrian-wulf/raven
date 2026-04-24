@@ -1,0 +1,18 @@
+id: js-vue-crypto-001
+name: Math.random for randomness
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-338
+languages:
+- javascript
+- typescript
+message: Math.random() is not cryptographically secure. Use crypto.getRandomValues() for security purposes.
+patterns:
+- type: regex
+  pattern: Math\.random\s*\(\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/338.html
+frameworks:
+- vue

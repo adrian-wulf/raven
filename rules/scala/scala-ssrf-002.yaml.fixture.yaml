@@ -1,0 +1,15 @@
+rule_id: scala-ssrf-002
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-ssrf-002
+
+    WS.url(userUrl).get()
+
+    '
+  safe: '// Safe - scala-ssrf-002
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

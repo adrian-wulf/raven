@@ -1,0 +1,22 @@
+id: php-session-003
+name: Session without Regenerate on Login
+description: |
+  Detects session-fixation issues in PHP code.
+severity: high
+category: session-fixation
+confidence: high
+cwe: CWE-384
+languages: [php]
+message: |
+  Always call session_regenerate_id(true) after successful authentication.
+patterns:
+  - type: regex
+    pattern: '(?i)session_start\s*\(\).*login(?!.*session_regenerate_id)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$_SESSION\[''user''\].*=.*(?!.*session_regenerate_id)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/384.html

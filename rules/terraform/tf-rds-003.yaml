@@ -1,0 +1,16 @@
+id: tf-rds-003
+name: RDS snapshot public
+severity: critical
+category: storage
+confidence: critical
+cwe: CWE-284
+languages:
+- terraform
+- hcl
+message: RDS snapshot with public access exposes database backups. Disable public access.
+patterns:
+- type: regex
+  pattern: snapshot_identifier.*publicly_accessible\s*=\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

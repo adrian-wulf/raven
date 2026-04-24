@@ -17,7 +17,7 @@ patterns:
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(?i)filter\s*[:=]\s*["''][^"'']*\+\s*.*(request|req|params|body|input|data)'
+    pattern: '(?i)filter\s*[:=]\s*["''''][^"'''']*\+\s*.*(request|req|params|body|input|data)'
     where:
       - not-test-file: true
 references:

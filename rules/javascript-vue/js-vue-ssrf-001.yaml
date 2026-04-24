@@ -1,0 +1,19 @@
+id: js-vue-ssrf-001
+name: axios.get with user URL
+severity: medium
+category: ssrf
+confidence: medium
+cwe: CWE-918
+languages:
+- javascript
+- typescript
+message: axios.get() with user-controlled URL can enable SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: axios\.(get|post|put|delete)\s*\(\s*(?P<input>this\.|user|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- vue

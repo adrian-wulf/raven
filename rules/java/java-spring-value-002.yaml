@@ -1,0 +1,27 @@
+id: java-spring-value-002
+name: Spring @Value with Sensitive Data
+description: |
+  Detects information-disclosure issues in JAVA code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-532
+languages: [java]
+frameworks: [spring]
+message: |
+  @Value injection of secrets should use encrypted property sources.
+patterns:
+  - type: regex
+    pattern: '(?i)@Value\s*\(\s*[$\#]\{.*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Value\s*\(\s*[$\#]\{.*secret'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Value\s*\(\s*[$\#]\{.*key'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/532.html

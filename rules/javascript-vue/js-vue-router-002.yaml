@@ -1,0 +1,18 @@
+id: js-vue-router-002
+name: beforeEach bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: beforeEach guard that always calls next() bypasses route protection. Implement auth checks.
+patterns:
+- type: regex
+  pattern: router\.beforeEach\s*\(\s*\(\s*to\s*,\s*from\s*,\s*next\s*\)\s*=>\s*\{\s*\n\s*next\s*\(\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- vue

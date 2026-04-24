@@ -1,0 +1,15 @@
+rule_id: dart-xss-002
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-xss-002
+
+    webview.loadHtmlString(userHtml);
+
+    '
+  safe: '// Safe - dart-xss-002
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

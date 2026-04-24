@@ -1,0 +1,18 @@
+id: js-nextjs-api-002
+name: API route SQL injection
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- javascript
+- typescript
+message: API route with string concatenated SQL enables injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: handler\s*\(.*\)\s*\{[^}]*query\s*\(\s*[`\'\"][^`\'\"]*\$\{
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- nextjs

@@ -1,0 +1,26 @@
+id: rust-concurrency-002
+name: Arc RefCell Data Race
+description: |
+  Detects race-condition issues in RUST code.
+severity: high
+category: race-condition
+confidence: high
+cwe: CWE-362
+languages: [rust]
+message: |
+  Arc<RefCell<T>> allows data races across threads. Use Arc<Mutex<T>>.
+patterns:
+  - type: regex
+    pattern: '(?i)Arc::new\s*\(\s*RefCell'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Arc<.*RefCell'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Arc::clone.*RefCell'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

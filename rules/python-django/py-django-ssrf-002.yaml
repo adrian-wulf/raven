@@ -1,0 +1,18 @@
+id: py-django-ssrf-002
+name: requests.get without URL validation
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- python
+message: requests.get() with user-controlled URL enables SSRF. Validate and sanitize URLs.
+patterns:
+- type: regex
+  pattern: requests\.get\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- django

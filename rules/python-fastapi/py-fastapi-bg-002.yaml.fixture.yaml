@@ -1,0 +1,13 @@
+rule_id: py-fastapi-bg-002
+language: python
+examples:
+  unsafe: "# Unsafe - py-fastapi-bg-002\ndef secret_view(request):\n    return secret_data\n"
+  safe: '# Safe - py-fastapi-bg-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

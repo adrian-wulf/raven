@@ -1,0 +1,23 @@
+id: php-redirect-003
+name: wp_redirect Open Redirect
+description: |
+  Detects open-redirect issues in PHP code.
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages: [php]
+frameworks: [wordpress]
+message: |
+  wp_redirect with user input enables open redirect.
+patterns:
+  - type: regex
+    pattern: '(?i)wp_redirect\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)wp_redirect\s*\(.*[''"]http.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

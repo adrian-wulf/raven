@@ -1,0 +1,18 @@
+id: py-django-sqli-003
+name: Django RawSQL with user input
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: RawSQL expression with user input can lead to SQL injection. Use parameterized queries or ORM.
+patterns:
+- type: regex
+  pattern: RawSQL\s*\(\s*.*(?P<fmt>f[\"\']|%s|\.format\()
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

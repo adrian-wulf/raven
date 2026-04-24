@@ -1,0 +1,26 @@
+id: java-xxe-010
+name: XMLStreamReader XXE
+description: |
+  Detects xxe issues in JAVA code.
+severity: high
+category: xxe
+confidence: medium
+cwe: CWE-611
+languages: [java]
+message: |
+  XMLStreamReader may process external entities by default. Configure securely.
+patterns:
+  - type: regex
+    pattern: '(?i)XMLInputFactory\.newInstance'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xmlInputFactory\.createXMLStreamReader'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)xmlInputFactory\.setProperty.*IS_SUPPORTING_EXTERNAL_ENTITIES.*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

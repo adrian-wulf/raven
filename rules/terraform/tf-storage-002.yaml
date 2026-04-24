@@ -1,0 +1,16 @@
+id: tf-storage-002
+name: S3 without encryption
+severity: high
+category: storage
+confidence: high
+cwe: CWE-311
+languages:
+- terraform
+- hcl
+message: S3 bucket without server-side encryption exposes data at rest. Enable SSE.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_s3_bucket[\"\'][^}]*\}(?!.*server_side_encryption_configuration)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

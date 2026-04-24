@@ -1,0 +1,13 @@
+id: py-adv-005
+name: Python Dangerous Default Mutable Argument
+severity: low
+category: rce
+confidence: high
+cwe: "CWE-664"
+languages: [python]
+message: "Mutable default argument (list, dict) can cause unexpected behavior. Use None as default and initialize inside function."
+patterns:
+  - type: regex
+    pattern: "def\\s+\\w+\\s*\\(.*=\\s*\\[|def\\s+\\w+\\s*\\(.*=\\s*\\{"
+references:
+  - https://cwe.mitre.org/data/definitions/664.html

@@ -1,0 +1,15 @@
+id: dart-webview-001
+name: javascriptMode unrestricted
+severity: high
+category: webview
+confidence: high
+cwe: CWE-79
+languages:
+- dart
+message: 'javascriptMode: JavascriptMode.unrestricted allows arbitrary JS execution. Restrict if possible.'
+patterns:
+- type: regex
+  pattern: javascriptMode\s*:\s*JavascriptMode\.unrestricted
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html

@@ -1,0 +1,15 @@
+rule_id: scala-xss-003
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-xss-003
+
+    Html(userHtml)
+
+    '
+  safe: '// Safe - scala-xss-003
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

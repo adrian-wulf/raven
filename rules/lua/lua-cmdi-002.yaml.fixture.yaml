@@ -1,0 +1,15 @@
+rule_id: lua-cmdi-002
+language: lua
+examples:
+  unsafe: '-- Unsafe - lua-cmdi-002
+
+    os.execute("ls " .. user_path)
+
+    '
+  safe: '-- Safe - lua-cmdi-002
+
+    -- Validate inputs, use parameterized APIs
+
+    local stmt = db:prepare(''SELECT * FROM t WHERE id = ?'')
+
+    '

@@ -1,0 +1,18 @@
+id: js-vue-component-002
+name: is attribute with user input
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: The :is attribute with user input can render arbitrary components. Validate component names.
+patterns:
+- type: regex
+  pattern: :is\s*=\s*[\"\'][^\"\']*\{\{[^}]+\}\}
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- vue

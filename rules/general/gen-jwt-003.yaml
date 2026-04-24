@@ -1,0 +1,13 @@
+id: gen-jwt-003
+name: JWT Token Without Expiration
+severity: high
+category: auth
+confidence: high
+cwe: "CWE-613"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "JWT token created without expiration (exp claim). All tokens must have a reasonable expiration time."
+patterns:
+  - type: regex
+    pattern: "(jwt|Jwt|JWT|jsonwebtoken)\\.sign\\s*\\(.*\\{.*(?!exp)"
+references:
+  - https://cwe.mitre.org/data/definitions/613.html

@@ -1,0 +1,15 @@
+id: docker-signal-001
+name: No STOPSIGNAL defined
+severity: low
+category: config
+confidence: low
+cwe: CWE-400
+languages:
+- dockerfile
+message: No STOPSIGNAL defined can cause unclean shutdown. Define STOPSIGNAL.
+patterns:
+- type: regex
+  pattern: ^((?!STOPSIGNAL).)*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

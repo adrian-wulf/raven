@@ -1,0 +1,15 @@
+id: sol-reentrancy-003
+name: Low-level call without ReentrancyGuard
+severity: critical
+category: reentrancy
+confidence: high
+cwe: CWE-841
+languages:
+- solidity
+message: Low-level .call without ReentrancyGuard is vulnerable to reentrancy. Add nonReentrant modifier.
+patterns:
+- type: regex
+  pattern: \.call\s*\{[^}]*value\s*:\s*[^}]+\}\s*\([^)]*\)(?!.*nonReentrant)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/841.html

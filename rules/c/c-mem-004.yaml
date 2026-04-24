@@ -1,0 +1,18 @@
+id: c-mem-004
+name: Double fclose
+description: |
+  Detects use-after-free issues in C code.
+severity: high
+category: use-after-free
+confidence: high
+cwe: CWE-415
+languages: [c]
+message: |
+  Double fclose causes use-after-free on FILE structure.
+patterns:
+  - type: regex
+    pattern: '(?i)fclose\s*\(.*\).*fclose\s*\(\s*\1'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/415.html

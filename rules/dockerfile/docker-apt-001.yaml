@@ -1,0 +1,15 @@
+id: docker-apt-001
+name: apt-get upgrade
+severity: medium
+category: supply-chain
+confidence: medium
+cwe: CWE-1104
+languages:
+- dockerfile
+message: apt-get upgrade in Dockerfile can introduce unpredictable changes. Pin package versions.
+patterns:
+- type: regex
+  pattern: apt-get\s+(upgrade|dist-upgrade)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1104.html

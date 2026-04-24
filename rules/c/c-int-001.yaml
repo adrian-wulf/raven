@@ -1,0 +1,26 @@
+id: c-int-001
+name: Signed Unsigned Integer Confusion
+description: |
+  Detects integer-overflow issues in C code.
+severity: high
+category: integer-overflow
+confidence: high
+cwe: CWE-195
+languages: [c]
+message: |
+  Mixing signed/unsigned integers causes type confusion and potential overflows.
+patterns:
+  - type: regex
+    pattern: '(?i)(int|signed)\s+\w+\s*=\s*(size_t|unsigned)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)(size_t|unsigned)\s+\w+\s*=\s*-'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)malloc\s*\(.*(int|signed)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/195.html

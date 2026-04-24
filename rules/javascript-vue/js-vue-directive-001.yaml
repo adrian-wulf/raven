@@ -1,0 +1,18 @@
+id: js-vue-directive-001
+name: Custom directive user input
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Custom directive binding user input to DOM without sanitization can enable XSS. Sanitize input.
+patterns:
+- type: regex
+  pattern: Vue\.directive\s*\(\s*[\"\']\w+[\"\']\s*,\s*\{[^}]*mounted\s*\(\s*el\s*,\s*binding\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

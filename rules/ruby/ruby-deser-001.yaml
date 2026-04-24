@@ -1,0 +1,26 @@
+id: ruby-deser-001
+name: YAML.load User Input
+description: |
+  Detects insecure-deserialization issues in RUBY code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [ruby]
+message: |
+  YAML.load can instantiate arbitrary Ruby objects. Use YAML.safe_load.
+patterns:
+  - type: regex
+    pattern: '(?i)YAML\.load\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)YAML\.load\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)YAML\.load_file\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

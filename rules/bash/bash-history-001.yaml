@@ -1,0 +1,16 @@
+id: bash-history-001
+name: Sensitive command in history
+severity: medium
+category: secrets
+confidence: medium
+cwe: CWE-532
+languages:
+- bash
+- shell
+message: Command with password may be stored in shell history. Use HISTCONTROL.
+patterns:
+- type: regex
+  pattern: \b(mysql|psql|ssh)\s+.*-p\s*\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/532.html

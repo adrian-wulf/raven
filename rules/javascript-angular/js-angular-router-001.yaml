@@ -1,0 +1,18 @@
+id: js-angular-router-001
+name: router.navigate without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: router.navigate() without auth check may allow unauthorized navigation. Add route guards.
+patterns:
+- type: regex
+  pattern: this\.router\.navigate\s*\(\s*\[
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- angular

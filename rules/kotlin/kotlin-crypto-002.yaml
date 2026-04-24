@@ -1,0 +1,22 @@
+id: kotlin-crypto-002
+name: Hardcoded Keystore Password
+description: |
+  Detects hardcoded-secrets issues in KOTLIN code.
+severity: critical
+category: hardcoded-secrets
+confidence: critical
+cwe: CWE-798
+languages: [kotlin]
+message: |
+  Keystore passwords in code compromise all stored keys.
+patterns:
+  - type: regex
+    pattern: '(?i)KeyStore\.load\s*\(\s*.*[''"][^''"]{4,}[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)load\s*\(\s*.*[''"][^''"]+[''"].*password'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

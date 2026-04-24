@@ -1,0 +1,18 @@
+id: js-angular-xss-002
+name: bypassSecurityTrustScript
+severity: critical
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: bypassSecurityTrustScript() allows arbitrary script execution. Extremely dangerous with user input.
+patterns:
+- type: regex
+  pattern: bypassSecurityTrustScript\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,26 @@
+id: java-misc-005
+name: JMX MBean Remote Exposure
+description: |
+  Detects information-disclosure issues in JAVA code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-200
+languages: [java]
+message: |
+  Exposed JMX MBeans can leak sensitive operations. Restrict access.
+patterns:
+  - type: regex
+    pattern: '(?i)ManagementFactory.*registerMBean'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)JMXConnectorServerFactory.*newJMXConnectorServer'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)jmxremote.*authenticate.*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

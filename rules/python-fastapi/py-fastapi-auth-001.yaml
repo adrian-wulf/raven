@@ -1,0 +1,17 @@
+id: py-fastapi-auth-001
+name: OAuth2PasswordBearer bypass
+severity: high
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- python
+message: OAuth2PasswordBearer without proper token validation can be bypassed. Validate tokens correctly.
+patterns:
+- type: regex
+  pattern: OAuth2PasswordBearer\s*\(\s*tokenUrl\s*=\s*[\"\']\w+[\"\']\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- fastapi

@@ -1,0 +1,18 @@
+id: py-fastapi-cache-001
+name: Cache poisoning
+severity: medium
+category: cache
+confidence: medium
+cwe: CWE-349
+languages:
+- python
+message: Cache key based on user input can enable cache poisoning. Sanitize cache keys.
+patterns:
+- type: regex
+  pattern: cache\.set\s*\(\s*(?P<input>request\.|f[\"\']|\w+\s*\+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/349.html
+frameworks:
+- fastapi

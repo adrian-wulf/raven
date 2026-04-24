@@ -1,0 +1,17 @@
+rule_id: py-flask-file-003
+language: python
+examples:
+  unsafe: '# Unsafe - py-flask-file-003
+
+    open(user_path).read()
+
+    '
+  safe: '# Safe - py-flask-file-003
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

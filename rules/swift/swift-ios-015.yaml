@@ -1,0 +1,23 @@
+id: swift-ios-015
+name: JavaScript Bridge Abuse
+description: |
+  Detects code-injection issues in SWIFT code.
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages: [swift]
+frameworks: [ios]
+message: |
+  JavaScript bridge handlers executing user code can be abused.
+patterns:
+  - type: regex
+    pattern: '(?i)postMessage\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)webkit\.messageHandlers.*postMessage'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

@@ -1,0 +1,23 @@
+id: ruby-rails-csrf-002
+name: Rails protect_from_forgery Missing
+description: |
+  Detects csrf issues in RUBY code.
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Applications must enable protect_from_forgery.
+patterns:
+  - type: regex
+    pattern: '(?i)class\s+ApplicationController.*(?!protect_from_forgery)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ApplicationController.*Base(?!.*protect_from_forgery)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

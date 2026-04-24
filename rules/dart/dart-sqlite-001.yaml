@@ -1,0 +1,15 @@
+id: dart-sqlite-001
+name: sqflite without version migration
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-693
+languages:
+- dart
+message: sqflite without onUpgrade can corrupt data on schema change. Implement migrations.
+patterns:
+- type: regex
+  pattern: openDatabase\s*\([^)]*\)(?!.*onUpgrade)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

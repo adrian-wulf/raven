@@ -1,0 +1,22 @@
+id: go-misc-001
+name: strconv.FormatFloat Precision Loss
+description: |
+  Detects numeric-error issues in GO code.
+severity: low
+category: numeric-error
+confidence: low
+cwe: CWE-681
+languages: [go]
+message: |
+  Be aware of precision loss when converting floating point numbers to strings.
+patterns:
+  - type: regex
+    pattern: '(?i)strconv\.FormatFloat.*64'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)strconv\.ParseFloat'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/681.html

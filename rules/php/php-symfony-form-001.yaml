@@ -1,0 +1,23 @@
+id: php-symfony-form-001
+name: Symfony Form Validation Bypass
+description: |
+  Detects input-validation issues in PHP code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [php]
+frameworks: [symfony]
+message: |
+  Forms without validation constraints allow invalid data.
+patterns:
+  - type: regex
+    pattern: '(?i)->add\s*\(.*[''"][^''"]+[''"].*TextType(?!.*constraints)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)FormBuilder.*add\(.*(?!.*constraints)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

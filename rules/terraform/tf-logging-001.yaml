@@ -1,0 +1,16 @@
+id: tf-logging-001
+name: CloudTrail disabled
+severity: high
+category: logging
+confidence: high
+cwe: CWE-778
+languages:
+- terraform
+- hcl
+message: CloudTrail not enabled means API calls are not audited. Enable CloudTrail.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_cloudtrail[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

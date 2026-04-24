@@ -1,0 +1,22 @@
+id: cpp-stl-004
+name: Map Key Iterator Invalidation
+description: |
+  Detects use-after-free issues in CPP code.
+severity: medium
+category: use-after-free
+confidence: medium
+cwe: CWE-416
+languages: [cpp]
+message: |
+  map::erase invalidates only the erased iterator. Others remain valid.
+patterns:
+  - type: regex
+    pattern: '(?i)map.*erase\s*\(.*iter\+\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)map.*erase\s*\(.*iter--'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

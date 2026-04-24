@@ -1,0 +1,22 @@
+id: ruby-regex-001
+name: Regexp.new User Input ReDoS
+description: |
+  Detects regex-dos issues in RUBY code.
+severity: medium
+category: regex-dos
+confidence: medium
+cwe: CWE-400
+languages: [ruby]
+message: |
+  Regex with user input can have catastrophic backtracking.
+patterns:
+  - type: regex
+    pattern: '(?i)Regexp\.new\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Regexp\.new\s*\(\s*.*[''"].*\*.*[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/400.html

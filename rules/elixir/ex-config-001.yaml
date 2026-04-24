@@ -1,0 +1,15 @@
+id: ex-config-001
+name: Prod secret base exposure
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- elixir
+message: Secret key base exposed in production config can compromise security. Use environment variables.
+patterns:
+- type: regex
+  pattern: secret_key_base:\s*[\"\'][^\"\']{20,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

@@ -1,0 +1,22 @@
+id: go-http-006
+name: httptest.Server in Production Code
+description: |
+  Detects insecure-configuration issues in GO code.
+severity: medium
+category: insecure-configuration
+confidence: medium
+cwe: CWE-489
+languages: [go]
+message: |
+  httptest.Server should not be used in production. It's intended for testing only.
+patterns:
+  - type: regex
+    pattern: '(?i)httptest\.NewServer'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)httptest\.NewTLSServer'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/489.html

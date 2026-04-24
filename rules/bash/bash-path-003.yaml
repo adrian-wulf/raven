@@ -1,0 +1,17 @@
+id: bash-path-003
+name: source user file
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- bash
+- shell
+message: sourcing a user-controlled file can execute arbitrary code. Validate file path.
+patterns:
+- type: regex
+  pattern: source\s+\$?(?P<input>\w+)|\.\s+\$?(?P<input2>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

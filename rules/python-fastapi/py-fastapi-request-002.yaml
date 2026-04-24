@@ -1,0 +1,17 @@
+id: py-fastapi-request-002
+name: Header injection
+severity: high
+category: injection
+confidence: high
+cwe: CWE-20
+languages:
+- python
+message: Header parameter without validation can lead to header injection. Validate and sanitize headers.
+patterns:
+- type: regex
+  pattern: Header\s*\(\s*\w+\s*\)\s*(?!.*regex)(?!.*validate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- fastapi

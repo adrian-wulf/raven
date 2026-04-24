@@ -1,0 +1,17 @@
+id: py-flask-wtf-001
+name: Form without CSRF
+severity: medium
+category: csrf
+confidence: medium
+cwe: CWE-352
+languages:
+- python
+message: Flask-WTF form without CSRF protection is vulnerable. Enable CSRF protection.
+patterns:
+- type: regex
+  pattern: class\s+\w+Form\s*\(\s*FlaskForm\s*\)(?!.*csrf)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html
+frameworks:
+- flask

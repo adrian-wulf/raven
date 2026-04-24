@@ -1,0 +1,15 @@
+rule_id: sol-gas-003
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-gas-003
+
+    for (uint i = 0; i < recipients.length; i++) { recipients[i].transfer(amount); }
+
+    '
+  safe: '// Safe - sol-gas-003
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

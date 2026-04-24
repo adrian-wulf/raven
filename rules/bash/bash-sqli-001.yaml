@@ -1,0 +1,17 @@
+id: bash-sqli-001
+name: mysql with user query
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- bash
+- shell
+message: mysql -e with user input enables SQL injection. Use prepared statements via proper client.
+patterns:
+- type: regex
+  pattern: mysql\s+.*-e\s+[\"\'].*\$\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

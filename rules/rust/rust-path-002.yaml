@@ -1,0 +1,22 @@
+id: rust-path-002
+name: PathBuf push User Path
+description: |
+  Detects path-traversal issues in RUST code.
+severity: medium
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages: [rust]
+message: |
+  PathBuf::push doesn't prevent traversal. Validate result.
+patterns:
+  - type: regex
+    pattern: '(?i)PathBuf::new\s*\(\s*\).*push\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PathBuf::from\s*\(.*\).*push\s*\(.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

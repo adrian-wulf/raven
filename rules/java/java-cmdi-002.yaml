@@ -1,0 +1,26 @@
+id: java-cmdi-002
+name: ProcessBuilder User Input
+description: |
+  Detects command-injection issues in JAVA code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [java]
+message: |
+  ProcessBuilder with user-controlled arguments can inject commands.
+patterns:
+  - type: regex
+    pattern: '(?i)ProcessBuilder\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ProcessBuilder.*redirectErrorStream.*start'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+ProcessBuilder\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

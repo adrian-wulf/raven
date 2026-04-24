@@ -1,0 +1,13 @@
+id: gen-config-006
+name: Verbose Error Messages in Production
+severity: high
+category: config
+confidence: high
+cwe: "CWE-209"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Verbose error messages/stack traces returned to client. Return generic error messages in production."
+patterns:
+  - type: regex
+    pattern: "(app\\.use\\s*\\(\\s*error|exception.*handler|errorHandler|onError)"
+references:
+  - https://cwe.mitre.org/data/definitions/209.html

@@ -1,0 +1,27 @@
+id: java-android-013
+name: Android Mode World Readable/Writeable
+description: |
+  Detects insecure-permissions issues in JAVA code.
+severity: critical
+category: insecure-permissions
+confidence: critical
+cwe: CWE-276
+languages: [java]
+frameworks: [android]
+message: |
+  MODE_WORLD_READABLE/WRITEABLE allows any app to access files. Use MODE_PRIVATE.
+patterns:
+  - type: regex
+    pattern: '(?i)MODE_WORLD_READABLE'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)MODE_WORLD_WRITEABLE'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)openFileOutput\s*\(.*MODE_WORLD'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/276.html

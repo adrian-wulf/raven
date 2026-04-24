@@ -1,0 +1,15 @@
+rule_id: sol-addr-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-addr-001
+
+    function transfer(address to, uint amount) public { require(to != address(0)); }
+
+    '
+  safe: '// Safe - sol-addr-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

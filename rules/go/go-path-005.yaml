@@ -1,0 +1,22 @@
+id: go-path-005
+name: filepath.Join Traversal Bypass
+description: |
+  Detects path-traversal issues in GO code.
+severity: high
+category: path-traversal
+confidence: medium
+cwe: CWE-22
+languages: [go]
+message: |
+  filepath.Join alone does not prevent directory traversal. Validate after joining.
+patterns:
+  - type: regex
+    pattern: '(?i)filepath\.Join\s*\(\s*.*(r\.|req|request|param|input|user|filename|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)path\.Join\s*\(\s*.*(r\.|req|request|param|input|user|filename|path)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

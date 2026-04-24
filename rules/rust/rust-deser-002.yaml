@@ -1,0 +1,23 @@
+id: rust-deser-002
+name: serde_json from_str Trusted
+description: |
+  Detects insecure-deserialization issues in RUST code.
+severity: medium
+category: insecure-deserialization
+confidence: medium
+cwe: CWE-502
+languages: [rust]
+frameworks: [serde]
+message: |
+  Deserializing untrusted JSON without validation can be risky.
+patterns:
+  - type: regex
+    pattern: '(?i)serde_json::from_str\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)serde_json::from_reader\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

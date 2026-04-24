@@ -1,0 +1,18 @@
+id: py-django-ssrf-001
+name: urlopen in view
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- python
+message: Using urlopen with user-controlled URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: urlopen\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- django

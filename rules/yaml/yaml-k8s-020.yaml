@@ -1,0 +1,15 @@
+id: yaml-k8s-020
+name: PodSecurityPolicy missing
+severity: high
+category: config
+confidence: high
+cwe: CWE-693
+languages:
+- yaml
+message: No PodSecurityPolicy means no pod security constraints. Enable PSP or OPA.
+patterns:
+- type: regex
+  pattern: ^((?!kind:\s*PodSecurityPolicy)(?!kind:\s*PodSecurity)(?!OPA).)*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

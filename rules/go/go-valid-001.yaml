@@ -1,0 +1,18 @@
+id: go-valid-001
+name: Missing Input Validation on Handler
+description: |
+  Detects input-validation issues in GO code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [go]
+message: |
+  All handler inputs should be validated. Missing validation leads to injection vulnerabilities.
+patterns:
+  - type: regex
+    pattern: '(?i)func\s+\w+\s*\(\s*w\s+http\.ResponseWriter\s*,\s*r\s*\*http\.Request\s*\)\s*\{[^}]*(r\.FormValue|r\.URL\.Query)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

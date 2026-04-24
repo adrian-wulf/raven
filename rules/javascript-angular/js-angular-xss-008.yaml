@@ -1,0 +1,18 @@
+id: js-angular-xss-008
+name: DomSanitizer bypass
+severity: critical
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Direct use of DomSanitizer bypass methods can enable XSS. Validate all input.
+patterns:
+- type: regex
+  pattern: sanitizer\.(bypassSecurityTrustHtml|bypassSecurityTrustScript|bypassSecurityTrustResourceUrl)\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,18 @@
+id: js-vue-nuxt-001
+name: Nuxt auth module missing
+severity: high
+category: auth
+confidence: high
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: Nuxt app without auth module may allow unauthorized access. Configure auth.
+patterns:
+- type: regex
+  pattern: modules:\s*\[(?!.*@nuxtjs/auth)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- vue

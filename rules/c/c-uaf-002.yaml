@@ -1,0 +1,22 @@
+id: c-uaf-002
+name: Double-Free
+description: |
+  Detects use-after-free issues in C code.
+severity: critical
+category: use-after-free
+confidence: critical
+cwe: CWE-415
+languages: [c]
+message: |
+  Double-free corrupts heap and can lead to arbitrary code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)free\s*\(\s*\w+\s*\).*free\s*\(\s*\w+\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)free\s*\(.*\n.*free\s*\(\s*\1'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/415.html

@@ -1,0 +1,23 @@
+id: java-deser-008
+name: SnakeYAML Constructor Abuse
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: critical
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [java]
+frameworks: [snakeyaml]
+message: |
+  Custom SnakeYAML constructors can be exploited for RCE.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+Constructor\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)TypeDescription.*putMapPropertyType'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

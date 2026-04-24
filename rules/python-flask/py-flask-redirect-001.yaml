@@ -1,0 +1,18 @@
+id: py-flask-redirect-001
+name: redirect with user URL
+severity: high
+category: open-redirect
+confidence: high
+cwe: CWE-601
+languages:
+- python
+message: redirect() with user-controlled URL enables open redirect. Validate against allowlist.
+patterns:
+- type: regex
+  pattern: redirect\s*\(\s*(?P<input>request\.(args|form|headers)|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/601.html
+frameworks:
+- flask

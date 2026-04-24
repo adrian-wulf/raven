@@ -1,0 +1,13 @@
+id: c-oo br-001
+name: Array Access Without Bounds Check
+severity: high
+category: bufferoverflow
+confidence: high
+cwe: "CWE-125"
+languages: [c, cpp]
+message: "Array indexed with user-controlled value without bounds check. Validate index before access."
+patterns:
+  - type: regex
+    pattern: "\\[\\s*\\w+\\s*\\]"
+references:
+  - https://cwe.mitre.org/data/definitions/125.html

@@ -1,0 +1,15 @@
+rule_id: js-nextjs-api-004
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-api-004
+
+    const input = req.body.value;
+
+    '
+  safe: '// Safe - js-nextjs-api-004
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

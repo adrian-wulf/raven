@@ -1,0 +1,23 @@
+id: csharp-ef-004
+name: EF Raw Query Mapping
+description: |
+  Detects sql-injection issues in CSHARP code.
+severity: high
+category: sql-injection
+confidence: medium
+cwe: CWE-89
+languages: [csharp]
+frameworks: [aspnet, ef]
+message: |
+  Custom SQL query mapping without validation can inject SQL.
+patterns:
+  - type: regex
+    pattern: '(?i)SqlQuery\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ExecuteStoreQuery\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

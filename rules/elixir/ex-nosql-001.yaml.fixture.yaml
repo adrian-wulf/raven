@@ -1,0 +1,15 @@
+rule_id: ex-nosql-001
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-nosql-001
+
+    Repo.query("SELECT * FROM users WHERE id = #{user_id}")
+
+    '
+  safe: '# Safe - ex-nosql-001
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

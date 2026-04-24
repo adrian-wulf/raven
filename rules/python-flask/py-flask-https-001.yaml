@@ -1,0 +1,17 @@
+id: py-flask-https-001
+name: HTTPS redirect missing
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-319
+languages:
+- python
+message: No HTTPS redirect allows HTTP connections. Use Talisman or sslify.
+patterns:
+- type: regex
+  pattern: '@app\.(before_request|after_request)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html
+frameworks:
+- flask

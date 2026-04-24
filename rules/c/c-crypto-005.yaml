@@ -1,0 +1,30 @@
+id: c-crypto-005
+name: Deprecated MD5 SHA1 Hash
+description: |
+  Detects weak-cryptography issues in C code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-328
+languages: [c]
+message: |
+  MD5 and SHA1 are cryptographically broken. Use SHA-256 or better.
+patterns:
+  - type: regex
+    pattern: '(?i)MD5_Init'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SHA1_Init'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)EVP_md5\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)EVP_sha1\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/328.html

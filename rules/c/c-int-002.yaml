@@ -1,0 +1,26 @@
+id: c-int-002
+name: Integer Wraparound
+description: |
+  Detects integer-overflow issues in C code.
+severity: high
+category: integer-overflow
+confidence: high
+cwe: CWE-190
+languages: [c]
+message: |
+  Integer arithmetic without overflow checks can wrap around.
+patterns:
+  - type: regex
+    pattern: '(?i)\*\s*\w+.*\+.*malloc'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\+\s*\w+.*malloc'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)malloc\s*\(.*\+.*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/190.html

@@ -1,0 +1,13 @@
+id: gen-mobile-008
+name: Screenshot Enabled for Sensitive Screens
+severity: medium
+category: mobile
+confidence: high
+cwe: "CWE-200"
+languages: [java, kotlin, swift, dart]
+message: "Screenshots not prevented on sensitive screens. Use FLAG_SECURE (Android) or preventScreenCapture (iOS)."
+patterns:
+  - type: regex
+    pattern: "(FLAG_SECURE|preventScreenCapture|secureTextEntry)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

@@ -1,0 +1,22 @@
+id: ruby-cmd-007
+name: Ruby %x Command Injection
+description: |
+  Detects command-injection issues in RUBY code.
+severity: critical
+category: command-injection
+confidence: critical
+cwe: CWE-78
+languages: [ruby]
+message: |
+  %x{} with user input executes shell commands.
+patterns:
+  - type: regex
+    pattern: '(?i)%x\{.*params.*\}'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)%x\{.*\#\{.*params.*\}.*\}'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

@@ -1,0 +1,22 @@
+id: go-http-005
+name: InsecureSkipVerify in HTTP Transport
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: critical
+category: weak-cryptography
+confidence: high
+cwe: CWE-295
+languages: [go]
+message: |
+  TLS certificate verification must not be disabled. Remove InsecureSkipVerify.
+patterns:
+  - type: regex
+    pattern: '(?i)TLSClientConfig.*InsecureSkipVerify'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tls\.Config\{[^}]*InsecureSkipVerify\s*:\s*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/295.html

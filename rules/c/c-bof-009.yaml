@@ -1,0 +1,22 @@
+id: c-bof-009
+name: wcscpy Wide String Overflow
+description: |
+  Detects buffer-overflow issues in C code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-120
+languages: [c]
+message: |
+  wcscpy can overflow wide char buffers. Use wcsncpy.
+patterns:
+  - type: regex
+    pattern: '(?i)wcscpy\s*\(\s*[^,]+,\s*[^)]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)wcscat\s*\(\s*[^,]+,\s*[^)]+\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/120.html

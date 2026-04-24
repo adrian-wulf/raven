@@ -1,0 +1,15 @@
+id: sol-erc-003
+name: ERC20 transfer without event
+severity: low
+category: logging
+confidence: low
+cwe: CWE-778
+languages:
+- solidity
+message: ERC20 transfer without Transfer event breaks compatibility. Emit event.
+patterns:
+- type: regex
+  pattern: function\s+transfer\s*\([^)]*\)[^{]*\{[^}]*balances[^}]*\}(?!.*emit)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/778.html

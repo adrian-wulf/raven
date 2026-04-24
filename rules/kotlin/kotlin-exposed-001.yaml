@@ -1,0 +1,27 @@
+id: kotlin-exposed-001
+name: Exposed Raw SQL Injection
+description: |
+  Detects sql-injection issues in KOTLIN code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [kotlin]
+frameworks: [exposed]
+message: |
+  Exposed raw SQL with user input allows injection.
+patterns:
+  - type: regex
+    pattern: '(?i)Transaction.*exec\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Raw\s*\(\s*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)CustomOperator\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

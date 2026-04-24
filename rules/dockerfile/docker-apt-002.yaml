@@ -1,0 +1,15 @@
+id: docker-apt-002
+name: apt without no-install-recommends
+severity: low
+category: supply-chain
+confidence: low
+cwe: CWE-1104
+languages:
+- dockerfile
+message: apt-get install without --no-install-recommends installs unnecessary packages. Use flag.
+patterns:
+- type: regex
+  pattern: apt-get\s+install(?!.*--no-install-recommends)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1104.html

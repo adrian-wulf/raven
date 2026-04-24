@@ -1,0 +1,17 @@
+id: py-fastapi-oauth-001
+name: OAuth without PKCE
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-352
+languages:
+- python
+message: OAuth2 without PKCE is vulnerable to authorization code interception. Use PKCE.
+patterns:
+- type: regex
+  pattern: OAuth2AuthorizationCodeBearer\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html
+frameworks:
+- fastapi

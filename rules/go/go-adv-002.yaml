@@ -1,0 +1,13 @@
+id: go-adv-002
+name: Go HTTP Client Without Timeout
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-400"
+languages: [go]
+message: "HTTP client created without timeout. Always set timeout to prevent goroutine leaks and DoS."
+patterns:
+  - type: regex
+    pattern: "&http\\.Client\\s*\\{(?!.*Timeout)"
+references:
+  - https://cwe.mitre.org/data/definitions/400.html

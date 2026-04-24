@@ -1,0 +1,26 @@
+id: java-ldap-003
+name: LDAP Search Filter Construction
+description: |
+  Detects ldap-injection issues in JAVA code.
+severity: critical
+category: ldap-injection
+confidence: high
+cwe: CWE-90
+languages: [java]
+message: |
+  Building LDAP filters with string concatenation is vulnerable to injection.
+patterns:
+  - type: regex
+    pattern: '(?i)String\.format\s*\(\s*[`"]\(\&\?\(cn=%s\)[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)[`"]\(\&\?\(cn=[`"]\s*\+.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)filter\s*=\s*[`"].*cn=.*\+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/90.html

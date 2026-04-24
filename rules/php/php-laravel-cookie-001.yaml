@@ -1,0 +1,19 @@
+id: php-laravel-cookie-001
+name: Laravel Cookie Without Encryption
+description: |
+  Detects insecure-cookie issues in PHP code.
+severity: medium
+category: insecure-cookie
+confidence: medium
+cwe: CWE-614
+languages: [php]
+frameworks: [laravel]
+message: |
+  Cookies without encryption can be tampered with.
+patterns:
+  - type: regex
+    pattern: '(?i)Cookie::make\s*\(.*[''"][^''"]+[''"].*\d+.*\)(?!.*encrypt)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

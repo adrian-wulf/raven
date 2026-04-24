@@ -1,0 +1,22 @@
+id: c-fmt-007
+name: sprintf Format String Stack
+description: |
+  Detects format-string issues in C code.
+severity: critical
+category: format-string
+confidence: critical
+cwe: CWE-134
+languages: [c]
+message: |
+  sprintf with format from user enables stack-based memory corruption.
+patterns:
+  - type: regex
+    pattern: '(?i)sprintf\s*\(\s*[^,]+,\s*[^''"]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sprintf\s*\(\s*buf,\s*.*fmt'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

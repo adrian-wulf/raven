@@ -1,0 +1,17 @@
+id: py-django-serializer-004
+name: ReadOnlyField bypass
+severity: low
+category: serialization
+confidence: low
+cwe: CWE-20
+languages:
+- python
+message: ReadOnlyField may still be written in create/update. Validate in serializer.
+patterns:
+- type: regex
+  pattern: ReadOnlyField\s*\(\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

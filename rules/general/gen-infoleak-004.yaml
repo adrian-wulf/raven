@@ -1,0 +1,13 @@
+id: gen-infoleak-004
+name: Debug Information in Production
+severity: high
+category: infoleak
+confidence: high
+cwe: "CWE-200"
+languages: [python, javascript, go, java, php, csharp, ruby]
+message: "Debug mode or verbose error reporting enabled. Disable in production to prevent information leakage."
+patterns:
+  - type: regex
+    pattern: "debug\\s*=\\s*True|DEBUG\\s*=\\s*true|app\\.debug|enableDebug|showErrors\\s*=\\s*true"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

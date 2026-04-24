@@ -1,0 +1,23 @@
+id: kotlin-deser-004
+name: Kotlinx Serialization without Validation
+description: |
+  Detects insecure-deserialization issues in KOTLIN code.
+severity: low
+category: insecure-deserialization
+confidence: low
+cwe: CWE-502
+languages: [kotlin]
+frameworks: [kotlinx]
+message: |
+  kotlinx.serialization should validate input before decoding.
+patterns:
+  - type: regex
+    pattern: '(?i)Json\.decodeFromString\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Json\.parseToJsonElement\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

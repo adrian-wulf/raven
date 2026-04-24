@@ -1,0 +1,26 @@
+id: kotlin-crypto-001
+name: Weak Cipher Algorithm
+description: |
+  Detects weak-cryptography issues in KOTLIN code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-327
+languages: [kotlin]
+message: |
+  Weak cipher algorithms are insecure. Use AES/GCM.
+patterns:
+  - type: regex
+    pattern: '(?i)Cipher\.getInstance\s*\(\s*[''"]DES[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Cipher\.getInstance\s*\(\s*[''"]RC4[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Cipher\.getInstance\s*\(\s*[''"]Blowfish[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/327.html

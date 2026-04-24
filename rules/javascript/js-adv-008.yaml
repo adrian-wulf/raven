@@ -1,0 +1,13 @@
+id: js-adv-008
+name: JavaScript Open Redirect via Location Header
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-601"
+languages: [javascript, typescript]
+message: "Redirect URL from user input enables open redirect. Validate redirect URLs against allowlist."
+patterns:
+  - type: regex
+    pattern: "res\\.redirect\\s*\\(.*(req\\.|body|params|query|referer|referrer)"
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

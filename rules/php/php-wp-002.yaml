@@ -1,0 +1,23 @@
+id: php-wp-002
+name: WordPress add_option XSS
+description: |
+  Detects xss issues in PHP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [php]
+frameworks: [wordpress]
+message: |
+  add_option values rendered in admin can contain XSS payloads.
+patterns:
+  - type: regex
+    pattern: '(?i)add_option\s*\(.*[''"][^''"]+[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)update_option\s*\(.*[''"][^''"]+[''"].*[''"]<script'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

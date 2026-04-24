@@ -1,0 +1,22 @@
+id: go-crypto-010
+name: RSA without OAEP Padding
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: high
+category: weak-cryptography
+confidence: medium
+cwe: CWE-780
+languages: [go]
+message: |
+  Use RSA-OAEP padding instead of PKCS#1 v1.5 for encryption.
+patterns:
+  - type: regex
+    pattern: '(?i)rsa\.DecryptPKCS1v15'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rsa\.EncryptPKCS1v15'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/780.html

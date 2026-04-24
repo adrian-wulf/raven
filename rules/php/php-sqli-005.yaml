@@ -1,0 +1,22 @@
+id: php-sqli-005
+name: mysqli_multi_query Injection
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  mysqli_multi_query allows stacked queries, enabling data extraction or modification.
+patterns:
+  - type: regex
+    pattern: '(?i)mysqli_multi_query\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)multi_query\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

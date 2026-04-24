@@ -1,0 +1,26 @@
+id: rust-concurrency-001
+name: Send Sync Autoimpl Bypass
+description: |
+  Detects race-condition issues in RUST code.
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages: [rust]
+message: |
+  Manual unsafe impl of Send/Sync can introduce data races.
+patterns:
+  - type: regex
+    pattern: '(?i)unsafe\s+impl\s+Send'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)unsafe\s+impl\s+Sync'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)unsafe\s+impl\s+.*for'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

@@ -1,0 +1,13 @@
+id: gen-cookie-005
+name: Overly Long Cookie Expiration
+severity: low
+category: cookie
+confidence: high
+cwe: "CWE-613"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Cookie expiration is too far in the future. Set reasonable expiration (max 30 days for sensitive apps)."
+patterns:
+  - type: regex
+    pattern: "Expires=.*(202[5-9]|203\\d|Max-Age=\\s*\\d{7,})"
+references:
+  - https://cwe.mitre.org/data/definitions/613.html

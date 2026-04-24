@@ -1,0 +1,15 @@
+id: yaml-k8s-007
+name: allowPrivilegeEscalation
+severity: high
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: allowPrivilegeEscalation:true allows process to gain more privileges. Set to false.
+patterns:
+- type: regex
+  pattern: allowPrivilegeEscalation:\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

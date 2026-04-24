@@ -1,0 +1,16 @@
+id: dart-deser-001
+name: jsonDecode without validation
+severity: medium
+category: deserialization
+confidence: medium
+cwe: CWE-502
+languages:
+- dart
+message: jsonDecode without validation can allow deserialization attacks. Validate JSON structure.
+patterns:
+- type: regex
+  pattern: jsonDecode\s*\(\s*(?P<input>response\.body|body|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/502.html

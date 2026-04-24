@@ -1,0 +1,17 @@
+id: py-flask-request-002
+name: request.form without validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: request.form access without validation can allow injection. Validate and sanitize form data.
+patterns:
+- type: regex
+  pattern: request\.form\s*\[\s*[\"\']\w+[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- flask

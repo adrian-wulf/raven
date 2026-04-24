@@ -1,0 +1,23 @@
+id: kotlin-android-003
+name: Android WebView setJavaScriptEnabled
+description: |
+  Detects xss issues in KOTLIN code.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [kotlin]
+frameworks: [android]
+message: |
+  JavaScript enabled without need increases attack surface.
+patterns:
+  - type: regex
+    pattern: '(?i)setJavaScriptEnabled\s*\(\s*true\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)settings\.javaScriptEnabled\s*=\s*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

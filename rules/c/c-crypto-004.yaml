@@ -1,0 +1,26 @@
+id: c-crypto-004
+name: DES Weak Encryption
+description: |
+  Detects weak-cryptography issues in C code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-326
+languages: [c]
+message: |
+  DES has 56-bit key, brute-forceable in hours. Use AES-256.
+patterns:
+  - type: regex
+    pattern: '(?i)DES_set_key'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DES_ncbc_encrypt'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DES_ecb_encrypt'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/326.html

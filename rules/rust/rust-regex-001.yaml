@@ -1,0 +1,26 @@
+id: rust-regex-001
+name: Regex Denial of Service
+description: |
+  Detects regex-dos issues in RUST code.
+severity: medium
+category: regex-dos
+confidence: medium
+cwe: CWE-400
+languages: [rust]
+message: |
+  Complex regex with user input can cause ReDoS.
+patterns:
+  - type: regex
+    pattern: '(?i)Regex::new\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)regex::Regex.*compile.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Regex::new\s*\(.*\*.*\*'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/400.html

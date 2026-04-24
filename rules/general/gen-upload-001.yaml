@@ -1,0 +1,13 @@
+id: gen-upload-001
+name: Unrestricted File Upload
+severity: critical
+category: fileupload
+confidence: high
+cwe: "CWE-434"
+languages: [javascript, python, php, java, csharp, ruby, go]
+message: "File upload without type validation. Validate content type, extension, and magic bytes. Store outside web root."
+patterns:
+  - type: regex
+    pattern: "(upload|multer|Upload)\\s*\\(\\s*[^)]*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/434.html

@@ -1,0 +1,23 @@
+id: kotlin-spring-002
+name: Spring @PathVariable Trust
+description: |
+  Detects injection issues in KOTLIN code.
+severity: high
+category: injection
+confidence: high
+cwe: CWE-74
+languages: [kotlin]
+frameworks: [spring]
+message: |
+  @PathVariable values can contain malicious payloads.
+patterns:
+  - type: regex
+    pattern: '(?i)@PathVariable.*String.*(?!.*validate)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@PathVariable.*(?!.*regex)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/74.html

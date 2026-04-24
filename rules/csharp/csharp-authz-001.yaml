@@ -1,0 +1,27 @@
+id: csharp-authz-001
+name: AllowAnonymous on Sensitive Method
+description: |
+  Detects broken-authorization issues in CSHARP code.
+severity: high
+category: broken-authorization
+confidence: high
+cwe: CWE-284
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  [AllowAnonymous] on POST/DELETE endpoints bypasses authentication.
+patterns:
+  - type: regex
+    pattern: '(?i)\[AllowAnonymous\].*\[HttpPost\]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[AllowAnonymous\].*\[HttpDelete\]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[AllowAnonymous\].*\[HttpPut\]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/284.html

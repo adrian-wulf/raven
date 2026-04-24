@@ -1,0 +1,17 @@
+rule_id: docker-latest-002
+language: dockerfile
+examples:
+  unsafe: '# Unsafe - docker-latest-002
+
+    FROM ubuntu:latest
+
+    '
+  safe: '# Safe - docker-latest-002
+
+    # Use pinned versions, non-root user, secrets mount
+
+    FROM ubuntu:22.04
+
+    USER appuser
+
+    '

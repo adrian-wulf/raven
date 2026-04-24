@@ -1,0 +1,15 @@
+id: sol-erc-001
+name: ERC20 approve race condition
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages:
+- solidity
+message: approve() without first setting to 0 is vulnerable to race condition. Use increaseAllowance.
+patterns:
+- type: regex
+  pattern: function\s+approve\s*\(\s*address\s+\w+\s*,\s*uint256\s+\w+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/362.html

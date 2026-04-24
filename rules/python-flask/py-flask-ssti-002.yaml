@@ -1,0 +1,17 @@
+id: py-flask-ssti-002
+name: Jinja safe filter
+severity: high
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- python
+message: The |safe filter disables auto-escaping and can lead to XSS. Avoid with user data.
+patterns:
+- type: regex
+  pattern: \|\s*safe\b
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- flask

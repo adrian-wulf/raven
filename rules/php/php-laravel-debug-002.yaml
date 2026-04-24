@@ -1,0 +1,23 @@
+id: php-laravel-debug-002
+name: Laravel Debug Bar Production
+description: |
+  Detects information-disclosure issues in PHP code.
+severity: critical
+category: information-disclosure
+confidence: critical
+cwe: CWE-200
+languages: [php]
+frameworks: [laravel]
+message: |
+  Debug bar must not be enabled in production.
+patterns:
+  - type: regex
+    pattern: '(?i)Debugbar.*enable'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DEBUGBAR_ENABLED\s*=\s*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

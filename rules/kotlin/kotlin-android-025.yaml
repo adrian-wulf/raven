@@ -1,0 +1,27 @@
+id: kotlin-android-025
+name: Android Root Detection Bypass
+description: |
+  Detects integrity issues in KOTLIN code.
+severity: high
+category: integrity
+confidence: high
+cwe: CWE-354
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Bypassing root detection allows running on compromised devices.
+patterns:
+  - type: regex
+    pattern: '(?i)checkRoot.*return\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)isRooted.*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)root.*detect.*bypass'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/354.html

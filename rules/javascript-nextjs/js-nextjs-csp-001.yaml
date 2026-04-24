@@ -1,0 +1,18 @@
+id: js-nextjs-csp-001
+name: Missing CSP in headers
+severity: high
+category: config
+confidence: high
+cwe: CWE-693
+languages:
+- javascript
+- typescript
+message: No Content-Security-Policy in Next.js headers allows XSS. Add CSP header.
+patterns:
+- type: regex
+  pattern: headers\s*\(\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html
+frameworks:
+- nextjs

@@ -1,0 +1,17 @@
+id: py-django-upload-001
+name: FileField without validation
+severity: medium
+category: file-upload
+confidence: medium
+cwe: CWE-434
+languages:
+- python
+message: FileField without file type validation allows uploading potentially dangerous files. Add validators.
+patterns:
+- type: regex
+  pattern: FileField\s*\([^)]*\)(?!.*validator)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/434.html
+frameworks:
+- django

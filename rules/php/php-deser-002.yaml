@@ -1,0 +1,22 @@
+id: php-deser-002
+name: unserialize without Allowed Classes
+description: |
+  Detects insecure-deserialization issues in PHP code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [php]
+message: |
+  unserialize without ['allowed_classes' => []] allows arbitrary object instantiation.
+patterns:
+  - type: regex
+    pattern: '(?i)unserialize\s*\(\s*\$[^,]+\s*\)(?!.*allowed_classes)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)unserialize\s*\(\s*\$.*\)(?!.*options)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

@@ -1,0 +1,19 @@
+id: js-vue-ssr-001
+name: SSR XSS in initial state
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Serializing initial state in SSR without escaping can enable XSS. Use serialize-javascript.
+patterns:
+- type: regex
+  pattern: window\.__INITIAL_STATE__\s*=\s*(?P<input>JSON\.stringify|state)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

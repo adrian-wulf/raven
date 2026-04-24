@@ -1,0 +1,15 @@
+rule_id: scala-crypto-002
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-crypto-002
+
+    Cipher.getInstance("AES/ECB/PKCS5Padding")
+
+    '
+  safe: '// Safe - scala-crypto-002
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

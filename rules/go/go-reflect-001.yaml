@@ -1,0 +1,22 @@
+id: go-reflect-001
+name: reflect.Value with User Input
+description: |
+  Detects insecure-reflection issues in GO code.
+severity: medium
+category: insecure-reflection
+confidence: medium
+cwe: CWE-470
+languages: [go]
+message: |
+  Reflection with user-controlled values can bypass type safety and access control.
+patterns:
+  - type: regex
+    pattern: '(?i)reflect\.ValueOf\s*\(.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)reflect\.New\s*\(.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/470.html

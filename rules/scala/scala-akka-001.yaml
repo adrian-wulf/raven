@@ -1,0 +1,16 @@
+id: scala-akka-001
+name: Actor injection
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- scala
+message: Akka actor message without validation can allow injection. Validate messages.
+patterns:
+- type: regex
+  pattern: actorRef\s*!\s*(?P<input>user|input|untrusted)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html

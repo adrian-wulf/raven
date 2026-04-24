@@ -1,0 +1,13 @@
+rule_id: py-django-mass-002
+language: python
+examples:
+  unsafe: "# Unsafe - py-django-mass-002\ndef __init__(self, **kwargs):\n    for k, v in kwargs.items():\n        setattr(self, k, v)\n"
+  safe: '# Safe - py-django-mass-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

@@ -1,0 +1,16 @@
+id: tf-rds-001
+name: RDS public accessibility
+severity: high
+category: database
+confidence: high
+cwe: CWE-284
+languages:
+- terraform
+- hcl
+message: RDS publicly accessible exposes database to internet. Disable public access.
+patterns:
+- type: regex
+  pattern: publicly_accessible\s*=\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

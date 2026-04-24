@@ -1,0 +1,15 @@
+id: docker-expose-001
+name: EXPOSE without protocol
+severity: low
+category: config
+confidence: low
+cwe: CWE-200
+languages:
+- dockerfile
+message: EXPOSE without protocol may expose unintended protocols. Specify /tcp or /udp.
+patterns:
+- type: regex
+  pattern: EXPOSE\s+\d+\s*$
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/200.html

@@ -1,0 +1,15 @@
+id: yaml-k8s-022
+name: Ingress without TLS
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- yaml
+message: Ingress without TLS termination transmits data in plaintext. Enable TLS.
+patterns:
+- type: regex
+  pattern: kind:\s*Ingress\s*\n.*spec:(?!.*tls)(?!.*secretName)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

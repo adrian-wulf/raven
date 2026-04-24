@@ -1,0 +1,26 @@
+id: java-file-002
+name: File Constructor User Path
+description: |
+  Detects path-traversal issues in JAVA code.
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages: [java]
+message: |
+  File constructors with user paths can access arbitrary files.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+File\s*\(\s*.*request\.getParameter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+File\s*\(\s*.*getRealPath.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+FileInputStream\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

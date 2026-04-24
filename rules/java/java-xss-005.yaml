@@ -1,0 +1,26 @@
+id: java-xss-005
+name: JavaScript Engine User Input eval
+description: |
+  Detects xss issues in JAVA code.
+severity: critical
+category: xss
+confidence: critical
+cwe: CWE-79
+languages: [java]
+message: |
+  Executing user input through JavaScript engine enables arbitrary code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)ScriptEngine.*eval\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)NashornScriptEngine.*eval\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)engine\.eval\s*\(\s*.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

@@ -1,0 +1,17 @@
+id: py-flask-request-003
+name: request.json without validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: request.json access without validation can allow injection. Validate JSON input.
+patterns:
+- type: regex
+  pattern: request\.json\b(?!.*validate)(?!.*schema)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- flask

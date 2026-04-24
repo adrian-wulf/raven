@@ -1,0 +1,16 @@
+id: tf-kms-001
+name: KMS key rotation disabled
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-320
+languages:
+- terraform
+- hcl
+message: KMS key without automatic rotation increases key exposure risk. Enable rotation.
+patterns:
+- type: regex
+  pattern: enable_key_rotation\s*=\s*false
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/320.html

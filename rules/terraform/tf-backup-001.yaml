@@ -1,0 +1,16 @@
+id: tf-backup-001
+name: No backup retention
+severity: medium
+category: storage
+confidence: medium
+cwe: CWE-693
+languages:
+- terraform
+- hcl
+message: RDS without backup retention can't recover data. Set backup_retention_period.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_db_instance[\"\'][^}]*\}(?!.*backup_retention)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

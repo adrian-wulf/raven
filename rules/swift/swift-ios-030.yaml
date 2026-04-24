@@ -1,0 +1,23 @@
+id: swift-ios-030
+name: PropertyListSerialization without Validation
+description: |
+  Detects insecure-deserialization issues in SWIFT code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [swift]
+frameworks: [ios]
+message: |
+  PropertyListSerialization can instantiate arbitrary objects.
+patterns:
+  - type: regex
+    pattern: '(?i)PropertyListSerialization\.propertyList'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PropertyListSerialization.*from.*user(?!.*validate)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

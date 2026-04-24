@@ -1,0 +1,23 @@
+id: java-android-006
+name: Android Exported Activity
+description: |
+  Detects intent-injection issues in JAVA code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-926
+languages: [java]
+frameworks: [android]
+message: |
+  Exported activities can be started by malicious apps. Use permissions or set exported="false".
+patterns:
+  - type: regex
+    pattern: '(?i)<activity[^>]*android:exported\s*=\s*[`"]true[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)<activity[^>]*<intent-filter>(?!.*permission)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/926.html

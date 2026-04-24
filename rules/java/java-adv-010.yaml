@@ -1,0 +1,13 @@
+id: java-adv-010
+name: Java Host Header Injection
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-640"
+languages: [java]
+message: "Host header used for security decisions. Validate Host header against allowlist of trusted domains."
+patterns:
+  - type: regex
+    pattern: 'getHeader\\s*\\(\\s*[\\''"]Host[\\''"]\\s*\\)|request\\.getServerName\\s*\\('
+references:
+  - https://cwe.mitre.org/data/definitions/640.html

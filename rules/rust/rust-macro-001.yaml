@@ -1,0 +1,22 @@
+id: rust-macro-001
+name: Procedural Macro Injection
+description: |
+  Detects code-injection issues in RUST code.
+severity: medium
+category: code-injection
+confidence: medium
+cwe: CWE-94
+languages: [rust]
+message: |
+  Procedural macros executing arbitrary code during compilation.
+patterns:
+  - type: regex
+    pattern: '(?i)proc_macro::TokenStream'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)#\[proc_macro_attribute\]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

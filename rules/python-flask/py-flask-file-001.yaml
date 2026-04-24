@@ -1,0 +1,18 @@
+id: py-flask-file-001
+name: send_file with user path
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- python
+message: send_file() with user-controlled path enables directory traversal. Validate paths.
+patterns:
+- type: regex
+  pattern: send_file\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html
+frameworks:
+- flask

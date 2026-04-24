@@ -1,0 +1,26 @@
+id: csharp-deser-001
+name: BinaryFormatter Deserialization
+description: |
+  Detects insecure-deserialization issues in CSHARP code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [csharp]
+message: |
+  BinaryFormatter is insecure and obsolete. Use JsonSerializer or DataContractSerializer.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+BinaryFormatter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)binaryFormatter\.Deserialize'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)BinaryFormatter.*Serialize.*Deserialize'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

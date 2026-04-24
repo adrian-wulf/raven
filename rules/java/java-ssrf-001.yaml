@@ -1,0 +1,26 @@
+id: java-ssrf-001
+name: Java URLConnection SSRF
+description: |
+  Detects ssrf issues in JAVA code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [java]
+message: |
+  URLConnection with user-controlled URLs can access internal services.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+URL\s*\(.*request\.getParameter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)url\.openConnection\s*\(\).*connect'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)URLConnection.*getInputStream.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

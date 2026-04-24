@@ -1,0 +1,13 @@
+id: gen-api-004
+name: GraphQL Query Without Depth Limit
+severity: medium
+category: api
+confidence: high
+cwe: "CWE-770"
+languages: [javascript, python, java]
+message: "GraphQL query without depth limit. Set maximum query depth to prevent DoS via deeply nested queries."
+patterns:
+  - type: regex
+    pattern: "(graphql|apollo|type-graphql)"
+references:
+  - https://cwe.mitre.org/data/definitions/770.html

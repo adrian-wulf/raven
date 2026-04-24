@@ -1,0 +1,23 @@
+id: java-xss-003
+name: JSF h:outputText escape=False
+description: |
+  Detects xss issues in JAVA code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [java]
+frameworks: [jsf]
+message: |
+  Setting escape="false" on h:outputText renders raw HTML and enables XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)h:outputText.*escape\s*=\s*[`"]false[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)<h:outputText[^>]*escape\s*=\s*[`"]false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

@@ -1,0 +1,17 @@
+id: bash-cmdi-003
+name: Backticks with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: Backtick command substitution with user input is dangerous. Use $() or avoid.
+patterns:
+- type: regex
+  pattern: '`\s*\$?(?P<input>\w+)\s*`'
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

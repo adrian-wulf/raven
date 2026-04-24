@@ -1,0 +1,16 @@
+id: dart-path-002
+name: Directory with user path
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- dart
+message: Directory() with user path enables directory traversal. Validate paths.
+patterns:
+- type: regex
+  pattern: Directory\s*\(\s*(?P<input>user|path|input|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

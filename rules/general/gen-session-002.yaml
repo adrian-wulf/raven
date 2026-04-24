@@ -1,0 +1,13 @@
+id: gen-session-002
+name: Weak Session Identifier Generation
+severity: high
+category: session
+confidence: high
+cwe: "CWE-331"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Session ID generated with insufficient entropy. Use cryptographically secure random generator."
+patterns:
+  - type: regex
+    pattern: "Math\\.random\\(\\)|rand\\(\\)|random\\(\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/331.html

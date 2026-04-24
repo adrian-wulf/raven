@@ -1,0 +1,16 @@
+id: bash-set-001
+name: Missing set -euo pipefail
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-754
+languages:
+- bash
+- shell
+message: Script without error handling options continues on errors. Add set -euo pipefail.
+patterns:
+- type: regex
+  pattern: ^#!/bin/bash\s*\n(?!.*set\s+-e)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/754.html

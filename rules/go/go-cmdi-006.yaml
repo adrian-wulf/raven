@@ -1,0 +1,22 @@
+id: go-cmdi-006
+name: os/exec with Context and Shell
+description: |
+  Detects command-injection issues in GO code.
+severity: critical
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [go]
+message: |
+  Avoid using shell execution with user input even with context timeouts.
+patterns:
+  - type: regex
+    pattern: '(?i)exec\.CommandContext\s*\(\s*ctx\s*,\s*[`"]/bin/sh[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)exec\.CommandContext\s*\(\s*ctx\s*,\s*[`"]sh[`"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

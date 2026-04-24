@@ -1,0 +1,15 @@
+id: yaml-k8s-017
+name: Missing readinessProbe
+severity: low
+category: config
+confidence: low
+cwe: CWE-400
+languages:
+- yaml
+message: Container without readinessProbe may receive traffic before ready. Add probe.
+patterns:
+- type: regex
+  pattern: containers:\s*\n.*image:\s*\S+(?!.*readinessProbe)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

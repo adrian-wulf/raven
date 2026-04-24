@@ -1,0 +1,22 @@
+id: php-eval-003
+name: create_function User Input
+description: |
+  Detects code-injection issues in PHP code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-94
+languages: [php]
+message: |
+  create_function() with user input allows arbitrary function creation and RCE.
+patterns:
+  - type: regex
+    pattern: '(?i)create_function\s*\(.*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)create_function\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

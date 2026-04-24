@@ -1,0 +1,18 @@
+id: js-nextjs-img-001
+name: next/image without unoptimized check
+severity: low
+category: config
+confidence: low
+cwe: CWE-602
+languages:
+- javascript
+- typescript
+message: Using unoptimized images from external sources can be slow. Review image domains.
+patterns:
+- type: regex
+  pattern: <Image\s+src\s*=\s*\{(?!.*domains)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/602.html
+frameworks:
+- nextjs

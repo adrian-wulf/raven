@@ -1,0 +1,22 @@
+id: go-crypto-011
+name: DSA Key Generation
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: high
+category: weak-cryptography
+confidence: medium
+cwe: CWE-326
+languages: [go]
+message: |
+  DSA has security concerns. Prefer ECDSA or Ed25519.
+patterns:
+  - type: regex
+    pattern: '(?i)dsa\.GenerateKey'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)dsa\.GenerateParameters'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/326.html

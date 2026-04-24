@@ -1,0 +1,18 @@
+id: py-flask-blueprint-002
+name: Blueprint route injection
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: Dynamic blueprint route registration with user input can allow route injection. Validate inputs.
+patterns:
+- type: regex
+  pattern: \w+\.add_url_rule\s*\(\s*(?P<input>f[\"\']|user_|request\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- flask

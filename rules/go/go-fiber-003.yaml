@@ -1,0 +1,23 @@
+id: go-fiber-003
+name: Fiber CSRF Protection Disabled
+description: |
+  Detects csrf issues in GO code.
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages: [go]
+frameworks: [fiber]
+message: |
+  CSRF protection must be enabled for state-changing operations. Use CSRF middleware.
+patterns:
+  - type: regex
+    pattern: '(?i)csrf\.New\s*\([^)]*Skip'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)csrf\.Config\{[^}]*CookieSecure\s*:\s*false'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

@@ -1,0 +1,26 @@
+id: java-misc-014
+name: ExpressionFactory Eval Injection
+description: |
+  Detects expression-injection issues in JAVA code.
+severity: critical
+category: expression-injection
+confidence: critical
+cwe: CWE-917
+languages: [java]
+message: |
+  ExpressionFactory.createValueExpression with user input enables code execution.
+patterns:
+  - type: regex
+    pattern: '(?i)ExpressionFactory.*createValueExpression'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ValueExpression.*getValue.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ELContext.*getELResolver.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

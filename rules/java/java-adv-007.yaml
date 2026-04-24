@@ -1,0 +1,13 @@
+id: java-adv-007
+name: Java RequestDispatcher Forward User Input
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-552"
+languages: [java]
+message: "RequestDispatcher.forward with user input allows bypassing access controls. Validate forward paths."
+patterns:
+  - type: regex
+    pattern: "getRequestDispatcher\\s*\\(.*(req\\.|request|getParameter)"
+references:
+  - https://cwe.mitre.org/data/definitions/552.html

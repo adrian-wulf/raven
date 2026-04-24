@@ -1,0 +1,15 @@
+rule_id: tf-eks-001
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-eks-001
+
+    secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+    '
+  safe: '# Safe - tf-eks-001
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

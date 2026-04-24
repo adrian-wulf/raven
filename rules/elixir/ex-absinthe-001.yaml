@@ -1,0 +1,15 @@
+id: ex-absinthe-001
+name: Absinthe GraphQL without query complexity
+severity: medium
+category: dos
+confidence: medium
+cwe: CWE-400
+languages:
+- elixir
+message: GraphQL without complexity analysis allows deep query DoS. Add complexity limits.
+patterns:
+- type: regex
+  pattern: Absinthe\.Plug\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

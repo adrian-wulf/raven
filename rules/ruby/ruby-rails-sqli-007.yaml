@@ -1,0 +1,27 @@
+id: ruby-rails-sqli-007
+name: Rails calculate Injection
+description: |
+  Detects sql-injection issues in RUBY code.
+severity: high
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [ruby]
+frameworks: [rails]
+message: |
+  calculate with user input can inject functions.
+patterns:
+  - type: regex
+    pattern: '(?i)\.calculate\s*\(\s*[''"].*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.count\s*\(\s*[''"].*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\.sum\s*\(\s*[''"].*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

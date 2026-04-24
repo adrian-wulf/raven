@@ -1,0 +1,27 @@
+id: java-massassign-002
+name: Spring @RequestBody without @Valid
+description: |
+  Detects mass-assignment issues in JAVA code.
+severity: high
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [java]
+frameworks: [spring]
+message: |
+  @RequestBody without @Valid allows deserialization of arbitrary fields.
+patterns:
+  - type: regex
+    pattern: '(?i)@RequestBody.*(?!@Valid)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@RequestBody.*(?!.*Validator)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@RequestBody.*User\s+(?!@Valid)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

@@ -1,0 +1,16 @@
+id: lua-eval-001
+name: eval with user input
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- lua
+message: Evaluating user input as Lua code enables arbitrary execution. Never eval untrusted input.
+patterns:
+- type: regex
+  pattern: pcall\s*\(\s*loadstring\s*,\s*(?P<input>user|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

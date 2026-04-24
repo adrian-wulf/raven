@@ -1,0 +1,18 @@
+id: js-angular-lazy-001
+name: Lazy loaded module without auth guard
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: Lazy loaded module without canLoad guard may allow unauthorized access. Add guard.
+patterns:
+- type: regex
+  pattern: loadChildren.*=>.*import
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- angular

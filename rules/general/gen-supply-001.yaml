@@ -1,0 +1,13 @@
+id: gen-supply-001
+name: Dependency with Known Vulnerability Pattern
+severity: high
+category: supplychain
+confidence: high
+cwe: "CWE-1104"
+languages: [javascript, python, go, java, ruby]
+message: "Dependency version may have known vulnerabilities. Pin to secure versions and use lock files."
+patterns:
+  - type: regex
+    pattern: "(lodash\\s*<\\s*4\\.17\\.21|jquery\\s*<\\s*3\\.5\\.0|moment\\s*<\\s*2\\.29\\.4|express\\s*<\\s*4\\.17\\.3|django\\s*<\\s*3\\.2\\.19)"
+references:
+  - https://cwe.mitre.org/data/definitions/1104.html

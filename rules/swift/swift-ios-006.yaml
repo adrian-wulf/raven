@@ -1,0 +1,23 @@
+id: swift-ios-006
+name: Custom URL Scheme Open
+description: |
+  Detects url-redirection issues in SWIFT code.
+severity: medium
+category: url-redirection
+confidence: medium
+cwe: CWE-601
+languages: [swift]
+frameworks: [ios]
+message: |
+  Opening custom URL schemes without validation is dangerous.
+patterns:
+  - type: regex
+    pattern: '(?i)application\s*\(\s*.*open\s+url'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)handleOpenURL.*(?!.*validate)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

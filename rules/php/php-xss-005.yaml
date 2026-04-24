@@ -1,0 +1,22 @@
+id: php-xss-005
+name: htmlspecialchars without ENT_QUOTES
+description: |
+  Detects xss issues in PHP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [php]
+message: |
+  htmlspecialchars without ENT_QUOTES doesn't escape single quotes, allowing XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)htmlspecialchars\s*\(\s*\$.*\)(?!.*ENT_QUOTES)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)htmlentities\s*\(\s*\$.*\)(?!.*ENT_QUOTES)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

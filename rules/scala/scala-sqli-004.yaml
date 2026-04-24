@@ -1,0 +1,16 @@
+id: scala-sqli-004
+name: doobie raw SQL
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- scala
+message: doobie Fragment with string interpolation enables SQL injection. Use query parameters.
+patterns:
+- type: regex
+  pattern: sql"[^"]*\$\{\s*(?P<input>user|input|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

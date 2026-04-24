@@ -1,0 +1,17 @@
+id: py-django-upload-002
+name: Upload without extension check
+severity: high
+category: file-upload
+confidence: high
+cwe: CWE-434
+languages:
+- python
+message: File upload without extension validation can lead to arbitrary file execution. Validate extensions.
+patterns:
+- type: regex
+  pattern: def\s+\w+.*upload.*\(\s*request\s*\).*:\s*(?!.*\.endswith)(?!.*extension)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/434.html
+frameworks:
+- django

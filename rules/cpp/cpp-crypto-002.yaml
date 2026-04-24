@@ -1,0 +1,22 @@
+id: cpp-crypto-002
+name: C++ Hardcoded Key
+description: |
+  Detects hardcoded-secrets issues in CPP code.
+severity: critical
+category: hardcoded-secrets
+confidence: critical
+cwe: CWE-798
+languages: [cpp]
+message: |
+  Hardcoded keys in C++ source can be extracted from binary.
+patterns:
+  - type: regex
+    pattern: '(?i)const\s+char\*\s*\w*(key|secret)\s*=\s*[''"][^''"]{8,}[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::string\s+\w*(key|secret)\s*=\s*[''"][^''"]{8,}[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

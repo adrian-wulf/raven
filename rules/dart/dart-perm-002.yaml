@@ -1,0 +1,15 @@
+id: dart-perm-002
+name: Missing permission handler
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-280
+languages:
+- dart
+message: Permission request without status check may fail silently. Check permission status.
+patterns:
+- type: regex
+  pattern: Permission\.(camera|location|storage)\.request\(\)(?!.*status)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/280.html

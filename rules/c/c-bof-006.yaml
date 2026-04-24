@@ -1,0 +1,18 @@
+id: c-bof-006
+name: strncpy Truncation without Null
+description: |
+  Detects buffer-overflow issues in C code.
+severity: high
+category: buffer-overflow
+confidence: medium
+cwe: CWE-170
+languages: [c]
+message: |
+  strncpy may not null-terminate. Explicitly set dest[n-1] = '\0'.
+patterns:
+  - type: regex
+    pattern: '(?i)strncpy\s*\(\s*[^,]+,\s*[^,]+,\s*[^)]+\)(?!.*\[.*\]\s*=\s*[''"]\\0[''"])'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/170.html

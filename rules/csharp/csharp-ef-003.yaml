@@ -1,0 +1,23 @@
+id: csharp-ef-003
+name: EF LINQ SQL Injection via Raw
+description: |
+  Detects sql-injection issues in CSHARP code.
+severity: high
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [csharp]
+frameworks: [aspnet, ef]
+message: |
+  Mixing LINQ with raw SQL can bypass parameterization.
+patterns:
+  - type: regex
+    pattern: '(?i)Where\s*\(\s*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)FromSqlRaw.*Where.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

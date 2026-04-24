@@ -1,0 +1,15 @@
+rule_id: dart-inject-002
+language: dart
+examples:
+  unsafe: '// Unsafe - dart-inject-002
+
+    Process.run("ls $path", []);
+
+    '
+  safe: '// Safe - dart-inject-002
+
+    // Use parameterized APIs, validate inputs
+
+    final stmt = await db.prepare(''SELECT * FROM t WHERE id = ?'');
+
+    '

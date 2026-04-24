@@ -1,0 +1,16 @@
+id: tf-dynamodb-001
+name: DynamoDB without encryption
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-311
+languages:
+- terraform
+- hcl
+message: DynamoDB without SSE exposes data at rest. Enable encryption.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_dynamodb_table[\"\'][^}]*\}(?!.*server_side_encryption)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

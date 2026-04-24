@@ -1,0 +1,23 @@
+id: csharp-session-002
+name: Cookie without HttpOnly
+description: |
+  Detects insecure-cookie issues in CSHARP code.
+severity: high
+category: insecure-cookie
+confidence: high
+cwe: CWE-1004
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Cookies without HttpOnly can be stolen via XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)CookieOptions.*HttpOnly\s*=\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)AppendCookie.*(?!HttpOnly)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1004.html

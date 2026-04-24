@@ -1,0 +1,18 @@
+id: js-vue-composable-001
+name: Composable without cleanup
+severity: low
+category: config
+confidence: low
+cwe: CWE-772
+languages:
+- javascript
+- typescript
+message: Composable without onUnmounted cleanup can leak memory. Add cleanup.
+patterns:
+- type: regex
+  pattern: export\s+function\s+use\w+\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/772.html
+frameworks:
+- vue

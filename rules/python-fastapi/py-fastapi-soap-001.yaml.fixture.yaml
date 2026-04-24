@@ -1,0 +1,19 @@
+rule_id: py-fastapi-soap-001
+language: python
+examples:
+  unsafe: '# Unsafe - py-fastapi-soap-001
+
+    import hashlib
+
+    hashlib.md5(password.encode())
+
+    '
+  safe: '# Safe - py-fastapi-soap-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

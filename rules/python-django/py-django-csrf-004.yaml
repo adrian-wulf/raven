@@ -1,0 +1,17 @@
+id: py-django-csrf-004
+name: CSRF_COOKIE_HTTPONLY False
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-1004
+languages:
+- python
+message: CSRF_COOKIE_HTTPONLY=False allows JS access to CSRF cookie. Enable httponly.
+patterns:
+- type: regex
+  pattern: CSRF_COOKIE_HTTPONLY\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1004.html
+frameworks:
+- django

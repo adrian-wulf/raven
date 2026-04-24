@@ -1,0 +1,23 @@
+id: kotlin-android-021
+name: Android usesCleartextTraffic
+description: |
+  Detects insecure-communication issues in KOTLIN code.
+severity: high
+category: insecure-communication
+confidence: high
+cwe: CWE-319
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Cleartext traffic allows network eavesdropping.
+patterns:
+  - type: regex
+    pattern: '(?i)usesCleartextTraffic=[''"]true[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)android:usesCleartextTraffic=[''"]true[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/319.html

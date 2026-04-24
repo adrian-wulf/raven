@@ -1,0 +1,15 @@
+id: docker-workdir-001
+name: WORKDIR /root
+severity: medium
+category: privilege
+confidence: medium
+cwe: CWE-250
+languages:
+- dockerfile
+message: Using /root as working directory runs in root home. Use non-root directory.
+patterns:
+- type: regex
+  pattern: WORKDIR\s+/root
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

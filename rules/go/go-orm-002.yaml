@@ -1,0 +1,23 @@
+id: go-orm-002
+name: MongoDB Raw Query with User Input
+description: |
+  Detects nosql-injection issues in GO code.
+severity: high
+category: nosql-injection
+confidence: high
+cwe: CWE-943
+languages: [go]
+frameworks: [mongo]
+message: |
+  Never include user input in MongoDB queries without sanitization. Use BSON builders.
+patterns:
+  - type: regex
+    pattern: '(?i)collection\.Find\s*\(\s*ctx\s*,\s*bson\.M\{[^}]*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)bson\.UnmarshalExtJSON.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/943.html

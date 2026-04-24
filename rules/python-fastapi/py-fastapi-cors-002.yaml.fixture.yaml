@@ -1,0 +1,17 @@
+rule_id: py-fastapi-cors-002
+language: python
+examples:
+  unsafe: '# Unsafe - py-fastapi-cors-002
+
+    CORS(app, origins=''*'')
+
+    '
+  safe: '# Safe - py-fastapi-cors-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

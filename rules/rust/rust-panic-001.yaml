@@ -1,0 +1,22 @@
+id: rust-panic-001
+name: panic! in Production
+description: |
+  Detects denial-of-service issues in RUST code.
+severity: high
+category: denial-of-service
+confidence: high
+cwe: CWE-248
+languages: [rust]
+message: |
+  panic! crashes the program. Use Result for recoverable errors.
+patterns:
+  - type: regex
+    pattern: '(?i)panic!\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)panic!\s*\(.*unwrap'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/248.html

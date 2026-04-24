@@ -1,0 +1,27 @@
+id: rust-log-002
+name: tracing User Input
+description: |
+  Detects log-injection issues in RUST code.
+severity: medium
+category: log-injection
+confidence: medium
+cwe: CWE-117
+languages: [rust]
+frameworks: [tracing]
+message: |
+  tracing with user input can forge log entries.
+patterns:
+  - type: regex
+    pattern: '(?i)tracing::info!\s*\(.*%\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tracing::warn!\s*\(.*%\s*.*input'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tracing::error!\s*\(.*%\s*.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/117.html

@@ -1,0 +1,16 @@
+id: scala-json-001
+name: Json.parse without validation
+severity: medium
+category: deserialization
+confidence: medium
+cwe: CWE-502
+languages:
+- scala
+message: Json.parse without schema validation can parse malicious JSON. Validate structure.
+patterns:
+- type: regex
+  pattern: Json\.parse\s*\(\s*(?P<input>request\.body|body)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/502.html

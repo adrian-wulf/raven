@@ -1,0 +1,27 @@
+id: swift-ios-004
+name: URL Scheme Hijacking
+description: |
+  Detects url-redirection issues in SWIFT code.
+severity: high
+category: url-redirection
+confidence: high
+cwe: CWE-601
+languages: [swift]
+frameworks: [ios]
+message: |
+  URL schemes can be hijacked by malicious apps.
+patterns:
+  - type: regex
+    pattern: '(?i)canOpenURL\s*\(\s*.*[''"].*://'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)UIApplication\.shared\.canOpenURL'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)open\s*\(\s*.*url.*scheme'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/601.html

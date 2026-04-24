@@ -1,0 +1,13 @@
+id: gen-cookie-006
+name: Session Cookie Without Expiration
+severity: medium
+category: cookie
+confidence: high
+cwe: "CWE-613"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Session cookie does not have expiration/Max-Age. Session cookies persist until browser close only."
+patterns:
+  - type: regex
+    pattern: "Set-Cookie.*(?!Expires|Max-Age)"
+references:
+  - https://cwe.mitre.org/data/definitions/613.html

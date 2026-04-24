@@ -1,0 +1,13 @@
+id: gen-supply-002
+name: Unpinned Dependency Version
+severity: medium
+category: supplychain
+confidence: high
+cwe: "CWE-1104"
+languages: [javascript, python, go, ruby]
+message: "Dependency version uses wildcard or loose constraint. Pin exact versions for reproducible builds."
+patterns:
+  - type: regex
+    pattern: "\\^|~|>=|>|latest|\\*"
+references:
+  - https://cwe.mitre.org/data/definitions/1104.html

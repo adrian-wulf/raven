@@ -1,0 +1,23 @@
+id: ruby-session-002
+name: Rails secret_token Weak
+description: |
+  Detects weak-cryptography issues in RUBY code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-798
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Weak secret_token allows cookie forgery. Use strong random values.
+patterns:
+  - type: regex
+    pattern: '(?i)secret_token\s*=\s*[''"][^''"]{0,30}[''"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)secret_token\s*=\s*[''"]change_me[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

@@ -1,0 +1,17 @@
+id: py-django-config-003
+name: ALLOWED_HOSTS wildcard
+severity: high
+category: config
+confidence: high
+cwe: CWE-644
+languages:
+- python
+message: ALLOWED_HOSTS = ['*'] allows any host, enabling HTTP Host header attacks. Specify valid hosts.
+patterns:
+- type: regex
+  pattern: ALLOWED_HOSTS\s*=\s*\[\s*[\"\']\*
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/644.html
+frameworks:
+- django

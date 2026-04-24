@@ -1,0 +1,19 @@
+id: js-angular-ssrf-001
+name: HttpClient.get with user URL
+severity: medium
+category: ssrf
+confidence: medium
+cwe: CWE-918
+languages:
+- javascript
+- typescript
+message: HttpClient.get() with user-controlled URL can enable SSRF. Validate URLs.
+patterns:
+- type: regex
+  pattern: http\.get\s*\(\s*(?P<input>this\.|userInput|req\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- angular

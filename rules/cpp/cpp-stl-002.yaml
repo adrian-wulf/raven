@@ -1,0 +1,22 @@
+id: cpp-stl-002
+name: std::string C_str Lifetime
+description: |
+  Detects use-after-free issues in CPP code.
+severity: medium
+category: use-after-free
+confidence: medium
+cwe: CWE-416
+languages: [cpp]
+message: |
+  c_str() result is valid only while string exists. Don't store pointer.
+patterns:
+  - type: regex
+    pattern: '(?i)c_str\s*\(\).*return'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)const\s+char\*.*=.*\.c_str\(\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

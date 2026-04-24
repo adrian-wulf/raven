@@ -1,0 +1,22 @@
+id: rust-clone-001
+name: Custom Clone without Validation
+description: |
+  Detects logic-error issues in RUST code.
+severity: medium
+category: logic-error
+confidence: medium
+cwe: CWE-480
+languages: [rust]
+message: |
+  Custom Clone implementations may not properly copy all fields.
+patterns:
+  - type: regex
+    pattern: '(?i)impl\s+Clone\s+for'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fn\s+clone\s*\(&self\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/480.html

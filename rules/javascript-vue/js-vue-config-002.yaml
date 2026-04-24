@@ -1,0 +1,18 @@
+id: js-vue-config-002
+name: productionTip enabled
+severity: low
+category: config
+confidence: low
+cwe: CWE-489
+languages:
+- javascript
+- typescript
+message: Vue productionTip in production is unnecessary. Set to false in production builds.
+patterns:
+- type: regex
+  pattern: Vue\.config\.productionTip\s*=\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- vue

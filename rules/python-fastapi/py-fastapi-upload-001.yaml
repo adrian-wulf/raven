@@ -1,0 +1,17 @@
+id: py-fastapi-upload-001
+name: Upload without file type check
+severity: high
+category: file-upload
+confidence: high
+cwe: CWE-434
+languages:
+- python
+message: UploadFile without content-type validation allows any file. Validate file types.
+patterns:
+- type: regex
+  pattern: UploadFile\s*\(\s*\)(?!.*content_type)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/434.html
+frameworks:
+- fastapi

@@ -1,0 +1,26 @@
+id: ruby-crypto-001
+name: Digest::MD5 Weak Hash
+description: |
+  Detects weak-cryptography issues in RUBY code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-328
+languages: [ruby]
+message: |
+  MD5 is cryptographically broken. Use bcrypt or scrypt for passwords.
+patterns:
+  - type: regex
+    pattern: '(?i)Digest::MD5'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Digest::SHA1'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)OpenSSL::Digest\.new\s*\(\s*[''"]md5[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/328.html

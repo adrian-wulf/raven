@@ -1,0 +1,30 @@
+id: php-xss-001
+name: echo User Input without Escape
+description: |
+  Detects xss issues in PHP code.
+severity: critical
+category: xss
+confidence: critical
+cwe: CWE-79
+languages: [php]
+message: |
+  echo with user input allows reflected/stored XSS. Use htmlspecialchars().
+patterns:
+  - type: regex
+    pattern: '(?i)echo\s+\$_(GET|POST|REQUEST|COOKIE|SERVER)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)echo\s+\$.*[''"]<'''
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)echo\s+\$.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)echo\s+\$.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

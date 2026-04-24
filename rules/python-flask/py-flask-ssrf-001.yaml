@@ -1,0 +1,18 @@
+id: py-flask-ssrf-001
+name: requests.get with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- python
+message: requests.get() with user-controlled URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: requests\.get\s*\(\s*(?P<input>request\.(args|form|json)|user_url|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- flask

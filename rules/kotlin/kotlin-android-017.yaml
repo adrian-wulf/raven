@@ -1,0 +1,27 @@
+id: kotlin-android-017
+name: Android ProGuard Rules Leak
+description: |
+  Detects information-disclosure issues in KOTLIN code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-200
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Overly permissive ProGuard rules expose internal names.
+patterns:
+  - type: regex
+    pattern: '(?i)-keep\s+class\s+\*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)-keepclassmembers\s+class\s+\*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)-dontobfuscate'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

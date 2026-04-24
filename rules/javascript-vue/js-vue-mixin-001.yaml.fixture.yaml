@@ -1,0 +1,15 @@
+rule_id: js-vue-mixin-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-mixin-001
+
+    router.push(''/admin'');
+
+    '
+  safe: '// Safe - js-vue-mixin-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

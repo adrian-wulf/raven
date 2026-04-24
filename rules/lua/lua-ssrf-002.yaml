@@ -1,0 +1,16 @@
+id: lua-ssrf-002
+name: luasocket HTTP request
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- lua
+message: luasocket HTTP with user URL enables SSRF. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: http\.request\s*\(\s*(?P<input>user|input|url)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

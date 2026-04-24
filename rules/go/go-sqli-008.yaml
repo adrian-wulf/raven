@@ -1,0 +1,23 @@
+id: go-sqli-008
+name: entgo Raw SQL
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+frameworks: [entgo]
+message: |
+  Avoid using raw SQL with entgo client. Use the query builder instead.
+patterns:
+  - type: regex
+    pattern: '(?i)client\.QueryContext\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ent\.Client.*Exec\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

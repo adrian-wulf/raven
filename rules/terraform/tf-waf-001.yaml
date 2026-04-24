@@ -1,0 +1,16 @@
+id: tf-waf-001
+name: WAF disabled
+severity: high
+category: network
+confidence: high
+cwe: CWE-693
+languages:
+- terraform
+- hcl
+message: No WAF on public-facing resources exposes to web attacks. Enable WAF.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_lb[\"\'][^}]*\}(?!.*waf)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

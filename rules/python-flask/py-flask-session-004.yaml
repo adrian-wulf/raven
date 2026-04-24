@@ -1,0 +1,17 @@
+id: py-flask-session-004
+name: Flask session not signed
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-345
+languages:
+- python
+message: Client-side session without signing can be tampered. Use server-side sessions.
+patterns:
+- type: regex
+  pattern: SESSION_TYPE\s*=\s*[\"\']filesystem[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/345.html
+frameworks:
+- flask

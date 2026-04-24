@@ -1,0 +1,22 @@
+id: php-info-001
+name: phpinfo Exposed
+description: |
+  Detects information-disclosure issues in PHP code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-200
+languages: [php]
+message: |
+  Exposing phpinfo() leaks server configuration and system details.
+patterns:
+  - type: regex
+    pattern: '(?i)phpinfo\s*\(\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)phpinfo\s*\(\s*INFO_ALL\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

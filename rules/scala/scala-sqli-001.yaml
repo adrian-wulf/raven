@@ -1,0 +1,16 @@
+id: scala-sqli-001
+name: Slick raw SQL
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- scala
+message: Slick sql with string interpolation enables SQL injection. Use Slick's query DSL.
+patterns:
+- type: regex
+  pattern: sql"""[^"]*\$\{\s*(?P<input>user|input|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

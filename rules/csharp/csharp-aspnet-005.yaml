@@ -1,0 +1,23 @@
+id: csharp-aspnet-005
+name: ASP.NET Middleware Bypass
+description: |
+  Detects broken-authentication issues in CSHARP code.
+severity: high
+category: broken-authentication
+confidence: high
+cwe: CWE-306
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Middleware ordering can bypass authentication. Auth must come before endpoints.
+patterns:
+  - type: regex
+    pattern: '(?i)app\.UseEndpoints.*app\.UseAuthentication'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)app\.MapControllers.*app\.UseAuthorization'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

@@ -1,0 +1,17 @@
+id: py-django-middleware-003
+name: ProcessResponse without content-type
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-116
+languages:
+- python
+message: Response without explicit content-type can cause MIME-type confusion. Set Content-Type header.
+patterns:
+- type: regex
+  pattern: def\s+process_response\s*\([^)]*\)(?!.*Content-Type)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/116.html
+frameworks:
+- django

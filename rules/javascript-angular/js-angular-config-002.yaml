@@ -1,0 +1,18 @@
+id: js-angular-config-002
+name: Debug info in production
+severity: low
+category: config
+confidence: low
+cwe: CWE-489
+languages:
+- javascript
+- typescript
+message: Debug info enabled in production can leak internal details. Disable debug mode.
+patterns:
+- type: regex
+  pattern: enableDebugTools\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- angular

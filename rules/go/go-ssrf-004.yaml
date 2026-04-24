@@ -1,0 +1,22 @@
+id: go-ssrf-004
+name: Custom http.Client with User URL
+description: |
+  Detects ssrf issues in GO code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [go]
+message: |
+  SSRF through custom HTTP clients can access internal services. Implement URL validation.
+patterns:
+  - type: regex
+    pattern: '(?i)client\.Get\s*\(\s*.*(r\.|req|request|param|input|user|url)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)client\.Do\s*\(\s*.*(r\.|req|request|param|input|user|url)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

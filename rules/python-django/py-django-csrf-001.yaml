@@ -1,0 +1,17 @@
+id: py-django-csrf-001
+name: CSRF exempt decorator
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages:
+- python
+message: '@csrf_exempt disables CSRF protection on a view. Ensure alternative protection is in place.'
+patterns:
+- type: regex
+  pattern: '@csrf_exempt'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/352.html
+frameworks:
+- django

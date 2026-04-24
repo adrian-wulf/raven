@@ -1,0 +1,22 @@
+id: cpp-ref-001
+name: Dangling Reference Return
+description: |
+  Detects use-after-free issues in CPP code.
+severity: high
+category: use-after-free
+confidence: high
+cwe: CWE-416
+languages: [cpp]
+message: |
+  Returning reference to local variable creates dangling reference.
+patterns:
+  - type: regex
+    pattern: '(?i)return\s+\w+&;(?!.*static)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)return\s+\*\w+;(?!.*static).*//.*local'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

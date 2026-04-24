@@ -1,0 +1,27 @@
+id: rust-sqli-003
+name: tokio-postgres query with Format
+description: |
+  Detects sql-injection issues in RUST code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [rust]
+frameworks: [tokio-postgres]
+message: |
+  tokio-postgres query with formatted strings is vulnerable.
+patterns:
+  - type: regex
+    pattern: '(?i)client\.query\s*\(.*format!'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)client\.execute\s*\(.*[''"].*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)tokio_postgres.*query\s*\(.*[''"].*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

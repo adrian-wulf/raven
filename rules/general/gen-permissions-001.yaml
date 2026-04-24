@@ -1,0 +1,13 @@
+id: gen-permissions-001
+name: Insecure File Permissions
+severity: medium
+category: config
+confidence: high
+cwe: "CWE-276"
+languages: [go, python, javascript, ruby]
+message: "File created with overly permissive permissions. Use 0600 for sensitive files or 0644 for public files."
+patterns:
+  - type: regex
+    pattern: "os\\.Chmod\\s*\\(\\s*[^,]+,\\s*0?777"
+references:
+  - https://cwe.mitre.org/data/definitions/276.html

@@ -1,0 +1,27 @@
+id: ruby-rails-authz-001
+name: Rails before_action Bypass
+description: |
+  Detects broken-authorization issues in RUBY code.
+severity: high
+category: broken-authorization
+confidence: high
+cwe: CWE-285
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Skipping before_action on sensitive methods allows unauthorized access.
+patterns:
+  - type: regex
+    pattern: '(?i)skip_before_action\s+.*authenticate'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)skip_before_action\s+.*authorize'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)before_action\s+except:'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/285.html

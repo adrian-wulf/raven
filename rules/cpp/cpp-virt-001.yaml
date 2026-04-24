@@ -1,0 +1,22 @@
+id: cpp-virt-001
+name: Missing Virtual Destructor
+description: |
+  Detects memory-safety issues in CPP code.
+severity: medium
+category: memory-safety
+confidence: medium
+cwe: CWE-1079
+languages: [cpp]
+message: |
+  Classes with virtual functions need virtual destructors for proper cleanup.
+patterns:
+  - type: regex
+    pattern: '(?i)class\s+\w+\s*\{[^}]*virtual[^}]*~(?<!virtual)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)virtual\s+void\s+\w+\s*\(.*\)(?!.*virtual.*~)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/1079.html

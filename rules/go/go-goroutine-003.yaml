@@ -1,0 +1,22 @@
+id: go-goroutine-003
+name: Goroutine Leak from Unbuffered Channel
+description: |
+  Detects concurrency issues in GO code.
+severity: medium
+category: concurrency
+confidence: medium
+cwe: CWE-772
+languages: [go]
+message: |
+  Unbuffered channels without receivers cause goroutine leaks. Always ensure channels are drained.
+patterns:
+  - type: regex
+    pattern: '(?i)make\s*\(\s*chan\s+\w+\s*\)(?!.*\d+)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)go\s+func\s*\(\)\s*\{[^}]*<-.*\}(?!.*close)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/772.html

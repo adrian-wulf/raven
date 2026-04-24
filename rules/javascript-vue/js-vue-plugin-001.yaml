@@ -1,0 +1,19 @@
+id: js-vue-plugin-001
+name: Plugin injection
+severity: medium
+category: code-injection
+confidence: medium
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: Installing plugins from user-controlled sources can execute malicious code. Validate plugin sources.
+patterns:
+- type: regex
+  pattern: Vue\.use\s*\(\s*(?P<input>require\(|user|dynamic)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- vue

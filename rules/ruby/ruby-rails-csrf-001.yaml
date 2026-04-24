@@ -1,0 +1,27 @@
+id: ruby-rails-csrf-001
+name: Rails CSRF Token Missing
+description: |
+  Detects csrf issues in RUBY code.
+severity: high
+category: csrf
+confidence: high
+cwe: CWE-352
+languages: [ruby]
+frameworks: [rails]
+message: |
+  POST endpoints without CSRF protection are vulnerable to cross-site request forgery.
+patterns:
+  - type: regex
+    pattern: '(?i)skip_before_action\s+:*verify_authenticity_token'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)protect_from_forgery\s+with:\s+:null_session'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)protect_from_forgery\s+except:'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

@@ -1,0 +1,17 @@
+rule_id: py-django-csrf-004
+language: python
+examples:
+  unsafe: '# Unsafe - py-django-csrf-004
+
+    DEBUG = True
+
+    '
+  safe: '# Safe - py-django-csrf-004
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

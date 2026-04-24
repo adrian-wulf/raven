@@ -1,0 +1,13 @@
+rule_id: py-django-upload-002
+language: python
+examples:
+  unsafe: "# Unsafe - py-django-upload-002\ndef handle_upload(request):\n    file = request.FILES['file']\n    open(file.name, 'wb').write(file.read())\n"
+  safe: '# Safe - py-django-upload-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

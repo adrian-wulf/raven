@@ -1,0 +1,16 @@
+id: dart-xss-002
+name: url_launcher without sanitization
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- dart
+message: url_launcher with user-controlled URL can open malicious schemes. Validate URL scheme.
+patterns:
+- type: regex
+  pattern: launch\s*\(\s*(?P<input>user|data|url|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

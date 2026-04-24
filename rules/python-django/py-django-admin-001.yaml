@@ -1,0 +1,17 @@
+id: py-django-admin-001
+name: Admin without permission check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Admin action without permission check may allow unauthorized access. Use @permission_required.
+patterns:
+- type: regex
+  pattern: def\s+\w+_action\s*\(\s*self\s*,\s*request\s*,\s*queryset\s*\)(?!.*permission)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- django

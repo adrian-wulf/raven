@@ -1,0 +1,18 @@
+id: py-django-xss-003
+name: HttpResponse with HTML
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: Returning HttpResponse with user-controlled HTML content enables XSS. Use render() with templates.
+patterns:
+- type: regex
+  pattern: HttpResponse\s*\(\s*(f[\"\']|.*\+\s*(?P<input>request\.|user_))
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- django

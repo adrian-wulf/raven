@@ -1,0 +1,22 @@
+id: swift-ssrf-001
+name: URLSession User URL
+description: |
+  Detects ssrf issues in SWIFT code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [swift]
+message: |
+  URLSession with user URLs can access internal services.
+patterns:
+  - type: regex
+    pattern: '(?i)URLSession\.shared\.dataTask\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)URLSession.*URL\s*\(\s*string:\s*.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

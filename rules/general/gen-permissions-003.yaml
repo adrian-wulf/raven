@@ -1,0 +1,13 @@
+id: gen-permissions-003
+name: Insecure umask Setting
+severity: medium
+category: config
+confidence: high
+cwe: "CWE-276"
+languages: [python, ruby, bash, c, cpp]
+message: "Overly permissive umask allows world-readable/writable files. Use 0077 for sensitive data."
+patterns:
+  - type: regex
+    pattern: "umask\\s*\\(\\s*0?0{1,2}\\s*\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/276.html

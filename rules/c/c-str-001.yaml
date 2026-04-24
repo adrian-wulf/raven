@@ -1,0 +1,18 @@
+id: c-str-001
+name: strtok Thread Unsafe
+description: |
+  Detects race-condition issues in C code.
+severity: medium
+category: race-condition
+confidence: medium
+cwe: CWE-362
+languages: [c]
+message: |
+  strtok is not thread-safe. Use strtok_r.
+patterns:
+  - type: regex
+    pattern: '(?i)strtok\s*\(\s*[^,]+,\s*[^)]+\)(?!.*_r)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/362.html

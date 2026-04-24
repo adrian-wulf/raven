@@ -1,0 +1,15 @@
+id: sol-addr-001
+name: Address zero check missing
+severity: medium
+category: validation
+confidence: medium
+cwe: CWE-20
+languages:
+- solidity
+message: Function accepting address without zero-address check can lose funds. Add check.
+patterns:
+- type: regex
+  pattern: function\s+\w+\s*\([^)]*address\s+\w+[^)]*\)\s*(?!.*!=\s*address\(0\))
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

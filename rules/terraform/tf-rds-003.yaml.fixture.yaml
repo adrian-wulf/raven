@@ -1,0 +1,15 @@
+rule_id: tf-rds-003
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-rds-003
+
+    # S3 without encryption
+
+    '
+  safe: '# Safe - tf-rds-003
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

@@ -1,0 +1,16 @@
+id: tf-sg-001
+name: 0.0.0.0/0 in ingress
+severity: high
+category: network
+confidence: high
+cwe: CWE-284
+languages:
+- terraform
+- hcl
+message: Security group with 0.0.0.0/0 ingress allows access from any IP. Restrict CIDR blocks.
+patterns:
+- type: regex
+  pattern: cidr_blocks\s*=\s*\[\s*[\"\']0\.0\.0\.0/0[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

@@ -1,0 +1,16 @@
+id: ex-xss-003
+name: Phoenix.HTML.raw
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- elixir
+message: Phoenix.HTML.raw() disables HTML escaping and can enable XSS. Sanitize content first.
+patterns:
+- type: regex
+  pattern: Phoenix\.HTML\.raw\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

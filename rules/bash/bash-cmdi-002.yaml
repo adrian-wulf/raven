@@ -1,0 +1,17 @@
+id: bash-cmdi-002
+name: Command substitution with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: $() command substitution with user input enables command injection. Validate inputs.
+patterns:
+- type: regex
+  pattern: \$\(\s*\$?(?P<input>\w+)\s*\)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

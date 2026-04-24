@@ -1,0 +1,18 @@
+id: js-nextjs-dynamic-001
+name: next/dynamic without ssr:false for client
+severity: low
+category: config
+confidence: low
+cwe: CWE-400
+languages:
+- javascript
+- typescript
+message: Client-only component without ssr:false causes hydration errors. Add ssr:false.
+patterns:
+- type: regex
+  pattern: dynamic\s*\(\s*\(\s*\)\s*=>
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html
+frameworks:
+- nextjs

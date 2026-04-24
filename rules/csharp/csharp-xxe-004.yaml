@@ -1,0 +1,22 @@
+id: csharp-xxe-004
+name: XmlTextReader DtdProcessing
+description: |
+  Detects xxe issues in CSHARP code.
+severity: critical
+category: xxe
+confidence: high
+cwe: CWE-611
+languages: [csharp]
+message: |
+  XmlTextReader with DtdProcessing.Parse enables XXE.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+XmlTextReader'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)XmlTextReader.*DtdProcessing.*Parse'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

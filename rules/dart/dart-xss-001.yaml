@@ -1,0 +1,16 @@
+id: dart-xss-001
+name: WebView loadHtmlString
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- dart
+message: WebView loadHtmlString with user data can enable XSS. Sanitize HTML content.
+patterns:
+- type: regex
+  pattern: loadHtmlString\s*\(\s*(?P<input>user|data|input|content)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

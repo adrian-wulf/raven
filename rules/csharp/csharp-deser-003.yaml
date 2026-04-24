@@ -1,0 +1,27 @@
+id: csharp-deser-003
+name: Json.NET TypeNameHandling All
+description: |
+  Detects insecure-deserialization issues in CSHARP code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [csharp]
+frameworks: [jsonnet]
+message: |
+  TypeNameHandling.All enables arbitrary type instantiation. Use None.
+patterns:
+  - type: regex
+    pattern: '(?i)TypeNameHandling\s*\.\s*All'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)TypeNameHandling\s*=\s*TypeNameHandling\.All'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)JsonSerializerSettings.*TypeNameHandling.*All'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

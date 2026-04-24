@@ -1,0 +1,15 @@
+id: yaml-k8s-026
+name: Service without selector
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-20
+languages:
+- yaml
+message: Service without selector may expose unintended pods. Add selector.
+patterns:
+- type: regex
+  pattern: kind:\s*Service\s*\n.*spec:(?!.*selector)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

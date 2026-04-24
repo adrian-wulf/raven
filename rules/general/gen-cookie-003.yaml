@@ -1,0 +1,13 @@
+id: gen-cookie-003
+name: Cookie Without SameSite Attribute
+severity: medium
+category: cookie
+confidence: high
+cwe: "CWE-352"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Cookie set without SameSite attribute. Use SameSite=Strict for sensitive cookies."
+patterns:
+  - type: regex
+    pattern: "Set-Cookie.*(?!SameSite)"
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

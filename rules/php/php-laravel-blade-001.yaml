@@ -1,0 +1,27 @@
+id: php-laravel-blade-001
+name: Laravel Blade @php Directive XSS
+description: |
+  Detects xss issues in PHP code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [php]
+frameworks: [laravel]
+message: |
+  Blade @php directive executes PHP code. Never include user input in @php blocks.
+patterns:
+  - type: regex
+    pattern: '(?i)@php\s*\(.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@php\s*\(.*\$request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@php\s*\(.*echo.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

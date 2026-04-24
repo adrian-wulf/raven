@@ -1,0 +1,27 @@
+id: go-sqli-002
+name: GORM Raw SQL Injection
+description: |
+  Detects sql-injection issues in GO code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [go]
+frameworks: [gorm]
+message: |
+  Avoid using Raw() with user input in GORM. Use parameterized queries or GORM's query builder.
+patterns:
+  - type: regex
+    pattern: '(?i)db\.Raw\s*\(\s*[`"][^`"]*(SELECT|INSERT|UPDATE|DELETE)[^`"]*[`"]\s*[^,)]*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)db\.Exec\s*\(\s*[`"][^`"]*\+\s*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)gorm\.Open.*\.Raw\s*\([^)]*req\.'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

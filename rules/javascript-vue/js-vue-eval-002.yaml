@@ -1,0 +1,19 @@
+id: js-vue-eval-002
+name: new Function in computed
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: Function constructor in computed property enables code injection. Avoid dynamic function creation.
+patterns:
+- type: regex
+  pattern: new\s+Function\s*\(\s*(?P<input>this\.|user|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- vue

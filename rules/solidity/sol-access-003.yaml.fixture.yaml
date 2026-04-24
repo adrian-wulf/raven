@@ -1,0 +1,11 @@
+rule_id: sol-access-003
+language: solidity
+examples:
+  unsafe: "// Unsafe - sol-access-003\nfunction withdraw() public {\n    msg.sender.call{value: balance}(\"\");\n}\n"
+  safe: '// Safe - sol-access-003
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

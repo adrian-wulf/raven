@@ -1,0 +1,18 @@
+id: go-deser-005
+name: xml.Decoder without Entity Limit
+description: |
+  Detects xxe issues in GO code.
+severity: high
+category: xxe
+confidence: medium
+cwe: CWE-611
+languages: [go]
+message: |
+  Set Entity handling on xml.Decoder to prevent XXE attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)xml\.NewDecoder\s*\([^)]*\)(?!.*Entity)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

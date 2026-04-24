@@ -1,0 +1,26 @@
+id: java-crypto-004
+name: Hardcoded Keystore Password
+description: |
+  Detects hardcoded-secrets issues in JAVA code.
+severity: critical
+category: hardcoded-secrets
+confidence: critical
+cwe: CWE-798
+languages: [java]
+message: |
+  Keystore passwords in source code compromise all stored keys.
+patterns:
+  - type: regex
+    pattern: '(?i)KeyStore\.load\s*\(.*[`"][^`"]{4,}[`"]\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+KeyStore\.PasswordProtection\s*\(\s*[`"][^`"]+[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)keystore\.load\s*\(.*password'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

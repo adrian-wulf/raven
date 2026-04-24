@@ -1,0 +1,17 @@
+id: py-flask-cookie-002
+name: Cookie without httponly
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-1004
+languages:
+- python
+message: Cookie without httponly=True is accessible via JavaScript, enabling XSS cookie theft. Enable httponly.
+patterns:
+- type: regex
+  pattern: set_cookie\s*\(\s*[\"\'][^\"\']+[\"\'][^)]*\)(?!.*httponly)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1004.html
+frameworks:
+- flask

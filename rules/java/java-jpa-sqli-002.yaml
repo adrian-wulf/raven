@@ -1,0 +1,27 @@
+id: java-jpa-sqli-002
+name: JPA createQuery JPQL Injection
+description: |
+  Detects sql-injection issues in JAVA code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [java]
+frameworks: [spring, hibernate]
+message: |
+  JPQL queries built with string concatenation are vulnerable to injection.
+patterns:
+  - type: regex
+    pattern: '(?i)createQuery\s*\(\s*[`"][^`"]*SELECT[^`"]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)createQuery\s*\(\s*[`"][^`"]*FROM[^`"]*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)entityManager\.createQuery.*String\.format'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

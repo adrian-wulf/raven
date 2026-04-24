@@ -1,0 +1,16 @@
+id: lua-deser-001
+name: loadstring with user input
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- lua
+message: loadstring with user input enables arbitrary code execution. Never load untrusted code.
+patterns:
+- type: regex
+  pattern: loadstring\s*\(\s*(?P<input>user|input|request|body)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

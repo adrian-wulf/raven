@@ -1,0 +1,22 @@
+id: c-crypto-003
+name: Hardcoded Encryption Key
+description: |
+  Detects hardcoded-secrets issues in C code.
+severity: critical
+category: hardcoded-secrets
+confidence: critical
+cwe: CWE-798
+languages: [c]
+message: |
+  Hardcoded keys can be extracted from binary. Use key management service.
+patterns:
+  - type: regex
+    pattern: '(?i)(char|unsigned char|uint8_t)\s+\w*(key|secret|password)\w*\[.*\]\s*=\s*\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)char\s*\*\s*\w*(key|secret)\s*=\s*[''"][^''"]{8,}[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

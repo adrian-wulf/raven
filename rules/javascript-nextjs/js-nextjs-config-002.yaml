@@ -1,0 +1,18 @@
+id: js-nextjs-config-002
+name: images remotePatterns wildcard
+severity: medium
+category: ssrf
+confidence: medium
+cwe: CWE-918
+languages:
+- javascript
+- typescript
+message: Next.js images with wildcard remotePatterns can enable SSRF. Restrict to trusted domains.
+patterns:
+- type: regex
+  pattern: remotePatterns\s*:\s*\[\s*\{\s*protocol\s*:\s*[\"\']https[\"\']\s*,\s*hostname\s*:\s*[\"\']\*\*\.[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- nextjs

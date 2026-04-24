@@ -1,0 +1,15 @@
+id: yaml-k8s-028
+name: Pod without terminationGracePeriod
+severity: low
+category: config
+confidence: low
+cwe: CWE-400
+languages:
+- yaml
+message: Pod without terminationGracePeriodSeconds can be killed abruptly. Set grace period.
+patterns:
+- type: regex
+  pattern: kind:\s*Pod\s*\n.*spec:(?!.*terminationGracePeriodSeconds)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html

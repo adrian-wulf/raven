@@ -1,0 +1,15 @@
+id: scala-http-001
+name: HTTP without TLS
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- scala
+message: HTTP connection without TLS is insecure. Use HTTPS.
+patterns:
+- type: regex
+  pattern: WS\.url\s*\(\s*[\"\']http://
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

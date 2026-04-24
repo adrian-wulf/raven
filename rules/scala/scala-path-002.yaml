@@ -1,0 +1,16 @@
+id: scala-path-002
+name: FileReader(userPath)
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- scala
+message: FileReader with user path enables directory traversal. Validate paths.
+patterns:
+- type: regex
+  pattern: new\s+FileReader\s*\(\s*(?P<input>user|input|request)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

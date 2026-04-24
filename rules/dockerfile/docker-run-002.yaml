@@ -1,0 +1,15 @@
+id: docker-run-002
+name: wget pipe sh
+severity: critical
+category: cmdi
+confidence: critical
+cwe: CWE-78
+languages:
+- dockerfile
+message: wget -O - | sh executes remote code without verification. Avoid this pattern.
+patterns:
+- type: regex
+  pattern: RUN\s+.*wget\s+.*\|\s*(sh|bash)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

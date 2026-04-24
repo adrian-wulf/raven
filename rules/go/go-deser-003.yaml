@@ -1,0 +1,22 @@
+id: go-deser-003
+name: gob.Decoder with Untrusted Data
+description: |
+  Detects insecure-deserialization issues in GO code.
+severity: high
+category: insecure-deserialization
+confidence: medium
+cwe: CWE-502
+languages: [go]
+message: |
+  gob.Decoder can execute arbitrary code with malicious input. Only decode trusted data.
+patterns:
+  - type: regex
+    pattern: '(?i)gob\.NewDecoder\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)gob\.Decode\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

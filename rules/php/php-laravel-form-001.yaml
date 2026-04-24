@@ -1,0 +1,23 @@
+id: php-laravel-form-001
+name: Laravel FormRequest Empty Rules
+description: |
+  Detects input-validation issues in PHP code.
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages: [php]
+frameworks: [laravel]
+message: |
+  Empty validation rules allow any input through.
+patterns:
+  - type: regex
+    pattern: '(?i)rules\s*\(\)\s*\{\s*return\s*\[\s*\]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)FormRequest.*rules.*return.*\[\s*\]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

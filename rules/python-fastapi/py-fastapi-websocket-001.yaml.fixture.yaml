@@ -1,0 +1,13 @@
+rule_id: py-fastapi-websocket-001
+language: python
+examples:
+  unsafe: "# Unsafe - py-fastapi-websocket-001\ndef secret_view(request):\n    return secret_data\n"
+  safe: '# Safe - py-fastapi-websocket-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

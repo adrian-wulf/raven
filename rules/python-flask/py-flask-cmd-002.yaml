@@ -1,0 +1,18 @@
+id: py-flask-cmd-002
+name: subprocess in route
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- python
+message: subprocess with shell=True and user input enables command injection. Use shell=False.
+patterns:
+- type: regex
+  pattern: subprocess\.(run|call|Popen)\s*\(\s*(?P<input>request\.|f[\"\'])\s*,\s*shell\s*=\s*True
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html
+frameworks:
+- flask

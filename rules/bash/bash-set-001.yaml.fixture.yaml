@@ -1,0 +1,17 @@
+rule_id: bash-set-001
+language: bash
+examples:
+  unsafe: '# Unsafe - bash-set-001
+
+    DEBUG = True
+
+    '
+  safe: '# Safe - bash-set-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

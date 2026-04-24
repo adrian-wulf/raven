@@ -1,0 +1,17 @@
+id: py-django-form-001
+name: Form without clean method
+severity: low
+category: input-validation
+confidence: low
+cwe: CWE-20
+languages:
+- python
+message: Django form without clean() method may lack field validation. Add validation.
+patterns:
+- type: regex
+  pattern: class\s+\w+Form\s*\(\s*forms\.Form\s*\)(?!.*def\s+clean)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

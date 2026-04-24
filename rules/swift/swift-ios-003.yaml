@@ -1,0 +1,23 @@
+id: swift-ios-003
+name: WKWebView allowsBackForwardNavigation
+description: |
+  Detects insecure-configuration issues in SWIFT code.
+severity: low
+category: insecure-configuration
+confidence: low
+cwe: CWE-20
+languages: [swift]
+frameworks: [ios]
+message: |
+  Back-forward navigation can lead to unexpected pages.
+patterns:
+  - type: regex
+    pattern: '(?i)allowsBackForwardNavigationGestures\s*=\s*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)webView\.allowsBackForwardNavigationGestures'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

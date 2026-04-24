@@ -1,0 +1,15 @@
+rule_id: ex-absinthe-001
+language: elixir
+examples:
+  unsafe: '# Unsafe - ex-absinthe-001
+
+    String.duplicate("x", user_count)
+
+    '
+  safe: '# Safe - ex-absinthe-001
+
+    # Use Ecto changesets, parameterized queries
+
+    from u in User, where: u.id == ^user_id
+
+    '

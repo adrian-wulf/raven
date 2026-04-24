@@ -1,0 +1,15 @@
+id: docker-copy-001
+name: ADD instead of COPY
+severity: low
+category: supply-chain
+confidence: low
+cwe: CWE-829
+languages:
+- dockerfile
+message: ADD has more features than COPY and can fetch remote URLs. Prefer COPY for local files.
+patterns:
+- type: regex
+  pattern: ADD\s+\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

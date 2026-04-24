@@ -1,0 +1,13 @@
+id: gen-config-005
+name: Server Version Disclosure
+severity: medium
+category: config
+confidence: high
+cwe: "CWE-200"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Server version exposed in headers (X-Powered-By, Server). Remove version information from response headers."
+patterns:
+  - type: regex
+    pattern: "(X-Powered-By|Server\\s*:|x-version|X-Generator)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

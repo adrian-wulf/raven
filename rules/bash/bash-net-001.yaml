@@ -1,0 +1,16 @@
+id: bash-net-001
+name: Telnet usage
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- bash
+- shell
+message: Telnet transmits data in plaintext. Use SSH instead.
+patterns:
+- type: regex
+  pattern: \btelnet\b
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html

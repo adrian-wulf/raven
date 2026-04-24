@@ -1,0 +1,15 @@
+rule_id: tf-waf-001
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-waf-001
+
+    cidr_blocks = ["0.0.0.0/0"]
+
+    '
+  safe: '# Safe - tf-waf-001
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

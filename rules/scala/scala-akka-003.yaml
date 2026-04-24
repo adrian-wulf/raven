@@ -1,0 +1,15 @@
+id: scala-akka-003
+name: Akka HTTP without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- scala
+message: Akka HTTP route without authentication allows unauthorized access. Add auth.
+patterns:
+- type: regex
+  pattern: path\s*\([^)]+\)\s*\{[^}]*complete
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

@@ -1,0 +1,18 @@
+id: js-vue-vuex-001
+name: Vuex action without error handling
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-391
+languages:
+- javascript
+- typescript
+message: Vuex action without error handling can fail silently. Add catch.
+patterns:
+- type: regex
+  pattern: actions:\s*\{\s*\w+\s*\(\s*\{[^}]*\}\s*\)\s*\{(?!.*catch)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html
+frameworks:
+- vue

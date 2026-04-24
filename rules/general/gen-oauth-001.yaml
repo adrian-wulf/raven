@@ -1,0 +1,13 @@
+id: gen-oauth-001
+name: OAuth State Parameter Missing
+severity: high
+category: auth
+confidence: high
+cwe: "CWE-352"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "OAuth authorization request missing state parameter. State parameter prevents CSRF attacks in OAuth flow."
+patterns:
+  - type: regex
+    pattern: "(authorize|auth|oauth).*(client_id|response_type).*(?!state)"
+references:
+  - https://cwe.mitre.org/data/definitions/352.html

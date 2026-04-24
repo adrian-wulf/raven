@@ -1,0 +1,15 @@
+id: dart-http-002
+name: badCertificateCallback
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-295
+languages:
+- dart
+message: badCertificateCallback that always returns true bypasses certificate validation. Remove in production.
+patterns:
+- type: regex
+  pattern: badCertificateCallback\s*:\s*\(\s*\w+\s*,\s*\w+\s*,\s*\w+\s*\)\s*=>\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/295.html

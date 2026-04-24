@@ -1,0 +1,15 @@
+rule_id: js-angular-http-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-http-002
+
+    if (env.production) { enableProdMode(); }
+
+    '
+  safe: '// Safe - js-angular-http-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

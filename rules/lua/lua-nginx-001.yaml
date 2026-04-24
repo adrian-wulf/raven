@@ -1,0 +1,15 @@
+id: lua-nginx-001
+name: Nginx location without auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- lua
+message: Nginx location without auth allows unauthorized access. Add auth.
+patterns:
+- type: regex
+  pattern: location\s+/\w+\s*\{[^}]*content_by_lua_block
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

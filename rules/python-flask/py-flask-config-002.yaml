@@ -1,0 +1,17 @@
+id: py-flask-config-002
+name: ENV development in production
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-489
+languages:
+- python
+message: Flask ENV=development in production enables debugger and reloader. Use production config.
+patterns:
+- type: regex
+  pattern: ENV\s*=\s*[\"\']development[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html
+frameworks:
+- flask

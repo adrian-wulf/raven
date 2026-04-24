@@ -1,0 +1,27 @@
+id: java-spring-actuator-001
+name: Spring Boot Actuator Exposure
+description: |
+  Detects information-disclosure issues in JAVA code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-200
+languages: [java]
+frameworks: [spring]
+message: |
+  Exposed actuators leak sensitive data. Restrict access to health and info only.
+patterns:
+  - type: regex
+    pattern: '(?i)management\.endpoints\.web\.exposure\.include.*\*'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)management\.endpoint\.env\.enabled.*true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)management\.endpoint\.heapdump\.enabled.*true'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

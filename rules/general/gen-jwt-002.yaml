@@ -1,0 +1,13 @@
+id: gen-jwt-002
+name: JWT Weak Signing Secret
+severity: critical
+category: auth
+confidence: high
+cwe: "CWE-326"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "JWT signed with weak or hardcoded secret. Use strong secrets (256+ bits) from secure configuration."
+patterns:
+  - type: regex
+    pattern: '(jwt|Jwt|JWT|jsonwebtoken)\\.sign.*[\\''"][^\\''"]{1,31}[\\''"]|secret\\s*[=:]\\s*[\\''"][^\\''"]{1,31}[\\''"]'
+references:
+  - https://cwe.mitre.org/data/definitions/326.html

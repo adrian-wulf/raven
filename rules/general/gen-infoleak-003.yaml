@@ -1,0 +1,13 @@
+id: gen-infoleak-003
+name: Sensitive Data in URL Parameters
+severity: high
+category: infoleak
+confidence: high
+cwe: "CWE-200"
+languages: [javascript, python, java, php, csharp]
+message: "Sensitive data transmitted in URL parameters. URLs are logged in browser history and server logs. Use POST body instead."
+patterns:
+  - type: regex
+    pattern: "(password|token|secret|api_key|ssn)\\s*[=:]\\s*[^&\\s]{8,}"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

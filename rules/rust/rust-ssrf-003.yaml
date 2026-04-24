@@ -1,0 +1,23 @@
+id: rust-ssrf-003
+name: awc::Client User URL
+description: |
+  Detects ssrf issues in RUST code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [rust]
+frameworks: [awc]
+message: |
+  awc::Client with user URLs enables SSRF.
+patterns:
+  - type: regex
+    pattern: '(?i)awc::Client.*get\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)awc::Client.*send\s*\(.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

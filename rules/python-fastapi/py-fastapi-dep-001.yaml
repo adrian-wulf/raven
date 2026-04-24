@@ -1,0 +1,17 @@
+id: py-fastapi-dep-001
+name: Depends() bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: Endpoint without Depends() authentication can be accessed without auth. Add auth dependency.
+patterns:
+- type: regex
+  pattern: '@app\.(get|post|put|delete|patch)\s*\([^)]*\)\s*\n\s*async\s+def\s+\w+\s*\(\s*(?!.*Depends)'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

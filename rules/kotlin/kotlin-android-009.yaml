@@ -1,0 +1,23 @@
+id: kotlin-android-009
+name: Android Exported Activity True
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-926
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Exported activities can be started by any app.
+patterns:
+  - type: regex
+    pattern: '(?i)android:exported=[''"]true[''"].*<activity'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)<activity[^>]*exported=[''"]true[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/926.html

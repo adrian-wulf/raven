@@ -1,0 +1,13 @@
+id: js-adv-007
+name: JavaScript Template Injection Nunjucks
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-1336"
+languages: [javascript, typescript]
+message: "Nunjucks render with user input allows SSTI. Do not render user-provided templates."
+patterns:
+  - type: regex
+    pattern: "nunjucks\\.render(?!String)\\s*\\(.*(req\\.|body|params|query)"
+references:
+  - https://cwe.mitre.org/data/definitions/1336.html

@@ -1,0 +1,26 @@
+id: java-log-002
+name: Java Util Logging User Input
+description: |
+  Detects log-injection issues in JAVA code.
+severity: medium
+category: log-injection
+confidence: medium
+cwe: CWE-117
+languages: [java]
+message: |
+  java.util.logging with user input can forge log entries.
+patterns:
+  - type: regex
+    pattern: '(?i)Logger\.getLogger.*info\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Logger\.getLogger.*warning\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Logger\.getLogger.*severe\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/117.html

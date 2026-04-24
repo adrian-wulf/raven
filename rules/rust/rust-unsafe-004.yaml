@@ -1,0 +1,22 @@
+id: rust-unsafe-004
+name: Union Access without Check
+description: |
+  Detects memory-safety issues in RUST code.
+severity: high
+category: memory-safety
+confidence: high
+cwe: CWE-843
+languages: [rust]
+message: |
+  Union field access without discriminant check is undefined behavior.
+patterns:
+  - type: regex
+    pattern: '(?i)union\s+\w+\s*\{[^}]*\}.*\.'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)union\s+\w+\s*\{.*unsafe'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/843.html

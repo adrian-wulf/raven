@@ -1,0 +1,23 @@
+id: csharp-aspnet-001
+name: ASP.NET ModelState.IsValid Bypass
+description: |
+  Detects input-validation issues in CSHARP code.
+severity: high
+category: input-validation
+confidence: high
+cwe: CWE-20
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Always check ModelState.IsValid before processing request data.
+patterns:
+  - type: regex
+    pattern: '(?i)public\s+async\s+Task.*ActionResult.*(?!ModelState\.IsValid)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\[HttpPost\].*(?!ModelState\.IsValid)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

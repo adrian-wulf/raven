@@ -13,11 +13,11 @@ message: |
   Use parameterized XPath or validate input strictly.
 patterns:
   - type: regex
-    pattern: '(?i)\.xpath\s*\(\s*f["''][^"'']*\{[^}]+\}'
+    pattern: '(?i)\.xpath\s*\(\s*f["''''][^"'''']*\{[^}]+\}'
     where:
       - not-test-file: true
   - type: regex
-    pattern: '(?i)\.xpath\s*\(\s*["''][^"'']*\+\s*.*(request|req|params|body|form|args|input|data)'
+    pattern: '(?i)\.xpath\s*\(\s*["''''][^"'''']*\+\s*.*(request|req|params|body|form|args|input|data)'
     where:
       - not-test-file: true
   - type: regex

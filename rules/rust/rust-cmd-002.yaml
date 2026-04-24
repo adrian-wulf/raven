@@ -1,0 +1,26 @@
+id: rust-cmd-002
+name: Command::new User Controlled Program
+description: |
+  Detects command-injection issues in RUST code.
+severity: critical
+category: command-injection
+confidence: critical
+cwe: CWE-78
+languages: [rust]
+message: |
+  Command::new with user-controlled program name executes arbitrary binaries.
+patterns:
+  - type: regex
+    pattern: '(?i)Command::new\s*\(.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Command::new\s*\(.*input'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Command::new\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

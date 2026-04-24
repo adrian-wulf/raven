@@ -19,6 +19,6 @@ patterns:
   - type: regex
     pattern: "\\.merge\\s*\\(\\s*[^)]+(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
   - type: regex
-    pattern: "Object\\.setPrototypeOf\\s*\\(\\s*[^)]*(req\\.|request\\.|params\\.|body\\.|query\\.|user|input|data)"
+    pattern: "Object\\.setPrototypeOf"
 references:
   - https://github.com/HoLyVieR/prototype-pollution-nsec18

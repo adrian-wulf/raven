@@ -1,0 +1,18 @@
+id: js-angular-change-001
+name: ChangeDetectorRef without detach
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-400
+languages:
+- javascript
+- typescript
+message: Manual change detection without detach can cause performance issues. Detach when done.
+patterns:
+- type: regex
+  pattern: ChangeDetectorRef.*detectChanges
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/400.html
+frameworks:
+- angular

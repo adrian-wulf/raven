@@ -1,0 +1,22 @@
+id: go-goroutine-005
+name: context.WithTimeout without defer cancel
+description: |
+  Detects resource-leak issues in GO code.
+severity: medium
+category: resource-leak
+confidence: medium
+cwe: CWE-772
+languages: [go]
+message: |
+  Always call cancel() from context.WithTimeout to release resources. Use defer.
+patterns:
+  - type: regex
+    pattern: '(?i)ctx\s*,\s*cancel\s*:=\s*context\.WithTimeout\s*\([^)]*\)(?!.*defer\s+cancel)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)context\.WithTimeout\s*\(.*\)\s*(?!.*defer)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/772.html

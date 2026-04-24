@@ -1,0 +1,22 @@
+id: php-sqli-006
+name: pg_query PostgreSQL Injection
+description: |
+  Detects sql-injection issues in PHP code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [php]
+message: |
+  pg_query with user input allows SQL injection. Use pg_prepare.
+patterns:
+  - type: regex
+    pattern: '(?i)pg_query\s*\(.*[''"].*WHERE.*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)pg_query_params\s*\(.*[''"].*\$_(GET|POST|REQUEST)(?!.*array)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

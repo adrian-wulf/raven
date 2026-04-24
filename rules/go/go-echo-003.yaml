@@ -1,0 +1,23 @@
+id: go-echo-003
+name: Echo JWT without Proper Validation
+description: |
+  Detects weak-cryptography issues in GO code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-345
+languages: [go]
+frameworks: [echo]
+message: |
+  Configure JWT middleware with proper secret validation and token expiry.
+patterns:
+  - type: regex
+    pattern: '(?i)middleware\.JWT\s*\(\[\]byte\s*\(\s*[`"][^`"]+[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)JWTConfig\{[^}]*SigningKey'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/345.html

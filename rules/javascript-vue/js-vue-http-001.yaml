@@ -1,0 +1,18 @@
+id: js-vue-http-001
+name: axios without baseURL validation
+severity: medium
+category: ssrf
+confidence: medium
+cwe: CWE-918
+languages:
+- javascript
+- typescript
+message: axios without validated baseURL can send requests to arbitrary hosts. Validate baseURL.
+patterns:
+- type: regex
+  pattern: axios\.(create|defaults\.baseURL)\s*\(\s*\{[^}]*baseURL
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/918.html
+frameworks:
+- vue

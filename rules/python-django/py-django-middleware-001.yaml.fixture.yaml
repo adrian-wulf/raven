@@ -1,0 +1,13 @@
+rule_id: py-django-middleware-001
+language: python
+examples:
+  unsafe: "# Unsafe - py-django-middleware-001\ndef secret_view(request):\n    return secret_data\n"
+  safe: '# Safe - py-django-middleware-001
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

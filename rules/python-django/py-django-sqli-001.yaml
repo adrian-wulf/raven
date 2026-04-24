@@ -1,0 +1,19 @@
+id: py-django-sqli-001
+name: Django ORM raw() with user input
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: Django ORM .raw() with user input can lead to SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: \.raw\s*\(\s*.*(?P<user_input>request\.(GET|POST|data|body|query_params))
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+- https://docs.djangoproject.com/en/stable/topics/db/sql/
+frameworks:
+- django

@@ -1,0 +1,23 @@
+id: java-spring-sqli-002
+name: Spring @PathVariable Injection
+description: |
+  Detects sql-injection issues in JAVA code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [java]
+frameworks: [spring]
+message: |
+  @PathVariable values can contain malicious payloads. Sanitize before SQL use.
+patterns:
+  - type: regex
+    pattern: '(?i)@PathVariable.*String.*query'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@PathVariable.*\+.*SELECT|INSERT|UPDATE|DELETE'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

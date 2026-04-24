@@ -1,0 +1,18 @@
+id: js-nextjs-ssr-001
+name: getServerSideProps injection
+severity: high
+category: injection
+confidence: high
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: getServerSideProps with user input without validation can allow injection. Validate all inputs.
+patterns:
+- type: regex
+  pattern: export\s+async\s+function\s+getServerSideProps\s*\(\s*\{\s*(?P<input>req|query|params)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- nextjs

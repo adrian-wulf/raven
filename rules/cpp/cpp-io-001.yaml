@@ -1,0 +1,22 @@
+id: cpp-io-001
+name: std::ifstream User Path
+description: |
+  Detects path-traversal issues in CPP code.
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages: [cpp]
+message: |
+  ifstream with user paths can read arbitrary files.
+patterns:
+  - type: regex
+    pattern: '(?i)std::ifstream\s+\w+\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::ifstream\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

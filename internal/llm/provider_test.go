@@ -20,6 +20,12 @@ func TestRegistryAutoDetect(t *testing.T) {
 	os.Unsetenv("RAVEN_LLM_PROVIDER")
 	os.Unsetenv("OPENAI_API_KEY")
 	os.Unsetenv("NVIDIA_API_KEY")
+	os.Unsetenv("ANTHROPIC_API_KEY")
+	os.Unsetenv("GROQ_API_KEY")
+	os.Unsetenv("DEEPSEEK_API_KEY")
+	os.Unsetenv("OPENROUTER_API_KEY")
+	os.Unsetenv("RAVEN_LLM_API_KEY")
+	os.Unsetenv("RAVEN_LLM_BASE_URL")
 
 	r := NewRegistry()
 	if len(r.Names()) > 0 {

@@ -1,0 +1,15 @@
+rule_id: js-nextjs-xss-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-xss-002
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-nextjs-xss-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

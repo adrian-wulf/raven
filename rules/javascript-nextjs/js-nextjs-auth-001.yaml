@@ -1,0 +1,18 @@
+id: js-nextjs-auth-001
+name: NextAuth config bypass
+severity: high
+category: auth
+confidence: high
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: NextAuth configuration with weak or missing checks can be bypassed. Review auth options.
+patterns:
+- type: regex
+  pattern: authOptions\s*:\s*\{(?![\s\S]{0,500}secret)(?![\s\S]{0,500}callbacks)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- nextjs

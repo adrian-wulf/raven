@@ -1,0 +1,13 @@
+id: gen-rp-001
+name: Missing Permissions-Policy Header
+severity: low
+category: headers
+confidence: high
+cwe: "CWE-693"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Permissions-Policy header not set. Restrict browser features (camera, microphone, geolocation) with Permissions-Policy."
+patterns:
+  - type: regex
+    pattern: "(?!Permissions-Policy)"
+references:
+  - https://cwe.mitre.org/data/definitions/693.html

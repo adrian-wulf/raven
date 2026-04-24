@@ -1,0 +1,15 @@
+id: scala-cache-001
+name: Cache without TTL
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-613
+languages:
+- scala
+message: Cache entry without TTL can persist indefinitely. Set expiration.
+patterns:
+- type: regex
+  pattern: cache\.set\s*\(\s*[^,]+,\s*[^,]+\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/613.html

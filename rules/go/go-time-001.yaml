@@ -1,0 +1,22 @@
+id: go-time-001
+name: time.Parse without Location Validation
+description: |
+  Detects input-validation issues in GO code.
+severity: low
+category: input-validation
+confidence: low
+cwe: CWE-20
+languages: [go]
+message: |
+  time.Parse without location validation can cause timezone issues.
+patterns:
+  - type: regex
+    pattern: '(?i)time\.Parse\s*\(\s*[`"]2006'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)time\.ParseInLocation'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/20.html

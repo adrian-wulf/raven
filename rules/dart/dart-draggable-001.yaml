@@ -1,0 +1,15 @@
+id: dart-draggable-001
+name: Drag and drop without validation
+severity: low
+category: input-validation
+confidence: low
+cwe: CWE-20
+languages:
+- dart
+message: Accepting dropped files without validation can allow malicious uploads. Validate.
+patterns:
+- type: regex
+  pattern: onDragDone\s*:\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

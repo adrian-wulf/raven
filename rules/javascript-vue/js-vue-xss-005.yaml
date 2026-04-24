@@ -1,0 +1,19 @@
+id: js-vue-xss-005
+name: v-bind:href with user URL
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: 'v-bind:href with user-controlled URL can enable javascript: protocol XSS. Validate URLs.'
+patterns:
+- type: regex
+  pattern: :href\s*=\s*[\"\'][^\"\']*(?P<input>user|data|props)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- vue

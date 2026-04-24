@@ -1,0 +1,15 @@
+id: docker-volume-001
+name: Anonymous volume
+severity: low
+category: config
+confidence: low
+cwe: CWE-276
+languages:
+- dockerfile
+message: Anonymous volume can persist sensitive data unexpectedly. Use named volumes.
+patterns:
+- type: regex
+  pattern: VOLUME\s+\[\s*[\"\']/\w+[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/276.html

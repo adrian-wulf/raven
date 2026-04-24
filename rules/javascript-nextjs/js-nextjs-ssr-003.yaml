@@ -1,0 +1,18 @@
+id: js-nextjs-ssr-003
+name: ctx.query without validation
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- javascript
+- typescript
+message: ctx.query used without validation can allow injection. Sanitize query parameters.
+patterns:
+- type: regex
+  pattern: ctx\.query\.(\w+)(?!.*sanitize)(?!.*validate)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- nextjs

@@ -1,0 +1,22 @@
+id: rust-memory-003
+name: Box::from_raw
+description: |
+  Detects memory-safety issues in RUST code.
+severity: high
+category: memory-safety
+confidence: high
+cwe: CWE-119
+languages: [rust]
+message: |
+  Box::from_raw with invalid pointer causes UB.
+patterns:
+  - type: regex
+    pattern: '(?i)Box::from_raw'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Box::into_raw.*from_raw'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/119.html

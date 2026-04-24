@@ -1,0 +1,17 @@
+id: bash-cmdi-004
+name: exec with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: exec with user-controlled input can execute arbitrary commands. Validate all inputs.
+patterns:
+- type: regex
+  pattern: exec\s+\$?(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

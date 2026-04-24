@@ -1,0 +1,13 @@
+id: java-adv-003
+name: Java Hibernate Injection via HQL
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-89"
+languages: [java]
+message: "Hibernate HQL query with string concatenation allows SQL injection. Use parameterized HQL queries."
+patterns:
+  - type: regex
+    pattern: 'createQuery\s*\(.*[''"].*\+|createSQLQuery\s*\('
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

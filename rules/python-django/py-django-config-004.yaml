@@ -1,0 +1,17 @@
+id: py-django-config-004
+name: SECURE_SSL_REDIRECT disabled
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-319
+languages:
+- python
+message: SECURE_SSL_REDIRECT = False allows HTTP connections. Enable it in production.
+patterns:
+- type: regex
+  pattern: SECURE_SSL_REDIRECT\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html
+frameworks:
+- django

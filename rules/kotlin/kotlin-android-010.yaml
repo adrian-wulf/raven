@@ -1,0 +1,23 @@
+id: kotlin-android-010
+name: Android Exported Service
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-926
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Exported services can be bound by malicious apps.
+patterns:
+  - type: regex
+    pattern: '(?i)android:exported=[''"]true[''"].*<service'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)<service[^>]*exported=[''"]true[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/926.html

@@ -1,0 +1,16 @@
+id: bash-eval-002
+name: eval on untrusted variable
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: eval on untrusted variable enables command injection. Avoid eval.
+patterns:
+- type: regex
+  pattern: eval\s+\$\{?\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

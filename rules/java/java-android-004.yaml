@@ -1,0 +1,27 @@
+id: java-android-004
+name: Android SharedPreferences Leak
+description: |
+  Detects information-disclosure issues in JAVA code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-312
+languages: [java]
+frameworks: [android]
+message: |
+  SharedPreferences without encryption can leak sensitive data on rooted devices.
+patterns:
+  - type: regex
+    pattern: '(?i)getSharedPreferences.*edit\(\).*putString.*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)getSharedPreferences.*edit\(\).*putString.*secret'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)getSharedPreferences.*edit\(\).*putString.*token'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/312.html

@@ -1,0 +1,15 @@
+rule_id: js-vue-provide-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-provide-001
+
+    const result = db.query(`SELECT * FROM t WHERE id = ${id}`);
+
+    '
+  safe: '// Safe - js-vue-provide-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

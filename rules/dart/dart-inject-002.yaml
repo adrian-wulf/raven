@@ -1,0 +1,16 @@
+id: dart-inject-002
+name: Shell command injection
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- dart
+message: Shell command with string interpolation enables injection. Use argument list.
+patterns:
+- type: regex
+  pattern: sh\w*\.run\s*\(\s*[\"\'][^\"\']*\$\{?\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

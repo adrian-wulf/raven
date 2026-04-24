@@ -1,0 +1,13 @@
+id: java-adv-002
+name: Java Expression Language Injection
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-917"
+languages: [java]
+message: "Expression Language (EL) evaluation with user input allows code execution. Do not evaluate untrusted EL expressions."
+patterns:
+  - type: regex
+    pattern: "(SimpleEvaluationContext|StandardEvaluationContext|ExpressionParser|createValueExpression|MethodExpression)"
+references:
+  - https://cwe.mitre.org/data/definitions/917.html

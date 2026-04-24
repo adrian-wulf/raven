@@ -1,0 +1,13 @@
+id: java-adv-001
+name: Java JNDI Injection Log4j Pattern
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-74"
+languages: [java]
+message: "JNDI lookup in logging message enables remote code execution (Log4Shell). Disable JNDI or use patched version."
+patterns:
+  - type: regex
+    pattern: '(jndi|ldap|rmi|dns):\/\/|\\$\\{jndi|log4j.*version.*2\\.((0|1|2|3|4|5|6|7|8|9|10|11|12|13|14)(\\.|\b))'
+references:
+  - https://cwe.mitre.org/data/definitions/74.html

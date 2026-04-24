@@ -1,0 +1,16 @@
+id: lua-deser-004
+name: dofile with user path
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- lua
+message: dofile with user path can execute arbitrary files. Validate paths.
+patterns:
+- type: regex
+  pattern: dofile\s*\(\s*(?P<input>user|input|arg|path)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

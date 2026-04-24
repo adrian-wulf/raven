@@ -1,0 +1,15 @@
+id: lua-redis-001
+name: Redis without AUTH
+severity: high
+category: auth
+confidence: high
+cwe: CWE-306
+languages:
+- lua
+message: Redis connection without AUTH allows unauthorized access. Require authentication.
+patterns:
+- type: regex
+  pattern: redis\.connect\s*\([^)]+\)(?!.*auth)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

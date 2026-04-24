@@ -1,0 +1,15 @@
+id: scala-crypto-001
+name: Weak AES mode
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-327
+languages:
+- scala
+message: AES with ECB mode is insecure. Use GCM or CBC with proper IV.
+patterns:
+- type: regex
+  pattern: AES/ECB|\"AES\"\s*,\s*\"ECB\"
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/327.html

@@ -1,0 +1,16 @@
+id: bash-xargs-001
+name: xargs without null delimiter
+severity: medium
+category: cmdi
+confidence: medium
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: xargs without -0 can fail on filenames with spaces. Use -0 with find -print0.
+patterns:
+- type: regex
+  pattern: find\s+.*\|\s*xargs(?!.*-0)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

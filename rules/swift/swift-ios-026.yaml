@@ -1,0 +1,27 @@
+id: swift-ios-026
+name: NSKeyedUnarchiver without Class Validation
+description: |
+  Detects insecure-deserialization issues in SWIFT code.
+severity: critical
+category: insecure-deserialization
+confidence: critical
+cwe: CWE-502
+languages: [swift]
+frameworks: [ios]
+message: |
+  NSKeyedUnarchiver without class validation enables object injection.
+patterns:
+  - type: regex
+    pattern: '(?i)NSKeyedUnarchiver\s*\(\s*forReadingWith'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)unarchiveObject\s*\(\s*with(?!.*decodeObjectOfClass)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)NSKeyedUnarchiver.*unarchiveObject(?!.*requiresSecureCoding)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

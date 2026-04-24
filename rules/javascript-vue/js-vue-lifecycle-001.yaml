@@ -1,0 +1,18 @@
+id: js-vue-lifecycle-001
+name: Created without error handling
+severity: low
+category: config
+confidence: low
+cwe: CWE-391
+languages:
+- javascript
+- typescript
+message: Async operations in created() without error handling can fail silently. Add try/catch.
+patterns:
+- type: regex
+  pattern: created\s*\(\s*\)\s*\{[^}]*axios\.(get|post)(?!.*catch)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/391.html
+frameworks:
+- vue

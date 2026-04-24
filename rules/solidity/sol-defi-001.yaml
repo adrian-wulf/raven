@@ -1,0 +1,15 @@
+id: sol-defi-001
+name: Flash loan without reentrancy guard
+severity: critical
+category: reentrancy
+confidence: high
+cwe: CWE-841
+languages:
+- solidity
+message: Flash loan callback without reentrancy guard can be reentered. Add guard.
+patterns:
+- type: regex
+  pattern: function\s+onFlashLoan\s*\(
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/841.html

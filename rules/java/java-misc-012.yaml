@@ -1,0 +1,22 @@
+id: java-misc-012
+name: HostnameVerifier All Valid
+description: |
+  Detects weak-cryptography issues in JAVA code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-297
+languages: [java]
+message: |
+  HostnameVerifier that always returns true allows man-in-the-middle attacks.
+patterns:
+  - type: regex
+    pattern: '(?i)HostnameVerifier.*verify\s*\(.*return\s+true'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)setDefaultHostnameVerifier.*ALLOW_ALL'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/297.html

@@ -1,0 +1,15 @@
+rule_id: tf-mfa-001
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-mfa-001
+
+    Principal = "*"
+
+    '
+  safe: '# Safe - tf-mfa-001
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

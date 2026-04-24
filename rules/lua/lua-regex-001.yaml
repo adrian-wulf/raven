@@ -1,0 +1,15 @@
+id: lua-regex-001
+name: Regex without anchor
+severity: medium
+category: regex
+confidence: medium
+cwe: CWE-625
+languages:
+- lua
+message: Regular expression without start/end anchor can match unexpectedly. Use anchors.
+patterns:
+- type: regex
+  pattern: string\.match\s*\(\s*[^,]+,\s*[\"\'][^\^\"]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/625.html

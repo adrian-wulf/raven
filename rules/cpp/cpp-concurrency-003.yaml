@@ -1,0 +1,22 @@
+id: cpp-concurrency-003
+name: Mutex Lock Order Inversion
+description: |
+  Detects deadlock issues in CPP code.
+severity: medium
+category: deadlock
+confidence: medium
+cwe: CWE-833
+languages: [cpp]
+message: |
+  Inconsistent lock ordering causes deadlock. Use std::lock for multiple mutexes.
+patterns:
+  - type: regex
+    pattern: '(?i)lock\s*\(.*mutex1.*\).*lock\s*\(.*mutex2'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::lock_guard.*mutex1.*std::lock_guard.*mutex2'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/833.html

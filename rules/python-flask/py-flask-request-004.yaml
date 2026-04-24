@@ -1,0 +1,17 @@
+id: py-flask-request-004
+name: request.files without validation
+severity: high
+category: file-upload
+confidence: high
+cwe: CWE-434
+languages:
+- python
+message: request.files access without validation can allow malicious uploads. Validate file type and size.
+patterns:
+- type: regex
+  pattern: request\.files\s*\[\s*[\"\']\w+[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/434.html
+frameworks:
+- flask

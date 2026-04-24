@@ -1,0 +1,17 @@
+rule_id: docker-label-001
+language: dockerfile
+examples:
+  unsafe: '# Unsafe - docker-label-001
+
+    ENV API_KEY=sk-live-abc123
+
+    '
+  safe: '# Safe - docker-label-001
+
+    # Use pinned versions, non-root user, secrets mount
+
+    FROM ubuntu:22.04
+
+    USER appuser
+
+    '

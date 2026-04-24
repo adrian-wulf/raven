@@ -1,0 +1,15 @@
+rule_id: js-vue-xss-004
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-vue-xss-004
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-vue-xss-004
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

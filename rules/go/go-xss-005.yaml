@@ -1,0 +1,22 @@
+id: go-xss-005
+name: XSS via json.Encoder with User Data
+description: |
+  Detects xss issues in GO code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [go]
+message: |
+  json.Encoder does not escape HTML in string values. Sanitize user data before encoding.
+patterns:
+  - type: regex
+    pattern: '(?i)json\.NewEncoder\s*\(w\)\.Encode\s*\(.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)json\.Marshal\s*\(.*(r\.|req|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

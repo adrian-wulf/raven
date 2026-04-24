@@ -1,0 +1,15 @@
+id: docker-root-001
+name: USER root
+severity: high
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- dockerfile
+message: Running container as root increases attack surface. Use non-root USER.
+patterns:
+- type: regex
+  pattern: USER\s+root
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

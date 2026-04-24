@@ -1,0 +1,15 @@
+rule_id: scala-play-001
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-play-001
+
+    sql"SELECT * FROM users WHERE id = $userId"
+
+    '
+  safe: '// Safe - scala-play-001
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

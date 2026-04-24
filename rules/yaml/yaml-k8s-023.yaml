@@ -1,0 +1,15 @@
+id: yaml-k8s-023
+name: ClusterRole with wildcard verbs
+severity: critical
+category: auth
+confidence: critical
+cwe: CWE-250
+languages:
+- yaml
+message: ClusterRole with * verbs grants all permissions. Restrict verbs.
+patterns:
+- type: regex
+  pattern: verbs:\s*\[\s*[\"\']\*[\"\']\s*\]
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

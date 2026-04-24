@@ -1,0 +1,15 @@
+id: yaml-k8s-006
+name: hostNetwork true
+severity: critical
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: hostNetwork:true shares host network namespace. Use pod networking instead.
+patterns:
+- type: regex
+  pattern: hostNetwork:\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

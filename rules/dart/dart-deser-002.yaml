@@ -1,0 +1,16 @@
+id: dart-deser-002
+name: XML parsing
+severity: medium
+category: deserialization
+confidence: medium
+cwe: CWE-611
+languages:
+- dart
+message: XML parsing without security settings can allow XXE attacks. Disable external entities.
+patterns:
+- type: regex
+  pattern: XmlDocument\.parse\s*\(\s*(?P<input>response|body|data)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/611.html

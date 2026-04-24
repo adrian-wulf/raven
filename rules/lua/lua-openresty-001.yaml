@@ -1,0 +1,16 @@
+id: lua-openresty-001
+name: ngx.exec without validation
+severity: medium
+category: redirect
+confidence: medium
+cwe: CWE-601
+languages:
+- lua
+message: ngx.exec with user URL can enable internal redirect attacks. Validate URLs.
+patterns:
+- type: regex
+  pattern: ngx\.exec\s*\(\s*(?P<input>ngx\.var|args|uri)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/601.html

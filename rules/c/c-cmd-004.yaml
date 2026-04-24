@@ -1,0 +1,22 @@
+id: c-cmd-004
+name: wordexp User Input
+description: |
+  Detects command-injection issues in C code.
+severity: high
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [c]
+message: |
+  wordexp performs shell expansion on user input. Avoid it.
+patterns:
+  - type: regex
+    pattern: '(?i)wordexp\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)wordexp\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

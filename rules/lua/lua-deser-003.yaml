@@ -1,0 +1,16 @@
+id: lua-deser-003
+name: loadfile with user path
+severity: high
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- lua
+message: loadfile with user path can execute arbitrary files. Validate file paths.
+patterns:
+- type: regex
+  pattern: loadfile\s*\(\s*(?P<input>user|input|arg|path)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

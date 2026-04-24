@@ -1,0 +1,17 @@
+id: py-flask-session-001
+name: Weak Flask secret_key
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-798
+languages:
+- python
+message: Weak or short secret_key allows session forgery. Use a strong random key (>= 32 bytes).
+patterns:
+- type: regex
+  pattern: secret_key\s*=\s*[\"\'][^\"\']{0,15}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html
+frameworks:
+- flask

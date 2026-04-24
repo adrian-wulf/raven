@@ -1,0 +1,15 @@
+id: sol-timestamp-001
+name: block.timestamp dependence
+severity: medium
+category: blockchain
+confidence: medium
+cwe: CWE-829
+languages:
+- solidity
+message: Dependence on block.timestamp can be manipulated by miners. Use block.number or oracle.
+patterns:
+- type: regex
+  pattern: block\.timestamp
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

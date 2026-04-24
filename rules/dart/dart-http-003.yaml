@@ -1,0 +1,15 @@
+id: dart-http-003
+name: HttpOverrides
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-295
+languages:
+- dart
+message: HttpOverrides.global can disable certificate validation globally. Remove in production.
+patterns:
+- type: regex
+  pattern: HttpOverrides\.global\s*=\s*\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/295.html

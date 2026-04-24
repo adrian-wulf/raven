@@ -1,0 +1,15 @@
+id: yaml-k8s-018
+name: Pod without serviceAccount
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- yaml
+message: Pod without explicit serviceAccount uses default. Create dedicated service accounts.
+patterns:
+- type: regex
+  pattern: kind:\s*Pod\s*\n.*containers:(?!.*serviceAccountName)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

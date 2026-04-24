@@ -1,0 +1,23 @@
+id: rust-axum-002
+name: Axum Middleware Missing
+description: |
+  Detects broken-authentication issues in RUST code.
+severity: medium
+category: broken-authentication
+confidence: medium
+cwe: CWE-306
+languages: [rust]
+frameworks: [axum]
+message: |
+  Sensitive routes need authentication middleware layers.
+patterns:
+  - type: regex
+    pattern: '(?i)Router::new\s*\(\).*route(?!.*layer)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)axum::Router.*route.*(?!.*auth)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

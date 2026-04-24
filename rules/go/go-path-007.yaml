@@ -1,0 +1,22 @@
+id: go-path-007
+name: http.FileServer without Path Restriction
+description: |
+  Detects path-traversal issues in GO code.
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages: [go]
+message: |
+  FileServer can expose files outside intended directory. Use StripPrefix and validate.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.FileServer\s*\(\s*http\.Dir\s*\(\s*[`"]\.[`"]\s*\)\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)http\.FileServer.*without.*StripPrefix'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

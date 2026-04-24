@@ -1,0 +1,15 @@
+id: yaml-k8s-009
+name: hostPath mount
+severity: high
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: hostPath mount can expose host filesystem. Use persistent volumes instead.
+patterns:
+- type: regex
+  pattern: hostPath:\s*\n\s+path:\s*/
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

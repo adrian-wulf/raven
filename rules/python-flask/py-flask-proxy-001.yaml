@@ -1,0 +1,17 @@
+id: py-flask-proxy-001
+name: Proxy fix without header validation
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-291
+languages:
+- python
+message: ProxyFix without validating proxy headers can enable IP spoofing. Validate headers.
+patterns:
+- type: regex
+  pattern: ProxyFix\s*\(\s*app\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/291.html
+frameworks:
+- flask

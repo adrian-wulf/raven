@@ -1,0 +1,16 @@
+id: tf-sqs-001
+name: SQS without encryption
+severity: medium
+category: crypto
+confidence: medium
+cwe: CWE-311
+languages:
+- terraform
+- hcl
+message: SQS queue without SSE exposes message content. Enable encryption.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_sqs_queue[\"\'][^}]*\}(?!.*kms_master_key_id)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/311.html

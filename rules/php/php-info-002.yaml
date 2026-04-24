@@ -1,0 +1,26 @@
+id: php-info-002
+name: display_errors Enabled
+description: |
+  Detects information-disclosure issues in PHP code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-200
+languages: [php]
+message: |
+  display_errors in production leaks file paths and code structure.
+patterns:
+  - type: regex
+    pattern: '(?i)display_errors\s*=\s*On'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)display_errors\s*=\s*1'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)display_startup_errors\s*=\s*On'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

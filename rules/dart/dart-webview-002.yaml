@@ -1,0 +1,16 @@
+id: dart-webview-002
+name: WebView without URL filter
+severity: medium
+category: webview
+confidence: medium
+cwe: CWE-20
+languages:
+- dart
+message: WebView without URL filtering can load malicious content. Implement navigation delegate.
+patterns:
+- type: regex
+  pattern: WebView\s*\(\s*initialUrl\s*:\s*(?P<input>user|dynamic)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/20.html

@@ -1,0 +1,13 @@
+id: gen-api-007
+name: API Pagination Without Maximum Limit
+severity: medium
+category: api
+confidence: high
+cwe: "CWE-770"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "API pagination does not enforce maximum page size. Set upper limit to prevent resource exhaustion."
+patterns:
+  - type: regex
+    pattern: "(limit|per_page|page_size)\\s*[=:]\\s*req\\.(query|body|params)"
+references:
+  - https://cwe.mitre.org/data/definitions/770.html

@@ -1,0 +1,17 @@
+id: py-django-email-001
+name: Email sending without validation
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: User input in email headers can enable header injection. Validate email inputs.
+patterns:
+- type: regex
+  pattern: send_mail\s*\([^)]*request\.
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

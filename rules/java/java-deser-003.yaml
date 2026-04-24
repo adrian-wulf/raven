@@ -1,0 +1,31 @@
+id: java-deser-003
+name: Jackson Deserialization RCE
+description: |
+  Detects insecure-deserialization issues in JAVA code.
+severity: critical
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [java]
+frameworks: [jackson]
+message: |
+  Jackson with enableDefaultTyping or polymorphic types can execute arbitrary code.
+patterns:
+  - type: regex
+    pattern: '(?i)enableDefaultTyping'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@JsonTypeInfo\s*\(\s*use\s*=\s*JsonTypeInfo\.Id\.CLASS'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ObjectMapper.*activateDefaultTyping'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@JsonTypeInfo.*ANY'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

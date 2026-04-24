@@ -1,0 +1,15 @@
+rule_id: sol-assembly-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-assembly-001
+
+    assembly { mstore(0x40, val) }
+
+    '
+  safe: '// Safe - sol-assembly-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

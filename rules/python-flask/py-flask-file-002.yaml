@@ -1,0 +1,18 @@
+id: py-flask-file-002
+name: send_from_directory traversal
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- python
+message: send_from_directory() with user path can traverse directories. Sanitize the filename.
+patterns:
+- type: regex
+  pattern: send_from_directory\s*\(\s*\w+\s*,\s*(?P<input>request\.|user_)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html
+frameworks:
+- flask

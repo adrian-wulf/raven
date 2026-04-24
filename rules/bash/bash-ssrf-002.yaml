@@ -1,0 +1,17 @@
+id: bash-ssrf-002
+name: wget with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- bash
+- shell
+message: wget with user URL enables SSRF. Validate URLs before downloading.
+patterns:
+- type: regex
+  pattern: wget\s+.*\$?(?P<input>URL|url|user|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

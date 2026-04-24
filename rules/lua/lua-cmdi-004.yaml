@@ -1,0 +1,16 @@
+id: lua-cmdi-004
+name: io.popen without sanitization
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- lua
+message: io.popen without input sanitization enables command injection. Sanitize all inputs.
+patterns:
+- type: regex
+  pattern: io\.popen\s*\(\s*[\"\'].*\.\.s*\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

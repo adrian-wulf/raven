@@ -1,0 +1,15 @@
+rule_id: tf-vpc-002
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-vpc-002
+
+    secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+    '
+  safe: '# Safe - tf-vpc-002
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

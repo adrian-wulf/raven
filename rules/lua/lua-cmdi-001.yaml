@@ -1,0 +1,16 @@
+id: lua-cmdi-001
+name: os.execute with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- lua
+message: os.execute with user input enables command injection. Validate and sanitize inputs.
+patterns:
+- type: regex
+  pattern: os\.execute\s*\(\s*(?P<input>user|input|arg|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

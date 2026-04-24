@@ -1,0 +1,23 @@
+id: swift-ios-039
+name: In-App Purchase Bypass
+description: |
+  Detects authorization issues in SWIFT code.
+severity: high
+category: authorization
+confidence: high
+cwe: CWE-793
+languages: [swift]
+frameworks: [ios]
+message: |
+  In-app purchase validation must be server-side.
+patterns:
+  - type: regex
+    pattern: '(?i)SKPaymentQueue.*updatedTransactions.*(?!.*server)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)purchase.*complete.*(?!.*verify)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/793.html

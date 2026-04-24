@@ -1,0 +1,27 @@
+id: ruby-rails-sqli-003
+name: Rails execute SQL Injection
+description: |
+  Detects sql-injection issues in RUBY code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [ruby]
+frameworks: [rails]
+message: |
+  ActiveRecord::Base.connection.execute with user input is vulnerable.
+patterns:
+  - type: regex
+    pattern: '(?i)connection\.execute\s*\(\s*[''"].*\#\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ActiveRecord::Base\.connection\.execute'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)execute\s*\(\s*[''"].*params'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

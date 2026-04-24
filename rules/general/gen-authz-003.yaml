@@ -1,0 +1,13 @@
+id: gen-authz-003
+name: Admin Function Without Role Check
+severity: critical
+category: authz
+confidence: high
+cwe: "CWE-862"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Administrative function lacks role-based access control. Add @RoleAllowed or equivalent authorization check."
+patterns:
+  - type: regex
+    pattern: "(admin|deleteAll|exportAll|backup|restore|impersonate)"
+references:
+  - https://cwe.mitre.org/data/definitions/862.html

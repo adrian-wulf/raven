@@ -1,0 +1,23 @@
+id: go-fiber-002
+name: Fiber CORS Allow All Origins
+description: |
+  Detects cors-misconfiguration issues in GO code.
+severity: medium
+category: cors-misconfiguration
+confidence: medium
+cwe: CWE-942
+languages: [go]
+frameworks: [fiber]
+message: |
+  Restrict CORS origins. Allowing all (*) can expose sensitive data to malicious sites.
+patterns:
+  - type: regex
+    pattern: '(?i)AllowOrigins.*[`"]\*[`"]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)AllowOrigins.*`.*\*`'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/942.html

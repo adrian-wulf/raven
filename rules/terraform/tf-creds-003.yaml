@@ -1,0 +1,16 @@
+id: tf-creds-003
+name: Password in plaintext
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- terraform
+- hcl
+message: Plaintext password in Terraform config is insecure. Use variables or secret manager.
+patterns:
+- type: regex
+  pattern: password\s*=\s*[\"\'][^\"\'\s]{4,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

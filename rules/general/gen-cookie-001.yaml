@@ -1,0 +1,13 @@
+id: gen-cookie-001
+name: Cookie Without Secure Flag
+severity: medium
+category: cookie
+confidence: high
+cwe: "CWE-614"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Cookie set without Secure flag. Secure flag prevents cookie transmission over HTTP."
+patterns:
+  - type: regex
+    pattern: "Set-Cookie.*(?!Secure)"
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

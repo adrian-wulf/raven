@@ -1,0 +1,18 @@
+id: cpp-bof-001
+name: strcpy C++ Buffer Overflow
+description: |
+  Detects buffer-overflow issues in CPP code.
+severity: critical
+category: buffer-overflow
+confidence: high
+cwe: CWE-120
+languages: [cpp]
+message: |
+  strcpy in C++ is unsafe. Use std::string or std::strncpy.
+patterns:
+  - type: regex
+    pattern: '(?i)strcpy\s*\(\s*[^,]+,\s*[^)]+\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/120.html

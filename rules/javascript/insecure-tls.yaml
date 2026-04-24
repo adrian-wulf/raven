@@ -17,7 +17,7 @@ patterns:
     where:
       - not-test-file: true
   - type: regex
-    pattern: 'NODE_TLS_REJECT_UNAUTHORIZED\s*[:=]\s*["'']0["'']'
+    pattern: 'NODE_TLS_REJECT_UNAUTHORIZED\s*[:=]\s*["'''']0["'''']'
     where:
       - not-test-file: true
   - type: regex

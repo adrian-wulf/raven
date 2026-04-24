@@ -1,0 +1,26 @@
+id: c-info-001
+name: Error Message Details
+description: |
+  Detects information-disclosure issues in C code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-209
+languages: [c]
+message: |
+  Detailed error messages reveal implementation details to attackers.
+patterns:
+  - type: regex
+    pattern: '(?i)perror\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)printf\s*\(.*[''"]Error:'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fprintf\s*\(.*stderr'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/209.html

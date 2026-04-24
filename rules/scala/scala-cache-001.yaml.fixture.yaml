@@ -1,0 +1,15 @@
+rule_id: scala-cache-001
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-cache-001
+
+    sql"SELECT * FROM users WHERE id = $userId"
+
+    '
+  safe: '// Safe - scala-cache-001
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

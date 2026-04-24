@@ -1,0 +1,16 @@
+id: ex-path-002
+name: File.write!
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages:
+- elixir
+message: File.write! with user path enables directory traversal and arbitrary file write. Validate paths.
+patterns:
+- type: regex
+  pattern: File\.write!\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/22.html

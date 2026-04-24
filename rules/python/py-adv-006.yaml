@@ -1,0 +1,13 @@
+id: py-adv-006
+name: Python eval on Untrusted Input
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [python]
+message: "eval() with untrusted input allows arbitrary code execution. Use ast.literal_eval for safe evaluation of literals."
+patterns:
+  - type: regex
+    pattern: "eval\\s*\\(.*(req\\.|request|user|input|params|body)"
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

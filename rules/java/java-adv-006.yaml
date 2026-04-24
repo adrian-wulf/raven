@@ -1,0 +1,13 @@
+id: java-adv-006
+name: Java Zip Slip Vulnerability
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-22"
+languages: [java]
+message: "Zip entry extraction without path validation enables Zip Slip. Validate entry names for .. sequences."
+patterns:
+  - type: regex
+    pattern: "ZipEntry.*getName.*new\\s+File|zip.*extract|JarEntry"
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

@@ -1,0 +1,17 @@
+id: py-django-template-002
+name: '{% autoescape off %}'
+severity: critical
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- html
+message: autoescape off disables template auto-escaping and enables XSS. Remove or use with care.
+patterns:
+- type: regex
+  pattern: \{%\s*autoescape\s+off\s*%\}
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- django

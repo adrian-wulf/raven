@@ -1,0 +1,18 @@
+id: js-angular-dom-001
+name: Renderer2 setProperty XSS
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Renderer2 setProperty with user input on sensitive properties can enable XSS. Validate input.
+patterns:
+- type: regex
+  pattern: renderer\.setProperty\s*\(\s*\w+\s*,\s*[\"\']innerHTML[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,26 @@
+id: go-path-006
+name: ioutil.ReadFile with User Path
+description: |
+  Detects path-traversal issues in GO code.
+severity: high
+category: path-traversal
+confidence: high
+cwe: CWE-22
+languages: [go]
+message: |
+  ioutil.ReadFile with user input can read arbitrary files. Validate paths.
+patterns:
+  - type: regex
+    pattern: '(?i)ioutil\.ReadFile\s*\(\s*.*(r\.|req|param|input|user|filename|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)os\.ReadDir\s*\(\s*.*(r\.|req|param|input|user|filename|path)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)os\.WriteFile\s*\(\s*.*(r\.|req|param|input|user|filename|path)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/22.html

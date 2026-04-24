@@ -1,0 +1,22 @@
+id: java-misc-008
+name: Java System Property User Control
+description: |
+  Detects command-injection issues in JAVA code.
+severity: high
+category: command-injection
+confidence: high
+cwe: CWE-78
+languages: [java]
+message: |
+  Setting system properties from user input can modify JVM behavior.
+patterns:
+  - type: regex
+    pattern: '(?i)System\.setProperty\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)System\.setProperty\s*\(.*getParameter'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/78.html

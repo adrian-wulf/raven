@@ -1,0 +1,17 @@
+id: py-flask-cache-001
+name: Flask-Cache without serialization
+severity: medium
+category: deserialization
+confidence: medium
+cwe: CWE-502
+languages:
+- python
+message: Flask-Cache with pickle serialization can enable RCE. Use JSON serialization.
+patterns:
+- type: regex
+  pattern: CACHE_TYPE\s*=\s*[\"\']simple[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html
+frameworks:
+- flask

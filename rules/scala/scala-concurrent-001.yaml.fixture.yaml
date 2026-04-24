@@ -1,0 +1,15 @@
+rule_id: scala-concurrent-001
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-concurrent-001
+
+    sql"SELECT * FROM users WHERE id = $userId"
+
+    '
+  safe: '// Safe - scala-concurrent-001
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

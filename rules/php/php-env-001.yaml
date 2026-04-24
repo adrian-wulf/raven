@@ -1,0 +1,22 @@
+id: php-env-001
+name: Environment Variable Exposure
+description: |
+  Detects information-disclosure issues in PHP code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-526
+languages: [php]
+message: |
+  Environment variables with secrets should not be logged or displayed.
+patterns:
+  - type: regex
+    pattern: '(?i)getenv\s*\(.*[''"](PASSWORD|SECRET|KEY|TOKEN)[''"]\s*\).*echo'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$_ENV\[.*(PASSWORD|SECRET|KEY|TOKEN)\].*echo'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/526.html

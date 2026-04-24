@@ -20,7 +20,7 @@ patterns:
           - unwrap_or_default
           - unwrap_or_else
   - type: regex
-    pattern: '\.expect\s*\(\s*["''][^"'']*["'']\s*\)'
+    pattern: '\.expect\s*\(\s*["''''][^"'''']*["'''']\s*\)'
     where:
       - not-test-file: true
 references:

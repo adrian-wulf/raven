@@ -1,0 +1,18 @@
+id: py-django-redirect-001
+name: Redirect without URL validation
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-601
+languages:
+- python
+message: Redirect with user-controlled URL enables open redirect attacks. Validate URLs against allowlist.
+patterns:
+- type: regex
+  pattern: redirect\s*\(\s*(?P<input>request\.(GET|POST)\[|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/601.html
+frameworks:
+- django

@@ -1,0 +1,17 @@
+id: py-django-session-001
+name: SESSION_COOKIE_HTTPONLY False
+severity: high
+category: config
+confidence: high
+cwe: CWE-1004
+languages:
+- python
+message: SESSION_COOKIE_HTTPONLY=False allows JavaScript access to session cookie. Enable httponly.
+patterns:
+- type: regex
+  pattern: SESSION_COOKIE_HTTPONLY\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/1004.html
+frameworks:
+- django

@@ -1,0 +1,16 @@
+id: ex-eval-002
+name: Code.eval_quoted
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- elixir
+message: Code.eval_quoted with user-controlled AST enables code injection. Validate AST structure.
+patterns:
+- type: regex
+  pattern: Code\.eval_quoted\s*\(\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

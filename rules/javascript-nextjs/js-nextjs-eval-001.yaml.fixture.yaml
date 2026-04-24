@@ -1,0 +1,15 @@
+rule_id: js-nextjs-eval-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-eval-001
+
+    eval(userCode);
+
+    '
+  safe: '// Safe - js-nextjs-eval-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

@@ -1,0 +1,15 @@
+id: dart-perm-001
+name: Missing permission check
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- dart
+message: Platform channel call without permission check. Verify permissions.
+patterns:
+- type: regex
+  pattern: MethodChannel\s*\(\s*[\"\']\w+[\"\']\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html

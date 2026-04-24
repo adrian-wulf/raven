@@ -1,0 +1,13 @@
+id: gen-oauth-003
+name: Hardcoded OAuth Client Secret
+severity: critical
+category: auth
+confidence: high
+cwe: "CWE-798"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "OAuth client secret hardcoded in source. Store client secrets in environment variables or secret manager."
+patterns:
+  - type: regex
+    pattern: '(client_secret|CLIENT_SECRET|clientSecret)\\s*[=:]\\s*[\\''"][^\\''"]{8,}[\\''"]'
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

@@ -13,11 +13,11 @@ message: |
   Validate URLs against an allowlist of allowed domains.
 patterns:
   - type: regex
-    pattern: 'header\s*\(\s*["'']Location:\s*["''].*\$_(GET|POST|REQUEST|COOKIE)'
+    pattern: 'header\s*\(\s*["'''']Location:\s*["''''].*\$_(GET|POST|REQUEST|COOKIE)'
     where:
       - not-test-file: true
   - type: regex
-    pattern: 'header\s*\(\s*["'']Location:\s*["''].*\$[^)]+\)'
+    pattern: 'header\s*\(\s*["'''']Location:\s*["''''].*\$[^)]+\)'
     where:
       - not-test-file: true
   - type: regex

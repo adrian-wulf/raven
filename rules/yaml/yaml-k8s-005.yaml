@@ -1,0 +1,15 @@
+id: yaml-k8s-005
+name: hostPID true
+severity: critical
+category: privilege
+confidence: high
+cwe: CWE-250
+languages:
+- yaml
+message: hostPID:true allows access to host processes. Disable unless absolutely necessary.
+patterns:
+- type: regex
+  pattern: hostPID:\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

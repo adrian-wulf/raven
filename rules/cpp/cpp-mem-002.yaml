@@ -1,0 +1,18 @@
+id: cpp-mem-002
+name: new[] without delete[]
+description: |
+  Detects resource-leak issues in CPP code.
+severity: high
+category: resource-leak
+confidence: high
+cwe: CWE-762
+languages: [cpp]
+message: |
+  new[] must be paired with delete[]. Mismatch causes undefined behavior.
+patterns:
+  - type: regex
+    pattern: '(?i)new\s+\w+\[.*\].*delete\s+(?!\[)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/762.html

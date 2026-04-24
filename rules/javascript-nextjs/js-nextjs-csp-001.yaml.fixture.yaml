@@ -1,0 +1,15 @@
+rule_id: js-nextjs-csp-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-nextjs-csp-001
+
+    if (env.production) { enableProdMode(); }
+
+    '
+  safe: '// Safe - js-nextjs-csp-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

@@ -1,0 +1,16 @@
+id: lua-cmdi-003
+name: os.execute without validation
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- lua
+message: os.execute without input validation is dangerous. Avoid shell execution with untrusted input.
+patterns:
+- type: regex
+  pattern: os\.execute\s*\(\s*[\"\'].*\.\.\s*\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

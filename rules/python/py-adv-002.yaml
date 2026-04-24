@@ -1,0 +1,13 @@
+id: py-adv-002
+name: Python yaml.load Without Safe Loader
+severity: critical
+category: rce
+confidence: high
+cwe: "CWE-502"
+languages: [python]
+message: "yaml.load without SafeLoader allows arbitrary code execution. Always use yaml.safe_load()."
+patterns:
+  - type: regex
+    pattern: "yaml\\.load\\s*\\(|yaml\\.load_all\\s*\\("
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

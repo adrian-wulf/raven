@@ -1,0 +1,23 @@
+id: ruby-xss-006
+name: Rails strip_tags Bypass
+description: |
+  Detects xss issues in RUBY code.
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [ruby]
+frameworks: [rails]
+message: |
+  strip_tags doesn't prevent all XSS vectors. Combine with html_escape.
+patterns:
+  - type: regex
+    pattern: '(?i)strip_tags\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)strip_tags.*html_safe'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

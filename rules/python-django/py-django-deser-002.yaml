@@ -1,0 +1,17 @@
+id: py-django-deser-002
+name: pickle in cache
+severity: critical
+category: deserialization
+confidence: high
+cwe: CWE-502
+languages:
+- python
+message: Using pickle for cache serialization can lead to remote code execution. Use JSON.
+patterns:
+- type: regex
+  pattern: cache\.set\s*\(.*pickle\.dumps
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/502.html
+frameworks:
+- django

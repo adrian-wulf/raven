@@ -1,0 +1,16 @@
+id: scala-xss-003
+name: Html without escaping
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- scala
+message: Creating Html object with user content bypasses escaping. Sanitize content.
+patterns:
+- type: regex
+  pattern: Html\s*\(\s*(?P<input>user|input|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

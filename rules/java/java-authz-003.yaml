@@ -1,0 +1,27 @@
+id: java-authz-003
+name: Spring @PermitAll Misuse
+description: |
+  Detects broken-authorization issues in JAVA code.
+severity: high
+category: broken-authorization
+confidence: high
+cwe: CWE-284
+languages: [java]
+frameworks: [spring]
+message: |
+  @PermitAll on sensitive endpoints bypasses all authentication.
+patterns:
+  - type: regex
+    pattern: '(?i)@PermitAll.*@RequestMapping'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@PermitAll.*@PostMapping'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@PermitAll.*@DeleteMapping'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/284.html

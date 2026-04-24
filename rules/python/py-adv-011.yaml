@@ -1,0 +1,13 @@
+id: py-adv-011
+name: Python __import__ with Dynamic Name
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-94"
+languages: [python]
+message: "Dynamic __import__ with user-controlled module name allows loading arbitrary modules. Validate module names against allowlist."
+patterns:
+  - type: regex
+    pattern: "__import__\\s*\\(.*(req\\.|request|user|input|params)"
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

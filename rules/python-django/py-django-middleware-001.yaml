@@ -1,0 +1,17 @@
+id: py-django-middleware-001
+name: Custom middleware bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- python
+message: Custom middleware without proper auth checks can bypass security. Implement proper checks.
+patterns:
+- type: regex
+  pattern: class\s+\w+Middleware\s*\(\s*MiddlewareMixin\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- django

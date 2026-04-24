@@ -1,0 +1,15 @@
+id: scala-crypto-002
+name: Hardcoded key
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-798
+languages:
+- scala
+message: Hardcoded encryption key in source code can be exposed. Use key management service.
+patterns:
+- type: regex
+  pattern: (secretKey|privateKey|key)\s*=\s*[\"\'][^\"\']{8,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

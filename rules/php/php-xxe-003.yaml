@@ -1,0 +1,26 @@
+id: php-xxe-003
+name: DOMDocument load XML XXE
+description: |
+  Detects xxe issues in PHP code.
+severity: critical
+category: xxe
+confidence: critical
+cwe: CWE-611
+languages: [php]
+message: |
+  DOMDocument::loadXML without entity disabling is vulnerable to XXE.
+patterns:
+  - type: regex
+    pattern: '(?i)DOMDocument.*loadXML\s*\(\s*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)\$dom->loadXML\s*\(\s*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+DOMDocument.*loadXML.*\$'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/611.html

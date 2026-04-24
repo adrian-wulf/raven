@@ -1,0 +1,15 @@
+id: docker-privilege-002
+name: CAP_ADD ALL
+severity: critical
+category: privilege
+confidence: critical
+cwe: CWE-250
+languages:
+- dockerfile
+message: Adding ALL capabilities removes container isolation. Add only required capabilities.
+patterns:
+- type: regex
+  pattern: CAP_ADD\s*:\?\s*\[?\s*ALL
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

@@ -1,0 +1,15 @@
+id: dart-input-001
+name: TextEditingController SQLi
+severity: medium
+category: sqli
+confidence: medium
+cwe: CWE-89
+languages:
+- dart
+message: Using TextEditingController text directly in SQL queries enables injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: (TextEditingController|controller\.text).*query|query.*controller\.text
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html

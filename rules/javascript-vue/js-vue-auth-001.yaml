@@ -1,0 +1,18 @@
+id: js-vue-auth-001
+name: Auth middleware bypass
+severity: high
+category: auth
+confidence: high
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: Auth middleware that always passes allows unauthorized access. Implement proper verification.
+patterns:
+- type: regex
+  pattern: middleware\s*:\s*\w+\s*\(\s*\)\s*\{\s*\n\s*return\s+true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- vue

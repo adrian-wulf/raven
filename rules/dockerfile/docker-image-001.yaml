@@ -1,0 +1,15 @@
+id: docker-image-001
+name: Image from untrusted registry
+severity: high
+category: supply-chain
+confidence: high
+cwe: CWE-829
+languages:
+- dockerfile
+message: Pulling images from untrusted registries risks supply chain attacks. Use trusted registry.
+patterns:
+- type: regex
+  pattern: FROM\s+(?!docker\.io)(?!ghcr\.io)(?!gcr\.io)(?!mcr\.microsoft\.com)\w+\.\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/829.html

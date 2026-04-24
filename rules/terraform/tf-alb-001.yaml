@@ -1,0 +1,16 @@
+id: tf-alb-001
+name: ALB without drop invalid headers
+severity: medium
+category: network
+confidence: medium
+cwe: CWE-20
+languages:
+- terraform
+- hcl
+message: ALB without dropping invalid headers can enable HTTP request smuggling. Enable.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_lb[\"\'][^}]*\}(?!.*drop_invalid_header_fields)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

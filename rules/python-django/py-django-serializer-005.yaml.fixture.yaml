@@ -1,0 +1,17 @@
+rule_id: py-django-serializer-005
+language: python
+examples:
+  unsafe: '# Unsafe - py-django-serializer-005
+
+    cursor.execute(f"SELECT * FROM users WHERE id = {user_id}")
+
+    '
+  safe: '# Safe - py-django-serializer-005
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

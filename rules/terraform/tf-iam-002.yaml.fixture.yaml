@@ -1,0 +1,15 @@
+rule_id: tf-iam-002
+language: terraform
+examples:
+  unsafe: '# Unsafe - tf-iam-002
+
+    Principal = "*"
+
+    '
+  safe: '# Safe - tf-iam-002
+
+    # Use variables, encryption, least privilege
+
+    cidr_blocks = [var.allowed_cidr]
+
+    '

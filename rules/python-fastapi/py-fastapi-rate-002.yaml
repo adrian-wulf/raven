@@ -1,0 +1,17 @@
+id: py-fastapi-rate-002
+name: Missing rate limit decorator
+severity: medium
+category: config
+confidence: low
+cwe: CWE-770
+languages:
+- python
+message: No rate limit decorator on endpoint can allow brute force or DoS. Add @limiter.limit().
+patterns:
+- type: regex
+  pattern: '@app\.(get|post)\s*\([^)]+\)\s*\n\s*(?!.*@limiter)(?!.*@throttle)async\s+def'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html
+frameworks:
+- fastapi

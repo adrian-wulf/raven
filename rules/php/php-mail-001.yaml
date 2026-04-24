@@ -1,0 +1,26 @@
+id: php-mail-001
+name: mail Header Injection
+description: |
+  Detects smtp-injection issues in PHP code.
+severity: critical
+category: smtp-injection
+confidence: critical
+cwe: CWE-93
+languages: [php]
+message: |
+  mail() with user input in headers enables email header injection and spam.
+patterns:
+  - type: regex
+    pattern: '(?i)mail\s*\(.*[''"].*[''"].*[''"].*\$_(GET|POST|REQUEST)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mail\s*\(.*[''"].*[''"].*[''"].*\$'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mail\s*\(.*[''"].*\$.*[''"].*[''"]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/93.html

@@ -1,0 +1,23 @@
+id: go-mem-003
+name: CGO String Bypass
+description: |
+  Detects memory-safety issues in GO code.
+severity: high
+category: memory-safety
+confidence: medium
+cwe: CWE-758
+languages: [go]
+frameworks: [cgo]
+message: |
+  CGO string conversions can cause memory corruption. Validate lengths and encoding.
+patterns:
+  - type: regex
+    pattern: '(?i)C\.GoString\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)C\.CString\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/758.html

@@ -1,0 +1,15 @@
+id: docker-cmd-001
+name: CMD as string instead of array
+severity: medium
+category: cmdi
+confidence: medium
+cwe: CWE-78
+languages:
+- dockerfile
+message: CMD as string invokes shell which can enable injection. Use JSON array format.
+patterns:
+- type: regex
+  pattern: CMD\s+\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

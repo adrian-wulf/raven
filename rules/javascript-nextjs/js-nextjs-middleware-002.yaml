@@ -1,0 +1,18 @@
+id: js-nextjs-middleware-002
+name: Matcher bypass
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-287
+languages:
+- javascript
+- typescript
+message: Middleware matcher that excludes sensitive routes can allow bypass. Review matcher patterns.
+patterns:
+- type: regex
+  pattern: 'export\s+const\s+config\s*=\s*\{\s*matcher\s*:'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/287.html
+frameworks:
+- nextjs

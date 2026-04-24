@@ -1,0 +1,19 @@
+id: js-angular-eval-001
+name: eval in component
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: eval() in Angular component enables arbitrary code execution. Never use eval.
+patterns:
+- type: regex
+  pattern: eval\s*\(\s*(?P<input>this\.|user|data|req\.)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- angular

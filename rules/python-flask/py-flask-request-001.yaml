@@ -1,0 +1,17 @@
+id: py-flask-request-001
+name: request.args.get without validation
+severity: medium
+category: input-validation
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: request.args.get() without input validation can allow injection attacks. Validate all inputs.
+patterns:
+- type: regex
+  pattern: request\.args\.get\s*\(\s*[\"\']\w+[\"\']\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- flask

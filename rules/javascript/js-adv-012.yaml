@@ -1,0 +1,13 @@
+id: js-adv-012
+name: JavaScript Buffer Allocation from User Input
+severity: high
+category: rce
+confidence: high
+cwe: "CWE-789"
+languages: [javascript, typescript]
+message: "Buffer or ArrayBuffer allocated with user-controlled size. Limit maximum size to prevent DoS."
+patterns:
+  - type: regex
+    pattern: "Buffer\\.alloc\\s*\\(.*(req\\.|body|params|query|length)"
+references:
+  - https://cwe.mitre.org/data/definitions/789.html

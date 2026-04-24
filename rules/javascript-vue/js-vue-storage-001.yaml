@@ -1,0 +1,18 @@
+id: js-vue-storage-001
+name: localStorage sensitive data
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-522
+languages:
+- javascript
+- typescript
+message: Storing sensitive data in localStorage exposes it to XSS. Use secure storage mechanisms.
+patterns:
+- type: regex
+  pattern: localStorage\.setItem\s*\(\s*[\"\'][^\"\']*[\"\']\s*,\s*(?P<input>password|secret|token)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/522.html
+frameworks:
+- vue

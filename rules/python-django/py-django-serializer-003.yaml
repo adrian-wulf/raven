@@ -1,0 +1,17 @@
+id: py-django-serializer-003
+name: Unbounded ListSerializer
+severity: medium
+category: serialization
+confidence: medium
+cwe: CWE-770
+languages:
+- python
+message: ListSerializer without max_length can allow DoS via large lists. Set max_length.
+patterns:
+- type: regex
+  pattern: class\s+\w+ListSerializer\s*\(\s*serializers\.ListSerializer\s*\)(?!.*max_length)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html
+frameworks:
+- django

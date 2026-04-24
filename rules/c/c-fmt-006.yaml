@@ -1,0 +1,22 @@
+id: c-fmt-006
+name: wprintf Format String
+description: |
+  Detects format-string issues in C code.
+severity: high
+category: format-string
+confidence: high
+cwe: CWE-134
+languages: [c]
+message: |
+  wprintf with user format string is vulnerable.
+patterns:
+  - type: regex
+    pattern: '(?i)wprintf\s*\(\s*[^''"L]+\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fwprintf\s*\(\s*[^,]+,\s*[^''"L]+'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

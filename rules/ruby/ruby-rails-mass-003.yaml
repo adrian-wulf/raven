@@ -1,0 +1,23 @@
+id: ruby-rails-mass-003
+name: Rails Strong Parameters Missing permit
+description: |
+  Detects mass-assignment issues in RUBY code.
+severity: high
+category: mass-assignment
+confidence: high
+cwe: CWE-915
+languages: [ruby]
+frameworks: [rails]
+message: |
+  Parameters without explicit permit are filtered out but log warnings.
+patterns:
+  - type: regex
+    pattern: '(?i)params\[.*\](?!.*permit)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)params\.require\s*\(.*\)(?!.*permit)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

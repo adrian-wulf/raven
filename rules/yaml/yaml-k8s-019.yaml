@@ -1,0 +1,15 @@
+id: yaml-k8s-019
+name: Container with SYS_ADMIN
+severity: critical
+category: privilege
+confidence: critical
+cwe: CWE-250
+languages:
+- yaml
+message: SYS_ADMIN capability is equivalent to root. Remove or reduce capabilities.
+patterns:
+- type: regex
+  pattern: add:\s*\n\s+-\s*SYS_ADMIN
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

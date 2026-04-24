@@ -1,0 +1,16 @@
+id: dart-ssrf-002
+name: dio.get with user URL
+severity: critical
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages:
+- dart
+message: dio.get with user URL enables SSRF. Validate URLs before fetching.
+patterns:
+- type: regex
+  pattern: dio\.(get|post|put|delete|fetch)\s*\(\s*(?P<input>user|url|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/918.html

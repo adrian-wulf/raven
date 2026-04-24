@@ -1,0 +1,15 @@
+id: scala-config-001
+name: Play secret hardcoded
+severity: critical
+category: secrets
+confidence: high
+cwe: CWE-798
+languages:
+- scala
+message: Hardcoded Play framework application.secret is insecure. Use env var.
+patterns:
+- type: regex
+  pattern: application\.secret\s*=\s*[\"\'][^\"\']{10,}[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html

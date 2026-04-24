@@ -1,0 +1,15 @@
+rule_id: js-angular-csrf-002
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-csrf-002
+
+    element.innerHTML = userData;
+
+    '
+  safe: '// Safe - js-angular-csrf-002
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

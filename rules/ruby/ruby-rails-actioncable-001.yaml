@@ -1,0 +1,23 @@
+id: ruby-rails-actioncable-001
+name: Rails ActionCable XSS
+description: |
+  Detects xss issues in RUBY code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [ruby]
+frameworks: [rails]
+message: |
+  ActionCable broadcasting user content without sanitization enables XSS.
+patterns:
+  - type: regex
+    pattern: '(?i)ActionCable.*broadcast\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ActionCable.*stream_from.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

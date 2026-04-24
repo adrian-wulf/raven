@@ -1,0 +1,27 @@
+id: java-xss-002
+name: Thymeleaf th:utext XSS
+description: |
+  Detects xss issues in JAVA code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [java]
+frameworks: [thymeleaf]
+message: |
+  th:utext disables HTML escaping. Use th:text for user-controlled content.
+patterns:
+  - type: regex
+    pattern: '(?i)th:utext\s*=\s*[`"].*\$\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)th:utext\s*=\s*[`"].*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)th\:utext.*\$\{.*param'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

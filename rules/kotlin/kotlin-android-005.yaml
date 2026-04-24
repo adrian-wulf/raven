@@ -1,0 +1,23 @@
+id: kotlin-android-005
+name: Android Intent Implicit Launch
+description: |
+  Detects intent-injection issues in KOTLIN code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-927
+languages: [kotlin]
+frameworks: [android]
+message: |
+  Implicit intents can be intercepted by malicious apps.
+patterns:
+  - type: regex
+    pattern: '(?i)Intent\s*\(\s*\)(?!.*setPackage)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Intent\s*\(\s*Action.*\)(?!.*setPackage)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/927.html

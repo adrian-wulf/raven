@@ -1,0 +1,17 @@
+id: bash-sqli-002
+name: psql with user query
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- bash
+- shell
+message: psql -c with user input enables SQL injection. Use parameterized queries.
+patterns:
+- type: regex
+  pattern: psql\s+.*-c\s+[\"\'].*\$\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

@@ -1,0 +1,22 @@
+id: c-crypto-002
+name: srand time NULL Seed
+description: |
+  Detects weak-cryptography issues in C code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-336
+languages: [c]
+message: |
+  srand(time(NULL)) produces predictable sequences. Use /dev/urandom.
+patterns:
+  - type: regex
+    pattern: '(?i)srand\s*\(\s*time\s*\(\s*NULL\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)srand\s*\(\s*clock\s*\(\s*\)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/336.html

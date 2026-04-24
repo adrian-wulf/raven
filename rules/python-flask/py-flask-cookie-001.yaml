@@ -1,0 +1,17 @@
+id: py-flask-cookie-001
+name: Cookie without secure flag
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-614
+languages:
+- python
+message: Cookie without secure=True can be sent over HTTP. Set secure=True in production.
+patterns:
+- type: regex
+  pattern: set_cookie\s*\(\s*[\"\'][^\"\']+[\"\'][^)]*\)(?!.*secure)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/614.html
+frameworks:
+- flask

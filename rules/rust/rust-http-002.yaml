@@ -1,0 +1,23 @@
+id: rust-http-002
+name: tower HTTP without Compression Limit
+description: |
+  Detects resource-exhaustion issues in RUST code.
+severity: low
+category: resource-exhaustion
+confidence: low
+cwe: CWE-400
+languages: [rust]
+frameworks: [tower]
+message: |
+  Unlimited decompression can lead to resource exhaustion.
+patterns:
+  - type: regex
+    pattern: '(?i)CompressionLayer::new\s*\(\)(?!.*limit)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DecompressionLayer.*without.*limit'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/400.html

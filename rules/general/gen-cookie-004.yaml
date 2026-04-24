@@ -1,0 +1,13 @@
+id: gen-cookie-004
+name: Sensitive Data in Cookie
+severity: high
+category: cookie
+confidence: high
+cwe: "CWE-312"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Sensitive data stored in cookie. Cookies are stored in plaintext on client. Use server-side sessions."
+patterns:
+  - type: regex
+    pattern: "Set-Cookie.*(password|token|secret|key|credit|ssn|auth)"
+references:
+  - https://cwe.mitre.org/data/definitions/312.html

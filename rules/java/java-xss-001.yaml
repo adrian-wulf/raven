@@ -1,0 +1,27 @@
+id: java-xss-001
+name: JSP Expression XSS
+description: |
+  Detects xss issues in JAVA code.
+severity: critical
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [java]
+frameworks: [jsp]
+message: |
+  JSP expressions <%= %> do not escape HTML. Use JSTL <c:out> instead.
+patterns:
+  - type: regex
+    pattern: '<%\s*=\s*.*request\.getParameter'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '<%\s*=\s*.*\$\{param'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '<%\s*=\s*.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

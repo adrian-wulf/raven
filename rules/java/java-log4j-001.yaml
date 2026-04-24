@@ -1,0 +1,31 @@
+id: java-log4j-001
+name: Log4j JNDI Lookup Pattern
+description: |
+  Detects code-injection issues in JAVA code.
+severity: critical
+category: code-injection
+confidence: critical
+cwe: CWE-77
+languages: [java]
+frameworks: [log4j]
+message: |
+  Log4j versions before 2.17.1 are vulnerable to Log4Shell (CVE-2021-44228). Upgrade immediately.
+patterns:
+  - type: regex
+    pattern: '\$\{jndi:'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '\$\{.*lower.*jndi'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '\$\{env:.*jndi'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)log4j.*version.*2\.1[0-6]'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/77.html

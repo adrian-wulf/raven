@@ -1,0 +1,15 @@
+rule_id: sol-storage-001
+language: solidity
+examples:
+  unsafe: '// Unsafe - sol-storage-001
+
+    User storage user; // uninitialized
+
+    '
+  safe: '// Safe - sol-storage-001
+
+    // Use Checks-Effects-Interactions, access controls
+
+    // ReentrancyGuard, SafeMath
+
+    '

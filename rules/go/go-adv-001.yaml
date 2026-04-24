@@ -1,0 +1,13 @@
+id: go-adv-001
+name: Go Panic Recovery Without Proper Handling
+severity: medium
+category: rce
+confidence: high
+cwe: "CWE-248"
+languages: [go]
+message: "Panic recovered without proper error handling. Log the error and return a safe response."
+patterns:
+  - type: regex
+    pattern: "recover\\s*\\(\\)"
+references:
+  - https://cwe.mitre.org/data/definitions/248.html

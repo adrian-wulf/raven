@@ -1,0 +1,26 @@
+id: go-debug-002
+name: Debug Print Statements Left in Code
+description: |
+  Detects information-disclosure issues in GO code.
+severity: low
+category: information-disclosure
+confidence: low
+cwe: CWE-489
+languages: [go]
+message: |
+  Remove debug print statements before deployment. They may leak sensitive information.
+patterns:
+  - type: regex
+    pattern: '(?i)fmt\.Println\s*\(\s*[`"]DEBUG'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)log\.Println\s*\(\s*[`"]DEBUG'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)//\s*TODO.*debug'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/489.html

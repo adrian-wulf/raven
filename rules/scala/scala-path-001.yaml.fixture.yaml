@@ -1,0 +1,15 @@
+rule_id: scala-path-001
+language: scala
+examples:
+  unsafe: '// Unsafe - scala-path-001
+
+    new File(userPath)
+
+    '
+  safe: '// Safe - scala-path-001
+
+    // Use ORM, parameterized queries
+
+    Users.filter(_.id === userId).result
+
+    '

@@ -1,0 +1,23 @@
+id: java-spring-scheduled-001
+name: Spring @Scheduled RCE via SpEL
+description: |
+  Detects expression-injection issues in JAVA code.
+severity: critical
+category: expression-injection
+confidence: high
+cwe: CWE-94
+languages: [java]
+frameworks: [spring]
+message: |
+  @Scheduled tasks with dynamic expressions can be hijacked for RCE.
+patterns:
+  - type: regex
+    pattern: '(?i)@Scheduled\s*\(.*cron.*[$\#]\{'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)@Scheduled.*fixedDelay.*[$\#]\{'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/94.html

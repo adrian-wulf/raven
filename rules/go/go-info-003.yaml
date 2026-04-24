@@ -1,0 +1,26 @@
+id: go-info-003
+name: Stack Trace Exposure in HTTP Response
+description: |
+  Detects information-disclosure issues in GO code.
+severity: high
+category: information-disclosure
+confidence: high
+cwe: CWE-497
+languages: [go]
+message: |
+  Stack traces contain implementation details. Never return them in HTTP responses.
+patterns:
+  - type: regex
+    pattern: '(?i)debug\.Stack\s*\(\).*w\.Write'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)runtime\.Stack\s*\(.*w'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)recover\s*\(\).*fmt\.Fprint.*w'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/497.html

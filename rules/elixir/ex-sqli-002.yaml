@@ -1,0 +1,16 @@
+id: ex-sqli-002
+name: unsafe_fragment
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- elixir
+message: unsafe_fragment with user input enables SQL injection. Use safe query composition.
+patterns:
+- type: regex
+  pattern: unsafe_fragment\s*\(\s*[\"\'][^\"\']*\#\{\s*\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

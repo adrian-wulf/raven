@@ -1,0 +1,16 @@
+id: lua-cmdi-002
+name: io.popen with user input
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- lua
+message: io.popen with user input enables command injection. Use safe argument passing.
+patterns:
+- type: regex
+  pattern: io\.popen\s*\(\s*(?P<input>user|input|arg|param)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

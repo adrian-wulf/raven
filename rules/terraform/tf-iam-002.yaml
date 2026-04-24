@@ -1,0 +1,16 @@
+id: tf-iam-002
+name: AdministratorAccess policy
+severity: high
+category: iam
+confidence: high
+cwe: CWE-250
+languages:
+- terraform
+- hcl
+message: Attaching AdministratorAccess grants full permissions. Use least privilege.
+patterns:
+- type: regex
+  pattern: policy\s*[=:]\s*[\"\']arn:aws:iam::aws:policy/AdministratorAccess[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

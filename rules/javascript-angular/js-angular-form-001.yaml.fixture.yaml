@@ -1,0 +1,15 @@
+rule_id: js-angular-form-001
+language: javascript
+examples:
+  unsafe: '// Unsafe - js-angular-form-001
+
+    const input = req.body.value;
+
+    '
+  safe: '// Safe - js-angular-form-001
+
+    // Use framework features, validate inputs, sanitize data
+
+    const safeHtml = DOMPurify.sanitize(userData);
+
+    '

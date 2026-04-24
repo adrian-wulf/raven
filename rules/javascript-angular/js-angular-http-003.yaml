@@ -1,0 +1,18 @@
+id: js-angular-http-003
+name: HTTP without interceptor auth
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- javascript
+- typescript
+message: HTTP request without auth header may fail authentication. Add auth interceptor.
+patterns:
+- type: regex
+  pattern: http\.(get|post)\s*\([^,]+\)(?!.*Authorization)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- angular

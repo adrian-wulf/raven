@@ -1,0 +1,22 @@
+id: cpp-type-002
+name: reinterpret_cast Unsafe
+description: |
+  Detects type-confusion issues in CPP code.
+severity: high
+category: type-confusion
+confidence: high
+cwe: CWE-843
+languages: [cpp]
+message: |
+  reinterpret_cast can produce invalid pointers. Validate before use.
+patterns:
+  - type: regex
+    pattern: '(?i)reinterpret_cast<.*>\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)reinterpret_cast<.*void\*.*>'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/843.html

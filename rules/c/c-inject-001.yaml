@@ -1,0 +1,22 @@
+id: c-inject-001
+name: sqlite3_exec User SQL
+description: |
+  Detects sql-injection issues in C code.
+severity: critical
+category: sql-injection
+confidence: high
+cwe: CWE-89
+languages: [c]
+message: |
+  sqlite3_exec with user input allows SQL injection. Use prepared statements.
+patterns:
+  - type: regex
+    pattern: '(?i)sqlite3_exec\s*\(.*,\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)sqlite3_exec\s*\(.*,\s*.*sprintf'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

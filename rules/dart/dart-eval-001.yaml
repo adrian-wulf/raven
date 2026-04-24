@@ -1,0 +1,16 @@
+id: dart-eval-001
+name: Dynamic code evaluation
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- dart
+message: Dynamic code evaluation can enable arbitrary code execution. Avoid eval-like functionality.
+patterns:
+- type: regex
+  pattern: Isolate\.run\s*\(\s*(?P<input>user|dynamic)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html

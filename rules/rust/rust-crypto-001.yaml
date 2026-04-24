@@ -1,0 +1,26 @@
+id: rust-crypto-001
+name: rand::thread_rng for Crypto
+description: |
+  Detects weak-cryptography issues in RUST code.
+severity: high
+category: weak-cryptography
+confidence: high
+cwe: CWE-338
+languages: [rust]
+message: |
+  thread_rng is not cryptographically secure. Use rand::rngs::StdRng or OsRng.
+patterns:
+  - type: regex
+    pattern: '(?i)thread_rng\s*\(\).*gen'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)thread_rng\s*\(\).*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)thread_rng\s*\(\).*token'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

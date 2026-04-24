@@ -1,0 +1,17 @@
+id: py-django-rate-001
+name: No rate limiting
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-770
+languages:
+- python
+message: No rate limiting on views allows brute force and DoS. Add django-ratelimit.
+patterns:
+- type: regex
+  pattern: '@ratelimit'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html
+frameworks:
+- django

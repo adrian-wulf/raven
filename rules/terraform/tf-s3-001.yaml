@@ -1,0 +1,16 @@
+id: tf-s3-001
+name: S3 bucket versioning disabled
+severity: medium
+category: storage
+confidence: medium
+cwe: CWE-693
+languages:
+- terraform
+- hcl
+message: S3 without versioning can't recover from ransomware. Enable versioning.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_s3_bucket[\"\'][^}]*\}(?!.*versioning)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/693.html

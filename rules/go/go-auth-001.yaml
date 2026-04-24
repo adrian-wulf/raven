@@ -1,0 +1,23 @@
+id: go-auth-001
+name: Missing Authentication on Route
+description: |
+  Detects broken-authentication issues in GO code.
+severity: high
+category: broken-authentication
+confidence: high
+cwe: CWE-306
+languages: [go]
+frameworks: [gin, echo, chi]
+message: |
+  All routes handling sensitive data must have authentication middleware.
+patterns:
+  - type: regex
+    pattern: '(?i)r\.GET\s*\(\s*[`"]/admin'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)r\.POST\s*\(\s*[`"]/api/(delete|update|admin)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/306.html

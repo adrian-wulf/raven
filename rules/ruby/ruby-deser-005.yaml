@@ -1,0 +1,23 @@
+id: ruby-deser-005
+name: Oj.load User Input
+description: |
+  Detects insecure-deserialization issues in RUBY code.
+severity: high
+category: insecure-deserialization
+confidence: high
+cwe: CWE-502
+languages: [ruby]
+frameworks: [oj]
+message: |
+  Oj.load with mode :object can instantiate arbitrary classes.
+patterns:
+  - type: regex
+    pattern: '(?i)Oj\.load\s*\(\s*.*params'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Oj\.load\s*\(\s*.*mode:\s*:object'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/502.html

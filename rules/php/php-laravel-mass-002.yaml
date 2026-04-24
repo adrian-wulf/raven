@@ -1,0 +1,23 @@
+id: php-laravel-mass-002
+name: Laravel Mass Assignment without guarded
+description: |
+  Detects mass-assignment issues in PHP code.
+severity: high
+category: mass-assignment
+confidence: medium
+cwe: CWE-915
+languages: [php]
+frameworks: [laravel]
+message: |
+  Models without $guarded are vulnerable to mass assignment.
+patterns:
+  - type: regex
+    pattern: '(?i)protected\s+\$guarded\s*=\s*\[\s*\]'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)class\s+\w+\s+extends\s+Model\s*\{[^}]*(?<!guarded)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/915.html

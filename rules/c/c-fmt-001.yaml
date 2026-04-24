@@ -1,0 +1,26 @@
+id: c-fmt-001
+name: printf User Format String
+description: |
+  Detects format-string issues in C code.
+severity: critical
+category: format-string
+confidence: critical
+cwe: CWE-134
+languages: [c]
+message: |
+  printf with user-controlled format string enables memory read/write.
+patterns:
+  - type: regex
+    pattern: '(?i)printf\s*\(\s*[^''"]+\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)printf\s*\(\s*.*user'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)printf\s*\(\s*.*input'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/134.html

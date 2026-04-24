@@ -1,0 +1,17 @@
+id: py-flask-jwt-001
+name: JWT without expiration
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-613
+languages:
+- python
+message: JWT token without expiration never expires. Set exp claim.
+patterns:
+- type: regex
+  pattern: jwt\.encode\s*\(\s*\{[^}]*\}(?!.*exp)(?!.*expire)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/613.html
+frameworks:
+- flask

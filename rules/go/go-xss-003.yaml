@@ -1,0 +1,30 @@
+id: go-xss-003
+name: html/template with Disabled Escaping
+description: |
+  Detects xss issues in GO code.
+severity: high
+category: xss
+confidence: medium
+cwe: CWE-79
+languages: [go]
+message: |
+  Never disable HTML escaping in templates. This opens reflected/stored XSS vulnerabilities.
+patterns:
+  - type: regex
+    pattern: '(?i)template\.HTML\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)template\.JS\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)template\.URL\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)template\.CSS\s*\('
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

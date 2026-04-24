@@ -1,0 +1,26 @@
+id: java-log-001
+name: SLF4J Log Injection
+description: |
+  Detects log-injection issues in JAVA code.
+severity: medium
+category: log-injection
+confidence: medium
+cwe: CWE-117
+languages: [java]
+message: |
+  User input in SLF4J logs can forge log entries. Sanitize newlines.
+patterns:
+  - type: regex
+    pattern: '(?i)LOGGER\.info\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)LOGGER\.warn\s*\(.*request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)LOGGER\.error\s*\(.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/117.html

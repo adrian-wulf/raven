@@ -1,0 +1,17 @@
+id: py-flask-ssti-004
+name: Environment autoescape=False
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- python
+message: Jinja2 Environment with autoescape=False disables XSS protection. Use autoescape=True.
+patterns:
+- type: regex
+  pattern: Environment\s*\(\s*.*autoescape\s*=\s*False
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- flask

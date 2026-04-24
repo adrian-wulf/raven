@@ -13,7 +13,7 @@ message: |
   Use parameterized LDAP queries or whitelist validation.
 patterns:
   - type: regex
-    pattern: '(?i)(search\s*\(\s*[^,]*,\s*["''][^"'']*\+|filter\s*\(\s*["''][^"'']*\+|\bfilter\s*\(\s*["''][^"'']*\$\{)'
+    pattern: '(?i)(search\s*\(\s*[^,]*,\s*["''''][^"'''']*\+|filter\s*\(\s*["''''][^"'''']*\+|\bfilter\s*\(\s*["''''][^"'''']*\$\{)'
     where:
       - not-test-file: true
   - type: regex

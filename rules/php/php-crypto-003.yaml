@@ -1,0 +1,30 @@
+id: php-crypto-003
+name: rand for Cryptographic Use
+description: |
+  Detects weak-cryptography issues in PHP code.
+severity: critical
+category: weak-cryptography
+confidence: critical
+cwe: CWE-338
+languages: [php]
+message: |
+  rand()/mt_rand() are predictable. Use random_int() for cryptographic operations.
+patterns:
+  - type: regex
+    pattern: '(?i)rand\s*\(\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mt_rand\s*\(\s*\)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)rand\s*\(.*\$.*password'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)mt_rand\s*\(.*\$.*token'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/338.html

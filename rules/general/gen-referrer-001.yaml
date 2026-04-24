@@ -1,0 +1,13 @@
+id: gen-referrer-001
+name: Referrer-Policy set to unsafe-origin
+severity: medium
+category: headers
+confidence: high
+cwe: "CWE-200"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Referrer-Policy allows sending full URL to external sites. Use strict-origin-when-cross-origin or stricter."
+patterns:
+  - type: regex
+    pattern: "Referrer-Policy.*(unsafe-url|origin-when-cross-origin)"
+references:
+  - https://cwe.mitre.org/data/definitions/200.html

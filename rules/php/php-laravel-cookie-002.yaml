@@ -1,0 +1,27 @@
+id: php-laravel-cookie-002
+name: Laravel Session Cookie Insecure
+description: |
+  Detects insecure-cookie issues in PHP code.
+severity: high
+category: insecure-cookie
+confidence: high
+cwe: CWE-614
+languages: [php]
+frameworks: [laravel]
+message: |
+  Session cookies must have Secure and HttpOnly flags.
+patterns:
+  - type: regex
+    pattern: '(?i''secure''\s*=>\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i''http_only''\s*=>\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i''same_site''\s*=>\s*null'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

@@ -1,0 +1,19 @@
+id: js-vue-eval-001
+name: eval in method
+severity: critical
+category: code-injection
+confidence: high
+cwe: CWE-94
+languages:
+- javascript
+- typescript
+message: eval() in Vue method enables arbitrary code execution. Never use eval with user input.
+patterns:
+- type: regex
+  pattern: eval\s*\(\s*(?P<input>this\.|user|data|input)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/94.html
+frameworks:
+- vue

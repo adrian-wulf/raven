@@ -1,0 +1,15 @@
+id: sol-txorigin-001
+name: tx.origin authentication
+severity: critical
+category: auth
+confidence: high
+cwe: CWE-288
+languages:
+- solidity
+message: tx.origin for authentication is vulnerable to phishing attacks. Use msg.sender instead.
+patterns:
+- type: regex
+  pattern: tx\.origin\s*==\s*\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/288.html

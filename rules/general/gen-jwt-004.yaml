@@ -1,0 +1,13 @@
+id: gen-jwt-004
+name: JWT Secret in Environment Variable Without Validation
+severity: high
+category: auth
+confidence: high
+cwe: "CWE-798"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "JWT secret loaded from env without checking existence. Ensure secret is configured before starting."
+patterns:
+  - type: regex
+    pattern: 'process\\.env\\.JWT_SECRET|os\\.Getenv\\s*\\(\\s*[\\''"]JWT_SECRET[\\''"]\\s*\\)|System\\.getenv\\s*\\(\\s*[\\''"]JWT_SECRET[\\''"]\\s*\\)'
+references:
+  - https://cwe.mitre.org/data/definitions/798.html

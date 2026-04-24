@@ -1,0 +1,16 @@
+id: dart-sqli-002
+name: moor raw SQL
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- dart
+message: moor/drift customStatement with user input enables SQL injection. Use query builder.
+patterns:
+- type: regex
+  pattern: customStatement\s*\(\s*[\"\'][^\"\']*\$\w+
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/89.html

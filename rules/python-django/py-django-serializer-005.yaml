@@ -1,0 +1,17 @@
+id: py-django-serializer-005
+name: CharField without max_length
+severity: medium
+category: serialization
+confidence: medium
+cwe: CWE-20
+languages:
+- python
+message: CharField without max_length allows unbounded input. Set max_length.
+patterns:
+- type: regex
+  pattern: CharField\s*\(\s*\)(?!.*max_length)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html
+frameworks:
+- django

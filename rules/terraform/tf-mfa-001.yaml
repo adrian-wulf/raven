@@ -1,0 +1,16 @@
+id: tf-mfa-001
+name: Missing MFA on root
+severity: high
+category: iam
+confidence: high
+cwe: CWE-308
+languages:
+- terraform
+- hcl
+message: AWS root account without MFA is vulnerable to takeover. Enforce MFA.
+patterns:
+- type: regex
+  pattern: resource\s+[\"\']aws_iam_account_password_policy[\"\'][^}]*\}(?!.*require_mfa)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/308.html

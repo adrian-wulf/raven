@@ -1,0 +1,13 @@
+id: gen-xpath-002
+name: XPathQuery with User Input
+severity: critical
+category: xpathi
+confidence: high
+cwe: "CWE-91"
+languages: [java, csharp, python]
+message: "XPath query built with user-controlled input. Sanitize or parameterize XPath expressions."
+patterns:
+  - type: regex
+    pattern: "(XPath|xpath|XPathNavigator|XPathExpression)"
+references:
+  - https://cwe.mitre.org/data/definitions/91.html

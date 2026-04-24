@@ -1,0 +1,22 @@
+id: cpp-move-001
+name: Use After std::move
+description: |
+  Detects use-after-free issues in CPP code.
+severity: high
+category: use-after-free
+confidence: high
+cwe: CWE-416
+languages: [cpp]
+message: |
+  Using a variable after std::move leaves it in moved-from state.
+patterns:
+  - type: regex
+    pattern: '(?i)std::move\s*\(\s*\w+\s*\).*\w+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)std::move\s*\(.*\).*use.*after'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/416.html

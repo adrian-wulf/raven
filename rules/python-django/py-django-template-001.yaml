@@ -1,0 +1,18 @@
+id: py-django-template-001
+name: render_to_string with user template
+severity: high
+category: ssti
+confidence: high
+cwe: CWE-1336
+languages:
+- python
+message: render_to_string() with user-controlled template name can lead to SSTI. Use allowlisted templates.
+patterns:
+- type: regex
+  pattern: render_to_string\s*\(\s*(?P<input>request\.|user_|f[\"\'])
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/1336.html
+frameworks:
+- django

@@ -1,0 +1,27 @@
+id: java-android-012
+name: Android PendingIntent Mutable
+description: |
+  Detects intent-injection issues in JAVA code.
+severity: high
+category: intent-injection
+confidence: high
+cwe: CWE-940
+languages: [java]
+frameworks: [android]
+message: |
+  Mutable PendingIntents can be hijacked. Use FLAG_IMMUTABLE when possible.
+patterns:
+  - type: regex
+    pattern: '(?i)PendingIntent\.getActivity\s*\(.*(?!FLAG_IMMUTABLE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PendingIntent\.getService\s*\(.*(?!FLAG_IMMUTABLE)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)PendingIntent\.getBroadcast\s*\(.*(?!FLAG_IMMUTABLE)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/940.html

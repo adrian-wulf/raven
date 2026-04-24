@@ -1,0 +1,15 @@
+id: ex-config-002
+name: Dev config in production
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-489
+languages:
+- elixir
+message: Development configuration in production exposes debug info. Use production config.
+patterns:
+- type: regex
+  pattern: config\s*:\s*prod\s*,\s*[^\n]*debug_errors\s*:\s*true
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/489.html

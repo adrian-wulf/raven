@@ -1,0 +1,16 @@
+id: ex-nosql-001
+name: MongoDB injection
+severity: critical
+category: nosql
+confidence: high
+cwe: CWE-943
+languages:
+- elixir
+message: MongoDB query with user input without sanitization enables NoSQL injection. Sanitize.
+patterns:
+- type: regex
+  pattern: Mongo\.find\s*\(\s*\w+\s*,\s*\{[^}]*#\{
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/943.html

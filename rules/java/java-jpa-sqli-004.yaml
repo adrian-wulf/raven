@@ -1,0 +1,23 @@
+id: java-jpa-sqli-004
+name: Hibernate Criteria API Bypass
+description: |
+  Detects sql-injection issues in JAVA code.
+severity: medium
+category: sql-injection
+confidence: medium
+cwe: CWE-89
+languages: [java]
+frameworks: [hibernate]
+message: |
+  Improper use of Criteria API with literal values can bypass parameterization.
+patterns:
+  - type: regex
+    pattern: '(?i)Restrictions\.sqlRestriction\s*\('
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)criteriaBuilder\.literal.*request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

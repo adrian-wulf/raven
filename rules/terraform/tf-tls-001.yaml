@@ -1,0 +1,16 @@
+id: tf-tls-001
+name: TLS 1.0 or 1.1
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-326
+languages:
+- terraform
+- hcl
+message: TLS 1.0/1.1 are deprecated and insecure. Use TLS 1.2 minimum.
+patterns:
+- type: regex
+  pattern: (min_tls_version|tls_version)\s*=\s*[\"\']TLS1\.[01][\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/326.html

@@ -1,0 +1,23 @@
+id: java-jpa-001
+name: JPA EntityManager Flush without Transaction
+description: |
+  Detects data-integrity issues in JAVA code.
+severity: medium
+category: data-integrity
+confidence: medium
+cwe: CWE-89
+languages: [java]
+frameworks: [spring, hibernate]
+message: |
+  Flushing EntityManager without transaction can cause inconsistent state.
+patterns:
+  - type: regex
+    pattern: '(?i)entityManager\.flush\s*\(\)(?!.*@Transactional)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)entityManager\.persist\s*\(.*(?!.*@Transactional)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/89.html

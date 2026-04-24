@@ -1,0 +1,17 @@
+rule_id: py-flask-ssti-004
+language: python
+examples:
+  unsafe: '# Unsafe - py-flask-ssti-004
+
+    return HttpResponse(f"<div>{user_input}</div>")
+
+    '
+  safe: '# Safe - py-flask-ssti-004
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

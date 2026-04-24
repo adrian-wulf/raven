@@ -1,0 +1,16 @@
+id: bash-find-001
+name: find with exec
+severity: medium
+category: cmdi
+confidence: medium
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: find -exec with shell can execute unexpected files. Use -exec with full path.
+patterns:
+- type: regex
+  pattern: find\s+.*-exec\s+\w+
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

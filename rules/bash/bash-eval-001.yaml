@@ -1,0 +1,16 @@
+id: bash-eval-001
+name: eval curl
+severity: critical
+category: cmdi
+confidence: critical
+cwe: CWE-78
+languages:
+- bash
+- shell
+message: eval $(curl ...) can execute arbitrary remote code. Never pipe curl to eval.
+patterns:
+- type: regex
+  pattern: eval\s*\$*\s*\(\s*curl
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html

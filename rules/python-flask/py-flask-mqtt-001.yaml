@@ -1,0 +1,17 @@
+id: py-flask-mqtt-001
+name: MQTT without TLS
+severity: high
+category: crypto
+confidence: high
+cwe: CWE-319
+languages:
+- python
+message: MQTT connection without TLS sends data in plaintext. Enable TLS.
+patterns:
+- type: regex
+  pattern: Mqtt\s*\(\s*\)(?!.*tls)(?!.*ssl)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/319.html
+frameworks:
+- flask

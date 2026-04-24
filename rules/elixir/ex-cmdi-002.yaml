@@ -1,0 +1,16 @@
+id: ex-cmdi-002
+name: :os.cmd
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- elixir
+message: :os.cmd with user input enables command injection. Avoid shell execution with untrusted input.
+patterns:
+- type: regex
+  pattern: :os\.cmd\s*\(\s*[\"\'][^\"\']*\#\{\s*(?P<input>user|input|params)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/78.html

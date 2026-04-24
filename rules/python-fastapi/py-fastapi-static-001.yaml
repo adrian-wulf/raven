@@ -1,0 +1,17 @@
+id: py-fastapi-static-001
+name: Static files without caching
+severity: low
+category: config
+confidence: low
+cwe: CWE-525
+languages:
+- python
+message: Static files served without cache headers reduce performance. Add cache-control.
+patterns:
+- type: regex
+  pattern: Mount\s*\(\s*[\"\'][^\"\']*[\"\']\s*,\s*StaticFiles
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/525.html
+frameworks:
+- fastapi

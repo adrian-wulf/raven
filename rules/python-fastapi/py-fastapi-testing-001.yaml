@@ -1,0 +1,17 @@
+id: py-fastapi-testing-001
+name: TestClient without auth override
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: TestClient without auth override may test with production auth. Override dependencies.
+patterns:
+- type: regex
+  pattern: TestClient\s*\(\s*app\s*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

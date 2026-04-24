@@ -1,0 +1,16 @@
+id: tf-iam-001
+name: Wildcard principal
+severity: critical
+category: iam
+confidence: critical
+cwe: CWE-250
+languages:
+- terraform
+- hcl
+message: IAM policy with Principal=* grants access to anyone. Restrict principals.
+patterns:
+- type: regex
+  pattern: '[Pp]rincipal\s*[=:]\s*[\"\'''']\*[\"\'''']'
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/250.html

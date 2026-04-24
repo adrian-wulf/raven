@@ -1,0 +1,19 @@
+rule_id: py-django-deser-002
+language: python
+examples:
+  unsafe: '# Unsafe - py-django-deser-002
+
+    import pickle
+
+    pickle.loads(user_data)
+
+    '
+  safe: '# Safe - py-django-deser-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

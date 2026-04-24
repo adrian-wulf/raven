@@ -1,0 +1,17 @@
+id: py-django-query-003
+name: annotate with RawSQL
+severity: critical
+category: sqli
+confidence: high
+cwe: CWE-89
+languages:
+- python
+message: annotate(RawSQL()) with user input enables SQL injection. Parameterize.
+patterns:
+- type: regex
+  pattern: \.annotate\s*\(\s*\w+\s*=\s*RawSQL
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/89.html
+frameworks:
+- django

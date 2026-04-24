@@ -1,0 +1,13 @@
+id: gen-cookie-002
+name: Cookie Without HttpOnly Flag
+severity: medium
+category: cookie
+confidence: high
+cwe: "CWE-1004"
+languages: [javascript, python, go, java, php, csharp, ruby]
+message: "Cookie set without HttpOnly flag. HttpOnly prevents JavaScript from accessing cookies, mitigating XSS."
+patterns:
+  - type: regex
+    pattern: "Set-Cookie.*(?!HttpOnly)"
+references:
+  - https://cwe.mitre.org/data/definitions/1004.html

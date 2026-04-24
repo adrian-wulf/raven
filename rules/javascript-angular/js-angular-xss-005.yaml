@@ -1,0 +1,19 @@
+id: js-angular-xss-005
+name: innerHTML binding
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages:
+- javascript
+- typescript
+message: Binding to innerHTML property can enable XSS with user data. Use textContent or Angular templates.
+patterns:
+- type: regex
+  pattern: \[innerHTML\]\s*=\s*[\"\'][^\"\']*\{\{\s*(?P<input>\w+)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html
+frameworks:
+- angular

@@ -1,0 +1,17 @@
+id: py-fastapi-grpc-001
+name: gRPC without auth interceptor
+severity: medium
+category: auth
+confidence: medium
+cwe: CWE-306
+languages:
+- python
+message: gRPC service without auth interceptor allows unauthorized access. Add interceptor.
+patterns:
+- type: regex
+  pattern: grpc\.server\s*\([^)]*\)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/306.html
+frameworks:
+- fastapi

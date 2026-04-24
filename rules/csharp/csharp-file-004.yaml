@@ -1,0 +1,23 @@
+id: csharp-file-004
+name: Content-Type Trust
+description: |
+  Detects file-upload issues in CSHARP code.
+severity: medium
+category: file-upload
+confidence: medium
+cwe: CWE-434
+languages: [csharp]
+frameworks: [aspnet]
+message: |
+  Content-Type header is client-controlled. Validate file contents.
+patterns:
+  - type: regex
+    pattern: '(?i)ContentType.*==.*[''"]image/(?!.*magic)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)ContentType.*StartsWith.*image(?!.*content)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/434.html

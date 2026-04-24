@@ -1,0 +1,16 @@
+id: ex-xss-002
+name: render without escaping
+severity: medium
+category: xss
+confidence: medium
+cwe: CWE-79
+languages:
+- elixir
+message: render with user data without escaping can enable XSS. Use HTML-safe helpers.
+patterns:
+- type: regex
+  pattern: render\s*\(\s*conn\s*,\s*[^)]*\w+\s*:\s*(?P<input>params|user)
+  where:
+  - not-constant: true
+references:
+- https://cwe.mitre.org/data/definitions/79.html

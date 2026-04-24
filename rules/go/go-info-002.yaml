@@ -1,0 +1,26 @@
+id: go-info-002
+name: Detailed Error Messages Exposed
+description: |
+  Detects information-disclosure issues in GO code.
+severity: medium
+category: information-disclosure
+confidence: medium
+cwe: CWE-209
+languages: [go]
+message: |
+  Do not expose internal error details to users. Log internally, return generic messages.
+patterns:
+  - type: regex
+    pattern: '(?i)http\.Error\s*\(\s*w\s*,\s*err\.Error'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)json\.NewEncoder\s*\(w\)\.Encode\s*\(\s*map\[string\]interface\{\}\{[^}]*err'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fmt\.Fprintf\s*\(\s*w\s*,\s*[`"].*error.*[`"]\s*,\s*err'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/209.html

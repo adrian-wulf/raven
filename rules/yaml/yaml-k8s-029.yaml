@@ -1,0 +1,15 @@
+id: yaml-k8s-029
+name: HorizontalPodAutoscaler without scale limit
+severity: medium
+category: config
+confidence: medium
+cwe: CWE-770
+languages:
+- yaml
+message: HPA without maxReplicas limit can exhaust resources. Set maxReplicas.
+patterns:
+- type: regex
+  pattern: kind:\s*HorizontalPodAutoscaler\s*\n.*spec:(?!.*maxReplicas)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/770.html

@@ -1,0 +1,23 @@
+id: csharp-ssrf-005
+name: Flurl User URL
+description: |
+  Detects ssrf issues in CSHARP code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [csharp]
+frameworks: [flurl]
+message: |
+  Flurl with user URLs enables SSRF.
+patterns:
+  - type: regex
+    pattern: '(?i)Flurl\.Http.*GetJsonAsync.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)Flurl\.Http.*PostJsonAsync.*Request'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html

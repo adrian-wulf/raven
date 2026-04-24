@@ -1,0 +1,15 @@
+id: dart-intent-001
+name: Intent without validation
+severity: medium
+category: injection
+confidence: medium
+cwe: CWE-20
+languages:
+- dart
+message: Intent data without validation can carry malicious payloads. Validate intent extras.
+patterns:
+- type: regex
+  pattern: ReceiveSharingIntent\.(getMediaStream|getTextStream)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/20.html

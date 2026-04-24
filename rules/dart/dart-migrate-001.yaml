@@ -1,0 +1,15 @@
+id: dart-migrate-001
+name: Firebase security rules missing
+severity: high
+category: auth
+confidence: high
+cwe: CWE-284
+languages:
+- dart
+message: Firebase without security rules allows unrestricted access. Configure rules.
+patterns:
+- type: regex
+  pattern: FirebaseFirestore\.instance(?!.*rules)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/284.html

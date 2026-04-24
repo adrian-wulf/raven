@@ -1,0 +1,22 @@
+id: rust-auth-001
+name: Cookie without Secure Flag
+description: |
+  Detects insecure-cookie issues in RUST code.
+severity: medium
+category: insecure-cookie
+confidence: medium
+cwe: CWE-614
+languages: [rust]
+message: |
+  Cookies without Secure flag sent over HTTP can be intercepted.
+patterns:
+  - type: regex
+    pattern: '(?i)Cookie::build\s*\(.*secure\s*\(\s*false'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SetCookie.*SameSite::None.*(?!secure)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/614.html

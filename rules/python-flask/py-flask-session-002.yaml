@@ -1,0 +1,17 @@
+id: py-flask-session-002
+name: Hardcoded secret_key dev value
+severity: critical
+category: crypto
+confidence: high
+cwe: CWE-798
+languages:
+- python
+message: Hardcoded secret_key like 'dev' or 'secret' is insecure. Use environment variable.
+patterns:
+- type: regex
+  pattern: secret_key\s*=\s*[\"\'](dev|secret|test|123|abc|change|default|flask)[\"\']
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/798.html
+frameworks:
+- flask

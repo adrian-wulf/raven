@@ -1,0 +1,26 @@
+id: csharp-ldap-001
+name: DirectorySearcher Filter Injection
+description: |
+  Detects ldap-injection issues in CSHARP code.
+severity: critical
+category: ldap-injection
+confidence: critical
+cwe: CWE-90
+languages: [csharp]
+message: |
+  DirectorySearcher with user input in filter allows LDAP injection.
+patterns:
+  - type: regex
+    pattern: '(?i)DirectorySearcher.*Filter.*=.*Request'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)DirectorySearcher.*Filter.*=.*\+'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)SearchResult.*Filter.*user'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/90.html

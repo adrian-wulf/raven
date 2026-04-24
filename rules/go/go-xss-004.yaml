@@ -1,0 +1,27 @@
+id: go-xss-004
+name: Reflected XSS via Direct HTTP Response Write
+description: |
+  Detects xss issues in GO code.
+severity: high
+category: xss
+confidence: high
+cwe: CWE-79
+languages: [go]
+frameworks: [gin, echo, fiber]
+message: |
+  Always sanitize user input before writing to HTTP response. Use html/template for rendering.
+patterns:
+  - type: regex
+    pattern: '(?i)w\.Write\s*\(\s*\[\]byte\s*\(\s*.*(r\.|req|request|param|input)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fmt\.Fprintf\s*\(\s*w\s*,\s*.*%s.*\s*,\s*.*(r\.|req|request|param|input)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)io\.WriteString\s*\(\s*w\s*,\s*.*(r\.|req|request|param|input)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/79.html

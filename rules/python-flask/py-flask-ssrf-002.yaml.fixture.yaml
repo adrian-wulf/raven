@@ -1,0 +1,17 @@
+rule_id: py-flask-ssrf-002
+language: python
+examples:
+  unsafe: '# Unsafe - py-flask-ssrf-002
+
+    requests.get(user_url)
+
+    '
+  safe: '# Safe - py-flask-ssrf-002
+
+    # Use parameterized queries, validate inputs, use security libraries
+
+    from django.utils.html import escape
+
+    escape(user_input)
+
+    '

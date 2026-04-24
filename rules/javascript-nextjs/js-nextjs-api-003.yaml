@@ -1,0 +1,18 @@
+id: js-nextjs-api-003
+name: API route command injection
+severity: critical
+category: cmdi
+confidence: high
+cwe: CWE-78
+languages:
+- javascript
+- typescript
+message: API route using exec with user input enables command injection. Avoid shell execution.
+patterns:
+- type: regex
+  pattern: handler\s*\(.*\)\s*\{[^}]*(exec|execSync|spawn)\s*\(\s*(?!.*validate)(?!.*sanitize)
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/78.html
+frameworks:
+- nextjs

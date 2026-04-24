@@ -1,0 +1,18 @@
+id: js-nextjs-cache-001
+name: Cache without revalidation
+severity: low
+category: config
+confidence: low
+cwe: CWE-525
+languages:
+- javascript
+- typescript
+message: Static generation without revalidation serves stale data. Add revalidate.
+patterns:
+- type: regex
+  pattern: getStaticProps.*\n.*return\s*\{[^}]*props
+  where: []
+references:
+- https://cwe.mitre.org/data/definitions/525.html
+frameworks:
+- nextjs

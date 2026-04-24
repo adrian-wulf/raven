@@ -1,0 +1,22 @@
+id: go-log-002
+name: fmt.Printf with User Data Log Injection
+description: |
+  Detects log-injection issues in GO code.
+severity: medium
+category: log-injection
+confidence: medium
+cwe: CWE-117
+languages: [go]
+message: |
+  User data in log statements can inject newlines and corrupt log files. Sanitize inputs.
+patterns:
+  - type: regex
+    pattern: '(?i)fmt\.Printf\s*\(\s*[`"][^`"]*%s[^`"]*[`"]\s*,\s*.*(r\.|req|request|param|input|user)'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)fmt\.Println\s*\(\s*.*(r\.|req|request|param|input|user)'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/117.html

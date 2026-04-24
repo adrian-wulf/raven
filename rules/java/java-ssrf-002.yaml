@@ -1,0 +1,26 @@
+id: java-ssrf-002
+name: HttpURLConnection SSRF
+description: |
+  Detects ssrf issues in JAVA code.
+severity: high
+category: ssrf
+confidence: high
+cwe: CWE-918
+languages: [java]
+message: |
+  HttpURLConnection can be abused for SSRF to internal IPs.
+patterns:
+  - type: regex
+    pattern: '(?i)HttpURLConnection.*openConnection'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)httpConn\.setRequestMethod.*GET'
+    where:
+      - not-test-file: true
+  - type: regex
+    pattern: '(?i)new\s+URL\s*\(.*\).openConnection'
+    where:
+      - not-test-file: true
+references:
+  - https://cwe.mitre.org/data/definitions/918.html
